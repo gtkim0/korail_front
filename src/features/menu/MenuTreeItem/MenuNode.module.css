@@ -1,0 +1,69 @@
+.menu {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 1rem;
+  position: relative;
+}
+
+.menu::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0.4rem;
+  bottom: 0;
+  width: 1px;
+  background-color: #ddd;
+}
+
+.node {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.node:hover {
+  background-color: #f1f3f5;
+}
+
+.selected {
+  background-color: #e6f0ff !important;
+  font-weight: 600;
+  color: #1a73e8;
+}
+
+.toggle {
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.8rem;
+  padding: 0.2rem;
+  width: 1em;
+  display: inline-block;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.childrenWrapper {
+  overflow: hidden;
+  /*transition: max-height 0.5s ease, opacity 0.5s ease;*/
+  opacity: 1;
+}
+
+.childrenWrapper.closed {
+  /*max-height: 0;*/
+  /*opacity: 0;*/
+}
+
+.childrenWrapper.open {
+  max-height: 1000px; /* 충분히 큰 값 */
+  opacity: 1;
+}

@@ -1,0 +1,8 @@
+.portalLayout {
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  /*padding: 3.2rem 4rem 0;*/
+  /*align-items: stretch;*/
+}

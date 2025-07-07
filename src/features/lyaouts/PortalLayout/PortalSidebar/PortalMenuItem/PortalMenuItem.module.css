@@ -1,0 +1,41 @@
+.menuItemWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+.menuItem {
+  cursor: pointer;
+  padding: 0.8rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #333;
+  user-select: none;
+  width: 100%;
+  transition: background 0.2s ease;
+}
+
+.menuItem:hover {
+  background-color: #f2f2f2;
+}
+
+.chevron {
+  display: inline-block;
+  transform: rotate(0deg);
+  transition: transform 0.2s ease;
+  font-size: 1rem;
+}
+
+.open {
+  transform: rotate(90deg);
+}
+
+.childrenWrapper {
+  margin-left: 1.6rem;
+  border-left: 1px solid #eee;
+  padding-left: 0.8rem;
+}

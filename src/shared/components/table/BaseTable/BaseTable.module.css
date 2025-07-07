@@ -1,0 +1,39 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.tr {
+  background-color: #fff;
+}
+
+.th,
+.td {
+  padding: 12px 16px;
+  border: 1px solid #eee;
+  text-align: left;
+}
+
+.th {
+  background-color: #f9f9f9;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tr:hover {
+  background-color: #f5f5f5;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.sortIcon {
+  margin-left: 6px;
+  font-size: 12px;
+  opacity: 1;
+}
