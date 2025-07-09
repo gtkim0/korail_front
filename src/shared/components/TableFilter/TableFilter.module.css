@@ -1,0 +1,14 @@
+.tableFilter {
+  display: flex;
+  padding-bottom: 1.6rem;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.6rem;
+  align-self: stretch;
+}
+
+.line {
+  width: 1px;
+  height: 100%;
+  background: #D5D5D6;
+}

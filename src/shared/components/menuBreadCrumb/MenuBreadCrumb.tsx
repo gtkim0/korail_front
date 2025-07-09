@@ -1,0 +1,46 @@
+import {BaseMenu} from "@/types/menu";
+import Image from "next/image";
+import styles from './MenuBreadCrumb.module.css'
+import clsx from "clsx";
+
+type Props = {
+  path: string;
+  menus: BaseMenu[];
+}
+
+function getBreadcrumb(menuList: BaseMenu[], target: BaseMenu | null) {
+  if (!target) return [];
+
+  const path: BaseMenu[] = [];
+  let current: BaseMenu | null = target;
+
+  while (current) {
+    path.unshift(current);
+    current = menuList.find(m => m.id === current?.pid) || null;
+  }
+
+  return path;
+}
+
+export default function MenuBreadCrumb({ path , menus }: Props ) {
+
+  const currentMenu = menus.find(item => item.url === path);
+  const breadcrumb = getBreadcrumb(menus, currentMenu!);
+
+  return (
+    <nav className={styles.breadCrumb}>
+      {breadcrumb.map((item, idx) => {
+        return (
+          <span
+            className={clsx(idx === 0 && styles.isFirst, idx === breadcrumb.length - 1 && styles.isMatch)}
+            key={item.id}
+          >
+            { idx === 0 && <Image src={'/home-stroke.svg'} alt={'logo'} width={16} height={16}/> }
+            { item.name }
+            { idx < breadcrumb.length - 1 && <Image src={'/arrow-right.svg'} alt={'logo'} width={16} height={16}/> }
+        </span>
+        )
+      })}
+    </nav>
+  );
+}

@@ -1,0 +1,15 @@
+.input {
+  padding: 0 1.2rem;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  border: 1px solid #D5D5D6;
+  border-radius: 6px;
+  background: #fff;
+  width: 100%;
+}
+
+.disabled {
+  background: #EBEBEB;
+}

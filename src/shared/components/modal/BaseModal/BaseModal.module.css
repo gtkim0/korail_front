@@ -14,8 +14,7 @@
 .modal {
     background-color: white;
     border-radius: 8px;
-    padding: 24px;
-    min-width: 300px;
+    min-width: 40rem;
     max-width: 90%;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     position: relative;
@@ -23,8 +22,20 @@
 
 .header {
     display: flex;
+    padding: 1.2rem 1.6rem;
     justify-content: space-between;
     align-items: center;
+    align-self: stretch;
+    border-bottom: 1px solid #D5D5D6;
+}
+
+.title {
+    color: #2A2A2B;
+    font-size: 1.6rem;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 150%;
+    letter-spacing: 0;
 }
 
 .closeButton {

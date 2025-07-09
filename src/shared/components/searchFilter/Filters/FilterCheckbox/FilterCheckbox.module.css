@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+.label {
+  color: #363637;
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: 0;
+  white-space: nowrap;
+}

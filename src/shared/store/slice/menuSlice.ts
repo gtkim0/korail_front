@@ -50,6 +50,7 @@ export const createMenuSlice: StateCreator<
     state.menu = [...state.menu.filter(i=> i.id !== state.selectedMenu.id)]
   }),
   upMenu: () => set((state)=> {
+
     if(!state.selectedMenu || state.selectedMenu.order === 1) return;
 
     const siblings =

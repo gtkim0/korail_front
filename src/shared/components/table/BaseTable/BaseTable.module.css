@@ -2,7 +2,7 @@
   width: 100%;
   border-collapse: collapse;
   border: 1px solid #ddd;
-  font-size: 14px;
+  table-layout: fixed;
 }
 
 .tr {
@@ -11,15 +11,20 @@
 
 .th,
 .td {
-  padding: 12px 16px;
+  padding: .6rem 1.2rem;
   border: 1px solid #eee;
   text-align: left;
 }
 
 .th {
-  background-color: #f9f9f9;
+  background-color: #EBEBEB;
   font-weight: 600;
   cursor: pointer;
+  font-size: 14px;
+}
+
+.td {
+  font-size: 15px;
 }
 
 .tr:hover {
@@ -36,4 +41,12 @@
   margin-left: 6px;
   font-size: 12px;
   opacity: 1;
+}
+
+.cellContent {
+  max-height: 3rem; /* ✅ 원하는 최대 높이 설정 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* 또는 여러 줄 허용할 경우 제거 */
+  display: -webkit-box;
 }

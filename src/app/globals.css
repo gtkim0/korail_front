@@ -1,6 +1,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-pretendard: 'Pretendard Variable', sans-serif;
+  --color: #ccc;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,15 +20,27 @@ body {
   padding: 0;
 }
 
+/*@media (max-width: 1520px) {*/
+/*  html {*/
+/*    font-size: 50% !important;*/
+/*  }*/
+/*}*/
+
 html {
   font-size: 62.5%; /* 1rem = 10px */
 }
 
+button {
+  box-shadow: none;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
 
 body {
+  font-family: var(--font-pretendard);
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -42,8 +56,44 @@ a {
   text-decoration: none;
 }
 
+input {
+  outline: none;
+  border: none;
+}
+
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
+}
+
+.font {
+  letter-spacing: 0;
+  line-height: 150%;
+  font-style: normal;
+}
+
+.font_sm {
+  font-size: 1.3rem;
+}
+
+.font_md {
+  font-size: 1.4rem;
+}
+
+.font_lg {
+  font-size: 1.5rem;
+}
+
+.font_xl {
+  font-size: 1.7rem;
+}
+
+.text_bold {
+  font-weight: 700;
+}
+
+.primary {
+  color: #0061B8;
 }

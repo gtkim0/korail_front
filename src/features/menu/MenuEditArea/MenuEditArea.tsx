@@ -1,62 +1,69 @@
 'use client'
-import {useState} from "react";
+import {forwardRef, useImperativeHandle, useState} from "react";
 import MenuTree from "@/features/menu/MenuTree/MenuTree";
 import MenuEditForm from "@/features/menu/MenuEditForm/MenuEditForm";
 import MenuHeader from "@/features/menu/MenuHeader/MenuHeader";
 import {useGlobalStore} from "@/shared/store/globalStore";
-import {toastConfirm} from "@/shared/components/confirm/ToastConfirm/toastConfirm";
 import {MODAL_MESSAGES} from "@/shared/contants/modalMessage";
 import useExpand from "@/features/menu/hooks/useExpand";
+import ConfirmModal from "@/shared/components/modal/ConfirmModal/ConfirmModal";
+import useModal from "@/shared/hooks/useModal";
+import {ActionButtons} from "@/shared/components/actionButtons/ActionButtons";
+import styles from './MenuEditArea.module.css'
 
-export default function MenuEditArea () {
+export type MenuEditAreaRef = {
+  submit: () => void;
+};
 
-  const { menu, setMenu, selectedMenu, setSelectMenu, addMenu, delMenu, upMenu, downMenu } = useGlobalStore(state=> state);
-  const [menuTreeKey, setMenuTreeKey] = useState(0);
-  const { open } = useExpand({ storageKey: 'menuState', defaultExpandAll: false, id: selectedMenu.id });
+const MenuEditArea = forwardRef<MenuEditAreaRef>((_,ref) =>  {
+
+  const {
+    menu, setMenu, selectedMenu, setSelectMenu, addMenu, delMenu, upMenu, downMenu
+  } = useGlobalStore(state => state);
+
+  const { isOpen, open: setOpen, close: setClose } = useModal();
+
+  useImperativeHandle(ref, () => ({
+    submit: () => {
+      console.log('저장 로직 실행');
+      console.log('선택된 메뉴:', selectedMenu);
+      console.log('메뉴 전체:', menu);
+    }
+  }));
+
+  const { open } = useExpand({storageKey: 'menuState', defaultExpandAll: false, id: selectedMenu.id});
   const [addedMenuId, setAddedMenuId] = useState<string | null>(null);
-
-  const handleDeleteMenu = async () => {
-
-    const deleteMenuLabel = selectedMenu.name;
-
-    const delMenuHasChildren = menu.filter(i=> i.pid === selectedMenu.id)?.length !== 0;
-
-    const confirm = await toastConfirm(
-      delMenuHasChildren ? `${deleteMenuLabel} ${MODAL_MESSAGES.deleteMenuWithChildren.message}` : `${deleteMenuLabel} ${MODAL_MESSAGES.deleteMenu.message}`
-    )
-
-    confirm ? delMenu() : null;
-  }
 
   const handleAddMenu = () => {
     open();
     setAddedMenuId(selectedMenu.id);
-    setMenuTreeKey(prev => prev + 1); // MenuTree 강제 리렌더링 유도
     addMenu();
   }
 
   return (
-    <div style={{display:'flex', flexDirection:'column'}}>
-      <MenuHeader
-        disableCreate={selectedMenu.depth === 3}
-        onCreateMenu={handleAddMenu}
-        onDeleteMenu={handleDeleteMenu}
-        onUpMenu={upMenu}
-        onDownMenu={downMenu}
-      />
-      <div style={{display:'flex',gap:'2rem',padding:'2rem 3rem', height:'50vh'}}>
-        <div style={{minWidth: '20rem', height:'100%', overflow:'auto'}}>
-          <MenuTree
-            storageKey={'menuState'}
-            parentId={null}
-            data={menu}
-            defaultExpandAll={false}
-            selectedMenu={selectedMenu}
-            onSelect={setSelectMenu}
-            addedMenuId={addedMenuId}
+    <div className={styles.container}>
+      <div className={styles.contentArea}>
+        <div className={styles.leftPanel}>
+          <MenuHeader
+            disableCreate={selectedMenu.depth === 3}
+            onCreateMenu={handleAddMenu}
+            onDeleteMenu={setOpen}
+            onUpMenu={upMenu}
+            onDownMenu={downMenu}
           />
+          <div className={styles.treeArea}>
+            <MenuTree
+              storageKey={'menuState'}
+              parentId={null}
+              data={menu}
+              defaultExpandAll={false}
+              selectedMenu={selectedMenu}
+              onSelect={setSelectMenu}
+              addedMenuId={addedMenuId}
+            />
+          </div>
         </div>
-        <div style={{minWidth:'20rem'}}>
+        <div className={styles.rightPanel}>
           <MenuEditForm
             menu={menu}
             setMenu={setMenu}
@@ -64,6 +71,33 @@ export default function MenuEditArea () {
           />
         </div>
       </div>
+
+      <ConfirmModal
+        title={MODAL_MESSAGES.deleteMenuWithChildren.title}
+        isOpen={isOpen}
+        onCloseAction={setClose}
+        actionButtons={
+          <ActionButtons
+            buttons={[
+              {
+                label: '취소',
+                onClick: setClose,
+                variant: 'normal',
+              },
+              {
+                label: '삭제',
+                onClick: () => {},
+                variant: 'primary',
+                disabled: false,
+              },
+            ]}
+          />
+        }
+      >
+        {MODAL_MESSAGES.deleteMenuWithChildren.message}
+      </ConfirmModal>
     </div>
   )
-}
+});
+
+export default MenuEditArea;

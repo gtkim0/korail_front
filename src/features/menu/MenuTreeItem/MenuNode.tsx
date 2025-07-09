@@ -1,12 +1,14 @@
-'use client'
-import {useEffect, useState, useRef} from "react";
+'use client';
+
+import { useEffect, useState, useRef } from "react";
 import MenuTree from "@/features/menu/MenuTree/MenuTree";
-import styles from './MenuNode.module.css'
+import styles from './MenuNode.module.css';
 import Image from "next/image";
 import clsx from "clsx";
-import {BaseMenu} from "@/types/menu";
+import { BaseMenu } from "@/types/menu";
 import useExpand from '@/features/menu/hooks/useExpand';
-import isDescendant from '@/shared/utils/isDescendant'
+import isDescendant from '@/shared/utils/isDescendant';
+import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
 
 interface Props {
   item: BaseMenu;
@@ -20,15 +22,15 @@ interface Props {
 }
 
 export default function MenuNode(props: Props) {
-  const { item, data, defaultExpandAll, level, storageKey, selectedMenu, onSelect } = props;
 
-  const { isOpen , toggle, loadItem } = useExpand({
+  const { item, data, defaultExpandAll, level, storageKey, selectedMenu, onSelect } = props;
+  const { isOpen, toggle, loadItem } = useExpand({
     storageKey,
     defaultExpandAll,
     id: item.id
   });
 
-  const hasChildren = data.some(i => i.pid === item.id);
+  const hasChildren = data?.some(i => i.pid === item.id);
 
   const hasMounted = useRef(false);
   const [wrapperClass, setWrapperClass] = useState(styles.closed);
@@ -50,7 +52,7 @@ export default function MenuNode(props: Props) {
           setWrapperClass(styles.open);
         });
       } else {
-        setWrapperClass(styles.open); // 애니메이션 없이 바로 적용
+        setWrapperClass(styles.open);
       }
     } else {
       setWrapperClass(styles.closed);
@@ -60,34 +62,33 @@ export default function MenuNode(props: Props) {
   }, [isOpen, props.addedMenuId]);
 
   return (
-    <li className={clsx(styles.menu)}>
-      <div className={(selectedMenu?.id === item.id) ? styles.selected : ''} style={{display: 'flex', alignItems: 'center', gap: 4}}>
+    <li
+      className={clsx(
+        styles.menu
+      )}
+    >
+      <div className={selectedMenu?.id === item.id ? styles.selected : ''} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
         {hasChildren ? (
-          <span onClick={toggle} style={{cursor: 'pointer', userSelect: 'none'}}>
-            {isOpen ? '▼' : '▶'}
+          <span onClick={toggle} style={{ cursor: 'pointer', userSelect: 'none' }}>
+            <ImageWrapper width={16} height={16} src={isOpen ? '/tree_up.svg' : '/tree_down.svg'} />
           </span>
         ) : (
-          <span style={{width: '1em'}}/>
+          <span style={{ width: '1em' }} />
         )}
-        <div onClick={() => onSelect(item)} style={{display:'flex',gap:'.3rem', alignItems:'center', cursor:'pointer'}}>
-          {
-            (!item.component && hasChildren)
-              ? <Image src={'/folder-open.svg'} alt={''} width={20} height={20}/>
-              : (!item.component && !hasChildren)
-                ? <Image src={'/folder-close.svg'} alt={''} width={20} height={20}/>
-                : <Image src={'/file.svg'} alt={''} width={20} height={20}/>
-          }
+        <div onClick={() => onSelect(item)} style={{ display: 'flex', gap: '.3rem', alignItems: 'center', cursor: 'pointer', color:'#2A2A2B' }}>
+          {/*<Image src={*/}
+          {/*  (!item.component && hasChildren) ? '/folder-open.svg' :*/}
+          {/*    (!item.component && !hasChildren) ? '/folder-close.svg' : '/file.svg'*/}
+          {/*} alt={''} width={20} height={20} />*/}
           {item.name}
         </div>
       </div>
-
-      {/* 🔽 여기 수정됨 */}
       <div className={clsx(styles.childrenWrapper, wrapperClass)}>
         {isOpen && (
           <MenuTree
             onSelect={onSelect}
             selectedMenu={selectedMenu}
-            data={data}
+            data={data ?? []}
             parentId={item.id}
             defaultExpandAll={defaultExpandAll}
             level={level + 1}

@@ -33,21 +33,29 @@ export default function MenuTree(props: Props) {
   if (children.length === 0) return null;
 
   return (
-    <ul style={{paddingLeft: level * 6}}>
-      {children.map(child => (
-        <MenuNode
-          key={child.id}
-          item={child}
-          data={data}
-          defaultExpandAll={defaultExpandAll}
-          level={level}
-          storageKey={storageKey}
-          selectedMenu={selectedMenu}
-          onSelect={onSelect}
-          addedMenuId={addedMenuId}
-        />
-      ))}
-    </ul>
+    <div
+      style={{
+        padding:'.8rem 1.6rem',
+        display:'flex',
+        flex: 1
+      }}
+    >
+      <ul style={{paddingLeft: level * 6}}>
+        {children.map(child => (
+          <MenuNode
+            key={child.id}
+            item={child}
+            data={data}
+            defaultExpandAll={defaultExpandAll}
+            level={level}
+            storageKey={storageKey}
+            selectedMenu={selectedMenu}
+            onSelect={onSelect}
+            addedMenuId={addedMenuId}
+          />
+        ))}
+      </ul>
+    </div>
   );
 }
 

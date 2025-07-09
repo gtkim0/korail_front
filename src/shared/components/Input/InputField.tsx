@@ -1,44 +1,61 @@
-import React, { ChangeEvent } from 'react'
+import React, { useState } from 'react';
+import FormFieldWrapper from "@/shared/components/formFieldWrapper/FormFieldWrapper";
+import styles from './InputField.module.css';
+import clsx from "clsx";
 
 interface InputFieldProps {
   field: any;
   label: string;
   help?: string;
+  placeholder?: string;
   type?: string;
   disabled?: boolean;
-  updateMenuField?: (value: string)=> void;
+  required?: boolean;
+  updateMenuField?: (value: string) => void;
+  useCheckbox?: boolean;
+  defaultChecked?: boolean;
 }
 
-export const InputField = ({ field, label, help, disabled = false, type = 'text', updateMenuField }: InputFieldProps) => {
+export const InputField = ({
+                             field,
+                             label,
+                             help,
+                             placeholder = '',
+                             type = 'text',
+                             disabled = false,
+                             required = false,
+                             updateMenuField,
+                             useCheckbox = false,
+                             defaultChecked = false,
+                           }: InputFieldProps) => {
+  const [checked, setChecked] = useState(defaultChecked);
+  const meta = field.getMeta();
+
+  const isDisabled = disabled || (useCheckbox && !checked);
+
   return (
-    <div style={{ marginBottom: '1rem' }}>
-      <label>{label}</label>
+    <FormFieldWrapper
+      label={label}
+      required={required}
+      help={help}
+      error={meta.touchedErrors}
+      useCheckbox={useCheckbox}
+      checked={checked}
+      onCheckboxChange={setChecked}
+    >
       <input
-        disabled={disabled}
+        placeholder={placeholder}
+        disabled={isDisabled}
         type={type}
         value={field.getValue()}
         onBlur={field.handleBlur}
-        onChange={(e)=> {
+        onChange={(e) => {
           const value = e.target.value;
           field.handleChange(value);
-          updateMenuField && updateMenuField(value)
+          updateMenuField?.(value);
         }}
-        // onChange={(e) => field.handleChange(e.target.value)}
-        // onChange: {(e) => {
-        //   field.handleChange(e);
-        //   updateMenuField(selectedMenu!.id, { description: e.target.value });
-        // }},
-        style={{
-          padding: '0.4rem 0.6rem',
-          border: '1px solid #ccc',
-          borderRadius: 4,
-          width: '100%',
-        }}
+        className={clsx(styles.input, isDisabled && styles.disabled)}
       />
-      {help && <div style={{ fontSize: '0.85rem', color: '#666' }}>{help}</div>}
-      {field.getMeta().touchedErrors && (
-        <div style={{ color: 'red', fontSize: '0.8rem' }}>{field.getMeta().touchedErrors}</div>
-      )}
-    </div>
+    </FormFieldWrapper>
   );
 };

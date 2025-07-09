@@ -1,0 +1,30 @@
+.toggle {
+  background-color: #ccc;
+  border: none;
+  position: relative;
+  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.toggle.on {
+  background-color: #0061B8;
+}
+
+.toggle.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.thumb {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.2s ease-in-out;
+}
+
+.toggleLabel {
+  color: #363637;
+  font-size: 1.4rem;
+  line-height: 150%;
+  letter-spacing: 0;
+}

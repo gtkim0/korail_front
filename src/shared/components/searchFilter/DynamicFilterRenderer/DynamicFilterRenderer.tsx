@@ -1,0 +1,103 @@
+import FilterGroup from '../Filters/FilterGroup/FilterGroup';
+import FilterCheckbox from '../Filters/FilterCheckbox/FilterCheckbox'
+import FilterSelect from "../Filters/FilterSelect/FilterSelect";
+import ColorPicker from "@/shared/components/colorPicker/ColorPicker";
+import ToggleSwitch from "@/shared/components/toggleSwitch/ToggleSwitch";
+import DatePickerRange from "@/shared/components/DatePicker/DatePickerRange";
+
+type FilterSchema = {
+  type: string;
+  key: string;
+  label: string;
+  options?: { key: string, label: string }[];
+}
+
+
+export function DynamicFilterRenderer({schema, value, onChange}: {
+  schema: FilterSchema[];
+  // schema: any;
+  value: Record<string, any>;
+  onChange: (next: Record<string, any>) => void;
+}) {
+  const handleChange = (key: string, val: any) => {
+    onChange({...value, [key]: val});
+  };
+
+  return (
+    <div style={{display: 'flex', gap:'3.6rem', padding:'1.6rem',background:'#EBEBEB', borderTop:'1px solid #D5D5D6'}}>
+      {schema.map(filter => (
+        <FilterGroup key={filter.key}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', justifyContent:'space-between', height:'100%' }}>
+            <div style={{ fontSize: '1.4rem', fontWeight: 'bold' }}>{filter.label}</div>
+
+            <div style={{ display: 'flex', gap: '1rem' }}>
+              {filter.type === 'checkbox' && (
+                <>
+                  {/* 전체 선택 옵션 */}
+                  <FilterCheckbox
+                    key="all"
+                    label="전체"
+                    checked={value[filter.key]?.length === filter.options?.length}
+                    onChange={() => {
+                      const allKeys = filter.options?.map(opt => opt.key) || [];
+                      const isAllSelected = value[filter.key]?.length === allKeys.length;
+                      handleChange(filter.key, isAllSelected ? [] : allKeys);
+                    }}
+                  />
+
+                  {/* 실제 옵션들 */}
+                  {filter.options?.map(opt => (
+                    <FilterCheckbox
+                      key={opt.key}
+                      label={opt.label}
+                      checked={value[filter.key]?.includes(opt.key)}
+                      onChange={() => {
+                        const prev = value[filter.key] || [];
+                        const next = prev.includes(opt.key)
+                          ? prev.filter((v: string) => v !== opt.key)
+                          : [...prev, opt.key];
+                        handleChange(filter.key, next);
+                      }}
+                    />
+                  ))}
+                </>
+              )}
+
+              {filter.type === 'switch' && (
+                <ToggleSwitch
+                  width={30}
+                  label={value[filter.key] === 'ON' ? 'ON' : 'OFF'}
+                  checked={value[filter.key] === 'ON'}
+                  onChange={(checked) => handleChange(filter.key, checked ? 'ON' : 'OFF')}
+                />
+              )}
+
+              {filter.type === 'select' && (
+                <FilterSelect
+                  options={filter.options!}
+                  value={value[filter.key] || ''}
+                  onChange={(e) => handleChange(filter.key, e.target.value)}
+                />
+              )}
+
+              {filter.type === 'dateRange' && (
+                // <FilterDateRange
+                //   value={value[filter.key]}
+                //   onChange={(val) => handleChange(filter.key, val)}
+                // />
+                <DatePickerRange />
+              )}
+
+              {filter.type === 'colorPicker' && (
+                <ColorPicker
+                  color={value[filter.key] || '#000000'}
+                  onChangeAction={(val: string) => handleChange(filter.key, val)}
+                />
+              )}
+            </div>
+          </div>
+        </FilterGroup>
+      ))}
+    </div>
+  );
+}

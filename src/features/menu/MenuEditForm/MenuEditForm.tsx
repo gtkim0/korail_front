@@ -3,6 +3,7 @@ import { useForm } from '@tanstack/react-form';
 import { InputField } from "@/shared/components/Input/InputField";
 import { useEffect } from "react";
 import {BaseMenu} from "@/types/menu";
+import FormFieldWrapper from "@/shared/components/formFieldWrapper/FormFieldWrapper";
 
 interface Props {
   selectedMenu: BaseMenu;
@@ -45,10 +46,15 @@ export default function MenuEditForm({selectedMenu, setMenu, menu}: Props) {
     }
   }, [selectedMenu]);
 
-  console.log(menu);
-
   return (
     <form
+      style={{
+        display:'flex',
+        flexDirection:'column',
+        gap:'3.6rem',
+        flex: 1,
+        alignSelf:'stretch'
+      }}
       onSubmit={(e) => {
         e.preventDefault();
         form.handleSubmit();
@@ -57,27 +63,31 @@ export default function MenuEditForm({selectedMenu, setMenu, menu}: Props) {
       {form.Field({
         name: 'pid',
         children: (field) => (
-          <InputField disabled={true} field={field} label="상위메뉴" help="대분류를 입력하세요."/>
+         <InputField disabled={true} required={true} field={field} label={'상위 메뉴명'} />
         ),
       })}
 
       {form.Field({
         name: 'name',
         children: (field) => (
-          <InputField updateMenuField={updateMenuField} field={field} label="메뉴 이름" help="중분류를 입력하세요." />
+          <InputField updateMenuField={updateMenuField} required={true} label={'현재 메뉴명'} field={field} />
         ),
       })}
 
       {form.Field({
         name: 'description',
         children: (field) => (
-          <InputField updateMenuField={updateDesField} field={field} label="메뉴 설명" help="메뉴 설명을 입력하세요." />
+          <InputField updateMenuField={updateDesField} label={'메뉴 도움말'} help={'메뉴 마우스 오버시 풍선도움말을 제공합니다.'} field={field} />
         ),
       })}
 
-      <button type="submit" style={{ marginTop: '1rem' }}>
-        저장
-      </button>
+      {form.Field({
+        name: 'description',
+        children: (field) => (
+          <InputField updateMenuField={updateDesField} useCheckbox defaultChecked={false} required={true} label={'경로 사용'} help={'메뉴 마우스 오버시 풍선도움말을 제공합니다.'} field={field} />
+        ),
+      })}
+
     </form>
   );
 }

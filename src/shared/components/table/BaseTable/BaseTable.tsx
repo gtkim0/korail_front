@@ -4,10 +4,9 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  OnChangeFn, RowSelectionState, SortingState,
+  OnChangeFn, RowSelectionState, SortingState,getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useState, useEffect } from 'react';
 import styles from './BaseTable.module.css';
 
 interface TableProps<T extends object> {
@@ -16,19 +15,21 @@ interface TableProps<T extends object> {
   sorting: SortingState;
   rowSelection: RowSelectionState;
   onRowSelectionChange: OnChangeFn<RowSelectionState>;
-  onSortingChange: OnChangeFn<SortingState>; // ✅ 이걸로 변경
+  onSortingChange: OnChangeFn<SortingState>;
   onRowSelectChange?: (selectedRows: T[]) => void;
+  setPagination?: any;
 }
 
 export default function Table<T extends object>({
-                                                  columns,
-                                                  data,
-                                                  sorting,
-                                                  rowSelection,
-                                                  onRowSelectionChange,
-                                                  onSortingChange,
-                                                  onRowSelectChange,
-                                                }: TableProps<T>) {
+  columns,
+  data,
+  sorting,
+  rowSelection,
+  onRowSelectionChange,
+  onSortingChange,
+  onRowSelectChange,
+  setPagination
+}: TableProps<T>) {
 
   const table = useReactTable({
     data,
@@ -41,6 +42,8 @@ export default function Table<T extends object>({
     onRowSelectionChange,
     enableRowSelection: true,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    onPaginationChange: setPagination,
     enableSorting: true,
   });
 
@@ -50,7 +53,7 @@ export default function Table<T extends object>({
   }
 
   return (
-    <div className="w-full overflow-x-auto">
+    <div style={{flex: 1}}>
       <table className={styles.table}>
         <thead>
         {table.getHeaderGroups().map(headerGroup => (
@@ -82,7 +85,9 @@ export default function Table<T extends object>({
           <tr key={row.id} className={styles.tr}>
             {row.getVisibleCells().map(cell => (
               <td key={cell.id} className={styles.td}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                <div className={styles.cellContent}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </div>
               </td>
             ))}
           </tr>

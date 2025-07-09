@@ -1,5 +1,6 @@
 export const MODAL_TITLE = {
-  editMenu: '메뉴정보 수정(등록)'
+  editMenu: '메뉴정보 등록/수정',
+  CongestionAddAndEdit: '혼잡도 단계 등록/수정'
 }
 
 export const MODAL_MESSAGES = {
@@ -17,10 +18,17 @@ export const MODAL_MESSAGES = {
   },
 
   deleteMenuWithChildren: {
-    message : '해당 메뉴와 모든 하위 메뉴가 삭제됩니다. 계속 진행하시겠습니까?'
+    title: '메뉴 삭제',
+    message: (
+      <>
+        선택한 메뉴를 삭제하시겠습니까?
+        <br/>
+        선택한 메뉴의 하위 뎁스가 같이 삭제됩니다.
+      </>
+    ),
   },
   deleteMenu: {
-    message : '해당 메뉴를 삭제하시겠습니까?'
+    message: '해당 메뉴를 삭제하시겠습니까?'
   }
   // ...
 } as const;

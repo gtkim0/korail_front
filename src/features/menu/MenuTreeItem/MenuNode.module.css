@@ -1,19 +1,25 @@
 .menu {
   list-style: none;
   margin: 0;
-  padding: 0 0 0 1rem;
+  /*padding: 0 0 0 1rem;*/
   position: relative;
+  padding: .6rem 0;
+  align-items: center;
+  gap: .6rem;
+  align-self: stretch;
+  border-radius: 4px;
+  background: #ffffff;
 }
 
-.menu::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0.4rem;
-  bottom: 0;
-  width: 1px;
-  background-color: #ddd;
-}
+/*.menu::before {*/
+/*  content: '';*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  left: 0.4rem;*/
+/*  bottom: 0;*/
+/*  width: 1px;*/
+/*  background-color: #ddd;*/
+/*}*/
 
 .node {
   display: flex;
@@ -66,4 +72,14 @@
 .childrenWrapper.open {
   max-height: 1000px; /* 충분히 큰 값 */
   opacity: 1;
+}
+
+.dropBefore {
+  border-top: 2px solid #3b82f6; /* 파란 실선 */
+}
+.dropAfter {
+  border-bottom: 2px solid #3b82f6;
+}
+.dropInside {
+  background-color: rgba(59, 130, 246, 0.1); /* 연한 파랑 배경 */
 }
