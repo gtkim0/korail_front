@@ -50,8 +50,8 @@ export default function PortalHeader() {
               alignItems: 'center'
             }}
           >
-            {/*<div style={{display:'flex', gap:'2.4rem', height: '100%'}}>*/}
-            <div style={{display:'flex', gap: 'clamp(0.8rem, 2vw, 2.4rem)', height: '100%'}}>
+            <div style={{display:'flex', gap:'2.4rem', height: '100%'}}>
+            {/*<div style={{display:'flex', gap: 'clamp(0.8rem, 2vw, 2.4rem)', height: '100%'}}>*/}
               {
                 renderMenu.map(i=>
                   <PortalHeaderItem onClick={handleMenuClick} key={i.id} item={i}/>

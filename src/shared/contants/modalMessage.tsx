@@ -1,6 +1,7 @@
 export const MODAL_TITLE = {
   editMenu: '메뉴정보 등록/수정',
-  CongestionAddAndEdit: '혼잡도 단계 등록/수정'
+  CongestionAddAndEdit: '혼잡도 단계 등록/수정',
+  Banner: '배너 정보 등록/수정'
 }
 
 export const MODAL_MESSAGES = {

@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from 'react-hot-toast';
 import "./globals.css";
 import MenuLoader from "@/shared/components/menu/MenuLoader";
 import RQProviders from "@/shared/provider/RQProvider";
 import localFont from "next/font/local";
+import { cookies } from 'next/headers';
 
 const pretendard = localFont({
   src: '../../public/fonts/pretendard/PretendardVariable.woff2',
   display: 'swap',
-  // weight: '100 900',
   variable: '--font-pretendard'
 })
 
@@ -23,6 +22,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
   return (
     <html lang="en">
       <body className={`${pretendard.variable} antialiased`}>

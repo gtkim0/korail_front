@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server';
-import {dummyMenu} from "@/app/pages/Menu";
+import {dummyMenu} from "@/data/dummyMenu";
 
 export async function GET() {
   try {
     // const menus = await getMenus();
-
     const menus = dummyMenu;
 
     return NextResponse.json(menus);

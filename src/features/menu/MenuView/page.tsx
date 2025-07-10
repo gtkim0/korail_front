@@ -31,13 +31,6 @@ export default function MenuView ({initialMenus}: { initialMenus: BaseMenu[]}) {
   const editAreaRef = useRef<MenuEditAreaRef>(null)
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const filterOptions: FilterOption[] = menuColumns
-    .filter(isAccessorColumn)
-    .map(col => ({
-      key: col.accessorKey,
-      label: col.header,
-    }));
-
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
@@ -69,7 +62,7 @@ export default function MenuView ({initialMenus}: { initialMenus: BaseMenu[]}) {
   }, []);
 
   return (
-    <div>
+    <>
       <SearchFilter
         onChange={(value)=> {}}
         onAdd={open}
@@ -105,6 +98,6 @@ export default function MenuView ({initialMenus}: { initialMenus: BaseMenu[]}) {
       >
         <MenuEditArea ref={editAreaRef}/>
       </BaseModal>
-    </div>
+    </>
   )
 }

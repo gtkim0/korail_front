@@ -6,10 +6,12 @@
   border-radius: 6px;
   border: 1px solid #D5D5D6;
   background: #fff;
-  height: 3.6rem;
+  min-height: 3.6rem;
+  height: 100%;
   align-items: center;
   position: relative;
   cursor: pointer;
+  width: 100%;
 }
 
 .colorLabel {

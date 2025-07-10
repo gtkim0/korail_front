@@ -8,7 +8,12 @@ export default function MenuLoader() {
   useEffect(() => {
     const fetchMenu = async () => {
       const res = await fetch('/api/menus');
+
+      console.log(res);
+
       const data = await res.json();
+
+      console.log(data);
       setRouteMenu(data);
     };
 

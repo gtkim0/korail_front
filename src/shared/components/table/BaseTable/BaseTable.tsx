@@ -53,7 +53,7 @@ export default function Table<T extends object>({
   }
 
   return (
-    <div style={{flex: 1}}>
+    <div style={{overflowX:'auto', width:'100%'}}>
       <table className={styles.table}>
         <thead>
         {table.getHeaderGroups().map(headerGroup => (

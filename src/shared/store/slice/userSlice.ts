@@ -1,8 +1,14 @@
 import { StateCreator } from 'zustand';
 
-export interface UserSlice {
+interface User {
+  id: number;
   username: string;
-  setUsername: (name: string) => void;
+}
+
+export interface UserSlice {
+  user: User | null;
+  setUser: (user: User | null) => void;
+  clearUser: ()=> void;
 }
 
 export const createUserSlice: StateCreator<
@@ -12,7 +18,8 @@ export const createUserSlice: StateCreator<
   UserSlice
 > = (set) => ({
   username: '',
-  setUsername: (name) => set((state) => {
-    state.username = name;
+  setUser: (user) => set((state) => {
+    state.user = user;
   }),
+  clearUser: () => set({ user: null })
 });

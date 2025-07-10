@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 import styles from './PortalLayout.module.css';
 import PortalSidebar from "@/features/lyaouts/PortalLayout/PortalSidebar/PortalSidebar";
-import {dummyMenu} from "@/app/pages/Menu";
 import PortalHeader from "@/features/lyaouts/PortalLayout/PortalHeader/PortalHeader";
 import PortalFooter from "@/features/lyaouts/PortalLayout/PortalFooter/PortalFooter";
+import {dummyMenu} from "@/data/dummyMenu";
 
 interface Props {
   children: ReactNode;

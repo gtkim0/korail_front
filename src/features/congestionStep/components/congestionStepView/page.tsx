@@ -22,15 +22,15 @@ import MenuEditArea, {type MenuEditAreaRef} from "@/features/menu/MenuEditArea/M
 import CongestionAddAndEditModal
   from "@/features/congestionStep/components/CongestionAddAndEditModal/CongestionAddAndEditModal";
 
-export default function CongestionStepView () {
+export default function CongestionStepView() {
 
-  const { isOpen, open, close } = useModal();
+  const {isOpen, open, close} = useModal();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const editAreaRef = useRef<MenuEditAreaRef>(null)
 
-  const [ filter, setFilter ] = useState({
-    step: ['1','2','3'],
+  const [filter, setFilter] = useState({
+    step: ['1', '2', '3'],
     alarm: 'ON',
     guide: 'ON'
   })
@@ -51,7 +51,7 @@ export default function CongestionStepView () {
     loading,
   } = useSorting<CongestionStep>({
     defaultSortKey: 'name',
-    fetchFn: async ({ sortKey, sortOrder }) => {
+    fetchFn: async ({sortKey, sortOrder}) => {
       const res = await fetch(`/api/menus?sort=${sortKey}&order=${sortOrder}`);
       return res.json();
     },
@@ -74,7 +74,8 @@ export default function CongestionStepView () {
         type={'congestionStep'}
         value={filter}
       />
-      <TableFilter />
+      <TableFilter/>
+
       <Table
         columns={withRowSelection(congestionStepColumns)}
         data={dummyCongestionData}
@@ -88,15 +89,15 @@ export default function CongestionStepView () {
         pageIndex={pagination.pageIndex}
         pageSize={pagination.pageSize}
         pageCount={Math.ceil(dummyMenuData.length / pagination.pageSize)} // 또는 서버에서 받은 totalPages
-        setPageIndex={(index) => setPagination(prev => ({ ...prev, pageIndex: index }))}
-        setPageSize={(size) => setPagination(prev => ({ ...prev, pageSize: size }))}
+        setPageIndex={(index) => setPagination(prev => ({...prev, pageIndex: index}))}
+        setPageSize={(size) => setPagination(prev => ({...prev, pageSize: size}))}
       />
       <BaseModal
         title={MODAL_TITLE.CongestionAddAndEdit}
         maxWidth={'lg'}
         isOpen={isOpen}
         onCloseAction={close}
-        footer={<BaseModalFooter editAreaRef={editAreaRef} close={close} />}
+        footer={<BaseModalFooter editAreaRef={editAreaRef} close={close}/>}
       >
         <CongestionAddAndEditModal selectedItem={{}}/>
       </BaseModal>

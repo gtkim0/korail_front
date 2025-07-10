@@ -1,5 +1,6 @@
 import {menuColumns} from "@/features/menu/columns/menuColumns";
 import {isAccessorColumn} from "@/shared/utils/isAccessorColumn";
+import {BannerColumns} from "@/features/banner/columns/BannerColumns";
 
 type FilterSchema = {
   type: string;
@@ -47,7 +48,33 @@ export const filterSchemas: Record<string, FilterSchema[]>= {
     //   label: '기간',
     // },
   ],
-  // banner: [],
+  banner: [
+    {
+      type: 'checkbox',
+      key: 'category',
+      label: '검색어 필터',
+      options: BannerColumns
+        .filter(isAccessorColumn)
+        .map(col => ({
+          key: col.accessorKey,
+          label: col.header,
+        }))
+    },
+    {
+      type: 'dateRange',
+      key: 'range',
+      label: '기간',
+    },
+    {
+      type: 'switch',
+      key: 'useYn',
+      label: '사용유무',
+      options: [
+        {key: 'ON', label: 'ON'},
+        {key: 'OFF', label: 'OFF'}
+      ]
+    },
+  ],
   congestionStep: [
     {
       type: 'checkbox',

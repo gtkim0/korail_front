@@ -6,7 +6,7 @@ interface Props {
 
 export const BaseModalFooter = (props: Props) => {
 
-  const { editAreaRef } = props;
+  const { editAreaRef, close } = props;
 
   return (
     <div className={styles.footer}>

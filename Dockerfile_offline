@@ -1,0 +1,24 @@
+FROM node:18-alpine
+
+# corepack(pnpm) 활성화
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+WORKDIR /app
+
+# 1. 패키지 정의 복사
+COPY package.json pnpm-lock.yaml ./
+
+# 2. 캐시 복사
+COPY .pnpm-store ./.pnpm-store
+COPY node_modules ./node_modules
+
+# 3. 앱 복사 및 빌드
+COPY . .
+
+# pnpm store 경로 명시
+ENV PNPM_STORE_PATH=./.pnpm-store
+
+RUN pnpm build
+
+EXPOSE 3000
+CMD ["pnpm", "start"]

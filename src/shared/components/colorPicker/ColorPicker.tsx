@@ -3,7 +3,7 @@ import styles from './ColorPicker.module.css';
 import {useState, useRef, useEffect, CSSProperties} from 'react';
 import dynamic from 'next/dynamic';
 
-const SketchPicker = dynamic(() => import('react-color').then(mod => mod.SketchPicker), {
+const SketchPicker = dynamic(() => import('react-color').then(mod => mod.ChromePicker), {
   ssr: false,
 });
 
@@ -19,18 +19,22 @@ export default function ColorPicker ({color, onChangeAction}: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        pickerRef.current &&
-        !pickerRef.current.contains(e.target as Node) &&
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
-      ) {
-        setShowPicker(false);
-      }
+    const handleClickOutside = (e: PointerEvent) => {
+      // setTimeout으로 SketchPicker 내부 클릭 DOM이 완전히 마운트되기를 기다림
+      setTimeout(() => {
+        if (
+          pickerRef.current &&
+          !pickerRef.current.contains(e.target as Node) &&
+          containerRef.current &&
+          !containerRef.current.contains(e.target as Node)
+        ) {
+          setShowPicker(false);
+        }
+      }, 0);
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+
+    document.addEventListener('pointerdown', handleClickOutside);
+    return () => document.removeEventListener('pointerdown', handleClickOutside);
   }, []);
 
   return (
@@ -60,7 +64,7 @@ export default function ColorPicker ({color, onChangeAction}: Props) {
       />
 
       {showPicker && (
-        <div ref={pickerRef} style={{ position: 'absolute', top: '3rem', width:'100%', left: 0, zIndex: 100 }}>
+        <div onClick={(e)=> e.stopPropagation()} ref={pickerRef} style={{ position: 'absolute', top: '3rem', width:'100%', left: 0, zIndex: 100 }}>
           <SketchPicker
             color={color}
             onChange={(updatedColor) => onChangeAction(updatedColor.hex)}

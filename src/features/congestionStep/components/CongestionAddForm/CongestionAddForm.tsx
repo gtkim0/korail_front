@@ -2,6 +2,7 @@ import {useForm} from "@tanstack/react-form";
 import {InputField} from "@/shared/components/Input/InputField";
 import ToggleSwitch from "@/shared/components/toggleSwitch/ToggleSwitch";
 import FormFieldWrapper from "@/shared/components/formFieldWrapper/FormFieldWrapper";
+import ColorPicker from "@/shared/components/colorPicker/ColorPicker";
 
 type Props = {
   selectedItem: {
@@ -58,7 +59,11 @@ export default function CongestionAddForm({selectedItem}: Props) {
       {form.Field({
         name: 'color',
         children: (field) => (
-          <InputField placeholder={'FF0000'} required={true} field={field} label={'색상'}/>
+          <FormFieldWrapper
+            label={'색상'}
+          >
+            <ColorPicker color={'#FF0000'} onChangeAction={()=> {}}/>
+          </FormFieldWrapper>
         ),
       })}
 
@@ -73,7 +78,7 @@ export default function CongestionAddForm({selectedItem}: Props) {
           children: (field) => (
             // <InputField placeholder={'FF0000'} required={true} field={field} label={'색상'} />
             <FormFieldWrapper
-              label={'알람발생'}
+              label={'알림발생'}
               required={true}
             >
               <ToggleSwitch label={'off'} checked={true} onChange={() => {
