@@ -1,19 +1,28 @@
+@use '@/shared/styles/media' as *;
+
 .table {
   width: 100%;
   border-collapse: collapse;
   border: 1px solid #ddd;
   table-layout: auto;
-  min-width: 1200px;
+  min-width: 120rem;
+  white-space: nowrap;
+  border-radius: 6px;
+  overflow: hidden;
+  @include mobile {
+    min-width: 80rem;
+  }
 }
 
 .tr {
   background-color: #fff;
+  border-radius: 6px;
 }
 
 .th,
 .td {
   padding: .6rem 1.2rem;
-  border: 1px solid #eee;
+  border-bottom: 1px solid #eee;
   text-align: left;
 }
 
@@ -21,11 +30,29 @@
   background-color: #EBEBEB;
   font-weight: 600;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 1.4rem;
+
+  &:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+  }
+
+  &:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+}
+
+thead tr:last-child .th {
+  border-bottom: none;
+}
+
+tbody tr:first-child .td {
+  border-top: none;
 }
 
 .td {
-  font-size: 15px;
+  font-size: 1.5rem;
 }
 
 .tr:hover {
@@ -33,14 +60,14 @@
 }
 
 .checkbox {
-  width: 16px;
-  height: 16px;
+  width: 1.6rem;
+  height: 1.6rem;
   cursor: pointer;
 }
 
 .sortIcon {
   margin-left: 6px;
-  font-size: 12px;
+  font-size: 1.2rem;
   opacity: 1;
 }
 

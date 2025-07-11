@@ -1,0 +1,54 @@
+.container {
+  display: flex;
+  padding: 1.6rem 0;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+
+  .wrapper {
+    display: flex;
+    padding-top: 1.6rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    align-self: stretch;
+    border-top: 1px solid #D5D5D6;
+
+    .title {
+      color: #2A2A2B;
+      font-size: 1.4rem;
+      font-weight: 600;
+      display: flex;
+      padding: 0 1.6rem;
+      align-items: flex-start;
+    }
+
+    .routeArea {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      align-self: stretch;
+
+      .titleArea {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        .title {
+          display: flex;
+          gap: .2rem;
+          align-items: center;
+
+          .star {
+            color: #F73750
+          }
+
+          span {
+            color: #363637;
+            font-size: 1.3rem;
+          }
+        }
+      }
+    }
+  }
+}
+

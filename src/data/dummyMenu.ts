@@ -16,29 +16,29 @@ const congestionSecondMenu = [
 ]
 const routeSecondMenu = [
   { id: '10', pid: '3', url: '', component: '', order: 2, depth: 2, name: '노선도', description: '' },
-  { id: '29', pid: '10', url: '/basic/congestion/subway', component: '', order: 1, depth: 3, name: '노선도', description: '' },
+  { id: '29', pid: '10', url: '/basic/congestion/subway', component: 'RouteMap', order: 1, depth: 3, name: '노선도', description: '' },
 ]
 const trainSecondMenu = [
   { id: '11', pid: '3', url: '', component: '', order: 3, depth: 2, name: '열차정보', description: '' },
-  { id: '30', pid: '11', url: '/basic/train/operation', component: '', order: 1, depth: 3, name: '운행정보', description: '' },
-  { id: '31', pid: '11', url: '/basic/train/programming', component: '', order: 2, depth: 3, name: '편성정보', description: '' },
-  { id: '32', pid: '11', url: '/basic/train/carriage', component: '', order: 3, depth: 3, name: '객차정보', description: '' },
-  { id: '33', pid: '11', url: '/basic/train/dispatch', component: '', order: 4, depth: 3, name: '배차주기', description: '' },
+  { id: '30', pid: '11', url: '/basic/train/operation', component: 'OperationInfo', order: 1, depth: 3, name: '운행정보', description: '' },
+  { id: '31', pid: '11', url: '/basic/train/programming', component: 'ProgrammingInfo', order: 2, depth: 3, name: '편성정보', description: '' },
+  { id: '32', pid: '11', url: '/basic/train/carriage', component: 'CarriageInfo', order: 3, depth: 3, name: '객차정보', description: '' },
+  { id: '33', pid: '11', url: '/basic/train/dispatch', component: 'BatchCycle', order: 4, depth: 3, name: '배차주기', description: '' },
 ]
 const subwayStationSecondMenu = [
   { id: '12', pid: '3', url: '', component: '', order: 4, depth: 2, name: '역사정보', description: '' },
-  { id: '34', pid: '12', url: '/basic/subway/info', component: '', order: 1, depth: 3, name: '역사정보', description: '' },
-  { id: '35', pid: '12', url: '/basic/subway/area', component: '', order: 2, depth: 3, name: '구역정보', description: '' },
-  { id: '36', pid: '12', url: '/basic/subway/evacuationInfo', component: '', order: 3, depth: 3, name: '대피안내정보', description: '' },
+  { id: '34', pid: '12', url: '/basic/subway/info', component: 'HistoryInfo', order: 1, depth: 3, name: '역사정보', description: '' },
+  { id: '35', pid: '12', url: '/basic/subway/area', component: 'ZoneInfo', order: 2, depth: 3, name: '구역정보', description: '' },
+  { id: '36', pid: '12', url: '/basic/subway/evacuationInfo', component: 'EvacuationInfo', order: 3, depth: 3, name: '대피안내정보', description: '' },
 ]
 const specialSecondMenu = [
   { id: '13', pid: '3', url: '', component: '', order: 5, depth: 2, name: '특수 기간 정보', description: '' },
-  { id: '37', pid: '13', url: '/basic/special/info', component: '', order: 1, depth: 3, name: '특수 기간 정보', description: '' },
+  { id: '37', pid: '13', url: '/basic/special/info', component: 'SpecialPeriodInfo', order: 1, depth: 3, name: '특수 기간 정보', description: '' },
 ]
 const measurementSecondMenu = [
   { id: '14', pid: '3', url: '', component: '', order: 6, depth: 2, name: '계측장치정보', description: '' },
-  { id: '38', pid: '14', url: '/basic/measurement/manage', component: '', order: 1, depth: 3, name: '계측장치정보', description: '' },
-  { id: '39', pid: '14', url: '/basic/measurement/video', component: '', order: 2, depth: 3, name: '조건영상저장', description: '' },
+  { id: '38', pid: '14', url: '/basic/measurement/manage', component: 'InstrumentationInfo', order: 1, depth: 3, name: '계측장치정보', description: '' },
+  { id: '39', pid: '14', url: '/basic/measurement/video', component: 'SaveConditionalImage', order: 2, depth: 3, name: '조건영상저장', description: '' },
 ]
 const menuSecondMenu = [
   { id: '15', pid: '3', url: '', component: '', order: 7, depth: 2, name: '메뉴정보', description: '' },

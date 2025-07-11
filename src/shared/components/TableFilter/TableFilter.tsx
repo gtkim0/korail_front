@@ -17,13 +17,14 @@ export default function TableFilter () {
           <span className={'primary'}> 24개</span>
         </span>
 
-        <span className={styles.line}> | </span>
+        <span className={styles.line}> &nbsp; </span>
 
         <div
           style={{
             display:'flex',
             gap:'.2rem',
-            alignItems:'center'
+            alignItems:'center',
+            cursor:'pointer'
           }}
         >
           <span className={clsx('font','font_md')}>10개씩 보기</span>

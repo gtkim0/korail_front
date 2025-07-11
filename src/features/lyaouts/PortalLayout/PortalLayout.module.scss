@@ -1,0 +1,22 @@
+@use '@/shared/styles/media' as *;
+
+.portalLayout {
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  /*padding: 3.2rem 4rem 0;*/
+  /*align-items: stretch;*/
+}
+
+.portalContent {
+  flex: 1;
+  padding: 4rem 6.4rem;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+
+  @include desktop {
+    height: auto;
+  }
+}

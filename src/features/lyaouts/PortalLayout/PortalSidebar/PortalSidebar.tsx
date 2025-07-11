@@ -1,5 +1,5 @@
 'use client'
-import styles from './PortalSidebar.module.css';
+import styles from './PortalSidebar.module.scss';
 import {useGlobalStore} from "@/shared/store/globalStore";
 import {BaseMenu} from "@/types/menu";
 import PortalMenuItem from "@/features/lyaouts/PortalLayout/PortalSidebar/PortalMenuItem/PortalMenuItem";

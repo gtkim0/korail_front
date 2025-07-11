@@ -1,7 +1,8 @@
-import { forwardRef, useImperativeHandle, useRef } from 'react';
+import {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import { useForm } from '@tanstack/react-form';
 import {InputField} from "@/shared/components/Input/InputField";
 import FormFieldWrapper from "@/shared/components/formFieldWrapper/FormFieldWrapper";
+import {FileInput} from "@/shared/components/fileInput/FileInput";
 
 export type BannerAddFormRef = {
   submit: () => void;
@@ -9,6 +10,7 @@ export type BannerAddFormRef = {
 
 const BannerAddForm = forwardRef<BannerAddFormRef>((_, ref) => {
 
+  const [ file, setFile ] = useState<File | null>(null);
   const form = useForm({
     defaultValues: {
       name: '',
@@ -23,11 +25,11 @@ const BannerAddForm = forwardRef<BannerAddFormRef>((_, ref) => {
     },
   });
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const handleFileChange = (file: File | null) => {
+    console.log(file);
     if (file) {
+      setFile(file);
       form.setFieldValue('image', file.name);
     }
   };
@@ -50,50 +52,7 @@ const BannerAddForm = forwardRef<BannerAddFormRef>((_, ref) => {
         name: 'image',
         children: (field) => (
           <FormFieldWrapper label={'이미지명'}>
-            <div style={{ display: 'flex', width: '100%', alignItems: 'center', gap: '1rem' }}>
-              <div
-                style={{
-                  flex: 1,
-                  border: '1px solid #D5D5D6',
-                  borderRadius: '4px',
-                  background: '#fff',
-                  padding: '0 1.2rem',
-                  height: '3.6rem',
-                  fontSize: '1.5rem',
-                  color: '#77777A',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}
-              >
-                {field.state.value || '이미지 파일을 첨부해 주세요.'}
-              </div>
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                style={{
-                  display: 'flex',
-                  height: '3.2rem',
-                  padding: '0 1rem',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  minWidth: '6.4rem',
-                  borderRadius: '4px',
-                  border: '1px solid #5EB2FE',
-                  background: '#E2F0FE',
-                  color: '#00417A',
-                  fontSize: '1.4rem'
-                }}
-              >
-                파일선택
-              </button>
-              <input
-                ref={fileInputRef}
-                type="file"
-                style={{ display: 'none' }}
-                onChange={handleFileChange}
-                accept="image/*"
-              />
-            </div>
+            <FileInput value={file?.name || ''} onChange={handleFileChange} />
           </FormFieldWrapper>
         )
       })}

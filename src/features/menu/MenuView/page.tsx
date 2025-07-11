@@ -17,6 +17,7 @@ import TableFilter from "@/shared/components/TableFilter/TableFilter";
 import type { MenuEditAreaRef } from "@/features/menu/MenuEditArea/MenuEditArea";
 import {BaseModalFooter} from "@/shared/components/modal/BaseModal/BaseModalFooter/BaseModalFooter";
 import {isAccessorColumn} from "@/shared/utils/isAccessorColumn";
+import {PageType} from "@/shared/enum/PageType";
 
 type FilterOption = {
   key: string;
@@ -67,7 +68,7 @@ export default function MenuView ({initialMenus}: { initialMenus: BaseMenu[]}) {
         onChange={(value)=> {}}
         onAdd={open}
         ref={inputRef}
-        type={'menu'}
+        type={PageType.Menu}
         value={{}}
       />
 

@@ -4,10 +4,10 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  OnChangeFn, RowSelectionState, SortingState,getPaginationRowModel,
+  OnChangeFn, RowSelectionState, SortingState, getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import styles from './BaseTable.module.css';
+import styles from './BaseTable.module.scss';
 
 interface TableProps<T extends object> {
   columns: ColumnDef<T, any>[];
@@ -21,15 +21,15 @@ interface TableProps<T extends object> {
 }
 
 export default function Table<T extends object>({
-  columns,
-  data,
-  sorting,
-  rowSelection,
-  onRowSelectionChange,
-  onSortingChange,
-  onRowSelectChange,
-  setPagination
-}: TableProps<T>) {
+                                                  columns,
+                                                  data,
+                                                  sorting,
+                                                  rowSelection,
+                                                  onRowSelectionChange,
+                                                  onSortingChange,
+                                                  onRowSelectChange,
+                                                  setPagination
+                                                }: TableProps<T>) {
 
   const table = useReactTable({
     data,
@@ -53,9 +53,9 @@ export default function Table<T extends object>({
   }
 
   return (
-    <div style={{overflowX:'auto', width:'100%'}}>
+    <div style={{overflowX: 'auto', minWidth: '100%'}}>
       <table className={styles.table}>
-        <thead>
+        <thead style={{borderRadius:'6px'}}>
         {table.getHeaderGroups().map(headerGroup => (
           <tr key={headerGroup.id} className={styles.tr}>
             {headerGroup.headers.map(header => (
@@ -80,7 +80,7 @@ export default function Table<T extends object>({
           </tr>
         ))}
         </thead>
-        <tbody>
+        <tbody className={styles.tbody}>
         {table.getRowModel().rows.map(row => (
           <tr key={row.id} className={styles.tr}>
             {row.getVisibleCells().map(cell => (

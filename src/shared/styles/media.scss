@@ -1,0 +1,43 @@
+$breakpoint-small-desktop: 1650px;
+$breakpoint-desktop: 1400px;
+$breakpoint-laptop: 1100px;
+$breakpoint-tablet: 768px;
+$breakpoint-mobile: 576px;
+$breakpoint-small-mobile: 360px;
+
+// Mixin 정의
+@mixin small-desktop {
+  @media (max-width: #{$breakpoint-small-desktop}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (max-width: #{$breakpoint-desktop}) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (max-width: #{$breakpoint-laptop}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: #{$breakpoint-tablet}) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: #{$breakpoint-mobile}) {
+    @content;
+  }
+}
+
+@mixin small-mobile {
+  @media (max-width: #{$breakpoint-small-mobile}) {
+    @content;
+  }
+}

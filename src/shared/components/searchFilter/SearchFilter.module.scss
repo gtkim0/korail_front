@@ -1,3 +1,5 @@
+@use '@/shared/styles/media' as *;
+
 .container {
   display: flex;
   padding: 1.6rem 0;
@@ -10,25 +12,36 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @include mobile {
+    flex-direction: column;
+    gap: 3.6rem;
+  }
 }
 
 .wrapper {
   display: flex;
-  height: 4.4rem;
+  //height: 4.4rem;
   align-items: center;
   gap: .8rem;
+  width: 100%;
+
+  @include mobile {
+    flex-direction: column;
+    height: auto;
+  }
 }
 
 .inputWrapper {
   display: flex;
   align-items: center;
   min-width: 4rem;
-  height: 100%;
   padding: 0 1.2rem;
   gap: 3.2rem;
   align-self: stretch;
   border-radius: 8px;
   border: 1px solid #D5D5D6;
+  height: 4.4rem;
 }
 
 .inputWrapper input {
@@ -48,6 +61,11 @@
   font-weight: 500;
   line-height: 150%;
   cursor: pointer;
+  height: 4.4rem;
+  box-sizing: border-box;
+  @include mobile {
+    justify-content: flex-start;
+  }
 }
 
 .open {
@@ -94,4 +112,12 @@
   font-style: normal;
   /*font-weight: 600;*/
   line-height: 150%;
+}
+
+.buttonArea {
+  width: 10rem;
+
+  @include mobile {
+    width: 100%;
+  }
 }

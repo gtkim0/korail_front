@@ -24,6 +24,7 @@ export async function clientFetch<T>(
       ...options.headers,
       ...(token && { Authorization: `Bearer ${token}` }),
     },
+    cache: "no-store"
   });
 
   if (!res.ok) {

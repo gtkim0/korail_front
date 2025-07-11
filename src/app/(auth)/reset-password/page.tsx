@@ -1,28 +1,30 @@
 'use client';
-import {useSearchParams} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import {useEffect, useState} from "react";
 
 export default function ResetPassword () {
   //ex) https://webDomain/reser-password?token=123123123123123123
-  const [ isValid, setIsValid ] = useState<boolean | null>(null);
-  const token = useSearchParams().get('token');
+  // const [ isValid, setIsValid ] = useState<boolean | null>(null);
+  // const token = useSearchParams().get('token');
+  //
+  // useEffect(()=> {
+  //
+  //   if(!token) {
+  //     setIsValid(false);
+  //     return ;
+  //   }
+  //
+  //   fetch(`spring?token=${token}`)
+  //     .then((res)=> {
+  //       setIsValid(res.ok)
+  //     })
+  //     .catch(()=> setIsValid(false));
+  // },[token])
+  //
+  // if(isValid === null) return <>검증 대기중.. </>
+  // if(!isValid) return <p>만료된 링크</p>
 
-  useEffect(()=> {
-
-    if(!token) {
-      setIsValid(false);
-      return ;
-    }
-
-    fetch(`spring?token=${token}`)
-      .then((res)=> {
-        setIsValid(res.ok)
-      })
-      .catch(()=> setIsValid(false));
-  },[token])
-
-  if(isValid === null) return <>검증 대기중.. </>
-  if(!isValid) return <p>만료된 링크</p>
+  const token = 'test'
 
   return (
     <>
@@ -32,9 +34,11 @@ export default function ResetPassword () {
   )
 }
 
-const PasswordResetForm = ({token}: { token: string }) => {
+const PasswordResetForm = ({token}: { token: string | null }) => {
 
   // 여기까지 token 넘기게.
+
+  const router = useRouter();
 
   const handleSubmit = () => {
 

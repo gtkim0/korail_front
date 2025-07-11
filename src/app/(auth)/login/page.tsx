@@ -1,6 +1,6 @@
 'use client';
 import {useRouter} from 'next/navigation';
-import {useCallback, useEffect, useState} from 'react';
+import {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import { toast } from 'react-hot-toast'
 
 export default function LoginPage() {
@@ -36,7 +36,7 @@ export default function LoginPage() {
     }
   };
 
-  const handleChange = useCallback((e) => {
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm(prev=> ({
       ...prev,

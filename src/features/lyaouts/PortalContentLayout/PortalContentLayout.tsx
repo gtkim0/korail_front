@@ -1,4 +1,4 @@
-import styles from './PortalContentLayout.module.css';
+import styles from './PortalContentLayout.module.scss';
 import MenuTitle from "@/shared/components/menuTitle/MenuTitle";
 import MenuBreadCrumb from "@/shared/components/menuBreadCrumb/MenuBreadCrumb";
 import {ReactNode} from "react";
@@ -10,7 +10,7 @@ interface Props {
   children: ReactNode;
 }
 
-export default function PortalContentLayout ({path, menus, children}: Props) {
+export default function  PortalContentLayout ({path, menus, children}: Props) {
 
   const currentMenu = menus.find(i=> i.url === path);
 

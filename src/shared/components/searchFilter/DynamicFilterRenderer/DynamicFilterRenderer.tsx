@@ -4,6 +4,8 @@ import FilterSelect from "../Filters/FilterSelect/FilterSelect";
 import ColorPicker from "@/shared/components/colorPicker/ColorPicker";
 import ToggleSwitch from "@/shared/components/toggleSwitch/ToggleSwitch";
 import DatePickerRange from "@/shared/components/DatePicker/DatePickerRange";
+import SearchModalTrigger from "@/shared/components/searchModalTrigger/searchModalTrigger";
+import {FilterType} from "@/shared/enum/FilterType";
 
 type FilterSchema = {
   type: string;
@@ -12,26 +14,25 @@ type FilterSchema = {
   options?: { key: string, label: string }[];
 }
 
-
-export function DynamicFilterRenderer({schema, value, onChange}: {
+export function DynamicFilterRenderer({schema, value, onChange, endPoint}: {
   schema: FilterSchema[];
-  // schema: any;
   value: Record<string, any>;
   onChange: (next: Record<string, any>) => void;
+  endPoint?: string;
 }) {
   const handleChange = (key: string, val: any) => {
     onChange({...value, [key]: val});
   };
 
   return (
-    <div style={{display: 'flex', gap:'3.6rem', padding:'1.6rem',background:'#EBEBEB', borderTop:'1px solid #D5D5D6'}}>
+    <div style={{display: 'flex', flexWrap:'wrap', gap:'3.6rem', padding:'1.6rem',background:'#EBEBEB', borderTop:'1px solid #D5D5D6'}}>
       {schema.map(filter => (
         <FilterGroup key={filter.key}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', justifyContent:'space-between', height:'100%' }}>
             <div style={{ fontSize: '1.4rem', fontWeight: 'bold' }}>{filter.label}</div>
 
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              {filter.type === 'checkbox' && (
+            <div style={{ display: 'flex', gap: '1rem', flexWrap:'wrap'  }}>
+              {filter.type === FilterType.Checkbox && (
                 <>
                   {/* 전체 선택 옵션 */}
                   <FilterCheckbox
@@ -63,7 +64,7 @@ export function DynamicFilterRenderer({schema, value, onChange}: {
                 </>
               )}
 
-              {filter.type === 'switch' && (
+              {filter.type === FilterType.Switch && (
                 <ToggleSwitch
                   width={30}
                   label={value[filter.key] === 'ON' ? 'ON' : 'OFF'}
@@ -72,26 +73,34 @@ export function DynamicFilterRenderer({schema, value, onChange}: {
                 />
               )}
 
-              {filter.type === 'select' && (
+              {filter.type === FilterType.Select && (
                 <FilterSelect
                   options={filter.options!}
                   value={value[filter.key] || ''}
-                  onChange={(e) => handleChange(filter.key, e.target.value)}
+                  onChange={(value) => handleChange(filter.key, value)}
                 />
               )}
 
-              {filter.type === 'dateRange' && (
-                // <FilterDateRange
-                //   value={value[filter.key]}
-                //   onChange={(val) => handleChange(filter.key, val)}
-                // />
-                <DatePickerRange />
+              {filter.type === FilterType.DateRange && (
+                <DatePickerRange
+                  startDate={value[filter.key]?.startDate}
+                  endDate={value[filter.key]?.endDate}
+                  onChange={({ startDate, endDate}) => handleChange(filter.key, { startDate, endDate })}
+                />
               )}
 
-              {filter.type === 'colorPicker' && (
+              {filter.type === FilterType.ColorPicker && (
                 <ColorPicker
                   color={value[filter.key] || '#000000'}
                   onChangeAction={(val: string) => handleChange(filter.key, val)}
+                />
+              )}
+
+              {filter.type === FilterType.SearchModal && endPoint && (
+                <SearchModalTrigger
+                  value={value[filter.key]}
+                  onSelect={(v)=> handleChange(filter.key, v)}
+                  endPoint={endPoint}
                 />
               )}
             </div>

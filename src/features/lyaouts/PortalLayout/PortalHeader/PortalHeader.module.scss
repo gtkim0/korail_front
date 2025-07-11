@@ -1,3 +1,5 @@
+@use '@/shared/styles/media' as *;
+
 .portalHeader {
   display: flex;
   width: 100%;
@@ -5,6 +7,10 @@
   background-color: #fff;
   padding: 0 4rem;
   min-height: 7.2rem;
+
+  @include desktop {
+    min-height: 6.4rem;
+  }
 }
 
 .wrapper {
@@ -15,36 +21,40 @@
   height: 100%;
 }
 
-.info {
+.contentWrapper {
   display: flex;
-  padding: 0 .4rem;
-  justify-content: flex-end;
-  align-items: center;
-  gap: .6rem;
+  gap: 2rem;
+  flex: 1;
   align-self: stretch;
+  justify-content: flex-start;
+  align-items: center;
+
+  @include desktop {
+    display: none;
+  }
 }
 
-.info_menu {
+.content {
   display: flex;
-  padding: .4rem .8rem;
-  justify-content: center;
-  align-items: center;
-  gap: .4rem;
-  border-radius: 8px;
-  color: #59595C;
-  font-size: 1.3rem;
-  line-height: 150%;
-  letter-spacing: 0;
-  font-weight: 500;
-  font-style: normal;
-  white-space: nowrap;
+  gap: 2.4rem;
+  height: 100%;
 }
 
 .menuArea {
   display: flex;
   width: 100%;
-  /*justify-content: space-between;*/
+  justify-content: space-between;
   /*height: 5rem;*/
+}
+
+.menuWrapper {
+  display: flex;
+  gap: 5.6rem;
+  align-items: center;
+
+  @include small-desktop {
+    gap: 4.6rem;
+  }
 }
 
 .mainTitle {
@@ -55,4 +65,8 @@
   letter-spacing: 0;
   margin: auto 0;
   white-space: nowrap;
+
+  @include desktop {
+    display: none;
+  }
 }

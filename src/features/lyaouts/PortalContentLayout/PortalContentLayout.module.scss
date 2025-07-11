@@ -1,11 +1,21 @@
+@use '@/shared/styles/media' as *;
+
 .container {
   display: flex;
   flex-direction: column;
   height: 100%;
   gap: 3rem;
+
+  @include mobile {
+    gap: 3.6rem;
+  }
 }
 
 .contentHeader {
   display: flex;
   justify-content: space-between;
+  @include mobile {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
 }

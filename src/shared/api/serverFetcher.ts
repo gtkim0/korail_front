@@ -16,19 +16,24 @@ export function buildQueryParams(params?: Record<string, any>): string {
 
 export async function serverFetch<T>(
   url: string,
-  options: RequestInit = { method: 'GET' }
+  options: RequestInit & { revalidate?: number } = { method: 'GET' }
 ): Promise<T> {
-  const token = cookies().get('access_token')?.value;
+
+  const storeCookie = await cookies();
+  const token = storeCookie.get('access_token');
+
+  const { revalidate, ...fetchOptions } = options;
 
   const res = await fetch(BASE_URL + url, {
     method: options.method ?? 'GET',
-    ...options,
+    ...fetchOptions,
     headers: {
       'Content-Type': 'application/json',
-      ...options.headers,
+      ...fetchOptions.headers,
       ...(token && { Authorization: `Bearer ${token}` }),
     },
-    cache: 'no-store',
+    cache: 'force-cache',
+    ...(revalidate && { next: { revalidate } }),
   });
 
   if (!res.ok) {
@@ -41,12 +46,16 @@ export async function serverFetch<T>(
 
 export const serverGet = <T>(
   url: string,
-  queryParams?: Record<string, any>
+  queryParams?: Record<string, any>,
+  options?: RequestInit & { revalidate?: number }
 ) => {
   const queryString = buildQueryParams(queryParams);
   const fullUrl = queryString ? `${url}?${queryString}` : url;
 
-  return serverFetch<T>(fullUrl, { method: 'GET' });
+  return serverFetch<T>(fullUrl, {
+    method: 'GET',
+    ...options,
+  });
 };
 
 export const serverPost = <T>(url: string, body: any) =>

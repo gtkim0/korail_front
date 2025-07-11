@@ -15,6 +15,7 @@ import {MODAL_TITLE} from "@/shared/contants/modalMessage";
 import {BaseModalFooter} from "@/shared/components/modal/BaseModal/BaseModalFooter/BaseModalFooter";
 import {BannerAddAndEditModal} from "@/features/banner/components/BannerAddAndEditModal/BannerAddAndEditModal";
 import {BannerAddFormRef} from "@/features/banner/components/BannerAddForm/BannerAddForm";
+import {PageType} from "@/shared/enum/PageType";
 
 export default function BannerView() {
 
@@ -56,7 +57,7 @@ export default function BannerView() {
         ref={inputRef}
         value={{}}
         onChange={(value)=> {}}
-        type={'banner'}
+        type={PageType.Banner}
       />
 
       <TableFilter/>

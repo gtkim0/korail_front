@@ -1,25 +1,26 @@
 'use client'
 import {useGlobalStore} from "@/shared/store/globalStore";
-import styles from './PortalHeader.module.css'
-import Image from "next/image";
+import styles from './PortalHeader.module.scss'
 import {useState} from "react";
 import {useRouter} from "next/navigation";
 import PortalHeaderItem from "@/features/lyaouts/PortalLayout/PortalHeader/PortalHeaderItem/PortalHeaderItem";
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
+import {BaseMenu} from "@/types/menu";
+import HeaderRightSection from "@/features/lyaouts/PortalLayout/PortalHeader/RightSection/RightSection";
 
-export default function PortalHeader() {
+export default function PortalHeader({menus}: { menus: BaseMenu[] }) {
 
   const router = useRouter();
-  const { routeMenu, setSelectedRouteMenu } = useGlobalStore(state=> state);
-  const renderMenu = routeMenu.filter(i=> i.depth === 1);
+  const {setSelectedRouteMenu} = useGlobalStore(state => state);
+  const renderMenu = menus.filter(i => i.depth === 1);
 
-  const [ activeMenuId, setActiveMenuId ] = useState<string>('');
+  const [activeMenuId, setActiveMenuId] = useState<string>('');
 
   //@TODO hook 으로 빼서 처리.
   const handleMenuClick = (id: string) => {
-    const secondDepthList = routeMenu.filter(i => i.depth === 2 && i.pid === id);
+    const secondDepthList = menus.filter(i => i.depth === 2 && i.pid === id);
 
-    const thirdDepth = routeMenu.find(i =>
+    const thirdDepth = menus.find(i =>
       i.depth === 3 && secondDepthList.some(second => second.id === i.pid)
     );
 
@@ -36,42 +37,28 @@ export default function PortalHeader() {
     <header className={styles.portalHeader}>
       <div className={styles.wrapper}>
         <div className={styles.menuArea}>
-          <div style={{display:'flex',gap:'1.2rem', alignItems:'center'}}>
-            <ImageWrapper width={166} height={40} src={'/portal_logo.svg'} />
-            <div className={styles.mainTitle}>혼잡도 관리시스템</div>
-          </div>
-          <div
-            style={{
-              display:'flex',
-              gap: '2rem',
-              flex: 1,
-              alignSelf: 'stretch',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <div style={{display:'flex', gap:'2.4rem', height: '100%'}}>
-            {/*<div style={{display:'flex', gap: 'clamp(0.8rem, 2vw, 2.4rem)', height: '100%'}}>*/}
-              {
-                renderMenu.map(i=>
-                  <PortalHeaderItem onClick={handleMenuClick} key={i.id} item={i}/>
-                )
-              }
+          <div className={styles.menuWrapper}>
+
+            <div style={{display: 'flex', gap: '1.2rem', alignItems: 'center'}}>
+              <ImageWrapper width={166} height={40} src={'/portal_logo.svg'}/>
+              <div className={styles.mainTitle}>혼잡도 관리시스템</div>
             </div>
-            {/*<div style={{width:'2.4rem',height:'100%',position:'relative'}}>*/}
-            {/*  <Image src={'/menu.svg'} alt={''} fill/>*/}
-            {/*</div>*/}
+
+            <div className={styles.contentWrapper}>
+              <div className={styles.content}>
+                {
+                  renderMenu.map(i =>
+                    <PortalHeaderItem onClick={handleMenuClick} key={i.id} item={i}/>
+                  )
+                }
+              </div>
+            </div>
           </div>
 
-          <div className={styles.info}>
-            <div className={styles.info_menu}>로그아웃</div>
-            <div className={styles.info_menu}>마이페이지</div>
-            <div className={styles.info_menu}>사이트맵</div>
-          </div>
+          <HeaderRightSection />
         </div>
       </div>
     </header>
-
 
 
   )

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Toaster } from 'react-hot-toast';
-import "./globals.css";
+import "./globals.scss";
+import "@/shared/styles/media.scss";
 import MenuLoader from "@/shared/components/menu/MenuLoader";
 import RQProviders from "@/shared/provider/RQProvider";
 import localFont from "next/font/local";
@@ -28,7 +29,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${pretendard.variable} antialiased`}>
       <RQProviders>
-        <MenuLoader />
         <Toaster
           position="top-center"
           toastOptions={{

@@ -1,5 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table';
-import styles from './BaseTable/BaseTable.module.css'; // checkbox 클래스도 여기에 포함된다고 가정
+import styles from './BaseTable/BaseTable.module.scss'; // checkbox 클래스도 여기에 포함된다고 가정
 
 export function withRowSelection<T extends object>(
   columns: ColumnDef<T, any>[]

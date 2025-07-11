@@ -17,8 +17,9 @@ export const createUserSlice: StateCreator<
   [],
   UserSlice
 > = (set) => ({
-  username: '',
-  setUser: (user) => set((state) => {
+  user: null,
+  setUser: (user: User | null) => set((state) => {
+    if(!user) return ;
     state.user = user;
   }),
   clearUser: () => set({ user: null })

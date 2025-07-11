@@ -66,7 +66,7 @@ export default function CongestionStepView() {
   });
 
   return (
-    <>
+    <div style={{width:'100%', overflowX:'auto'}}>
       <SearchFilter
         onChange={handleChange}
         onAdd={open}
@@ -101,6 +101,6 @@ export default function CongestionStepView() {
       >
         <CongestionAddAndEditModal selectedItem={{}}/>
       </BaseModal>
-    </>
+    </div>
   )
 }

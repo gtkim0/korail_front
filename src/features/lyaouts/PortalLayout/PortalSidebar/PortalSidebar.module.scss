@@ -1,3 +1,5 @@
+@use '@/shared/styles/media' as *;
+
 .portalSidebar {
   display: flex;
   width: 28rem;
@@ -11,6 +13,13 @@
   background-color: #F1F1F2;
   border-right: 1px solid #D5D5D6;
   padding: .8rem 1.2rem 0 1.2rem;
+  transition: width ease .3s;
+
+  @include desktop {
+    width: 0;
+    padding: 0;
+    display: none;
+  }
 }
 
 .portalSidebarHeader {

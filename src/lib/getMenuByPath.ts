@@ -1,5 +1,5 @@
-import {Menu} from "@/types/menu";
+import {BaseMenu} from "@/types/menu";
 
-export async function getMenuByPath (path: string, menus: Menu[]) {
-  return menus.find(i=> i.src === path)
+export async function getMenuByPath (path: string, menus: BaseMenu[]) {
+  return menus.find(i=> i.url === path)
 }

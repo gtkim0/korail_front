@@ -1,18 +1,25 @@
 import {menuColumns} from "@/features/menu/columns/menuColumns";
 import {isAccessorColumn} from "@/shared/utils/isAccessorColumn";
 import {BannerColumns} from "@/features/banner/columns/BannerColumns";
+import {routeMapColumns} from "@/features/routeMap/columns/routeMapColumns";
+import {FilterType} from "@/shared/enum/FilterType";
 
 type FilterSchema = {
   type: string;
   key: string;
   label: string;
   options?: { key: string, label: string }[];
+  endPoint?: string;
+}
+
+const categoryFilters = {
+  routeMap: ['1','2','3','4']
 }
 
 export const filterSchemas: Record<string, FilterSchema[]>= {
   menu: [
     {
-      type: 'checkbox',
+      type: FilterType.Checkbox,
       key: 'category',
       label: '검색어 필터',
       options: menuColumns
@@ -23,7 +30,7 @@ export const filterSchemas: Record<string, FilterSchema[]>= {
         }))
     },
     {
-      type: 'switch',
+      type: FilterType.Switch,
       key: 'enabled',
       label: '사용여부',
       options: [
@@ -31,26 +38,10 @@ export const filterSchemas: Record<string, FilterSchema[]>= {
         {key: 'OFF', label: '사용 안함'}
       ]
     },
-    // {
-    //   type: 'select',
-    //   key: 'status',
-    //   label: '상태',
-    //   options: [
-    //     {
-    //       key: '',
-    //       label: ''
-    //     }
-    //   ],
-    // },
-    // {
-    //   type: 'dateRange',
-    //   key: 'range',
-    //   label: '기간',
-    // },
   ],
   banner: [
     {
-      type: 'checkbox',
+      type: FilterType.Checkbox,
       key: 'category',
       label: '검색어 필터',
       options: BannerColumns
@@ -61,12 +52,12 @@ export const filterSchemas: Record<string, FilterSchema[]>= {
         }))
     },
     {
-      type: 'dateRange',
+      type: FilterType.DateRange,
       key: 'range',
       label: '기간',
     },
     {
-      type: 'switch',
+      type: FilterType.Switch,
       key: 'useYn',
       label: '사용유무',
       options: [
@@ -77,7 +68,7 @@ export const filterSchemas: Record<string, FilterSchema[]>= {
   ],
   congestionStep: [
     {
-      type: 'checkbox',
+      type: FilterType.Checkbox,
       key: 'category',
       label: '검색 기준',
       options: [
@@ -86,7 +77,7 @@ export const filterSchemas: Record<string, FilterSchema[]>= {
       ]
     },
     {
-      type: 'checkbox',
+      type: FilterType.Checkbox,
       key: 'step',
       label: '혼잡도 단계',
       options: [
@@ -97,7 +88,7 @@ export const filterSchemas: Record<string, FilterSchema[]>= {
       ]
     },
     {
-      type: 'colorPicker',
+      type: FilterType.ColorPicker,
       key: 'color',
       label: '색상',
     },
@@ -111,7 +102,7 @@ export const filterSchemas: Record<string, FilterSchema[]>= {
       ]
     },
     {
-      type: 'switch',
+      type: FilterType.Switch,
       key: 'guide',
       label: '안내방송',
       options: [
@@ -120,7 +111,7 @@ export const filterSchemas: Record<string, FilterSchema[]>= {
       ]
     },
     {
-      type: 'switch',
+      type: FilterType.Switch,
       key: 'message',
       label: '문자전송',
       options: [
@@ -129,9 +120,93 @@ export const filterSchemas: Record<string, FilterSchema[]>= {
       ]
     },
     {
-      type: 'dateRange',
+      type: FilterType.DateRange,
       key: 'range',
       label: '기간',
+    },
+  ],
+  routeMap: [
+    {
+      type: FilterType.Checkbox,
+      key: 'category',
+      label: '검색어 필터',
+      options: routeMapColumns
+        .filter(isAccessorColumn)
+        .filter(i=> categoryFilters.routeMap.includes(i.accessorKey))
+        .map(col => ({
+          key: col.accessorKey,
+          label: col.header,
+        }))
+    },
+    {
+      type: FilterType.ColorPicker,
+      key: 'color',
+      label: '색상',
+    },
+    {
+      type: FilterType.DateRange,
+      key: 'range1',
+      label: '개통일자',
+    },
+    {
+      type: FilterType.DateRange,
+      key: 'range2',
+      label: '데이터기준일자',
+    },
+    // {
+    //   type: FilterType.SearchModal,
+    //   key: 'searchModal',
+    //   label: '기간',
+    // },
+  ],
+  operationInfo: [
+    {
+      type: FilterType.Checkbox,
+      key: 'category',
+      label: '검색어 필터',
+      options: [
+        {key: '1', label: '열차번호'},
+        {key: '2', label: '노선명'},
+        {key: '3', label: '노선번호'},
+        {key: '4', label: '기점'},
+        {key: '5', label: '종점'},
+        {key: '6', label: '운행구간정거장'},
+      ]
+    },
+    {
+      type: FilterType.Select,
+      key: '구분',
+      label: '구분',
+      options: [
+        {key: '1', label: '구분A'},
+        {key: '2', label: '구분B'},
+        {key: '3', label: '구분C'},
+      ]
+    },
+    {
+      type: FilterType.Select,
+      key: '운행유형',
+      label: '운행유형',
+      options: [
+        {key: '1', label: '운행유형A'},
+        {key: '2', label: '운행유형B'},
+        {key: '3', label: '운행유형C'},
+      ]
+    },
+    {
+      type: FilterType.Select,
+      key: '요일구분',
+      label: '요일구분',
+      options: [
+        {key: '1', label: '요일구분A'},
+        {key: '2', label: '요일구분B'},
+        {key: '3', label: '요일구분C'},
+      ]
+    },
+    {
+      type: FilterType.DateRange,
+      key: 'range2',
+      label: '데이터기준일자',
     },
   ]
 }
