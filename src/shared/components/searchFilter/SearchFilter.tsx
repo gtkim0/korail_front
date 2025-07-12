@@ -8,6 +8,7 @@ import AddButton from "@/shared/components/button/AddButton";
 import clsx from "clsx";
 import {DynamicFilterRenderer} from "@/shared/components/searchFilter/DynamicFilterRenderer/DynamicFilterRenderer";
 import {filterSchemas} from "@/shared/contants/filterSchemas";
+import {AnimatePresence, motion} from "framer-motion";
 
 interface Props {
   onAdd: ()=> void;
@@ -46,15 +47,23 @@ export const SearchFilter = forwardRef<HTMLInputElement, Props>((props, ref: For
           <AddButton text={'등록'} onClick={onAdd}/>
         </div>
       </div>
-      {
-        isOpen &&
-        <DynamicFilterRenderer
-          schema={filterSchemas[type]}
-          value={value}
-          onChange={onChange}
-          endPoint={'ss'}
-        />
-      }
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+          >
+            <DynamicFilterRenderer
+              schema={filterSchemas[type]}
+              value={value}
+              onChange={onChange}
+              endPoint={'ss'}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 })

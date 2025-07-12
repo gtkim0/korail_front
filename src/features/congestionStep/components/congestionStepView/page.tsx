@@ -66,7 +66,7 @@ export default function CongestionStepView() {
   });
 
   return (
-    <div style={{width:'100%', overflowX:'auto'}}>
+    <div style={{width:'100%', overflowX:'auto', flex: 1, display:'flex', flexDirection:'column',gap:'3.6rem'}}>
       <SearchFilter
         onChange={handleChange}
         onAdd={open}
@@ -76,6 +76,7 @@ export default function CongestionStepView() {
       />
       <TableFilter/>
 
+      <div style={{display:'flex', flex: 1, flexDirection:'column', justifyContent: 'space-between'}}>
       <Table
         columns={withRowSelection(congestionStepColumns)}
         data={dummyCongestionData}
@@ -92,6 +93,7 @@ export default function CongestionStepView() {
         setPageIndex={(index) => setPagination(prev => ({...prev, pageIndex: index}))}
         setPageSize={(size) => setPagination(prev => ({...prev, pageSize: size}))}
       />
+      </div>
       <BaseModal
         title={MODAL_TITLE.CongestionAddAndEdit}
         maxWidth={'lg'}

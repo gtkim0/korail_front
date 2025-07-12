@@ -1,15 +1,14 @@
 import { StateCreator } from 'zustand';
-import {BaseMenu} from "@/types/menu";
+import { BaseMenu } from "@/types/menu";
 
 export interface RouteSlice {
   routeMenu: BaseMenu[];
   selectedRouteMenu: BaseMenu | null;
-  expandedMenuIds: string[];
+  expandedMenuId: string | null;
 
   setRouteMenu: (menu: BaseMenu[]) => void;
   setSelectedRouteMenu: (menu: BaseMenu | null) => void;
-  expandMenu: (id: string) => void;
-  collapseMenu: (id: string) => void;
+  setExpandedMenuId: (id: string | null) => void;
   resetExpandedMenus: () => void;
 }
 
@@ -21,9 +20,9 @@ export const createRouteSlice: StateCreator<
 > = (set) => ({
   routeMenu: [],
   selectedRouteMenu: null,
-  expandedMenuIds: [],
+  expandedMenuId: null,
 
-  setRouteMenu: (menu)=> set(state=> {
+  setRouteMenu: (menu) => set(state => {
     state.routeMenu = menu;
   }),
 
@@ -31,15 +30,11 @@ export const createRouteSlice: StateCreator<
     state.selectedRouteMenu = menu;
   }),
 
-  expandMenu: (id) => set(state => {
-    if (!state.expandedMenuIds.includes(id)) {
-      state.expandedMenuIds.push(id);
-    }
+  setExpandedMenuId: (id) => set(state => {
+    state.expandedMenuId = id;
   }),
-  collapseMenu: (id) => set(state => {
-    state.expandedMenuIds = state.expandedMenuIds.filter(item => item !== id);
-  }),
+
   resetExpandedMenus: () => set(state => {
-    state.expandedMenuIds = [];
+    state.expandedMenuId = null;
   }),
 });

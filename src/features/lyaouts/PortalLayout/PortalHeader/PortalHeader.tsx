@@ -1,20 +1,36 @@
 'use client'
-import { useGlobalStore } from "@/shared/store/globalStore";
+import {useGlobalStore} from "@/shared/store/globalStore";
 import styles from './PortalHeader.module.scss';
-import { useState, useMemo } from "react";
-import { useRouter } from "next/navigation";
+import {useState, useMemo, useRef, useEffect} from "react";
+import {usePathname, useRouter} from "next/navigation";
 import PortalHeaderItem from "@/features/lyaouts/PortalLayout/PortalHeader/PortalHeaderItem/PortalHeaderItem";
-import { ImageWrapper } from "@/shared/components/ImageWrapper/ImageWrapper";
-import { BaseMenu } from "@/types/menu";
+import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
+import {BaseMenu} from "@/types/menu";
 import HeaderRightSection from "@/features/lyaouts/PortalLayout/PortalHeader/RightSection/RightSection";
 import FullMenuDropdown from "@/features/lyaouts/PortalLayout/PortalHeader/FullMenuDropdown/FullMenuDropdown";
+import {AnimatePresence, motion} from "framer-motion";
 
-export default function PortalHeader({ menus }: { menus: BaseMenu[] }) {
+export default function PortalHeader({menus}: { menus: BaseMenu[] }) {
+
+  const pathname = usePathname();
   const router = useRouter();
-  const { setSelectedRouteMenu } = useGlobalStore(state => state);
+  const {setSelectedRouteMenu} = useGlobalStore(state => state);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [containerHeight, setContainerHeight] = useState(0);
 
   const renderMenu = menus.filter(i => i.depth === 1);
   const [activeMenuId, setActiveMenuId] = useState<string>('');
+
+  const activeFirstDepthId = useMemo(() => {
+    const current = menus.find(m => m.url === pathname);
+    if (!current) return null;
+
+    const second = menus.find(m => m.id === current.pid);
+    if (!second) return null;
+
+    const first = menus.find(m => m.id === second.pid);
+    return first?.id ?? null;
+  }, [menus, pathname]);
 
   const allMenuGroups = useMemo(() => {
     const secondDepth = menus.filter(i => i.depth === 2);
@@ -36,6 +52,7 @@ export default function PortalHeader({ menus }: { menus: BaseMenu[] }) {
   const menuGroup = activeMenuId ? allMenuGroups[activeMenuId] ?? [] : [];
 
   const handleMenuClick = (id: string) => {
+
     const secondDepthList = menus.filter(i => i.depth === 2 && i.pid === id);
     const thirdDepth = menus.find(i =>
       i.depth === 3 && secondDepthList.some(second => second.id === i.pid)
@@ -53,39 +70,74 @@ export default function PortalHeader({ menus }: { menus: BaseMenu[] }) {
     setActiveMenuId(id);
   };
 
+  useEffect(() => {
+    const updateHeight = () => {
+      if (wrapperRef.current) {
+        const rect = wrapperRef.current.getBoundingClientRect();
+        setContainerHeight(rect.height);
+      }
+    };
+
+    updateHeight(); // 초기 측정
+    window.addEventListener('resize', updateHeight); // 리사이즈 대응
+
+    return () => window.removeEventListener('resize', updateHeight);
+  }, []);
+
   return (
-    <header
-      className={styles.portalHeader}
-      onMouseLeave={() => setActiveMenuId('')}
-    >
-      <div className={styles.wrapper}>
-        <div className={styles.menuArea}>
-          <div className={styles.menuWrapper}>
-            <div style={{ display: 'flex', gap: '1.2rem', alignItems: 'center' }}>
-              <ImageWrapper width={166} height={40} src={'/portal_logo.svg'} />
-              <div className={styles.mainTitle}>혼잡도 관리시스템</div>
-            </div>
-            <div className={styles.contentWrapper}>
-              <div className={styles.content}>
-                {renderMenu.map(i => (
-                  <PortalHeaderItem
-                    key={i.id}
-                    item={i}
-                    onClick={handleMenuClick}
-                    onHover={handleMenuHover}
-                  />
-                ))}
+    <>
+      <header
+        className={styles.portalHeader}
+        onMouseLeave={() => setActiveMenuId('')}
+      >
+        <div ref={wrapperRef} className={styles.wrapper}>
+          <div className={styles.menuArea}>
+            <div className={styles.menuWrapper}>
+              <div style={{display: 'flex', gap: '1.2rem', alignItems: 'center'}}>
+                <ImageWrapper width={166} height={40} src={'/portal_logo.svg'}/>
+                <div className={styles.mainTitle}>혼잡도 관리시스템</div>
+              </div>
+              <div className={styles.contentWrapper}>
+                <div className={styles.content}>
+                  {renderMenu.map(i => (
+                    <PortalHeaderItem
+                      key={i.id}
+                      item={i}
+                      onClick={handleMenuClick}
+                      onHover={handleMenuHover}
+                      isActive={activeFirstDepthId === i.id}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
+            <HeaderRightSection/>
           </div>
-          <HeaderRightSection />
-        </div>
 
-        <FullMenuDropdown
-          visible={!!activeMenuId}
-          menuGroup={menuGroup}
-        />
-      </div>
-    </header>
+
+          {/*@TODO 추후 데이터 다 들어간후 any 제거*/}
+          <FullMenuDropdown
+            visible={!!activeMenuId}
+            menuGroup={menuGroup as any}
+          />
+        </div>
+      </header>
+
+      <AnimatePresence>
+        {activeMenuId && (
+          <motion.div
+            className={styles.backdropBelowHeader}
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            exit={{opacity: 0}}
+            transition={{duration: 0.3}}
+            style={{
+              top: containerHeight,
+              height: `calc(100vh - ${containerHeight}px)`,
+            }}
+          />
+        )}
+      </AnimatePresence>
+    </>
   );
 }

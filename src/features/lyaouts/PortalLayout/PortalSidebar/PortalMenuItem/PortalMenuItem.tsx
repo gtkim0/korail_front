@@ -5,6 +5,7 @@ import { useGlobalStore } from "@/shared/store/globalStore";
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
 import {usePathname, useRouter} from 'next/navigation'
 import clsx from "clsx";
+import {AnimatePresence, motion} from "framer-motion";
 
 export default function PortalMenuItem({ item }: { item: BaseMenu & { children?: BaseMenu[] } }) {
 
@@ -12,23 +13,26 @@ export default function PortalMenuItem({ item }: { item: BaseMenu & { children?:
   const pathname = usePathname();
 
   const hasChildren = item.children && item.children.length > 0;
-  const expandedMenuIds = useGlobalStore(state => state.expandedMenuIds);
-  const expandMenu = useGlobalStore(state => state.expandMenu);
-  const collapseMenu = useGlobalStore(state => state.collapseMenu);
+  const expandedMenuId = useGlobalStore(state => state.expandedMenuId);
+  const setExpandedMenuId = useGlobalStore(state => state.setExpandedMenuId);
 
-  const isOpen = expandedMenuIds.includes(item.id);
-
-  const isMatch = item.url === pathname
+  const isOpen = expandedMenuId === item.id;
+  const isMatch = item.url === pathname;
 
   const handleToggle = () => {
 
-    if(item.depth === 3) {
-      router.push(item.url)
+    if (item.depth === 3) {
+      router.push(item.url);
+      return;
     }
 
     if (!hasChildren) return;
-    if (isOpen) collapseMenu(item.id);
-    else expandMenu(item.id);
+
+    if (isOpen) {
+      setExpandedMenuId(null);
+    } else {
+      setExpandedMenuId(item.id);
+    }
   };
 
   return (
@@ -42,13 +46,22 @@ export default function PortalMenuItem({ item }: { item: BaseMenu & { children?:
         )}
       </div>
 
-      {isOpen && hasChildren && (
-        <div className={styles.childrenWrapper}>
-          {item.children?.map(child => (
-            <PortalMenuItem key={child.id} item={child} />
-          ))}
-        </div>
-      )}
+      <AnimatePresence initial={false}>
+        {isOpen && hasChildren && (
+          <motion.div
+            className={styles.childrenWrapper}
+            key="children"
+            initial={{ height: 0, opacity: 0, y: -5 }}
+            animate={{ height: 'auto', opacity: 1, y: 0 }}
+            exit={{ height: 0, opacity: 0, y: -5 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+          >
+            {item.children?.map(child => (
+              <PortalMenuItem key={child.id} item={child} />
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

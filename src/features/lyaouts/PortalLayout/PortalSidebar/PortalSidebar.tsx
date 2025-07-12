@@ -3,21 +3,36 @@ import styles from './PortalSidebar.module.scss';
 import {useGlobalStore} from "@/shared/store/globalStore";
 import {BaseMenu} from "@/types/menu";
 import PortalMenuItem from "@/features/lyaouts/PortalLayout/PortalSidebar/PortalMenuItem/PortalMenuItem";
+import {useEffect, useMemo} from "react";
+import {usePathname} from "next/navigation";
 
 export default function PortalSidebar({menu}: { menu: BaseMenu[] }) {
 
-  const { selectedMenu } = useGlobalStore(state=> state);
-  // const childrenMenus = menu.filter(i=> i.pid === selectedMenu.id)
+  const pathname = usePathname();
+  const setExpandedMenuId = useGlobalStore(state => state.setExpandedMenuId);
 
-  const secondDepthMenus = menu.filter(item => item.pid === '3');
+  useEffect(() => {
+    const currentMenu = menu.find(m => m.url === pathname);
 
-  const structuredMenus = secondDepthMenus.map(parent => {
-    const children = menu.filter(child => child.pid === parent.id);
-    return {
-      ...parent,
-      children,
-    };
-  });
+    if (currentMenu?.depth === 3) {
+      const parent2Depth = menu.find(m => m.id === currentMenu.pid);
+      if (parent2Depth) {
+        setExpandedMenuId(parent2Depth.id);
+      }
+    }
+  }, [pathname, menu, setExpandedMenuId]);
+
+  const secondDepthMenus = useMemo(() => menu.filter(item => item.pid === '2'), [menu]);
+
+  const structuredMenus = useMemo(() => {
+    return secondDepthMenus.map(parent => {
+      const children = menu.filter(child => child.pid === parent.id);
+      return {
+        ...parent,
+        children,
+      };
+    });
+  }, [secondDepthMenus, menu]);
 
   return (
     <div className={styles.portalSidebar}>

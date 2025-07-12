@@ -1,15 +1,15 @@
-import { BaseMenu } from "@/types/menu";
+import {BaseMenu} from "@/types/menu";
 import styles from "@/features/lyaouts/PortalLayout/PortalHeader/PortalHeader.module.scss";
-import { useEffect, useState } from "react";
-import clsx from "clsx";
+import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
+import {AnimatePresence, motion} from "framer-motion";
 
 interface Props {
   menuGroup: (BaseMenu & { thirdDepths: BaseMenu[] })[];
   visible: boolean;
 }
 
-export default function FullMenuDropdown({ menuGroup, visible }: Props) {
+export default function FullMenuDropdown({menuGroup, visible}: Props) {
 
   const router = useRouter();
   const [columnsPerRow, setColumnsPerRow] = useState(6);
@@ -24,7 +24,7 @@ export default function FullMenuDropdown({ menuGroup, visible }: Props) {
   };
 
   const handleMenuClick = (item: BaseMenu) => {
-    if(!item.url) return;
+    if (!item.url) return;
     router.push(item.url);
   }
 
@@ -36,27 +36,37 @@ export default function FullMenuDropdown({ menuGroup, visible }: Props) {
   }, []);
 
   return (
-    <div className={clsx(styles.dropdownFullMenu, visible ? styles.show : styles.hide)}>
-      <div className={styles.inner}>
-        {menuGroup.map((second, idx) => {
-          const isLastInRow = (idx + 1) % columnsPerRow === 0;
-          return (
-            <div
-              key={second.id}
-              className={clsx(styles.subMenuGroup, isLastInRow && styles.noBorder)}
-            >
-              <div className={styles.subMenuLabel}>{second.name}</div>
-              <ul className={styles.thirdDepthWrapper}>
-                {second.thirdDepths.map((third) => (
-                  <li onClick={()=> handleMenuClick(third)} key={third.id} className={styles.thirdDepthItem}>
-                    {third.name}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          className={styles.dropdownFullMenu}
+          initial={{opacity: 0, height: 0, y: -5}}
+          animate={{opacity: 1, height: 'auto', y: 0}}
+          exit={{opacity: 0, height: 0, y: -5}}
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
+        >
+          <div className={styles.inner}>
+            {Array.from({length: columnsPerRow}).map((_, columnIndex) => (
+              <div key={columnIndex} className={styles.subMenuGroup}>
+                {menuGroup
+                  .filter((_, idx) => idx % columnsPerRow === columnIndex)
+                  .map((menu, idx) => (
+                    <div style={{padding: '1rem 0'}} key={menu.id}>
+                      <div className={styles.subMenuLabel}>{menu.name}</div>
+                      <div className={styles.thirdDepthWrapper}>
+                        {menu.thirdDepths.map(third => (
+                          <div key={third.id} className={styles.thirdDepthItem}>
+                            {third.name}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
