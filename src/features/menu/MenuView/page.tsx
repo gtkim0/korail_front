@@ -72,7 +72,9 @@ export default function MenuView ({initialMenus}: { initialMenus: BaseMenu[]}) {
         value={{}}
       />
 
-      <TableFilter />
+      <TableFilter
+        onSelect={()=> {}}
+      />
 
       <Table
         columns={withRowSelection(menuColumns)}

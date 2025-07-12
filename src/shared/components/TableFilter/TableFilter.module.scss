@@ -1,0 +1,55 @@
+.tableFilter {
+  display: flex;
+  padding-bottom: 1.6rem;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.6rem;
+  align-self: stretch;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+}
+
+.line {
+  width: 1px;
+  height: .8rem;
+  background: #D5D5D6;
+}
+
+.buttonWrapper {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+
+  button {
+    width: 8rem;
+    height: 3.2rem;
+    min-width: 6.4rem;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+  }
+
+  .delete {
+    border: 1px solid #D5D5D6;
+    background: #FFF;
+    color: #363637;
+    &:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  .edit {
+    border: 1px solid #5EB2FE;
+    background: #E2F0FE;
+    color: #00417A;
+    &:hover {
+      background: #CEE7FD;
+    }
+  }
+}
