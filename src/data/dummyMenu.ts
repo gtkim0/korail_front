@@ -46,6 +46,23 @@ const menuSecondMenu = [
   { id: '41', pid: '15', url: '/basic/menu/banner', component: 'Banner', order: 2, depth: 3, name: '배너정보', description: '' },
 ]
 
+const temp = [
+  { id: '150', pid: '3', url: '', component: '', order: 7, depth: 2, name: '메뉴정보', description: '' },
+]
+
+const temp1 = [
+  { id: '151', pid: '3', url: '', component: '', order: 7, depth: 2, name: '메뉴정보', description: '' },
+]
+
+const temp2 = [
+  { id: '152', pid: '3', url: '', component: '', order: 7, depth: 2, name: '메뉴정보', description: '' },
+]
+
+const temp3 = [
+  { id: '153', pid: '3', url: '', component: '', order: 7, depth: 2, name: '메뉴정보', description: '' },
+]
+
+
 const secondDepthMenu = {
   congestionSecondMenu,
   routeSecondMenu,
@@ -54,6 +71,10 @@ const secondDepthMenu = {
   specialSecondMenu,
   measurementSecondMenu,
   menuSecondMenu,
+  temp,
+  temp1,
+  temp2,
+  temp3
 }
 
 export const dummyMenu = [

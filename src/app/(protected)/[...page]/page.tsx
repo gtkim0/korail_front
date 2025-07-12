@@ -31,7 +31,9 @@ export default async function PageMapper({ params }: { params: Promise<{page: st
   const cookieStore = await cookies();
   const token = cookieStore.get('access_token')
 
-  const menus = await menuServerApi.get(token) as BaseMenu[];
+  // const menus = await menuServerApi.get(token) as BaseMenu[];
+
+  const menus = dummyMenu;
 
   const currnet = dummyMenu.find(i=> i.url === path);
 
