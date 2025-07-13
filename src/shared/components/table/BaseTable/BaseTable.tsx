@@ -18,6 +18,7 @@ interface TableProps<T extends object> {
   onSortingChange: OnChangeFn<SortingState>;
   onRowSelectChange?: (selectedRows: T[]) => void;
   setPagination?: any;
+  minWidth?: string;
 }
 
 export default function Table<T extends object>({
@@ -28,7 +29,8 @@ export default function Table<T extends object>({
                                                   onRowSelectionChange,
                                                   onSortingChange,
                                                   onRowSelectChange,
-                                                  setPagination
+                                                  setPagination,
+                                                  minWidth = '120rem'
                                                 }: TableProps<T>) {
 
   const table = useReactTable({
@@ -54,7 +56,7 @@ export default function Table<T extends object>({
 
   return (
     <div style={{overflowX: 'auto', minWidth: '100%'}}>
-      <table className={styles.table}>
+      <table className={styles.table} style={{minWidth}}>
         <thead style={{borderRadius:'6px'}}>
         {table.getHeaderGroups().map(headerGroup => (
           <tr key={headerGroup.id} className={styles.tr}>

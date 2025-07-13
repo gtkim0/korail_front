@@ -16,12 +16,12 @@ import {BaseModalFooter} from "@/shared/components/modal/BaseModal/BaseModalFoot
 import {BannerAddAndEditModal} from "@/features/banner/components/BannerAddAndEditModal/BannerAddAndEditModal";
 import {BannerAddFormRef} from "@/features/banner/components/BannerAddForm/BannerAddForm";
 import {PageType} from "@/shared/enum/PageType";
+import TableWrapper from "@/shared/components/table/TableWrapper/TableWrapper";
 
 export default function BannerView() {
 
   const {isOpen, open, close} = useModal();
   const inputRef = useRef<HTMLInputElement>(null);
-  const [ isOn, setIsOn ] = useState(false);
   const editAreaRef = useRef<BannerAddFormRef>(null)
 
   const [pagination, setPagination] = useState({
@@ -36,7 +36,7 @@ export default function BannerView() {
     loading,
   } = useSorting<BannerColumnsType>({
     defaultSortKey: 'name',
-    fetchFn: async ({ sortKey, sortOrder }) => {
+    fetchFn: async ({sortKey, sortOrder}) => {
       const res = await fetch(`/api/menus?sort=${sortKey}&order=${sortOrder}`);
       return res.json();
     },
@@ -56,13 +56,12 @@ export default function BannerView() {
         onAdd={open}
         ref={inputRef}
         value={{}}
-        onChange={(value)=> {}}
+        onChange={(value) => {}}
         type={PageType.Banner}
       />
 
-      <TableFilter/>
-
-      <Table
+      <TableWrapper
+        onSelect={(v)=> {}}
         columns={withRowSelection(BannerColumns)}
         data={dummyBannerData}
         sorting={sorting}
@@ -70,9 +69,6 @@ export default function BannerView() {
         rowSelection={rowSelection}
         onRowSelectionChange={onRowSelectionChange}
         setPagination={setPagination}
-      />
-
-      <Pagination
         pageIndex={pagination.pageIndex}
         pageSize={pagination.pageSize}
         pageCount={Math.ceil(dummyMenuData.length / pagination.pageSize)} // 또는 서버에서 받은 totalPages
@@ -89,7 +85,6 @@ export default function BannerView() {
       >
         <BannerAddAndEditModal editAreaRef={editAreaRef}/>
       </BaseModal>
-
     </>
   )
 }

@@ -9,6 +9,7 @@ import clsx from "clsx";
 import {DynamicFilterRenderer} from "@/shared/components/searchFilter/DynamicFilterRenderer/DynamicFilterRenderer";
 import {filterSchemas} from "@/shared/contants/filterSchemas";
 import {AnimatePresence, motion} from "framer-motion";
+import {SearchInput} from "@/shared/components/Input/searchInput/SearchInput";
 
 interface Props {
   onAdd: ()=> void;
@@ -31,12 +32,12 @@ export const SearchFilter = forwardRef<HTMLInputElement, Props>((props, ref: For
     <div className={styles.container}>
       <div className={styles.searchFilter}>
         <div className={styles.wrapper}>
-          <div className={styles.inputWrapper}>
-            <input onKeyDown={handleKeyDown} placeholder={'검색어를 입력해주세요.'} ref={ref}/>
-            <button onClick={()=> onSubmit?.()} style={{background:'none'}}>
-              <ImageWrapper width={24} height={24} src={ '/search.svg'}/>
-            </button>
-          </div>
+          <SearchInput
+            width={'32rem'}
+            onKeyDown={handleKeyDown}
+            onSubmit={()=> onSubmit?.()}
+            ref={ref}
+          />
           <div onClick={() => isOpen ? close() : open()} className={clsx(styles.filter, isOpen && styles.open)}>
             <Image src={isOpen ? '/basic-search.svg' : '/multi-search.svg'} alt={'logo'} width={16} height={16}/>
             <span>검색 필터</span>

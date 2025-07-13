@@ -20,7 +20,10 @@ export default function  PortalContentLayout ({path, menus, children}: Props) {
         <MenuTitle title={currentMenu?.name || ''}/>
         <MenuBreadCrumb path={path} menus={menus}/>
       </div>
+
+      <div style={{display:'flex', flexDirection:'column', gap:'4rem', flex: 1}}>
       { children }
+      </div>
     </div>
   )
 }
