@@ -98,6 +98,7 @@ export function DynamicFilterRenderer({schema, value, onChange, endPoint}: {
 
               {filter.type === FilterType.SearchModal && endPoint && (
                 <SearchModalTrigger
+                  columns={[]}
                   value={value[filter.key]}
                   onSelect={(v)=> handleChange(filter.key, v)}
                   endPoint={endPoint}

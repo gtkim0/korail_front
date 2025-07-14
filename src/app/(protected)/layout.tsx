@@ -6,16 +6,14 @@ import {BaseMenu} from "@/types/menu";
 
 export default async function ProtectedLayout({ children }: { children: React.ReactNode }) {
 
-  // const cookieStore = await cookies();
-  //
-  // const token = cookieStore.get('access_token')
-  //
-  // if (!token) {
-  //   redirect('/login');
-  // }
-  //
-  // return <AuthGuard>{children}</AuthGuard>;
+  const cookieStore = await cookies();
 
-  return <>{children}</>;
+  const token = cookieStore.get('access_token')
 
+  if (!token) {
+    redirect('/login');
+  }
+
+  return <AuthGuard>{children}</AuthGuard>;
+  // return <>{children}</>;
 }

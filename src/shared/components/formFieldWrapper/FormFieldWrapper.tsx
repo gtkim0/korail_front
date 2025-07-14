@@ -4,6 +4,7 @@ interface FormFieldWrapperProps {
   label: string;
   required?: boolean;
   help?: string;
+  helpPosition?: 'top' | 'bottom'
   error?: string;
   children: React.ReactNode;
   useCheckbox?: boolean;
@@ -15,6 +16,7 @@ export default function FormFieldWrapper({
                                            label,
                                            required,
                                            help,
+                                           helpPosition = 'top',
                                            error,
                                            children,
                                            useCheckbox = false,
@@ -38,8 +40,9 @@ export default function FormFieldWrapper({
         </div>
       </label>
 
-      {help && <div className={styles.help}>{help}</div>}
+      {help && helpPosition === 'top' && <div className={styles.help}>{help}</div>}
       {children}
+      {help && helpPosition === 'bottom' && <div className={styles.help}>{help}</div>}
       {error && <div className={styles.error}>{error}</div>}
     </div>
   );

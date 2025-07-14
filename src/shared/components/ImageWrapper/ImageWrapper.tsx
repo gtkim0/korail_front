@@ -4,7 +4,7 @@ export const ImageWrapper =
   ({width, height, alt = 'logo', src, enableCursor = true}:
    { width: number, height: number ,alt?: string, src: string,enableCursor?: boolean }) => {
   return (
-    <div style={{width, height, position: 'relative', cursor: enableCursor ? 'pointer' : 'default'}}>
+    <div style={{width, height, position: 'relative', cursor: enableCursor ? 'pointer' : 'default', margin:'0 auto'}}>
       <Image
         src={src}
         alt={alt}

@@ -23,9 +23,9 @@ export const SearchInput = forwardRef<HTMLInputElement, Props>((props,ref) => {
   } = props;
 
   return (
-    <div className={styles.container} style={{ width }}>
-      <input disabled={disabled} onKeyDown={(e)=> onKeyDown?.(e)} placeholder={placeholder} ref={ref}/>
-      <button type={'button'} onClick={()=> onSubmit?.()} style={{background:'none'}}>
+    <div className={styles.container} style={{ width, background: disabled ? '#EBEBEB' : '#fff' }}>
+      <input style={{flex:1, height:'100%', pointerEvents: disabled ? 'none' : 'auto'}} disabled={disabled} onKeyDown={(e)=> onKeyDown?.(e)} placeholder={placeholder} ref={ref}/>
+      <button type={'button'} onClick={()=> onSubmit?.()} style={{background:'none', pointerEvents: disabled ? 'none': 'auto'}}>
         {
           baseImageUrl &&
             <ImageWrapper width={24} height={24} src={baseImageUrl}/>

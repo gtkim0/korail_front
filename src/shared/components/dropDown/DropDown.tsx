@@ -7,7 +7,7 @@ import {AnimatePresence, motion} from "framer-motion";
 interface Props {
   options: { key: string, label: string }[];
   onSelect: (value: { key: string, label: string })=> void;
-  renderSelected: ( selected: { key: string, label: string }) => ReactNode;
+  renderSelected?: ( selected: { key: string, label: string }) => ReactNode;
 }
 
 export default function DropDown ({onSelect, renderSelected, options}: Props) {
@@ -46,7 +46,7 @@ export default function DropDown ({onSelect, renderSelected, options}: Props) {
           ? renderSelected(selected)
           : (
             <>
-              <span className={clsx('font', 'font_md')}>{selected.label}</span>
+              <span className={clsx('font', 'font_md')} style={{flex: 1}}>{selected.label}</span>
               <ImageWrapper width={16} height={16} src={'/arrow-down.svg'} />
             </>
           )
@@ -68,6 +68,7 @@ export default function DropDown ({onSelect, renderSelected, options}: Props) {
                 className={option.key === selected.key ? styles.selected : ''}
                 key={option.key}
                 onClick={() => handleSelect(option)}
+                style={{width:'100%'}}
               >
                 <span>{option.label}</span>
               </div>

@@ -12,6 +12,8 @@
   gap: .6rem;
   align-self: stretch;
   font-size: 1.3rem;
+  line-height: 150%;
+  letter-spacing: 0;
 }
 
 .required {
@@ -32,7 +34,7 @@
 }
 
 .error {
-  font-size: 0.8rem;
+  font-size: 1.2rem;
   color: red;
   margin-top: 0.3rem;
 }

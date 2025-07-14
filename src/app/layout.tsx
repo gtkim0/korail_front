@@ -1,11 +1,10 @@
-import type { Metadata } from "next";
-import { Toaster } from 'react-hot-toast';
+import type {Metadata} from "next";
+import {Toaster} from 'react-hot-toast';
 import "./globals.scss";
 import "@/shared/styles/media.scss";
-import MenuLoader from "@/shared/components/menu/MenuLoader";
 import RQProviders from "@/shared/provider/RQProvider";
 import localFont from "next/font/local";
-import { cookies } from 'next/headers';
+import SplashWrapper from "@/shared/components/splashWrapper/SplashWrapper";
 
 const pretendard = localFont({
   src: '../../public/fonts/pretendard/PretendardVariable.woff2',
@@ -19,25 +18,27 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
-}: Readonly<{
+                                     children,
+                                   }: Readonly<{
   children: React.ReactNode;
 }>) {
 
 
   return (
     <html lang="en">
-      <body className={`${pretendard.variable} antialiased`}>
-      <RQProviders>
-        <Toaster
-          position="top-center"
-          toastOptions={{
-            style: { fontSize: '14px', zIndex: 100000 },
-          }}
-        />
+    <body className={`${pretendard.variable} antialiased`}>
+    <RQProviders>
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          style: {fontSize: '14px', zIndex: 100000},
+        }}
+      />
+      <SplashWrapper>
         {children}
-      </RQProviders>
-      </body>
+      </SplashWrapper>
+    </RQProviders>
+    </body>
     </html>
   );
 }

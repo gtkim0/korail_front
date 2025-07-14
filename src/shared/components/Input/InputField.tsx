@@ -14,6 +14,7 @@ interface InputFieldProps {
   updateMenuField?: (value: string) => void;
   useCheckbox?: boolean;
   defaultChecked?: boolean;
+  name?: string;
 }
 
 export const InputField = ({
@@ -21,6 +22,7 @@ export const InputField = ({
                              label,
                              help,
                              placeholder = '',
+                             name = '',
                              type = 'text',
                              disabled = false,
                              required = false,
@@ -31,6 +33,8 @@ export const InputField = ({
   const [checked, setChecked] = useState(defaultChecked);
   const meta = field.getMeta();
 
+  const showError = meta.isTouched && meta.errors?.[0];
+
   const isDisabled = disabled || (useCheckbox && !checked);
 
   return (
@@ -38,12 +42,13 @@ export const InputField = ({
       label={label}
       required={required}
       help={help}
-      error={meta.touchedErrors}
+      error={showError}
       useCheckbox={useCheckbox}
       checked={checked}
       onCheckboxChange={setChecked}
     >
       <input
+        name={name}
         placeholder={placeholder}
         disabled={isDisabled}
         type={type}
