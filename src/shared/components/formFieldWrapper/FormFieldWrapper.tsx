@@ -25,20 +25,24 @@ export default function FormFieldWrapper({
                                          }: FormFieldWrapperProps) {
   return (
     <div className={styles.fieldWrapper}>
-      <label className={styles.label}>
-        {useCheckbox && (
-          <input
-            type="checkbox"
-            className={styles.checkbox}
-            checked={checked}
-            onChange={(e) => onCheckboxChange?.(e.target.checked)}
-          />
-        )}
-        <div>
-          {label}
-          {required && <span className={styles.required}>*</span>}
-        </div>
-      </label>
+      {
+        label &&
+        <label className={styles.label}>
+          {useCheckbox && (
+            <input
+              type="checkbox"
+              className={styles.checkbox}
+              checked={checked}
+              onChange={(e) => onCheckboxChange?.(e.target.checked)}
+            />
+          )}
+          <div>
+            {label}
+            {required && <span className={styles.required}>*</span>}
+          </div>
+        </label>
+      }
+
 
       {help && helpPosition === 'top' && <div className={styles.help}>{help}</div>}
       {children}

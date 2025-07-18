@@ -8,7 +8,7 @@ export function useAuth () {
 
   useEffect(()=> {
     if(!user) {
-      fetch('/api/me', { credentials: 'include'})
+      fetch('/apis/auth/me', { credentials: 'include'})
         .then(res=> {
           if (!res.ok) throw new Error('unauthenticated');
           return res.json();

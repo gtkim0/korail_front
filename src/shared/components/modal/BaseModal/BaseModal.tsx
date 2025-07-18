@@ -5,6 +5,7 @@ import styles from './BaseModal.module.css';
 import clsx from "clsx";
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
 import {AnimatePresence, motion} from "framer-motion";
+import {PageType} from "@/shared/enum/PageType";
 
 interface Props {
   isOpen: boolean;

@@ -14,7 +14,7 @@ export default function DatePickerRange({ startDate, endDate, onChange }: Props 
   return (
     <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}>
       <DatePicker
-        selected={new Date()}
+        selected={startDate}
         dateFormat={'yyyy-MM-dd'}
         portalId="root-portal"
         customInput={<CustomInput/>}
@@ -22,7 +22,7 @@ export default function DatePickerRange({ startDate, endDate, onChange }: Props 
       />
       <span style={{fontWeight: 700, lineHeight: '150%', fontSize: '1.5rem'}}>-</span>
       <DatePicker
-        selected={new Date()}
+        selected={endDate}
         dateFormat={'yyyy-MM-dd'}
         portalId="root-portal"
         customInput={<CustomInput/>}

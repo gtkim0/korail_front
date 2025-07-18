@@ -114,7 +114,6 @@ export default function PortalHeader({menus}: { menus: BaseMenu[] }) {
             <HeaderRightSection/>
           </div>
 
-
           {/*@TODO 추후 데이터 다 들어간후 any 제거*/}
           <FullMenuDropdown
             visible={!!activeMenuId}

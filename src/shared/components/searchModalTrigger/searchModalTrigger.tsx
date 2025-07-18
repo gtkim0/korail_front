@@ -21,6 +21,10 @@ interface Props<T extends object> {
   onRowClick?: (row: T) => void;
   renderTrigger?: ReactNode;
   placeholder?: string;
+  height?: string;
+  isOpen: boolean;
+  onOpen: ()=> void;
+  onClose: ()=> void;
 }
 
 export default function SearchModalTrigger<T extends object>(
@@ -35,13 +39,19 @@ export default function SearchModalTrigger<T extends object>(
     minWidth = 'auto',
     onRowClick,
     renderTrigger,
-    placeholder
+    placeholder,
+    height = '3.6rem',
+    isOpen,
+    onOpen,
+    onClose
   }: Props<T>) {
 
-  const {isOpen, open, close} = useModal();
+  // const {isOpen, open, close} = useModal();
   const [search, setSearch] = useState('');
   const [searchResult, setSearchResult] = useState<{ key: string; label: string }[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const [ selectedRow, setSelectedRow ] = useState(null);
 
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -56,8 +66,9 @@ export default function SearchModalTrigger<T extends object>(
   } = useSorting<T>({
     defaultSortKey: 'name',
     fetchFn: async ({sortKey, sortOrder}) => {
-      const res = await fetch(`${endPoint}?sort=${sortKey}&order=${sortOrder}`);
-      return res.json();
+      // const res = await fetch(`${endPoint}?sort=${sortKey}&order=${sortOrder}`);
+      // return res.json();
+      return [];
     },
   });
 
@@ -77,8 +88,9 @@ export default function SearchModalTrigger<T extends object>(
     console.log(ids);
   });
 
-  const onSubmit = () => {
-  }
+  const onSubmit = () => {}
+
+  console.log('asd')
 
   useEffect(() => {
     if (!isOpen || search.length < 2 || !endPoint) return;
@@ -95,24 +107,23 @@ export default function SearchModalTrigger<T extends object>(
   return (
     <>
       {renderTrigger ? (
-        <div onClick={open} style={{display: 'inline-block', cursor: 'pointer'}}>
+        <div onClick={onOpen} style={{display: 'inline-block', cursor: 'pointer'}}>
           {renderTrigger}
         </div>
       ) : (
-        <div style={{display: 'flex', alignItems: 'flex-start', gap: '.8rem', alignSelf: 'stretch', cursor: 'pointer'}}>
-          <div onClick={open} style={{width: '100%', height: '3.6rem', cursor: 'pointer'}}>
-            <SearchInput disabled={true}/>
+        <div style={{display: 'flex', alignItems: 'flex-start', gap: '.8rem', alignSelf: 'stretch', cursor: 'pointer', flex: 1}}>
+          <div onClick={onOpen} style={{height: height, width: '100%', cursor: 'pointer'}}>
+            <SearchInput placeholder={placeholder} disabled={true}/>
           </div>
         </div>
       )}
 
       {isOpen && (
-        <BaseModal title={title} isOpen={isOpen} onCloseAction={close}>
+        <BaseModal title={title} isOpen={isOpen} onCloseAction={onClose}>
           <div style={{padding: '1.6rem', display: 'flex', flexDirection: 'column', flex: 1}}>
             <div style={{display: 'flex', flexDirection: 'column', flex: 1, gap: '1.2rem', alignSelf: 'stretch'}}>
               <div style={{height: '3.6rem'}}>
                 <SearchInput
-                  placeholder={placeholder}
                   ref={inputRef}
                   onKeyDown={() => {}}
                   onSubmit={() => {}}
@@ -122,11 +133,20 @@ export default function SearchModalTrigger<T extends object>(
               <Table
                 columns={columns}
                 // data={sortedData}
-                data={sortedDummyData}
+                data={[
+                  {
+                    number:'2',
+                    name:'123'
+                  }
+                ]}
                 sorting={sorting}
                 onSortingChange={onSortingChange}
                 rowSelection={rowSelection}
                 onRowSelectionChange={onRowSelectionChange}
+                onRowSelectChange={(row)=> {
+                  console.log(row);
+                  setSelectedRow(row)
+                }}
                 setPagination={setPagination}
                 minWidth={minWidth}
               />

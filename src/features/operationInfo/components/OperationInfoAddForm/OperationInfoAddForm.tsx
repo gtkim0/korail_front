@@ -50,7 +50,7 @@ export default function OperationInfoAddForm() {
             {form.Field({
               name: 'name',
               children: (field) => (
-                <InputField placeholder={'열차번호'} required field={field} label={'열차번호'} />
+                <InputField height={'3.6rem'} placeholder={'열차번호'} required field={field} label={'열차번호'} />
               ),
             })}
           </div>

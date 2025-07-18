@@ -1,9 +1,18 @@
 import styles from './RightSection.module.scss';
 import Image from "next/image";
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
+import {useRouter} from "next/navigation";
 export default function HeaderRightSection () {
 
-  const handleClick = () => {}
+  const router = useRouter();
+
+  const handleClick = async () => {
+    await fetch('http://localhost:3000/api/logout', {
+      method:'post'
+    }).then(res=> {
+      router.push('/auth/login')
+    })
+  }
 
   const rightMenu = [
   {
@@ -28,7 +37,7 @@ export default function HeaderRightSection () {
     <div className={styles.container}>
       {
         rightMenu.map(i=> (
-          <div key={i.label} className={styles.item}>
+          <div onClick={()=> i.onClick?.()} key={i.label} className={styles.item}>
             <div className={styles.logo}>
               <ImageWrapper src={i.src} alt={'logo'} width={20} height={20} />
             </div>

@@ -106,7 +106,7 @@ export default function RcTimePicker({label = '', value, onChange, useAmPm}: Pro
     <div className={styles.wrapper} ref={wrapperRef}>
       {label && <label className={styles.label}>{label}</label>}
       <div className={styles.inputGroup} onClick={() => setIsOpen(true)}>
-        <div>
+        <div style={{flex: 1}}>
           <input
             className={styles.segmentInput}
             value={hour}

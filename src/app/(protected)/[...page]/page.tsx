@@ -6,6 +6,7 @@ import {dummyMenu} from "@/data/dummyMenu";
 import {cookies} from "next/headers";
 import {menuServerApi} from "@/features/menu/api/server/menuServerApi";
 import {BaseMenu} from "@/types/menu";
+import PortalContentLayout from "@/features/lyaouts/PortalContentLayout/PortalContentLayout";
 
 /** 동적 import 로 routing **/
 export default async function PageMapper({ params }: { params: Promise<{page: string[]}> }) {
@@ -33,9 +34,11 @@ export default async function PageMapper({ params }: { params: Promise<{page: st
 
   const menus = await menuServerApi.get(token) as BaseMenu[];
 
+  console.log(menus);
+
   // const menus = dummyMenu;
 
-  const currnet = dummyMenu.find(i=> i.url === path);
+  const currnet = menus.find(i=> i.url === path);
 
   let Component;
   try {
@@ -47,6 +50,8 @@ export default async function PageMapper({ params }: { params: Promise<{page: st
 
   return (
     <PortalLayout menus={menus}>
-      <Component menus={menus} path={path}/>
+      <PortalContentLayout path={path} menus={menus}>
+        <Component menus={menus} path={path}/>
+      </PortalContentLayout>
     </PortalLayout>)
 }

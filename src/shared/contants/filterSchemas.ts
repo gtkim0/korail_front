@@ -3,6 +3,7 @@ import {isAccessorColumn} from "@/shared/utils/isAccessorColumn";
 import {BannerColumns} from "@/features/banner/columns/BannerColumns";
 import {routeMapColumns} from "@/features/routeMap/columns/routeMapColumns";
 import {FilterType} from "@/shared/enum/FilterType";
+import { PageType } from "@/shared/enum/PageType";
 
 type FilterSchema = {
   type: string;
@@ -16,8 +17,8 @@ const categoryFilters = {
   routeMap: ['1','2','3','4']
 }
 
-export const filterSchemas: Record<string, FilterSchema[]>= {
-  menu: [
+export const filterSchemas: Record<PageType, FilterSchema[]>= {
+  [PageType.Menu]: [
     {
       type: FilterType.Checkbox,
       key: 'category',
@@ -39,7 +40,7 @@ export const filterSchemas: Record<string, FilterSchema[]>= {
       ]
     },
   ],
-  banner: [
+  [PageType.Banner]: [
     {
       type: FilterType.Checkbox,
       key: 'category',
@@ -66,7 +67,7 @@ export const filterSchemas: Record<string, FilterSchema[]>= {
       ]
     },
   ],
-  congestionStep: [
+  [PageType.CongestionStep]: [
     {
       type: FilterType.Checkbox,
       key: 'category',
@@ -125,7 +126,7 @@ export const filterSchemas: Record<string, FilterSchema[]>= {
       label: '기간',
     },
   ],
-  routeMap: [
+  [PageType.RouteMap]: [
     {
       type: FilterType.Checkbox,
       key: 'category',
@@ -159,7 +160,7 @@ export const filterSchemas: Record<string, FilterSchema[]>= {
     //   label: '기간',
     // },
   ],
-  operationInfo: [
+  [PageType.OperationInfo]: [
     {
       type: FilterType.Checkbox,
       key: 'category',
@@ -207,6 +208,82 @@ export const filterSchemas: Record<string, FilterSchema[]>= {
       type: FilterType.DateRange,
       key: 'range2',
       label: '데이터기준일자',
+    },
+  ],
+  [PageType.BatchCycle]: [
+    {
+      type: FilterType.Checkbox,
+      key: 'category',
+      label: '검색어 필터',
+      options: [
+        {accessorKey: '1', header: '차량번호'},
+        {accessorKey: '2', header: '승차인원'},
+        {accessorKey: '3', header: '바닥면전'},
+        {accessorKey: '4', header: 'CCTV1'},
+      ].filter(isAccessorColumn)
+        .map(col => ({
+          key: col.accessorKey,
+          label: col.header,
+        }))
+    },
+    {
+      type: FilterType.Radio,
+      key: 'q',
+      label: '방식',
+      options: [
+        {key: '1', label: '일정간격'},
+        {key: '2', label: '특정시간'},
+      ]
+    },
+
+    {
+      type: FilterType.DateRange,
+      key: 'range2',
+      label: '데이터기준일자',
+    },
+  ],
+  [PageType.ProgrammingInfo]: [
+    {
+      type: FilterType.Checkbox,
+      key: 'category',
+      label: '검색어 필터',
+      options: [
+        {accessorKey: '1', header: '노선번호'},
+        {accessorKey: '2', header: '노선명'},
+        {accessorKey: '3', header: '편성번호'},
+        {accessorKey: '4', header: '차량번호'},
+      ].filter(isAccessorColumn)
+        .map(col => ({
+          key: col.accessorKey,
+          label: col.header,
+        }))
+    },
+    {
+      type: FilterType.Select,
+      key: 'type',
+      label: '구분',
+      options: [
+        {key: '1', label: '간선'},
+        {key: '2', label: '고속'},
+      ]
+    },
+    {
+      type: FilterType.DateRange,
+      key: 'range1',
+      label: '개통일자',
+    },
+  ],
+  [PageType.StationInfo] : [],
+  [PageType.CarriageInfo] : [],
+  [PageType.EvacuationInfo] : [
+    {
+      type: FilterType.Checkbox,
+      key: 'category',
+      label: '검색 기준',
+      options: [
+        {key: '1', label: '번호(코드)'},
+        {key: '2', label: '임계치'},
+      ]
     },
   ]
 }

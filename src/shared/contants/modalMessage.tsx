@@ -1,12 +1,49 @@
-export const MODAL_TITLE = {
-  editMenu: '메뉴정보 등록/수정',
-  CongestionAddAndEdit: '혼잡도 단계 등록/수정',
-  Banner: '배너 정보 등록/수정',
-  RouteMap: '노선정보 등록/수정',
-  OperationInfo: '운행정보 등록/수정'
+import {PageType} from "@/shared/enum/PageType";
+
+export const MODAL_TITLE: Partial<Record<PageType, string>> = {
+  [PageType.Menu]: '메뉴정보 등록/수정',
+  [PageType.CongestionStep]: '혼잡도 단계 등록/수정',
+  [PageType.Banner]: '배너 정보 등록/수정',
+  [PageType.RouteMap]: '노선정보 등록/수정',
+  [PageType.OperationInfo]: '운행정보 등록/수정',
+  [PageType.BatchCycle]: 'DB 업데이트 주기 등록/수정',
+  [PageType.ProgrammingInfo] : '편성정보 등록/수정',
+  [PageType.StationInfo]: '역사정보 등록/수정',
+  [PageType.CarriageInfo]: '',
+  [PageType.EvacuationInfo]: '대피안내정보 등록/수정'
 }
 
 export const MODAL_MESSAGES = {
+
+  sendEmail: {
+    title: '이용안내',
+    message: '회원가입시 등록된 이메일 주소로 정보를 발송하였습니다.'
+  },
+
+  successSignup: {
+    title: '확인',
+    message: (
+      <>
+        회원가입이 완료 되었습니다.<br />
+        [확인]버튼을 누르면 회원로그인 페이지로 이동합니다.
+      </>
+    )
+  },
+
+  showVerificationSentModal: {
+    title: '확인',
+    message: (
+      <>
+        입력하신 이메일 주소로 인증메일이 발송 되었습니다.
+        <br />
+        <br />
+        이메일 확인 후 내용에 기입된 인증번호를
+        <br />
+        아래 인증번호 입력란에 입력후 회원가입을 계속 진행하세요.
+      </>
+    )
+  },
+
   confirmDeleteUser: {
     title: '정말 탈퇴하시겠습니까?',
     message: '탈퇴하면 계정이 완전히 삭제됩니다.',

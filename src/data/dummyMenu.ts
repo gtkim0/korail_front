@@ -23,7 +23,7 @@ export const menuList = [
   { id: '33', pid: '11', url: '/basic/train/dispatch', component: 'BatchCycle', order: 4, depth: 3, name: '배차주기', description: '' },
 
   { id: '12', pid: '2', url: '', component: '', order: 4, depth: 2, name: '역사정보', description: '' },
-  { id: '34', pid: '12', url: '/basic/subway/info', component: 'HistoryInfo', order: 1, depth: 3, name: '역사정보', description: '' },
+  { id: '34', pid: '12', url: '/basic/subway/info', component: 'StationInfo', order: 1, depth: 3, name: '역사정보', description: '' },
   { id: '35', pid: '12', url: '/basic/subway/area', component: 'ZoneInfo', order: 2, depth: 3, name: '구역정보', description: '' },
   { id: '36', pid: '12', url: '/basic/subway/evacuationInfo', component: 'EvacuationInfo', order: 3, depth: 3, name: '대피안내정보', description: '' },
 
@@ -40,32 +40,81 @@ export const menuList = [
 
   
   // 혼잡도 통계 하위
+  { id: '333', pid: '3', url: '', component: '', order: 1, depth: 2, name: '열차 통계', description: '' },
+  { id: '334', pid: '333', url: '/congestion-statistics/train/statistics', component: 'TrainStatistics', order: 1, depth: 3, name: '열차 통계', description: '' },
+  { id: '335', pid: '3', url: '', component: '', order: 2, depth: 2, name: '역사 통계', description: '' },
+  { id: '336', pid: '335', url: '/congestion-statistics/stations/statistics', component: 'StationStatistics', order: 1, depth: 3, name: '역사 통계', description: '' },
+  { id: '337', pid: '3', url: '', component: '', order: 3, depth: 2, name: '인프라모니터링', description: '' },
+  { id: '338', pid: '337', url: '/congestion-statistics/infra/model', component: 'InfraModelAnalysis', order: 1, depth: 3, name: '분석모델', description: '' },
+  { id: '339', pid: '337', url: '/congestion-statistics/infra/equipment', component: 'InfraEquipmentAnalysis', order: 2, depth: 3, name: '분석장비', description: '' },
+  { id: '340', pid: '3', url: '', component: '', order: 4, depth: 2, name: '데이터보관', description: '' },
+  { id: '341', pid: '340', url: '/congestion-statistics/data/storage-cycle', component: 'DataStorageCycle', order: 1, depth: 3, name: '데이터보관주기', description: '' },
+  { id: '342', pid: '340', url: '/congestion-statistics/data/backup-path', component: 'DataBackupPath', order: 2, depth: 3, name: '데이터백업경로', description: '' },
 
   // 비상 대응 하위
   { id: '444', pid: '4', url: '', component: '', order: 1, depth: 2, name: '비상 대응 메뉴얼', description: '' },
   { id: '445', pid: '444', url: '/emergency/manual', component: 'EmergencyManual', order: 1, depth: 3, name: '비상 대응 메뉴얼', description: '' },
-
   { id: '446', pid: '4', url: '', component: '', order: 2, depth: 2, name: '현장 조치 메뉴얼', description: '' },
   { id: '447', pid: '446', url: '/emergency/action/manual', component: 'EmergencyActionManual', order: 1, depth: 3, name: '현장 조치 메뉴얼', description: '' },
-
   { id: '448', pid: '4', url: '', component: '', order: 3, depth: 2, name: '현장 인원', description: '' },
   { id: '449', pid: '448', url: '/emergency/personnel', component: 'EmergencyFieldPersonnel', order: 1, depth: 3, name: '현장 인원', description: '' },
-
   { id: '450', pid: '4', url: '', component: '', order: 4, depth: 2, name: '안내 방송', description: '' },
-  { id: '451', pid: '450', url: '/emergency/guide/info', component: '', order: 1, depth: 3, name: '안내방송 정보', description: '' },
-  { id: '452', pid: '450', url: '/emergency/automatic/manual', component: '', order: 2, depth: 3, name: '자동수동 방송', description: '' },
-
+  { id: '451', pid: '450', url: '/emergency/guide/info', component: 'EmergencyGuideInfo', order: 1, depth: 3, name: '안내방송 정보', description: '' },
+  { id: '452', pid: '450', url: '/emergency/automatic/manual', component: 'EmergencyBroadcastControl', order: 2, depth: 3, name: '자동수동 방송', description: '' },
   { id: '453', pid: '4', url: '', component: '', order: 5, depth: 2, name: '알림 규칙', description: '' },
-  { id: '454', pid: '453', url: '/emergency/notification-rules', component: '', order: 1, depth: 3, name: '알림 규칙', description: '' },
+  { id: '454', pid: '453', url: '/emergency/notification-rules', component: 'NotificationRules', order: 1, depth: 3, name: '알림 규칙', description: '' },
 
 
-  // temp 들도 포함
-  // { id: '150', pid: '3', url: '', component: '', order: 7, depth: 2, name: '메뉴정보', description: '' },
-  // { id: '151', pid: '3', url: '', component: '', order: 7, depth: 2, name: '메뉴정보', description: '' },
-  // { id: '152', pid: '3', url: '', component: '', order: 7, depth: 2, name: '메뉴정보', description: '' },
-  // { id: '153', pid: '3', url: '', component: '', order: 7, depth: 2, name: '메뉴정보', description: '' },
-  // { id: '154', pid: '3', url: '', component: '', order: 7, depth: 2, name: '메뉴정보', description: '' },
-  // { id: '155', pid: '3', url: '', component: '', order: 7, depth: 2, name: '메뉴정보', description: '' },
+  // 권한 관리 하위
+  { id: '700', pid: '7', url: '', component: '', order: 1, depth: 2, name: '권한 그룹', description: '' },
+  { id: '703', pid: '700', url: '/permission/group', component: 'PermissionGroup', order: 1, depth: 2, name: '권한 그룹', description: '' },
+  { id: '701', pid: '7', url: '', component: '', order: 1, depth: 2, name: '역사별 권한', description: '' },
+  { id: '704', pid: '701', url: '/permission/station', component: 'PermissionStation', order: 1, depth: 2, name: '역사별 권한', description: '' },
+  { id: '702', pid: '7', url: '', component: '', order: 1, depth: 2, name: '메뉴별 권한', description: '' },
+  { id: '705', pid: '702', url: '/permission/menu', component: 'PermissionMenu', order: 1, depth: 2, name: '메뉴별 권한', description: '' },
+
+  // 마이페이지
+
+  
+
+  // { id: '61', pid: null, depth: 2, name: '권한 그룹', url: '', component: '', code: 'MS-MP-030' },
+  // { id: '61-1', pid: '61', depth: 3, name: '권한 그룹', url: '/permission/group', component: 'PermissionGroup', code: 'MS-MP-030-01' },
+  //
+  // { id: '62', pid: null, depth: 2, name: '역사별 권한', url: '', component: '', code: 'MS-MP-031' },
+  // { id: '62-1', pid: '62', depth: 3, name: '역사별 권한', url: '/permission/station', component: 'PermissionStation', code: 'MS-MP-031-01' },
+  //
+  // { id: '63', pid: null, depth: 2, name: '매뉴별 권한', url: '', component: '', code: 'MS-MP-032' },
+  // { id: '63-1', pid: '63', depth: 3, name: '매뉴별 권한', url: '/permission/menu', component: 'PermissionMenu', code: 'MS-MP-032-01' },
+  //
+  // // 마이페이지
+  // { id: '64', pid: null, depth: 2, name: '회원 정보', url: '', component: '', code: 'MS-MP-033' },
+  // { id: '64-1', pid: '64', depth: 3, name: '회원 정보', url: '/mypage/profile', component: 'UserProfile', code: 'MS-MP-033-01' },
+  //
+  // { id: '65', pid: null, depth: 2, name: '비밀번호 재설정', url: '', component: '', code: 'MS-MP-034' },
+  // { id: '65-1', pid: '65', depth: 3, name: '비밀번호 재설정', url: '/mypage/reset-password', component: 'ResetPassword', code: 'MS-MP-034-01' },
+  //
+  // { id: '66', pid: null, depth: 2, name: '권한 조회', url: '', component: '', code: 'MS-MP-035' },
+  // { id: '66-1', pid: '66', depth: 3, name: '권한 조회', url: '/mypage/permission/view', component: 'PermissionView', code: 'MS-MP-035-01' },
+  // { id: '66-2', pid: '66', depth: 3, name: '권한 요청', url: '/mypage/permission/request', component: 'PermissionRequest', code: 'MS-MP-035-02' },
+  //
+  // { id: '68', pid: null, depth: 2, name: '회원 탈퇴', url: '', component: '', code: 'MS-MP-036' },
+  // { id: '68-1', pid: '68', depth: 3, name: '회원탈퇴', url: '/mypage/withdraw', component: 'UserWithdraw', code: 'MS-MP-036-01' },
+  //
+  // // 영상조회반출
+  // { id: '69', pid: null, depth: 2, name: '영상 조회', url: '', component: '', code: 'MS-MP-037' },
+  // { id: '69-1', pid: '69', depth: 3, name: '영상조회', url: '/video/export/view', component: 'VideoView', code: 'MS-MP-037-01' },
+  //
+  // { id: '70', pid: null, depth: 2, name: '반출 요청', url: '', component: '', code: 'MS-MP-038' },
+  // { id: '70-1', pid: '70', depth: 3, name: '반출 요청', url: '/video/export/request', component: 'ExportRequest', code: 'MS-MP-038-01' },
+  //
+  // { id: '71', pid: null, depth: 2, name: '결재 수신', url: '', component: '', code: 'MS-MP-039' },
+  // { id: '71-1', pid: '71', depth: 3, name: '결재 대기', url: '/video/export/receive/pending', component: 'ApprovalReceivePending', code: 'MS-MP-039-01' },
+  // { id: '71-2', pid: '71', depth: 3, name: '결재 완료', url: '/video/export/receive/completed', component: 'ApprovalReceiveCompleted', code: 'MS-MP-039-02' },
+  //
+  // { id: '73', pid: null, depth: 2, name: '결재 상신', url: '', component: '', code: 'MS-MP-040' },
+  // { id: '73-1', pid: '73', depth: 3, name: '결재 대기', url: '/video/export/request/pending', component: 'ApprovalSubmitPending', code: 'MS-MP-040-01' },
+  // { id: '73-2', pid: '73', depth: 3, name: '결재 완료', url: '/video/export/request/completed', component: 'ApprovalSubmitCompleted', code: 'MS-MP-040-02' }
+  //
 ];
 
 export const dummyMenu = menuList

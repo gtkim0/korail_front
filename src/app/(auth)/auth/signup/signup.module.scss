@@ -1,0 +1,165 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+}
+
+.content {
+  flex: 1;
+  padding: 6.4rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 2rem;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  align-self: stretch;
+  border-bottom: 1px solid #D5D5D6;
+}
+
+.logoRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  align-self: stretch;
+}
+
+.logoImage {
+  width: 16.6rem;
+  height: 4rem;
+  aspect-ratio: 83 / 20;
+  position: relative;
+}
+
+.title {
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: #363637;
+}
+
+.systemLabel {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.formSection {
+  display: flex;
+  width: 76rem;
+  padding: 4.4rem 3.2rem 0 3.2rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 5.6rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 3.2rem;
+  align-self: stretch;
+}
+
+.formItem {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  align-self: stretch;
+}
+
+.inputRow {
+  display: flex;
+  gap: 0.8rem;
+  align-self: stretch;
+  align-items: flex-start;
+}
+
+.atSymbol {
+  line-height: 25.5px;
+  font-weight: 500;
+  letter-spacing: 0;
+  font-size: 1.5rem;
+  margin: auto 0;
+}
+
+.dropdownWrapper {
+  width: 100%;
+  border: 1px solid #d5d5d6;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 0 1.2rem;
+  height: 100%;
+}
+
+.input {
+  width: 100%;
+  min-width: 4rem;
+  height: 4.4rem;
+  display: flex;
+  padding: 0 1.2rem;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid #D5D5D6;
+}
+
+.inputDisabled {
+  background: #EBEBEB;
+}
+
+.sendButton {
+  white-space: nowrap;
+  height: 4.4rem;
+  padding: 0 1.2rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  background: #D5D5D6;
+}
+
+.emailHint {
+  color: #6B6B6E;
+  font-size: 1.2rem;
+}
+
+.row {
+  display: flex;
+  gap: 5.6rem;
+  align-self: stretch;
+}
+
+.flex1 {
+  flex: 1;
+}
+
+.footerButtons {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.2rem;
+  align-self: stretch;
+}
+
+.cancelButton {
+  width: 100%;
+  display: flex;
+  height: 4.4rem;
+  min-width: 9rem;
+  padding: 0 1.6rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.error {
+  color: red;
+}

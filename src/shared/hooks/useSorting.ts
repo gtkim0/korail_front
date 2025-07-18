@@ -11,6 +11,7 @@ export function useSorting<T>({ defaultSortKey = 'name', fetchFn }: UseSortingOp
   const [sorting, setSorting] = useState<SortingState>([
     { id: defaultSortKey, desc: false },
   ]);
+
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState(false);
 

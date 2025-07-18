@@ -84,7 +84,7 @@ export default function RouteMapView () {
       />
 
       <BaseModal
-        title={MODAL_TITLE.RouteMap}
+        title={MODAL_TITLE[PageType]}
         maxWidth={'lg'}
         isOpen={isOpen}
         onCloseAction={close}

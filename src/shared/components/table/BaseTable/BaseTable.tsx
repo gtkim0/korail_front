@@ -9,29 +9,36 @@ import {
 } from '@tanstack/react-table';
 import styles from './BaseTable.module.scss';
 
-interface TableProps<T extends object> {
-  columns: ColumnDef<T, any>[];
+interface TableProps<T extends { id: string | number }> {
+  columns: ColumnDef<T, unknown>[];
   data: T[];
+  clickedItem: T | undefined;
   sorting: SortingState;
   rowSelection: RowSelectionState;
   onRowSelectionChange: OnChangeFn<RowSelectionState>;
   onSortingChange: OnChangeFn<SortingState>;
   onRowSelectChange?: (selectedRows: T[]) => void;
-  setPagination?: any;
   minWidth?: string;
+  pageIndex: number;
+  pageSize: number;
+  pageCount: number;
+  onChangeClickedItem: (item: T) => void;
 }
 
-export default function Table<T extends object>({
-                                                  columns,
-                                                  data,
-                                                  sorting,
-                                                  rowSelection,
-                                                  onRowSelectionChange,
-                                                  onSortingChange,
-                                                  onRowSelectChange,
-                                                  setPagination,
-                                                  minWidth = '120rem'
-                                                }: TableProps<T>) {
+export default function Table<T extends { id: string | number }>(
+  {
+    columns,
+    data,
+    clickedItem,
+    sorting,
+    rowSelection,
+    onRowSelectionChange,
+    onSortingChange,
+    onChangeClickedItem,
+    onRowSelectChange,
+    minWidth = '120rem',
+    pageCount, pageSize, pageIndex
+  }: TableProps<T>) {
 
   const table = useReactTable({
     data,
@@ -39,27 +46,30 @@ export default function Table<T extends object>({
     state: {
       sorting,
       rowSelection,
+      pagination: {
+        pageIndex,
+        pageSize,
+      }
     },
     onSortingChange,
     onRowSelectionChange,
     enableRowSelection: true,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onPaginationChange: setPagination,
     enableSorting: true,
+    manualPagination: true, // 이게 수동설정
+    pageCount,  // 총 페이지수
   });
-
-  if (onRowSelectChange) {
-    const selectedRows = table.getSelectedRowModel().rows.map(r => r.original);
-    onRowSelectChange(selectedRows);
-  }
 
   return (
     <div style={{overflowX: 'auto', minWidth: '100%'}}>
       <table className={styles.table} style={{minWidth}}>
-        <thead style={{borderRadius:'6px'}}>
+        <thead style={{borderRadius: '6px'}}>
         {table.getHeaderGroups().map(headerGroup => (
-          <tr key={headerGroup.id} className={styles.tr}>
+          <tr
+            key={headerGroup.id}
+            className={styles.tr}
+          >
             {headerGroup.headers.map(header => (
               <th
                 key={header.id}
@@ -83,17 +93,28 @@ export default function Table<T extends object>({
         ))}
         </thead>
         <tbody className={styles.tbody}>
-        {table.getRowModel().rows.map(row => (
-          <tr key={row.id} className={styles.tr}>
-            {row.getVisibleCells().map(cell => (
-              <td key={cell.id} className={styles.td}>
-                <div className={styles.cellContent}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </div>
-              </td>
-            ))}
-          </tr>
-        ))}
+        {table.getRowModel().rows.map(row => {
+          return (
+            <tr
+              style={{background: row.original.id === clickedItem?.id ? 'red' : '#fff'}}
+              key={row.id}
+              className={styles.tr}
+              onClick={(e) => {
+                e.stopPropagation();
+                console.log('Row:', row.original);
+                onChangeClickedItem(row.original);
+              }}
+            >
+              {row.getVisibleCells().map(cell => (
+                <td key={cell.id} className={styles.td}>
+                  <div className={styles.cellContent}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </div>
+                </td>
+              ))}
+            </tr>
+          )
+        })}
         </tbody>
       </table>
     </div>

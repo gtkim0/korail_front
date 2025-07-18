@@ -1,22 +1,23 @@
 import TableFilter from "@/shared/components/TableFilter/TableFilter";
 import Table from "@/shared/components/table/BaseTable/BaseTable";
-import {withRowSelection} from "@/shared/components/table/withRowSelection";
-import {BannerColumns, dummyBannerData} from "@/features/banner/columns/BannerColumns";
 import Pagination from "@/shared/components/table/Pagination/Pagination";
 import {dummyMenuData} from "@/features/menu/columns/menuColumns";
 import {ColumnDef, OnChangeFn, RowSelectionState, SortingState} from "@tanstack/react-table";
 
 interface Props<T extends object> {
   onSelect: (v: { key: string, label: string})=> void;
+  onEdit?: (v: T)=> void;
+  onDelete?: ()=> void;
   columns: ColumnDef<T, any>[];
   data: T[];
+  clickedItem: T | undefined;
   sorting: SortingState;
   rowSelection: RowSelectionState;
   onRowSelectionChange: OnChangeFn<RowSelectionState>;
   onSortingChange: OnChangeFn<SortingState>;
   // onRowSelectChange?: (selectedRows: T[]) => void;
   setPagination?: any;
-
+  onChangeClickedItem: (item: T) => void;
   pageIndex: number;
   pageSize: number;
   pageCount: number;
@@ -24,30 +25,43 @@ interface Props<T extends object> {
   setPageSize: (size: number) => void;
 }
 
-export default function TableWrapper<T extends object>(props: Props<T>) {
+export default function TableWrapper<T extends { id: string | number }>(props: Props<T>) {
 
   const {
-    onSelect, columns, data, sorting, rowSelection, onRowSelectionChange,onSortingChange,
+    onSelect,
+    onEdit, onDelete,
+    columns, data,
+    clickedItem,
+    sorting, rowSelection, onRowSelectionChange,onSortingChange,
     setPagination,
     pageIndex,
     pageSize,
     pageCount,
+    onChangeClickedItem,
     setPageIndex,
     setPageSize
   } = props;
 
   return (
     <div style={{ flex: 1}}>
-      <TableFilter onSelect={onSelect} />
+      <TableFilter
+        onSelect={onSelect}
+        onEdit={onEdit}
+        onDelete={onDelete}
+      />
 
-      <Table
+      <Table<T>
         columns={columns}
         data={data}
+        clickedItem={clickedItem}
         sorting={sorting}
         onSortingChange={onSortingChange}
         rowSelection={rowSelection}
         onRowSelectionChange={onRowSelectionChange}
-        setPagination={setPagination}
+        onChangeClickedItem={onChangeClickedItem}
+        pageCount={Math.ceil(dummyMenuData.length / pageSize)}
+        pageIndex={pageIndex}
+        pageSize={pageSize}
       />
 
       <Pagination

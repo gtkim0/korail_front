@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+import logger from "@/lib/logger";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 
@@ -38,6 +39,19 @@ export async function serverFetch<T>(
 
   if (!res.ok) {
     const message = await res.text();
+    logger.error({ message: 'res >>>', data: {
+      endPoint: '/board',
+      method: 'GET',
+      body: {},
+      headers: {},
+      params: {},
+      response: {
+        status: res.status,
+        statusText: res.statusText,
+        headers: res.headers,
+        body: message
+      }
+    }});
     throw new Error(`서버 API 요청 실패 (${res.status}): ${message}`);
   }
 

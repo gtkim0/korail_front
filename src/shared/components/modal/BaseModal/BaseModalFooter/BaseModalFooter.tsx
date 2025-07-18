@@ -1,12 +1,13 @@
 import styles from './BaseModalFooter.module.css';
 interface Props {
-  editAreaRef?: any;
+  onSubmit: ()=> void;
   close: ()=> void;
+  disabled?: boolean;
 }
 
 export const BaseModalFooter = (props: Props) => {
 
-  const { editAreaRef, close } = props;
+  const { onSubmit, close, disabled } = props;
 
   return (
     <div className={styles.footer}>
@@ -14,8 +15,10 @@ export const BaseModalFooter = (props: Props) => {
         취소
       </button>
       <button
+        type={'submit'}
         className={`${styles.button} ${styles.save}`}
-        onClick={() => editAreaRef.current?.submit()}
+        onClick={onSubmit}
+        style={{ background: disabled ? 'grey': '#0061bb', color: disabled ? '#000' : '#fff'}}
       >
         저장
       </button>

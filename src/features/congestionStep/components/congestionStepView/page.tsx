@@ -21,6 +21,7 @@ import {BaseModalFooter} from "@/shared/components/modal/BaseModal/BaseModalFoot
 import MenuEditArea, {type MenuEditAreaRef} from "@/features/menu/MenuEditArea/MenuEditArea";
 import CongestionAddAndEditModal
   from "@/features/congestionStep/components/CongestionAddAndEditModal/CongestionAddAndEditModal";
+import {PageType} from "@/shared/enum/PageType";
 
 export default function CongestionStepView() {
 
@@ -75,16 +76,14 @@ export default function CongestionStepView() {
         value={filter}
       />
       <TableFilter/>
-
       <div style={{display:'flex', flex: 1, flexDirection:'column', justifyContent: 'space-between'}}>
-      <Table
+      <Table<CongestionStep>
         columns={withRowSelection(congestionStepColumns)}
         data={dummyCongestionData}
         sorting={sorting}
         onSortingChange={onSortingChange}
         rowSelection={rowSelection}
-        onRowSelectionChange={onRowSelectionChange}
-        setPagination={setPagination}
+        onRowSelectionChange={onRowSelectionChange} pageIndex={0} pageSize={0} pageCount={0}
       />
       <Pagination
         pageIndex={pagination.pageIndex}
@@ -95,8 +94,9 @@ export default function CongestionStepView() {
       />
       </div>
       <BaseModal
-        title={MODAL_TITLE.CongestionAddAndEdit}
+        title={MODAL_TITLE[PageType.CongestionStep]}
         maxWidth={'lg'}
+
         isOpen={isOpen}
         onCloseAction={close}
         footer={<BaseModalFooter editAreaRef={editAreaRef} close={close}/>}

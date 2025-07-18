@@ -4,11 +4,9 @@ import PortalContentLayout from "@/features/lyaouts/PortalContentLayout/PortalCo
 import {dummyMenu} from "@/data/dummyMenu";
 import {BaseMenu} from "@/types/menu";
 
-export default async function Menu({path, menus}: { path: string, menus: BaseMenu[] }) {
+export default async function Menu() {
 
   return (
-    <PortalContentLayout path={path} menus={menus}>
-      <MenuView initialMenus={dummyMenu}/>
-    </PortalContentLayout>
+    <MenuView initialMenus={dummyMenu}/>
   )
 }

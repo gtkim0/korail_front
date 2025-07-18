@@ -11,7 +11,45 @@ export default function PortalSidebar({menu}: { menu: BaseMenu[] }) {
   const pathname = usePathname();
   const setExpandedMenuId = useGlobalStore(state => state.setExpandedMenuId);
 
-  useEffect(() => {
+  const currentMenu = useMemo(() => {
+    return menu.find(m => m.url === pathname);
+  }, [pathname, menu]);
+
+  const current2DepthId = useMemo(() => {
+    if (currentMenu?.depth === 3) {
+      const parent2 = menu.find(m => m.id === currentMenu.pid);
+      return parent2?.id ?? null;
+    }
+    if (currentMenu?.depth === 2) {
+      return currentMenu.id;
+    }
+    return null;
+  }, [currentMenu, menu]);
+  const current1DepthId = useMemo(() => {
+    const current2 = menu.find(m => m.id === current2DepthId);
+    return current2?.pid ?? null;
+  }, [current2DepthId, menu]);
+
+  const title = menu.find(i=> i.id === current1DepthId)?.name
+
+  const secondDepthMenus = useMemo(() => {
+    return menu.filter(m => m.depth === 2 && m.pid === current1DepthId);
+  }, [menu, current1DepthId]);
+
+  const structuredMenus = useMemo(() => {
+    return secondDepthMenus.map(parent => {
+      const children = menu.filter(m => m.pid === parent.id);
+      const isExpanded = parent.id === current2DepthId;
+
+      return {
+        ...parent,
+        children,
+        isExpanded,
+      };
+    });
+  }, [secondDepthMenus, current2DepthId, menu]);
+
+  useEffect(() =>  {
     const currentMenu = menu.find(m => m.url === pathname);
 
     if (currentMenu?.depth === 3) {
@@ -22,28 +60,16 @@ export default function PortalSidebar({menu}: { menu: BaseMenu[] }) {
     }
   }, [pathname, menu, setExpandedMenuId]);
 
-  const secondDepthMenus = useMemo(() => menu.filter(item => item.pid === '2'), [menu]);
-
-  const structuredMenus = useMemo(() => {
-    return secondDepthMenus.map(parent => {
-      const children = menu.filter(child => child.pid === parent.id);
-      return {
-        ...parent,
-        children,
-      };
-    });
-  }, [secondDepthMenus, menu]);
-
   return (
     <div className={styles.portalSidebar}>
       <div className={styles.portalSidebarHeader}>
         <span className={styles.secDep}>
-        기본정보
+          {title}
         </span>
       </div>
       <div className={styles.menuScrollArea}>
         {structuredMenus.map(item => (
-          <PortalMenuItem key={item.id} item={item} />
+          <PortalMenuItem key={item.id} item={item}/>
         ))}
       </div>
     </div>

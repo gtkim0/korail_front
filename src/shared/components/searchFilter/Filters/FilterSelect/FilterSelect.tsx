@@ -35,7 +35,7 @@ export default function FilterSelect({options, value, onChange}: FilterSelectPro
   return (
     <div className={styles.customSelectWrapper} ref={dropdownRef}>
       <div className={styles.selectedBox} onClick={() => setOpen(prev => !prev)}>
-        <span>{selectedLabel}</span>
+        <span style={{flex: 1}}>{selectedLabel}</span>
         <ImageWrapper width={16} height={16} src={'/arrow-down.svg'} alt=""/>
       </div>
 

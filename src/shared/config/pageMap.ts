@@ -20,6 +20,18 @@ export const pageComponentNameMap = {
     SaveConditionalImage: '조건영상저장',
     Menu: '메뉴정보',
     Banner: '배너정보',
+    TrainStatistics: '열차 통계',
+    StationStatistics: '역사 통계',
+    InfraModelAnalysis: '분석모델',
+    InfraEquipmentAnalysis: '분석장비',
+    DataStorageCycle: '데이터보관주기',
+    DataBackupPath: '데이터백업경로',
+    EmergencyManual: '비상 대응 메뉴얼',
+    EmergencyActionManual: '현장 조치 메뉴얼',
+    EmergencyFieldPersonnel: '현장 인원',
+    EmergencyGuideInfo: '안내방송 정보',
+    EmergencyBroadcastControl: '자동수동 발송',
+    NotificationRules: '알림 규칙'
   }
 
 

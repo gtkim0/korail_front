@@ -14,9 +14,12 @@ export async function clientFetch<T>(
   url: string,
   options: RequestInit = { method: 'GET' }
 ): Promise<T> {
+
   const token = localStorage.getItem('access_token'); // 또는 쿠키 파싱해서 가져오기
 
-  const res = await fetch(url, {
+  const rootFlag = '/apis'
+
+  const res = await fetch(`${rootFlag}${url}`, {
     method: options.method ?? 'GET',
     ...options,
     headers: {
@@ -32,7 +35,13 @@ export async function clientFetch<T>(
     throw new Error(`클라이언트 API 요청 실패 (${res.status}): ${message}`);
   }
 
-  return res.json();
+  const contentType = res.headers.get('content-type');
+
+  if (contentType && contentType.includes('application/json')) {
+    return res.json();
+  }
+
+  return {} as T;
 }
 
 export const clientGet = <T>(
@@ -44,11 +53,13 @@ export const clientGet = <T>(
   return clientFetch<T>(fullUrl, { method: 'GET' });
 };
 
-export const clientPost = <T>(url: string, body: any) =>
-  clientFetch<T>(url, {
+export const clientPost = <T>(url: string, body: any) => {
+  console.log(body)
+  return clientFetch<T>(url, {
     method: 'POST',
     body: JSON.stringify(body),
   });
+}
 
 export const clientPut = <T>(url: string, body: any) =>
   clientFetch<T>(url, {

@@ -24,7 +24,7 @@ type FilterOption = {
   label: string;
 };
 
-export default function MenuView ({initialMenus}: { initialMenus: BaseMenu[]}) {
+export default function MenuView () {
 
   const setMenu = useGlobalStore(state=> state.setMenu);
   const { isOpen, open, close } = useModal();
@@ -93,7 +93,7 @@ export default function MenuView ({initialMenus}: { initialMenus: BaseMenu[]}) {
         setPageSize={(size) => setPagination(prev => ({ ...prev, pageSize: size }))}
       />
       <BaseModal
-        title={MODAL_TITLE.editMenu}
+        title={MODAL_TITLE[PageType]}
         maxWidth={'lg'}
         isOpen={isOpen}
         onCloseAction={close}

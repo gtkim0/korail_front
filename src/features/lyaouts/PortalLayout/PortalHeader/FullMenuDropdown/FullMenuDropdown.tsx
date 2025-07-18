@@ -55,7 +55,7 @@ export default function FullMenuDropdown({menuGroup, visible}: Props) {
                       <div className={styles.subMenuLabel}>{menu.name}</div>
                       <div className={styles.thirdDepthWrapper}>
                         {menu.thirdDepths.map(third => (
-                          <div key={third.id} className={styles.thirdDepthItem}>
+                          <div onClick={()=> router.push(third.url)} key={third.id} className={styles.thirdDepthItem}>
                             {third.name}
                           </div>
                         ))}

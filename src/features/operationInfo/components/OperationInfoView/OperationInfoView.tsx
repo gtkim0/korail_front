@@ -79,7 +79,7 @@ export default function OperationInfoView () {
       />
 
       <BaseModal
-        title={MODAL_TITLE.OperationInfo}
+        title={MODAL_TITLE[PageType]}
         maxWidth={'lg'}
         isOpen={isOpen}
         onCloseAction={close}

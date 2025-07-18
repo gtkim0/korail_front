@@ -2,6 +2,7 @@ import {ColumnDef} from "@tanstack/react-table";
 import {Menu} from "@/features/menu/columns/menuColumns";
 
 export type CongestionStep = {
+  id: string;
   code: string;
   step: string;
   max: string;
@@ -14,6 +15,7 @@ export type CongestionStep = {
 
 export const dummyCongestionData = [
   {
+    id: '1',
     code: 'C00',
     step: '1',
     max: '255',
@@ -24,6 +26,7 @@ export const dummyCongestionData = [
     date: '2025-06-25'
   },
   {
+    id: '2',
     code: 'C00',
     step: '1',
     max: '255',
@@ -34,6 +37,7 @@ export const dummyCongestionData = [
     date: '2025-06-25'
   },
   {
+    id: '3',
     code: 'C00',
     step: '1',
     max: '255',

@@ -6,6 +6,7 @@ import ToggleSwitch from "@/shared/components/toggleSwitch/ToggleSwitch";
 import DatePickerRange from "@/shared/components/DatePicker/DatePickerRange";
 import SearchModalTrigger from "@/shared/components/searchModalTrigger/searchModalTrigger";
 import {FilterType} from "@/shared/enum/FilterType";
+import FilterRadioGroup from "@/shared/components/searchFilter/Filters/FilterRadioGroup/FilterRadioGroup";
 
 type FilterSchema = {
   type: string;
@@ -104,6 +105,16 @@ export function DynamicFilterRenderer({schema, value, onChange, endPoint}: {
                   endPoint={endPoint}
                 />
               )}
+
+              {filter.type === FilterType.Radio && (
+                <FilterRadioGroup
+                  name={filter.key}
+                  options={filter.options}
+                  selected={value[filter.key]}
+                  onChange={(val)=> handleChange(filter.key, val)}
+                />
+              )}
+
             </div>
           </div>
         </FilterGroup>

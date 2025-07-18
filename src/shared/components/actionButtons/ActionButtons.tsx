@@ -11,7 +11,7 @@ interface ActionButton {
 }
 
 interface ActionButtonsProps {
-  buttons: [ActionButton, ActionButton];
+  buttons: [ActionButton, ActionButton] | [ActionButton];
 }
 
 export const ActionButtons = ({ buttons }: ActionButtonsProps) => {

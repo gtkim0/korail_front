@@ -62,6 +62,7 @@
   cursor: pointer;
   height: 4.4rem;
   box-sizing: border-box;
+  user-select: none;
   @include mobile {
     justify-content: flex-start;
   }

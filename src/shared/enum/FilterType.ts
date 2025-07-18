@@ -4,5 +4,6 @@ export enum FilterType {
   Select = 'select',
   DateRange = 'dateRange',
   ColorPicker = 'colorPicker',
-  SearchModal = 'searchModal'
+  SearchModal = 'searchModal',
+  Radio = 'radio'
 }

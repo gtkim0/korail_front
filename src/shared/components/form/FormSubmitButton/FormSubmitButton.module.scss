@@ -1,0 +1,24 @@
+.submitButton {
+  width: 100%;
+  display: flex;
+  height: 4.4rem;
+  min-width: 9rem;
+  padding: 0 1.6rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  background: #D5D5D6;
+}
+
+.error {
+  color: red;
+}
+
+.btnActive {
+  background: #0070D4;
+  color: #fff;
+}
+
+.inactive {
+  background: #D5D5D6;
+}

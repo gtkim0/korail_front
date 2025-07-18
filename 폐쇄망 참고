@@ -1,0 +1,22 @@
+
+폐쇄망에서 필요한 라이브러리 있을경우
+
+(1) ex) npm pack axios@1.6.0  << 개별 다운 후 offline-cache 폴더에 추가.
+
+package.json 에 dependencies 에 추가
+
+(2) ex ) "axios": "file:offline-cache/axios-1.6.0.tgz"   << .tgz 경로 직접 명시하여 의존성 추가
+
+(3) yarn install --offline
+
+--------------------------
+
+gitea
+
+path : C\git
+
+port 10050
+
+name: gtkim
+password: !sjaks7788
+

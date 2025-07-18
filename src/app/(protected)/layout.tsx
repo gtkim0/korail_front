@@ -11,7 +11,7 @@ export default async function ProtectedLayout({ children }: { children: React.Re
   const token = cookieStore.get('access_token')
 
   if (!token) {
-    redirect('/login');
+    redirect('/auth/login');
   }
 
   return <AuthGuard>{children}</AuthGuard>;

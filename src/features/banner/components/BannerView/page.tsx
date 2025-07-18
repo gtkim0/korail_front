@@ -71,13 +71,13 @@ export default function BannerView() {
         setPagination={setPagination}
         pageIndex={pagination.pageIndex}
         pageSize={pagination.pageSize}
-        pageCount={Math.ceil(dummyMenuData.length / pagination.pageSize)} // 또는 서버에서 받은 totalPages
+        pageCount={Math.ceil(dummyBannerData.length / pagination.pageSize)} // 또는 서버에서 받은 totalPages
         setPageIndex={(index) => setPagination(prev => ({...prev, pageIndex: index}))}
         setPageSize={(size) => setPagination(prev => ({...prev, pageSize: size}))}
       />
 
       <BaseModal
-        title={MODAL_TITLE.Banner}
+        title={MODAL_TITLE[PageType]}
         maxWidth={'lg'}
         isOpen={isOpen}
         onCloseAction={close}

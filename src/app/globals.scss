@@ -28,7 +28,16 @@ body {
 /*}*/
 
 html {
+
   font-size: 62.5%; /* 1rem = 10px */
+
+  //@include fork-desktop {
+  //  font-size: 80%;
+  //}
+  //
+  //@include fullScreen-desktop {
+  //  font-size: 62.5%;
+  //}
 
   @include small-desktop {
     font-size: 58%; // 9.28px

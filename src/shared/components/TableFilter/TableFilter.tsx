@@ -5,14 +5,16 @@ import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
 
 interface Props {
   onSelect?: (value: {key: string, label: string})=> void;
+  onEdit?: (v: any)=> void;
+  onDelete?: ()=> void;
 }
 
-export default function TableFilter ({ onSelect }: Props) {
+export default function TableFilter ({ onSelect, onEdit, onDelete }: Props) {
 
   return (
     <div className={styles.tableFilter}>
       <div className={styles.wrapper}>
-        <span className={clsx('font_lg', 'text_bold','font')}>
+        <span style={{display:'flex',whiteSpace:'nowrap', gap:'.3rem'}} className={clsx('font_lg', 'text_bold','font')}>
           검색 결과
           <span className={'primary'}> 24개</span>
         </span>
@@ -36,8 +38,8 @@ export default function TableFilter ({ onSelect }: Props) {
       </div>
 
       <div className={styles.buttonWrapper}>
-        <button className={styles.delete}>삭제</button>
-        <button className={styles.edit}>수정</button>
+        <button onClick={()=> onDelete?.()} className={styles.delete}>삭제</button>
+        <button onClick={()=> onEdit?.()} className={styles.edit}>수정</button>
       </div>
     </div>
   )
