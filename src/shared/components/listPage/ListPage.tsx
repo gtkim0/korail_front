@@ -178,8 +178,7 @@ function ListPage<T extends { id: string | number }, F extends BaseModalFormProp
       />
 
       <TableWrapper<T>
-        onSelect={() => {
-        }}
+        onSelect={() => {}}
         onEdit={handleEdit}
         onDelete={handleDelete}
         columns={columns}

@@ -6,19 +6,13 @@ import StationInfoAddForm from "@/features/history-info/components/StationInfoAd
 import {clientDelete, clientGet, clientPost} from "@/shared/api/clientFetcher";
 import {withRowSelection} from "@/shared/components/table/withRowSelection";
 import {stationApi} from "@/features/history-info/api/stationsInfoApi";
-import {BaseModalFormProps} from "@/types/common";
+import {BaseModalFormProps, PageServerProps} from "@/types/common";
 
 export interface StationInfoAddFormProps extends BaseModalFormProps<StationInfoColumnsType> {
   // optional: readonly?: boolean;
 }
 
-interface Props {
-  initialFilter: Record<string, any>;
-  initialData: StationInfoColumnsType[];
-  initialSortKey?: string;
-}
-
-export default function StationInfoView ({ initialFilter, initialData, initialSortKey }: Props) {
+export default function StationInfoView ({ initialFilter, initialData, initialSortKey }: PageServerProps) {
 
   return (
     <ListPage<StationInfoColumnsType, StationInfoAddFormProps>

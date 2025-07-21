@@ -1,8 +1,9 @@
 import {BaseMenu} from "@/types/menu";
 import styles from "@/features/lyaouts/PortalLayout/PortalHeader/PortalHeader.module.scss";
 import {useEffect, useState} from "react";
-import {useRouter} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import {AnimatePresence, motion} from "framer-motion";
+import clsx from "clsx";
 
 interface Props {
   menuGroup: (BaseMenu & { thirdDepths: BaseMenu[] })[];
@@ -11,8 +12,11 @@ interface Props {
 
 export default function FullMenuDropdown({menuGroup, visible}: Props) {
 
+  const path = usePathname();
   const router = useRouter();
   const [columnsPerRow, setColumnsPerRow] = useState(6);
+
+  const actualColumns = Math.min(columnsPerRow, menuGroup.length);
 
   const getColumnCount = () => {
     const width = window.innerWidth;
@@ -39,23 +43,28 @@ export default function FullMenuDropdown({menuGroup, visible}: Props) {
     <AnimatePresence>
       {visible && (
         <motion.div
+          // layout
           className={styles.dropdownFullMenu}
           initial={{opacity: 0, height: 0, y: -5}}
           animate={{opacity: 1, height: 'auto', y: 0}}
           exit={{opacity: 0, height: 0, y: -5}}
           transition={{ duration: 0.3, ease: 'easeInOut' }}
         >
-          <div className={styles.inner}>
-            {Array.from({length: columnsPerRow}).map((_, columnIndex) => (
+          <motion.div className={styles.inner}>
+            {Array.from({length: actualColumns}).map((_, columnIndex) => (
               <div key={columnIndex} className={styles.subMenuGroup}>
                 {menuGroup
-                  .filter((_, idx) => idx % columnsPerRow === columnIndex)
+                  .filter((_, idx) => idx % actualColumns === columnIndex)
                   .map((menu, idx) => (
                     <div style={{padding: '1rem 0'}} key={menu.id}>
                       <div className={styles.subMenuLabel}>{menu.name}</div>
                       <div className={styles.thirdDepthWrapper}>
                         {menu.thirdDepths.map(third => (
-                          <div onClick={()=> router.push(third.url)} key={third.id} className={styles.thirdDepthItem}>
+                          <div
+                            onClick={()=> handleMenuClick(third)}
+                            key={third.id}
+                            className={clsx(styles.thirdDepthItem, third.url === path && styles.current)}
+                          >
                             {third.name}
                           </div>
                         ))}
@@ -64,7 +73,7 @@ export default function FullMenuDropdown({menuGroup, visible}: Props) {
                   ))}
               </div>
             ))}
-          </div>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

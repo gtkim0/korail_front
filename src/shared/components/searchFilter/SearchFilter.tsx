@@ -10,10 +10,11 @@ import {DynamicFilterRenderer} from "@/shared/components/searchFilter/DynamicFil
 import {filterSchemas} from "@/shared/contants/filterSchemas";
 import {AnimatePresence, motion} from "framer-motion";
 import {SearchInput} from "@/shared/components/Input/searchInput/SearchInput";
+import {PageType} from "@/shared/enum/PageType";
 
 interface Props {
   onAdd: ()=> void;
-  type: string;
+  type: PageType;
   value: {[key:string]: any}
   onChange: ( value: any )=> void;
   onSubmit?: () => void;

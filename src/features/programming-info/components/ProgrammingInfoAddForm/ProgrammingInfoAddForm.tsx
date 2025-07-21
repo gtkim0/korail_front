@@ -70,7 +70,6 @@ const ProgrammingInfoAddForm =
                 name: 'name',
                 children: (field) => (
                   <InputField
-                    type={'name'}
                     placeholder={'구분'}
                     required={true}
                     field={field}
@@ -84,8 +83,6 @@ const ProgrammingInfoAddForm =
                 name: 'name',
                 children: (field) => (
                   <InputField
-
-                    type={'name'}
                     placeholder={'노선번호.'}
                     required={true}
                     field={field}

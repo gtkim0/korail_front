@@ -162,7 +162,6 @@
 .thirdDepthItem {
   position: relative;
   display: flex;
-  padding: .2rem .6rem;
   align-items: center;
   gap: .2rem;
   align-self: stretch;
@@ -171,7 +170,7 @@
   color: #363637;
   cursor: pointer;
   line-height: 150%;
-  padding-left: 1.6rem;
+  padding: .4rem .6rem .4rem 1.6rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -198,4 +197,8 @@
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 500;
   pointer-events: auto;
+}
+
+.current {
+  background: #BDF1FF;
 }

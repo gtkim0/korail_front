@@ -4,10 +4,7 @@ import {useForm, useStore} from "@tanstack/react-form";
 import { z } from "zod";
 import { InputField } from "@/shared/components/Input/InputField";
 import {StationInfoAddFormProps} from "@/features/history-info/components/StationInfoView/StationInfoView";
-
-export type HistoryInfoAddFormRef = {
-  submit: () => Promise<any>;
-};
+import {FormAddFormRef} from "@/types/common";
 
 const ResetSchema = z.object({
   title: z.string().min(3, '비밀번호는 최소 10자리여야 합니다.'),
@@ -17,7 +14,7 @@ const ResetSchema = z.object({
   image_url: z.string().min(3, '비밀번호는 최소 10자리여야 합니다.'),
 });
 
-const StationInfoAddForm = forwardRef<HistoryInfoAddFormRef, StationInfoAddFormProps>(({ editData, onCanSubmitChange }, ref) => {
+const StationInfoAddForm = forwardRef<FormAddFormRef, StationInfoAddFormProps>(({ editData, onCanSubmitChange }, ref) => {
 
   const form = useForm({
     defaultValues: {
@@ -65,13 +62,15 @@ const StationInfoAddForm = forwardRef<HistoryInfoAddFormRef, StationInfoAddFormP
   }, []);
 
   return (
-    <form style={{
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '3.6rem',
-      padding: '1.6rem'
-    }}>
+    <form
+      style={{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '3.6rem',
+        padding: '1.6rem'
+      }}
+    >
       <div style={{ display: 'flex', gap: '3.6rem' }}>
         <div style={{ flex: 1 }}>
           {form.Field({

@@ -9,8 +9,13 @@ export const MODAL_TITLE: Partial<Record<PageType, string>> = {
   [PageType.BatchCycle]: 'DB 업데이트 주기 등록/수정',
   [PageType.ProgrammingInfo] : '편성정보 등록/수정',
   [PageType.StationInfo]: '역사정보 등록/수정',
-  [PageType.CarriageInfo]: '',
-  [PageType.EvacuationInfo]: '대피안내정보 등록/수정'
+  [PageType.CarriageInfo]: '객차정보 등록/수정',
+  [PageType.EvacuationInfo]: '대피안내정보 등록/수정',
+  [PageType.ZoneInfo]: '구역 정보 등록/수정',
+  [PageType.SpecialPeriod]: '특수기간정보 등록/수정',
+  [PageType.Instrumentation]: '계측장치정보 등록/수정',
+  [PageType.SaveConditionImage]: '조건영상저장 등록/수정',
+  [PageType.EmergencyManual]: '비상 대응 메뉴얼 등록/수정'
 }
 
 export const MODAL_MESSAGES = {

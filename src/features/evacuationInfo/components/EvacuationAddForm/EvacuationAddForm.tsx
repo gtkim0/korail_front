@@ -1,5 +1,5 @@
 import {z} from "zod";
-import {forwardRef, useEffect, useImperativeHandle} from "react";
+import {forwardRef, useEffect, useImperativeHandle, useState} from "react";
 import {useForm, useStore} from "@tanstack/react-form";
 import {InputField} from "@/shared/components/Input/InputField";
 import FormFieldWrapper from "@/shared/components/formFieldWrapper/FormFieldWrapper";
@@ -25,6 +25,8 @@ const EvacuationAddForm = forwardRef<EvacuationAddFormRef, EvacuationInfoAddForm
     onCanSubmitChange
   }, ref
 ) => {
+
+  const [ searchModalState, setSearchModalState ] = useState(null)
 
   const form = useForm({
     defaultValues: {
@@ -85,14 +87,14 @@ const EvacuationAddForm = forwardRef<EvacuationAddFormRef, EvacuationInfoAddForm
         children: (field) => (
           <FormFieldWrapper label={'노선명'}>
             <SearchModalTrigger
-              height={'4.4rem'}
+              height={'3.6rem'}
               value={''}
               onSelect={() => {}}
               endPoint={''}
               columns={[]}
-              isOpen={false}
-              onOpen={() => {}}
-              onClose={() => {}}
+              isOpen={field.name === searchModalState}
+              onOpen={()=> setSearchModalState(field.name)}
+              onClose={()=> setSearchModalState(null)}
             />
           </FormFieldWrapper>
         )
@@ -100,14 +102,14 @@ const EvacuationAddForm = forwardRef<EvacuationAddFormRef, EvacuationInfoAddForm
       {form.Field({
         name: 'stationNum',
         children: (field) => (
-          <InputField placeholder="역사번호" required field={field} label="역사번호"/>
+          <InputField height={'3.6rem'} placeholder="역사번호" required field={field} label="역사번호"/>
         )
       })}
       <div style={{display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', columnGap: '3.6rem'}}>
         {form.Field({
           name: 'stationName',
           children: (field) => (
-            <InputField placeholder="역사명" required field={field} label="역사명"/>
+            <InputField height={'3.6rem'} placeholder="역사명" required field={field} label="역사명"/>
           )
         })}
         {form.Field({
@@ -115,14 +117,14 @@ const EvacuationAddForm = forwardRef<EvacuationAddFormRef, EvacuationInfoAddForm
           children: (field) => (
             <FormFieldWrapper label={'대피안내도'}>
               <SearchModalTrigger
-                height={'4.4rem'}
+                height={'3.6rem'}
                 value={''}
                 onSelect={() => {}}
                 endPoint={''}
                 columns={[]}
-                isOpen={false}
-                onOpen={() => {}}
-                onClose={() => {}}
+                isOpen={field.name === searchModalState}
+                onOpen={()=> setSearchModalState(field.name)}
+                onClose={()=> setSearchModalState(null)}
               />
             </FormFieldWrapper>
           )
@@ -141,12 +143,20 @@ const EvacuationAddForm = forwardRef<EvacuationAddFormRef, EvacuationInfoAddForm
                 display: 'flex',
                 alignItems: 'center',
                 padding: '0 1.2rem',
-                height: '4.4rem'
+                height: '3.6rem'
               }}
             >
               <DropDown
-                options={[{key: '1', label: '1'}]}
-                onSelect={() => {}}
+                options={
+                  [
+                    {key: '1', label: '비상 대응 메뉴얼1'},
+                    {key: '2', label: '비상 대응 메뉴얼2'},
+                    {key: '3', label: '비상 대응 메뉴얼3'},
+                  ]
+                }
+                onSelect={() => {
+                  form.setFieldValue(field.name, field.getValue())
+                }}
               />
             </div>
           </FormFieldWrapper>

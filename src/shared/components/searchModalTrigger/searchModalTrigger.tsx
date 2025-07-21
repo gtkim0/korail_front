@@ -113,7 +113,7 @@ export default function SearchModalTrigger<T extends object>(
       ) : (
         <div style={{display: 'flex', alignItems: 'flex-start', gap: '.8rem', alignSelf: 'stretch', cursor: 'pointer', flex: 1}}>
           <div onClick={onOpen} style={{height: height, width: '100%', cursor: 'pointer'}}>
-            <SearchInput placeholder={placeholder} disabled={true}/>
+            <SearchInput placeholder={placeholder} disabled={true} />
           </div>
         </div>
       )}

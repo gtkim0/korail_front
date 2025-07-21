@@ -17,6 +17,21 @@ const categoryFilters = {
   routeMap: ['1','2','3','4']
 }
 
+function buildColumnOptions(columns: any[], filterKeys?: string[]) {
+  return columns
+    .filter(isAccessorColumn)
+    .filter(col => !filterKeys || filterKeys.includes(col.accessorKey))
+    .map(col => ({
+      key: col.accessorKey,
+      label: col.header,
+    }));
+}
+
+const onOffOptions = [
+  { key: 'ON', label: 'ON' },
+  { key: 'OFF', label: 'OFF' },
+];
+
 export const filterSchemas: Record<PageType, FilterSchema[]>= {
   [PageType.Menu]: [
     {
@@ -34,10 +49,7 @@ export const filterSchemas: Record<PageType, FilterSchema[]>= {
       type: FilterType.Switch,
       key: 'enabled',
       label: '사용여부',
-      options: [
-        {key: 'ON', label: '사용함'},
-        {key: 'OFF', label: '사용 안함'}
-      ]
+      options: onOffOptions
     },
   ],
   [PageType.Banner]: [
@@ -94,31 +106,22 @@ export const filterSchemas: Record<PageType, FilterSchema[]>= {
       label: '색상',
     },
     {
-      type: 'switch',
+      type: FilterType.Switch,
       key: 'alarm',
       label: '알람발생',
-      options: [
-        {key: 'ON', label: 'ON'},
-        {key: 'OFF', label: 'OFF'}
-      ]
+      options: onOffOptions
     },
     {
       type: FilterType.Switch,
       key: 'guide',
       label: '안내방송',
-      options: [
-        {key: 'ON', label: 'ON'},
-        {key: 'OFF', label: 'OFF'}
-      ]
+      options: onOffOptions
     },
     {
       type: FilterType.Switch,
       key: 'message',
       label: '문자전송',
-      options: [
-        {key: 'ON', label: 'ON'},
-        {key: 'OFF', label: 'OFF'}
-      ]
+      options: onOffOptions
     },
     {
       type: FilterType.DateRange,
@@ -281,9 +284,96 @@ export const filterSchemas: Record<PageType, FilterSchema[]>= {
       key: 'category',
       label: '검색 기준',
       options: [
-        {key: '1', label: '번호(코드)'},
-        {key: '2', label: '임계치'},
+        {key: '1', label: '노선번호'},
+        {key: '2', label: '노선명'},
+        {key: '3', label: '역사번호'},
+        {key: '4', label: '역사명'},
       ]
+    },
+    {
+      type: FilterType.DateRange,
+      key: 'range1',
+      label: '개통일자',
+    },
+  ],
+  [PageType.ZoneInfo]: [
+    {
+      type: FilterType.Checkbox,
+      key: 'category',
+      label: '검색 기준',
+      options: [
+        {key: '1', label: '노선명'},
+        {key: '2', label: '역사명'},
+        {key: '3', label: '구역종류'},
+        {key: '4', label: '구역명'},
+        {key: '5', label: 'CCTVID'},
+      ]
+    },
+    {
+      type: FilterType.Switch,
+      key: 'enabled',
+      label: '방송구역',
+      options: onOffOptions
+    },
+    {
+      type: FilterType.DateRange,
+      key: 'range1',
+      label: '개통일자',
+    },
+  ],
+  [PageType.SpecialPeriod]: [
+    {
+      type: FilterType.Checkbox,
+      key: 'category',
+      label: '검색 기준',
+      options: [
+        {key: '1', label: '노선번호'},
+        {key: '2', label: '노선명'},
+        {key: '3', label: '역사번호'},
+        {key: '4', label: '역사명'},
+      ]
+    },
+    {
+      type: FilterType.Switch,
+      key: 'useYn',
+      label: '사용유무',
+      options: [
+        {key: 'ON', label: 'ON'},
+        {key: 'OFF', label: 'OFF'}
+      ]
+    },
+    {
+      type: FilterType.DateRange,
+      key: 'range1',
+      label: '개통일자',
+    },
+  ],
+  [PageType.Instrumentation]: [
+    {
+      type: FilterType.Checkbox,
+      key: 'category',
+      label: '검색 기준',
+      options: [
+        {key: '1', label: '관리번호'},
+        {key: '2', label: 'IP'},
+        {key: '3', label: '편성번호'},
+        {key: '4', label: '차량번호'},
+      ]
+    },
+    {
+      type: FilterType.Select,
+      key: 'operatingStatus',
+      label: '운영상태',
+      options: [
+        {key: '1', label: '운영중'},
+        {key: '2', label: '수리중'},
+        {key: '3', label: '통신불가'},
+      ]
+    },
+    {
+      type: FilterType.DateRange,
+      key: 'range1',
+      label: '데이터 기준일자',
     },
   ]
 }

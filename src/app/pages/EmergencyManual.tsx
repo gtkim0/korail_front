@@ -1,7 +1,7 @@
+import EmergencyManualServer from "@/features/emergency-manual/components/EmergencyManualView/EmergencyManualServer";
+
 export default function EmergencyManual() {
   return (
-    <>
-      비상대응규칙
-    </>
+    <EmergencyManualServer />
   )
 }

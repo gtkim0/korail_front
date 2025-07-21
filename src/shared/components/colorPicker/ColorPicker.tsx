@@ -66,6 +66,9 @@ export default function ColorPicker ({color, onChangeAction}: Props) {
       {showPicker && (
         <div onClick={(e)=> e.stopPropagation()} ref={pickerRef} style={{ position: 'absolute', top: '3rem', width:'100%', left: 0, zIndex: 100 }}>
           <SketchPicker
+            styles={{
+              width:'100%'
+            }}
             color={color}
             onChange={(updatedColor) => onChangeAction(updatedColor.hex)}
           />

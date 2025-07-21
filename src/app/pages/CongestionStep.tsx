@@ -1,8 +1,8 @@
 // 혼잡도 단계
-import CongestionStepView from "@/features/congestionStep/components/congestionStepView/page";
+import CongestionStepServer from "@/features/congestionStep/components/congestionStepView/CongestionStepServer";
 
 export default async function CongestionStep () {
   return (
-    <CongestionStepView />
+    <CongestionStepServer />
   )
 }

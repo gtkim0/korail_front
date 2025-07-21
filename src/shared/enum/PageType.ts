@@ -9,4 +9,9 @@ export enum PageType {
   StationInfo = 'station-info',
   CongestionStep = 'CongestionStep',
   EvacuationInfo = 'evacuation-info',
+  ZoneInfo = 'zone-info',
+  SpecialPeriod = 'special-period',
+  Instrumentation = 'instrumentation',
+  SaveConditionImage = 'save-condition-image',
+  EmergencyManual = 'emergency-manual',
 }
