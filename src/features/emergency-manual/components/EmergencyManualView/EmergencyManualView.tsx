@@ -4,7 +4,6 @@ import {EmergencyManualColumnType} from "@/types/emergency-manual";
 import ListPage from "@/shared/components/listPage/ListPage";
 import {PageType} from "@/shared/enum/PageType";
 import { withRowSelection } from "@/shared/components/table/withRowSelection";
-import SpecialPeriodAddForm from "@/features/special-period/components/SpecialPeriodAddForm/SpecialPeriodAddForm";
 import { emergencyManualColumns } from "@/features/emergency-manual/columns/emergencyManualColumns";
 import EmergencyManualAddForm
   from "@/features/emergency-manual/components/EmergencyManualAddForm/EmergencyManualAddForm";
@@ -19,15 +18,14 @@ export default function EmergencyManualView({initialFilter, initialData}: PageSe
       columns={withRowSelection(emergencyManualColumns)}
       initialFilter={initialFilter}
       initialSortKey={'id'}
-      fetchData={async ()=> {
-        return []
-      }}
+      fetchData={async (value)=> { return []} }
       ModalBody={EmergencyManualAddForm}
       modalBodyProps={{}}
       onSubmitEdit={async ()=> {
         return true;
       }}
-      onSubmitAdd={async ()=> {
+      onSubmitAdd={async (value)=> {
+        console.log(value);
         return true;
       }}
       onDelete={async (ids)=> {

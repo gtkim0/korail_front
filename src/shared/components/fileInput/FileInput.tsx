@@ -1,5 +1,5 @@
 import styles from './FileInput.module.scss'
-import {forwardRef, useImperativeHandle, useRef} from "react";
+import {useRef, ChangeEvent} from "react";
 
 interface Props {
   value: string;
@@ -11,7 +11,7 @@ export const FileInput = ({value, placeHolder, onChange}: Props) => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     onChange(file);
   };

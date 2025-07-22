@@ -8,7 +8,11 @@
   padding: 0 1.2rem;
   height: 3.6rem;
   background: #fff;
-  width: 17rem;
+  width: 100%;
+
+  &.fullWidth {
+    width: 100% !important;
+  }
 }
 
 .input {

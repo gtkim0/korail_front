@@ -14,4 +14,6 @@ export enum PageType {
   Instrumentation = 'instrumentation',
   SaveConditionImage = 'save-condition-image',
   EmergencyManual = 'emergency-manual',
+  EmergencyActionManual = 'emergency-action-manual',
+  EmergencyFieldPersonnel = 'emergency-field-personnel',
 }

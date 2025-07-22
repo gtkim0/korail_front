@@ -32,9 +32,9 @@ export default function DatePickerRange({ startDate, endDate, onChange }: Props 
   )
 }
 
-const CustomInput = forwardRef<HTMLInputElement, any>(
-  ({value, onClick}, ref) => (
-    <div className={styles.inputWrapper} onClick={onClick}>
+export const CustomInput = forwardRef<HTMLInputElement, any>(
+  ({value, onClick, className}, ref) => (
+    <div className={`${styles.inputWrapper} ${className ?? ''}`} onClick={onClick}>
       <input
         ref={ref}
         value={value}

@@ -57,7 +57,7 @@ export function DynamicFilterRenderer({schema, value, onChange, modalEndPoint}: 
       {schema.map(filter => (
         <FilterGroup key={filter.key}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', justifyContent:'space-between', height:'100%' }}>
-            <div style={{ fontSize: '1.4rem', fontWeight: 'bold' }}>{filter.label}</div>
+            <div style={{ fontSize: '1.3rem', fontWeight: '600', lineHeight:'150%' }}>{filter.label}</div>
 
             <div style={{ display: 'flex', gap: '1rem', flexWrap:'wrap'  }}>
               {filter.type === FilterType.Checkbox && (

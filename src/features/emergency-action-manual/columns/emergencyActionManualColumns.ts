@@ -1,7 +1,7 @@
 import {ColumnDef} from "@tanstack/react-table";
-import {EmergencyManualColumnType} from "@/types/emergency-manual";
+import {EmergencyActionManualColumnType} from "@/types/emergency-action-manual";
 
-export const emergencyManualColumns: ColumnDef<EmergencyManualColumnType> = [
+export const emergencyActionManualColumns: ColumnDef<EmergencyActionManualColumnType> = [
   {
     accessorKey: 'manualId',
     header: '메뉴얼ID'
@@ -15,8 +15,12 @@ export const emergencyManualColumns: ColumnDef<EmergencyManualColumnType> = [
     header: '메뉴얼 제목'
   },
   {
-    accessorKey: 'writer',
-    header: '작성자'
+    accessorKey: 'department',
+    header: '조치부서'
+  },
+  {
+    accessorKey: 'appliedArea',
+    header: '적용범위 '
   },
   {
     accessorKey: 'phone',

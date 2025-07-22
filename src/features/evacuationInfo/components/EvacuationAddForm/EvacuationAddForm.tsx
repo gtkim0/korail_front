@@ -1,11 +1,11 @@
 import {z} from "zod";
-import {forwardRef, useEffect, useImperativeHandle, useState} from "react";
-import {useForm, useStore} from "@tanstack/react-form";
+import {forwardRef, useState} from "react";
 import {InputField} from "@/shared/components/Input/InputField";
 import FormFieldWrapper from "@/shared/components/formFieldWrapper/FormFieldWrapper";
 import SearchModalTrigger from "@/shared/components/searchModalTrigger/searchModalTrigger";
 import DropDown from "@/shared/components/dropDown/DropDown";
 import {EvacuationInfoAddFormProps} from "@/features/evacuationInfo/components/EvacuationInfoView/EvacuationInfoView";
+import ModalAddFormLayout from "@/shared/components/modalAddFormLayout/ModalAddFormLayout";
 
 export type EvacuationAddFormRef = {
   submit: () => Promise<any>;
@@ -19,69 +19,30 @@ const ResetSchema = z.object({
   manual: z.string().min(3, ''),
 });
 
-const EvacuationAddForm = forwardRef<EvacuationAddFormRef, EvacuationInfoAddFormProps>((
-  {
-    editData,
-    onCanSubmitChange
-  }, ref
-) => {
+const EvacuationAddForm =
+  forwardRef<EvacuationAddFormRef, EvacuationInfoAddFormProps>(({editData, onCanSubmitChange}, ref) => {
 
   const [ searchModalState, setSearchModalState ] = useState(null)
 
-  const form = useForm({
-    defaultValues: {
-      routeName: '',
-      stationNum: '',
-      stationName: '',
-      guideMap: '',
-      manual: '',
-    },
-    onSubmit: async ({value}) => {
-      return value;
-    },
-    validators: {
-      onSubmit: ResetSchema,
-      onChange: ResetSchema,
+  const form = useCommonForm<z.infer<typeof ResetSchema>>(
+    ref,
+    editData,
+    onCanSubmitChange,
+    ResetSchema,
+    {
+      manualId: '',
+      situationClass: '',
+      manualSubject: '',
+      writer: '',
+      appliedArea: '',
+      phone: '',
+      useYn: false,
+      file: null
     }
-  });
-
-  const canSubmit = useStore(form.store, (state) => state.canSubmit);
-
-  useImperativeHandle(ref, () => ({
-    submit: async () => {
-      const routeName = form.getFieldValue('routeName');
-      const stationNum = form.getFieldValue('stationNum');
-      const stationName = form.getFieldValue('stationName');
-      const guideMap = form.getFieldValue('guideMap');
-      const manual = form.getFieldValue('manual');
-      const result = ResetSchema.safeParse({routeName, stationNum, stationName, guideMap, manual});
-      if (!result.success) {
-        return null;
-      }
-      return result.data;
-    }
-  }));
-
-  useEffect(() => {
-    onCanSubmitChange?.(canSubmit);
-  }, [canSubmit]);
-
-  useEffect(() => {
-    if (editData) {
-      form.reset(editData);
-    }
-  }, []);
+  )
 
   return (
-    <form
-      style={{
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '3.6rem',
-        padding: '1.6rem'
-      }}
-    >
+    <ModalAddFormLayout>
       {form.Field({
         name: 'routeName',
         children: (field) => (
@@ -162,7 +123,7 @@ const EvacuationAddForm = forwardRef<EvacuationAddFormRef, EvacuationInfoAddForm
           </FormFieldWrapper>
         )
       })}
-    </form>
+    </ModalAddFormLayout>
   )
 })
 

@@ -4,6 +4,9 @@ import {BannerColumns} from "@/features/banner/columns/BannerColumns";
 import {routeMapColumns} from "@/features/routeMap/columns/routeMapColumns";
 import {FilterType} from "@/shared/enum/FilterType";
 import { PageType } from "@/shared/enum/PageType";
+import {Page} from "react-pdf";
+import {OPERATING_STATUS_OPTIONS} from "@/shared/contants/selectOptions/operatingStatusOptions";
+import {SELECT_OPTIONS} from "@/shared/contants/selectOptions";
 
 type FilterSchema = {
   type: string;
@@ -364,11 +367,84 @@ export const filterSchemas: Record<PageType, FilterSchema[]>= {
       type: FilterType.Select,
       key: 'operatingStatus',
       label: '운영상태',
+      options: OPERATING_STATUS_OPTIONS
+    },
+    {
+      type: FilterType.DateRange,
+      key: 'range1',
+      label: '데이터 기준일자',
+    },
+  ],
+  [PageType.EmergencyManual]: [
+    {
+      type: FilterType.Checkbox,
+      key: 'category',
+      label: '검색 기준',
       options: [
-        {key: '1', label: '운영중'},
-        {key: '2', label: '수리중'},
-        {key: '3', label: '통신불가'},
+        {key: '1', label: '메뉴얼ID'},
+        {key: '2', label: '상황구분'},
+        {key: '3', label: '메뉴얼제목'},
+        {key: '4', label: '작성자'},
       ]
+    },
+    {
+      type: FilterType.Switch,
+      key: 'useYn',
+      label: '사용여부',
+      options: [
+        {key: 'ON', label: 'ON'},
+        {key: 'OFF', label: 'OFF'}
+      ]
+    },
+    {
+      type: FilterType.DateRange,
+      key: 'range1',
+      label: '데이터 기준일자',
+    },
+  ],
+  [PageType.EmergencyActionManual]: [
+    {
+      type: FilterType.Checkbox,
+      key: 'category',
+      label: '검색 기준',
+      options: [
+        {key: '1', label: '메뉴얼ID'},
+        {key: '2', label: '상황구분'},
+        {key: '3', label: '메뉴얼제목'},
+        {key: '4', label: '조치부서'},
+      ]
+    },
+    {
+      type: FilterType.Switch,
+      key: 'useYn',
+      label: '사용여부',
+      options: [
+        {key: 'ON', label: 'ON'},
+        {key: 'OFF', label: 'OFF'}
+      ]
+    },
+    {
+      type: FilterType.DateRange,
+      key: 'range1',
+      label: '데이터 기준일자',
+    },
+  ],
+  [PageType.EmergencyFieldPersonnel]: [
+    {
+      type: FilterType.Checkbox,
+      key: 'category',
+      label: '검색 기준',
+      options: [
+        {key: '1', label: '노선명'},
+        {key: '2', label: '역사명'},
+        {key: '3', label: '근무자'},
+      ]
+    },
+    {
+      type: FilterType.Select,
+      key: 'position',
+      label: '직책',
+      options: SELECT_OPTIONS.POSITION_OPTIONS
     },
     {
       type: FilterType.DateRange,

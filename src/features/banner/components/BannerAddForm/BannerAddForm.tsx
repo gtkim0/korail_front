@@ -27,7 +27,6 @@ const BannerAddForm = forwardRef<BannerAddFormRef>((_, ref) => {
 
 
   const handleFileChange = (file: File | null) => {
-    console.log(file);
     if (file) {
       setFile(file);
       form.setFieldValue('image', file.name);

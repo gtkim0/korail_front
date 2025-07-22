@@ -138,3 +138,10 @@ input {
   width: 100% !important;
 }
 
+.react-datepicker-wrapper {
+  width: 100% !important;
+}
+
+.react-datepicker {
+  z-index: 10000 !important;
+}

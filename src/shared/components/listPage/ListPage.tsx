@@ -128,15 +128,15 @@ function ListPage<T extends { id: string | number }, F extends BaseModalFormProp
   const handleSubmitForm = async () => {
 
     if (!editAreaRef.current?.submit) return;
-    const result = await editAreaRef.current.submit(); // formData
+    const result = await editAreaRef.current.submit();
 
     if (!result) return;
     let success = false;
 
     if (editTarget && onSubmitEdit) {
-      success = await onSubmitEdit(result); // 수정
+      success = await onSubmitEdit(result);
     } else if (onSubmitAdd) {
-      success = await onSubmitAdd(result); // 생성
+      success = await onSubmitAdd(result);
     }
 
     if (success) {

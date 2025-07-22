@@ -1,7 +1,7 @@
-export default function EmergencyActionManual() {
+import EmergencyActionManualServer from "@/features/emergency-action-manual/components/EmergencyActionManualView/EmergencyActionManualServer";
+
+export default async function EmergencyActionManual() {
   return (
-    <>
-      현장 조치 메뉴얼
-    </>
+    <EmergencyActionManualServer />
   )
 }
