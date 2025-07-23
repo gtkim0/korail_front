@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from './DatePickerRange.module.css'
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
+import { ko } from 'date-fns/locale'
 
 type Props = {
   startDate: Date | null;
@@ -14,6 +15,7 @@ export default function DatePickerRange({ startDate, endDate, onChange }: Props 
   return (
     <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}>
       <DatePicker
+        locale={ko}
         selected={startDate}
         dateFormat={'yyyy-MM-dd'}
         portalId="root-portal"
@@ -22,6 +24,7 @@ export default function DatePickerRange({ startDate, endDate, onChange }: Props 
       />
       <span style={{fontWeight: 700, lineHeight: '150%', fontSize: '1.5rem'}}>-</span>
       <DatePicker
+        locale={ko}
         selected={endDate}
         dateFormat={'yyyy-MM-dd'}
         portalId="root-portal"

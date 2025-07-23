@@ -464,8 +464,18 @@ export const filterSchemas: Record<PageType, FilterSchema[]>= {
       ]
     },
   ],
+<<<<<<< HEAD
   [PageType.SaveConditionImage]: [
 
   ],
   [PageType.EmergencyGuideInfo]: []
+=======
+  [PageType.SaveConditionImage]: [],
+  [PageType.EmergencyGuideInfo]: [],
+  [PageType.NotificationPush]: [],
+  [PageType.NotificationRecipient]: [],
+  [PageType.NotificationText]: [],
+  [PageType.NotificationLog]: [],
+  [PageType.NotificationRule]: []
+>>>>>>> 1e81324 (fit(비상 대응) - 알림 규칙 퍼블리싱)
 }

@@ -7,6 +7,6 @@ import {BaseMenu} from "@/types/menu";
 export default async function Menu() {
 
   return (
-    <MenuView initialMenus={dummyMenu}/>
+    <MenuView />
   )
 }

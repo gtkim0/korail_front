@@ -1,15 +1,15 @@
-import {useState, useEffect, useRef} from "react";
+import {useState, useEffect, useRef, RefObject} from "react";
 import styles from './TimePicker.module.scss'
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
 
 interface Props {
   label?: string;
-  value: { hour: string; minute: string; ampm?: 'AM' | 'PM' };
-  onChange: (value: { hour: string; minute: string; ampm?: 'AM' | 'PM' }) => void;
+  value: { hour: string; minute: string; second: string; ampm?: 'AM' | 'PM' };
+  onChange: (value: { hour: string; minute: string; second: string; ampm?: 'AM' | 'PM' }) => void;
   useAmPm?: boolean;
 }
 
-const pad = (num: number) => num.toString().padStart(2, '0');
+const pad = (num: string | number) => num.toString().padStart(2, '0');
 
 export default function RcTimePicker({label = '', value, onChange, useAmPm}: Props) {
 
@@ -43,7 +43,7 @@ export default function RcTimePicker({label = '', value, onChange, useAmPm}: Pro
     onChange({ hour, minute, second, ampm: useAmPm ? ampm : undefined });
   }, [hour, minute, second, ampm]);
 
-  const scrollToValue = (ref: React.RefObject<HTMLDivElement>, value: string) => {
+  const scrollToValue = (ref: RefObject<HTMLDivElement | null>, value: string) => {
     if (ref.current) {
       const el = ref.current.querySelector(`[data-value="${pad(value)}"]`) as HTMLElement;
       if (el) {

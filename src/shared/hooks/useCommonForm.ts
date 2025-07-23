@@ -17,7 +17,7 @@ export function useCommonForm<T extends object>(
     onSubmit: ({value}) => value,
     validators: schema
       ? {
-        onSubmit: schema,
+        // onSubmit: schema,
         onChange: schema,
       }
       : undefined,

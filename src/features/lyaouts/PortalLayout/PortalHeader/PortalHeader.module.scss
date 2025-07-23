@@ -11,6 +11,10 @@
   @include desktop {
     min-height: 6.4rem;
   }
+
+  @include mobile {
+    padding: 0 3rem;
+  }
 }
 
 .wrapper {

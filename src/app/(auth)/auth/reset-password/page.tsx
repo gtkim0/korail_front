@@ -1,8 +1,8 @@
 import AuthContainer from "@/features/auth/components/AuthContainer/AuthContainer";
 import ResetPasswordForm from "@/features/auth/components/ResetPasswordForm/ResetPasswordForm";
 
-interface PageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
+interface ResetPasswordPageProps {
+  searchParams: { token?: string };
 }
 
 async function verifyToken(token: string): Promise<boolean> {
@@ -22,9 +22,9 @@ async function verifyToken(token: string): Promise<boolean> {
   }
 }
 
-export default async function ResetPassword({ searchParams }: PageProps) {
+export default async function ResetPassword({ searchParams }: { searchParams: Promise<any> }) {
 
-  const token = typeof searchParams.token === 'string' ? searchParams.token : '';
+  const { token } = await searchParams;
 
   if (!token) {
     return (

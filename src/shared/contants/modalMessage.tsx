@@ -19,7 +19,16 @@ export const MODAL_TITLE: Partial<Record<PageType, string>> = {
   [PageType.EmergencyActionManual]: '현장 조치 메뉴얼 등록/수정',
   [PageType.EmergencyFieldPersonnel]: '현장인원 등록/수정',
   [PageType.EmergencyGuideInfo]: '안내방송 정보 등록/수정',
+<<<<<<< HEAD
   [PageType.EmergencyBroadcastControl]: '자동수동 방송 등록/수정'
+=======
+  [PageType.EmergencyBroadcastControl]: '자동수동 방송 등록/수정',
+  [PageType.NotificationRule]: '알림규칙 등록/수정',
+  [PageType.NotificationPush]: '푸시알림 등록/수정',
+  [PageType.NotificationLog]: '알림 등록/수정',
+  [PageType.NotificationText]: '알림문구 등록/수정',
+  [PageType.NotificationRecipient]: '알림 수신문자 등록/수정'
+>>>>>>> 1e81324 (fit(비상 대응) - 알림 규칙 퍼블리싱)
 }
 
 export const MODAL_MESSAGES = {

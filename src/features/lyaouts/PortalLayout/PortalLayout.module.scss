@@ -19,4 +19,8 @@
   @include desktop {
     height: auto;
   }
+
+  @include mobile {
+    padding: 2rem 3.2rem;
+  }
 }

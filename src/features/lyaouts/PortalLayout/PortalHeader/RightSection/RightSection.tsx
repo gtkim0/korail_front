@@ -7,7 +7,7 @@ export default function HeaderRightSection () {
   const router = useRouter();
 
   const handleClick = async () => {
-    await fetch('http://localhost:3000/api/logout', {
+    await fetch(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/logout`, {
       method:'post'
     }).then(res=> {
       router.push('/auth/login')

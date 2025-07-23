@@ -12,7 +12,7 @@ type FilterSchema = {
   type: string;
   key: string;
   label: string;
-  options?: { key: string, label: string }[];
+  options?: readonly { key: string, label: string }[];
   endPoint?: string;
 }
 
@@ -58,7 +58,6 @@ export function DynamicFilterRenderer({schema, value, onChange, modalEndPoint}: 
         <FilterGroup key={filter.key}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', justifyContent:'space-between', height:'100%' }}>
             <div style={{ fontSize: '1.3rem', fontWeight: '600', lineHeight:'150%' }}>{filter.label}</div>
-
             <div style={{ display: 'flex', gap: '1rem', flexWrap:'wrap'  }}>
               {filter.type === FilterType.Checkbox && (
                 <>

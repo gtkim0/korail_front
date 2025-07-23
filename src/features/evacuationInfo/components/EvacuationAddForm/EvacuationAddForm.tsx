@@ -74,7 +74,7 @@ const EvacuationAddForm =
           )
         })}
         {form.Field({
-          name: 'guideMap',
+          name: 'image_url',
           children: (field) => (
             <FormFieldWrapper label={'대피안내도'}>
               <SearchModalTrigger

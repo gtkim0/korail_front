@@ -28,6 +28,7 @@
   @include mobile {
     flex-direction: column;
     height: auto;
+    align-items: flex-start;
   }
 }
 
@@ -41,6 +42,10 @@
   border-radius: 8px;
   border: 1px solid #D5D5D6;
   height: 4.4rem;
+
+  @include mobile {
+    flex: 1;
+  }
 }
 
 .inputWrapper input {

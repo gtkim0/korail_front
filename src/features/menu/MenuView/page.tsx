@@ -18,6 +18,7 @@ import type { MenuEditAreaRef } from "@/features/menu/MenuEditArea/MenuEditArea"
 import {BaseModalFooter} from "@/shared/components/modal/BaseModal/BaseModalFooter/BaseModalFooter";
 import {isAccessorColumn} from "@/shared/utils/isAccessorColumn";
 import {PageType} from "@/shared/enum/PageType";
+import {dummyMenu} from "@/data/dummyMenu";
 
 type FilterOption = {
   key: string;
@@ -58,6 +59,8 @@ export default function MenuView () {
     console.log(ids);
   });
 
+  const initialMenus = dummyMenu;
+
   useEffect(() => {
     setMenu(initialMenus)
   }, []);
@@ -76,31 +79,31 @@ export default function MenuView () {
         onSelect={()=> {}}
       />
 
-      <Table
-        columns={withRowSelection(menuColumns)}
-        data={dummyMenuData}
-        sorting={sorting}
-        onSortingChange={onSortingChange}
-        rowSelection={rowSelection}
-        onRowSelectionChange={onRowSelectionChange}
-        setPagination={setPagination}
-      />
-      <Pagination
-        pageIndex={pagination.pageIndex}
-        pageSize={pagination.pageSize}
-        pageCount={Math.ceil(dummyMenuData.length / pagination.pageSize)} // 또는 서버에서 받은 totalPages
-        setPageIndex={(index) => setPagination(prev => ({ ...prev, pageIndex: index }))}
-        setPageSize={(size) => setPagination(prev => ({ ...prev, pageSize: size }))}
-      />
-      <BaseModal
-        title={MODAL_TITLE[PageType]}
-        maxWidth={'lg'}
-        isOpen={isOpen}
-        onCloseAction={close}
-        footer={<BaseModalFooter editAreaRef={editAreaRef} close={close} />}
-      >
-        <MenuEditArea ref={editAreaRef}/>
-      </BaseModal>
+      {/*<Table*/}
+      {/*  columns={withRowSelection(menuColumns)}*/}
+      {/*  data={dummyMenuData}*/}
+      {/*  sorting={sorting}*/}
+      {/*  onSortingChange={onSortingChange}*/}
+      {/*  rowSelection={rowSelection}*/}
+      {/*  onRowSelectionChange={onRowSelectionChange}*/}
+      {/*  setPagination={setPagination}*/}
+      {/*/>*/}
+      {/*<Pagination*/}
+      {/*  pageIndex={pagination.pageIndex}*/}
+      {/*  pageSize={pagination.pageSize}*/}
+      {/*  pageCount={Math.ceil(dummyMenuData.length / pagination.pageSize)} // 또는 서버에서 받은 totalPages*/}
+      {/*  setPageIndex={(index) => setPagination(prev => ({ ...prev, pageIndex: index }))}*/}
+      {/*  setPageSize={(size) => setPagination(prev => ({ ...prev, pageSize: size }))}*/}
+      {/*/>*/}
+      {/*<BaseModal*/}
+      {/*  title={MODAL_TITLE[PageType.Menu]}*/}
+      {/*  maxWidth={'lg'}*/}
+      {/*  isOpen={isOpen}*/}
+      {/*  onCloseAction={close}*/}
+      {/*  footer={<BaseModalFooter editAreaRef={editAreaRef} close={close} />}*/}
+      {/*>*/}
+      {/*  <MenuEditArea ref={editAreaRef}/>*/}
+      {/*</BaseModal>*/}
     </>
   )
 }

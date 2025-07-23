@@ -1,0 +1,81 @@
+.wrapper {
+  display: flex;
+  padding: 0.6rem 2rem;
+  justify-content: center;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+.navButton {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  border-radius: 50%;
+  border: 0.8px solid #ebebeb;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.centerGroup {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.toggleButton {
+  display: flex;
+  height: 36px;
+  padding: 0 6px;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  position: relative;
+}
+
+.toggleText {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 150%;
+  color: #363637;
+}
+
+.dropdown {
+  width: 15rem;
+  min-width: 8rem;
+  padding: 6px;
+  flex-direction: column;
+  display: flex;
+  position: absolute;
+  top: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow-y: auto;
+  max-height: 30rem;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #ebebeb;
+  box-shadow: 0 0 2px 0 rgba(18, 37, 77, 0.08),
+  0 8px 16px 0 rgba(18, 37, 77, 0.16);
+  z-index: 10;
+}
+
+.dropdownItem {
+  font-size: 1.4rem;
+  display: flex;
+  padding: 6px;
+  align-items: center;
+  align-self: stretch;
+  border-radius: 6px;
+  background: #fff;
+  line-height: 150%;
+  color: #363637;
+  cursor: pointer;
+  justify-content: center;
+
+  &:hover {
+    background-color: #f0f4f8;
+  }
+}

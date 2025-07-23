@@ -261,12 +261,26 @@ export default function SignUp() {
 
           {/* 관심노선/역사 */}
           <FormFieldWrapper label="관심노선">
-            <SearchModalTrigger columns={[]} value="" onSelect={() => {
-            }} endPoint="/"/>
+            <SearchModalTrigger
+              columns={[]}
+              value=""
+              onSelect={() => {}}
+              endPoint="/"
+              isOpen={false}
+              onOpen={()=> {}}
+              onClose={()=> {}}
+            />
           </FormFieldWrapper>
           <FormFieldWrapper label="관심역사">
-            <SearchModalTrigger columns={[]} value="" onSelect={() => {
-            }} endPoint="/"/>
+            <SearchModalTrigger
+              columns={[]}
+              value=""
+              onSelect={() => {}}
+              endPoint="/"
+              isOpen={false}
+              onOpen={()=> {}}
+              onClose={()=> {}}
+            />
           </FormFieldWrapper>
         </div>
 

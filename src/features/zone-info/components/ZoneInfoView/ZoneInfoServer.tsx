@@ -7,6 +7,7 @@ export default async function ZoneInfoServer() {
   return (
     <ZoneInfoView
       initialFilter={initialFilter}
+      initialData={[]}
     />
   )
 }

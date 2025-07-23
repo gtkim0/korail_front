@@ -1,5 +1,3 @@
-
-import Menu from "@/app/pages/Menu";
 import PortalLayout from "@/features/lyaouts/PortalLayout/PortalLayout";
 import Banner from "@/app/pages/Banner";
 import {dummyMenu} from "@/data/dummyMenu";
@@ -32,11 +30,8 @@ export default async function PageMapper({ params }: { params: Promise<{page: st
   const cookieStore = await cookies();
   const token = cookieStore.get('access_token')
 
-  const menus = await menuServerApi.get(token) as BaseMenu[];
-
-  console.log(menus);
-
-  // const menus = dummyMenu;
+  // const menus = await menuServerApi.get(token) as BaseMenu[];
+  const menus = dummyMenu;
 
   const currnet = menus.find(i=> i.url === path);
 
@@ -44,14 +39,14 @@ export default async function PageMapper({ params }: { params: Promise<{page: st
   try {
     Component = (await import(`@/app/pages/${currnet?.component}`)).default;
   } catch {
-    Component = () => <Banner menus={menus} path={path}/>
+    Component = () => <Banner />
     // 추후 catch 에서는 404 에러페이지 띄우기.
    }
 
   return (
     <PortalLayout menus={menus}>
       <PortalContentLayout path={path} menus={menus}>
-        <Component menus={menus} path={path}/>
+        <Component />
       </PortalContentLayout>
     </PortalLayout>)
 }

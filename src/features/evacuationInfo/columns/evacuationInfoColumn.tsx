@@ -38,6 +38,7 @@ export const evacuationInfoColumns: ColumnDef<EvacuationInfoColumnsType>[] = [
   },
   {
     accessorKey: 'date',
-    header: '데이터기준일자'
+    header: '데이터기준일자',
   },
 ]
+

@@ -24,7 +24,7 @@ export interface BaseModalFormProps<T> {
   onCanSubmitChange: (v: boolean) => void;
 }
 
-interface ListPageProps<T extends { id: string | number }, F extends BaseModalFormProps<T>> {
+interface ListPageProps<T extends { id: string | number }, F> {
   pageType: PageType;
   filterSchemaKey: PageType;
   columns: any;
@@ -45,7 +45,7 @@ interface ListPageProps<T extends { id: string | number }, F extends BaseModalFo
   initialData?: T[]
 }
 
-function ListPage<T extends { id: string | number }, F extends BaseModalFormProps<T>>(
+function ListPage<T extends { id: string | number }, F>(
   {
     pageType,
     filterSchemaKey,

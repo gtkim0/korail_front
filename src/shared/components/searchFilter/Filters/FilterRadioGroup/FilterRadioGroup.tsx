@@ -6,7 +6,7 @@ type Option = {
 
 type FilterRadioGroupProps = {
   name: string;
-  options: Option[];
+  options: readonly Option[];
   selected: string;
   onChange: (key: string) => void;
 };
