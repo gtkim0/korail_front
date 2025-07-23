@@ -12,7 +12,7 @@ type FilterSchema = {
   type: string;
   key: string;
   label: string;
-  options?: { key: string, label: string }[];
+  options?: readonly { key: string, label: string }[];
   endPoint?: string;
 }
 
@@ -451,5 +451,21 @@ export const filterSchemas: Record<PageType, FilterSchema[]>= {
       key: 'range1',
       label: '데이터 기준일자',
     },
-  ]
+  ],
+  [PageType.EmergencyBroadcastControl]: [
+    {
+      type: FilterType.Checkbox,
+      key: 'category',
+      label: '검색 기준',
+      options: [
+        {key: '1', label: '방송규칙명'},
+        {key: '2', label: '혼잡도'},
+        {key: '3', label: '대상노선'},
+      ]
+    },
+  ],
+  [PageType.SaveConditionImage]: [
+
+  ],
+  [PageType.EmergencyGuideInfo]: []
 }

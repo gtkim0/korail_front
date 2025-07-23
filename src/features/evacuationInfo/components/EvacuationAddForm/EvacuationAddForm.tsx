@@ -6,6 +6,7 @@ import SearchModalTrigger from "@/shared/components/searchModalTrigger/searchMod
 import DropDown from "@/shared/components/dropDown/DropDown";
 import {EvacuationInfoAddFormProps} from "@/features/evacuationInfo/components/EvacuationInfoView/EvacuationInfoView";
 import ModalAddFormLayout from "@/shared/components/modalAddFormLayout/ModalAddFormLayout";
+import {useCommonForm} from "@/shared/hooks/useCommonForm";
 
 export type EvacuationAddFormRef = {
   submit: () => Promise<any>;
@@ -13,16 +14,17 @@ export type EvacuationAddFormRef = {
 
 const ResetSchema = z.object({
   routeName: z.string().min(3, ''),
+  routeNum: z.string().min(3, ''),
   stationNum: z.string().min(3, ''),
   stationName: z.string().min(3, ''),
-  guideMap: z.string().min(3, ''),
+  image_url: z.string().min(3, ''),
   manual: z.string().min(3, ''),
 });
 
 const EvacuationAddForm =
   forwardRef<EvacuationAddFormRef, EvacuationInfoAddFormProps>(({editData, onCanSubmitChange}, ref) => {
 
-  const [ searchModalState, setSearchModalState ] = useState(null)
+  const [ searchModalState, setSearchModalState ] = useState<string | null>(null)
 
   const form = useCommonForm<z.infer<typeof ResetSchema>>(
     ref,
@@ -30,14 +32,12 @@ const EvacuationAddForm =
     onCanSubmitChange,
     ResetSchema,
     {
-      manualId: '',
-      situationClass: '',
-      manualSubject: '',
-      writer: '',
-      appliedArea: '',
-      phone: '',
-      useYn: false,
-      file: null
+      routeName: '',
+      routeNum: '',
+      stationNum: '',
+      stationName: '',
+      image_url: '',
+      manual: ''
     }
   )
 

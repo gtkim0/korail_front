@@ -16,4 +16,6 @@ export enum PageType {
   EmergencyManual = 'emergency-manual',
   EmergencyActionManual = 'emergency-action-manual',
   EmergencyFieldPersonnel = 'emergency-field-personnel',
+  EmergencyGuideInfo = 'emergency-guide-info',
+  EmergencyBroadcastControl = 'emergency-broadcast-control',
 }

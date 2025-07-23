@@ -1,5 +1,3 @@
-import {StationInfoColumnsType} from "@/features/history-info/columns/historyInfoColumns";
-
 export interface BaseModalFormProps<T> {
   editData: T | null;
   onCanSubmitChange: (v: boolean) => void;
@@ -7,7 +5,7 @@ export interface BaseModalFormProps<T> {
 
 export interface PageServerProps {
   initialFilter: Record<string, any>;
-  initialData: StationInfoColumnsType[];
+  initialData: any[];
   initialSortKey?: string;
 }
 

@@ -61,7 +61,7 @@ export const SearchFilter = forwardRef<HTMLInputElement, Props>((props, ref: For
               schema={filterSchemas[type]}
               value={value}
               onChange={onChange}
-              endPoint={'ss'}
+              modalEndPoint={'/'}
             />
           </motion.div>
         )}

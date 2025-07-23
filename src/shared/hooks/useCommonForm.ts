@@ -9,6 +9,7 @@ export function useCommonForm<T extends object>(
   initialValues?: Partial<T>
 ) {
 
+  // @ts-ignore
   const form = useForm<T>({
     defaultValues: {
       ...(initialValues ?? {}),
@@ -23,6 +24,8 @@ export function useCommonForm<T extends object>(
   });
 
   const canSubmit = useStore(form.store, (state) => state.canSubmit);
+
+
   const values = useStore(form.store, (state) => state.values)
 
   useImperativeHandle(ref, () => ({

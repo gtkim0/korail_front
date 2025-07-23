@@ -1,7 +1,7 @@
 import {ColumnDef} from "@tanstack/react-table";
 import {SpecialPeriodColumnType} from "@/types/special-period";
 
-export const specialPeriodColumns: ColumnDef<SpecialPeriodColumnType> = [
+export const specialPeriodColumns: ColumnDef<SpecialPeriodColumnType>[] = [
   {
     accessorKey: 'routeName',
     header: '노선명'

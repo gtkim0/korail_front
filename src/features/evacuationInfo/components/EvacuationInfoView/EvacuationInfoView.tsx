@@ -16,7 +16,7 @@ import 'react-pdf/dist/Page/TextLayer.css';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.mjs`;
 
-export interface EvacuationInfoAddFormProps extends BaseModalFormProps<Omit<EvacuationInfoColumnsType, 'id'>> {
+export interface EvacuationInfoAddFormProps extends BaseModalFormProps<EvacuationInfoColumnsType> {
   // optional: readonly?: boolean;
 }
 

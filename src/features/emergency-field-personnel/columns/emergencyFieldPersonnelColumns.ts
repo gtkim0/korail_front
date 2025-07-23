@@ -2,7 +2,14 @@ import {ColumnDef} from "@tanstack/react-table";
 import {EmergencyActionManualColumnType} from "@/types/emergency-action-manual";
 import {EmergencyFieldPersonnelColumnType} from "@/types/emergency-field-personnel";
 
-export const emergencyFieldPersonnelColumns: ColumnDef<EmergencyFieldPersonnelColumnType> = [
+export const emergencyFieldPersonnelColumns: ColumnDef<EmergencyFieldPersonnelColumnType>[] = [
+  {
+    accessorKey: 'id',
+    header: 'ID',
+    meta: {
+      hidden: true,
+    }
+  },
   {
     accessorKey: 'workingDate',
     header: '근무일자'

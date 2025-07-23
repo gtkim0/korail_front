@@ -17,7 +17,9 @@ export const MODAL_TITLE: Partial<Record<PageType, string>> = {
   [PageType.SaveConditionImage]: '조건영상저장 등록/수정',
   [PageType.EmergencyManual]: '비상 대응 메뉴얼 등록/수정',
   [PageType.EmergencyActionManual]: '현장 조치 메뉴얼 등록/수정',
-  [PageType.EmergencyFieldPersonnel]: '현장인원 등록/수정'
+  [PageType.EmergencyFieldPersonnel]: '현장인원 등록/수정',
+  [PageType.EmergencyGuideInfo]: '안내방송 정보 등록/수정',
+  [PageType.EmergencyBroadcastControl]: '자동수동 방송 등록/수정'
 }
 
 export const MODAL_MESSAGES = {

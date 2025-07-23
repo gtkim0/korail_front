@@ -66,7 +66,7 @@ export function DynamicFilterRenderer({schema, value, onChange, modalEndPoint}: 
                     key="all"
                     label="전체"
                     checked={value[filter.key]?.length === filter.options?.length}
-                    onChange={() => {w
+                    onChange={() => {
                       const allKeys = filter.options?.map(opt => opt.key) || [];
                       const isAllSelected = value[filter.key]?.length === allKeys.length;
                       handleChange(filter.key, isAllSelected ? [] : allKeys);

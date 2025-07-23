@@ -61,9 +61,13 @@ export const menuList = [
   { id: '450', pid: '4', url: '', component: '', order: 4, depth: 2, name: '안내 방송', description: '' },
   { id: '451', pid: '450', url: '/emergency/guide/info', component: 'EmergencyGuideInfo', order: 1, depth: 3, name: '안내방송 정보', description: '' },
   { id: '452', pid: '450', url: '/emergency/automatic/manual', component: 'EmergencyBroadcastControl', order: 2, depth: 3, name: '자동수동 방송', description: '' },
+
   { id: '453', pid: '4', url: '', component: '', order: 5, depth: 2, name: '알림 규칙', description: '' },
   { id: '454', pid: '453', url: '/emergency/notification-rules', component: 'NotificationRules', order: 1, depth: 3, name: '알림 규칙', description: '' },
-
+  { id: '455', pid: '453', url: '/emergency/notification-text', component: 'NotificationText', order: 2, depth: 3, name: '알림 문구', description: '' },
+  { id: '456', pid: '453', url: '/emergency/notification-recipient', component: 'NotificationRecipient', order: 3, depth: 3, name: '알림 수신자', description: '' },
+  { id: '457', pid: '453', url: '/emergency/notification-push', component: 'NotificationPush', order: 4, depth: 3, name: '푸시 알림', description: '' },
+  { id: '458', pid: '453', url: '/emergency/notification-log', component: 'NotificationLog', order: 5, depth: 3, name: '알림 로그', description: '' },
 
   // 권한 관리 하위
   { id: '700', pid: '7', url: '', component: '', order: 1, depth: 2, name: '권한 그룹', description: '' },

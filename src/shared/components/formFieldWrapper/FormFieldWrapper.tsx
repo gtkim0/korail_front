@@ -1,4 +1,5 @@
 import styles from './FormFieldWrapper.module.css';
+import clsx from "clsx";
 
 interface FormFieldWrapperProps {
   label: string;
@@ -10,6 +11,7 @@ interface FormFieldWrapperProps {
   useCheckbox?: boolean;
   checked?: boolean;
   onCheckboxChange?: (checked: boolean) => void;
+  direction?: 'horizontal' | 'vertical'
 }
 
 export default function FormFieldWrapper({
@@ -22,9 +24,10 @@ export default function FormFieldWrapper({
                                            useCheckbox = false,
                                            checked,
                                            onCheckboxChange,
+  direction = 'vertical'
                                          }: FormFieldWrapperProps) {
   return (
-    <div className={styles.fieldWrapper}>
+    <div className={clsx(styles.fieldWrapper, direction === 'horizontal' ? styles.horizontal : styles.vertical )}>
       {
         label &&
         <label className={styles.label}>

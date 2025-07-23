@@ -2,9 +2,9 @@
 import {BaseModalFormProps, PageServerProps} from "@/types/common";
 import {EmergencyManualColumnType} from "@/types/emergency-manual";
 import ListPage from "@/shared/components/listPage/ListPage";
-import {PageType} from "@/shared/enum/PageType";
 import { withRowSelection } from "@/shared/components/table/withRowSelection";
 import { emergencyManualColumns } from "@/features/emergency-manual/columns/emergencyManualColumns";
+import {PageType} from "@/shared/enum/PageType";
 import EmergencyManualAddForm
   from "@/features/emergency-manual/components/EmergencyManualAddForm/EmergencyManualAddForm";
 

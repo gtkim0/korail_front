@@ -1,5 +1,5 @@
 import ModalAddFormLayout from "@/shared/components/modalAddFormLayout/ModalAddFormLayout";
-import {forwardRef, useState} from "react";
+import {forwardRef, useState, ChangeEvent, ForwardRefExoticComponent, PropsWithoutRef, RefAttributes} from "react";
 import {FormAddFormRef} from "@/types/common";
 import {
   EmergencyFieldPersonnelAddFormProps
@@ -17,7 +17,7 @@ import {formatPhoneNumber} from "@/utils/formatPhoneNumber";
 
 const EmergencyFieldPersonnelAddForm =
   forwardRef<FormAddFormRef, EmergencyFieldPersonnelAddFormProps>(({editData, onCanSubmitChange}, ref) => {
-    const [ searchModalState, setSearchModalState ] = useState(null)
+    const [ searchModalState, setSearchModalState ] = useState<string | null>(null)
 
     const form = useCommonForm<z.infer<typeof emergencyFieldPersonnelSchema>>(
       ref,
@@ -189,6 +189,6 @@ const EmergencyFieldPersonnelAddForm =
         </div>
       </ModalAddFormLayout>
     )
-  })
+  }) as any
 
 export default EmergencyFieldPersonnelAddForm;

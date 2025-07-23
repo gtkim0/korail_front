@@ -1,7 +1,7 @@
 import {ColumnDef} from "@tanstack/react-table";
 import {SaveConditionImageColumnType} from "@/types/save-condition-image";
 
-export const saveConditionColumns: ColumnDef<SaveConditionImageColumnType> = [
+export const saveConditionColumns: ColumnDef<SaveConditionImageColumnType>[] = [
   {
     accessorKey: 'use',
     header: '용도'

@@ -7,4 +7,4 @@ export const POSITION_OPTIONS = [
   { key: '3', label: '안전관리'},
   { key: '4', label: '시설관리'},
   { key: '5', label: '공익요원'},
-]
+] as const;

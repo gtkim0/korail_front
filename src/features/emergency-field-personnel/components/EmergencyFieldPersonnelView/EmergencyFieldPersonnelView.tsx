@@ -14,7 +14,7 @@ export interface EmergencyFieldPersonnelAddFormProps extends BaseModalFormProps<
 
 export default function EmergencyFieldPersonnelView({initialFilter, initialData}: PageServerProps) {
   return (
-    <ListPage
+    <ListPage<EmergencyFieldPersonnelColumnType, EmergencyFieldPersonnelAddFormProps>
       pageType={PageType.EmergencyFieldPersonnel}
       filterSchemaKey={PageType.EmergencyFieldPersonnel}
       columns={withRowSelection(emergencyFieldPersonnelColumns)}

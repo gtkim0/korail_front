@@ -9,6 +9,10 @@ import {
 } from '@tanstack/react-table';
 import styles from './BaseTable.module.scss';
 
+type CustomMeta = {
+  hidden?: boolean;
+};
+
 interface TableProps<T extends { id: string | number }> {
   columns: ColumnDef<T, unknown>[];
   data: T[];
@@ -70,7 +74,9 @@ export default function Table<T extends { id: string | number }>(
             key={headerGroup.id}
             className={styles.tr}
           >
-            {headerGroup.headers.map(header => (
+            {headerGroup.headers
+              .filter(header=> header.column.columnDef.meta?.hidden !== true)
+              .map(header => (
               <th
                 key={header.id}
                 className={styles.th}
@@ -105,7 +111,9 @@ export default function Table<T extends { id: string | number }>(
                 onChangeClickedItem(row.original);
               }}
             >
-              {row.getVisibleCells().map(cell => (
+              {row.getVisibleCells()
+                .filter(cell=> cell.column.columnDef.meta?.hidden !== true)
+                .map(cell => (
                 <td key={cell.id} className={styles.td}>
                   <div className={styles.cellContent}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

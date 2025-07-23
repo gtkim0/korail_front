@@ -1,7 +1,14 @@
 import {ColumnDef} from "@tanstack/react-table";
 import {EmergencyActionManualColumnType} from "@/types/emergency-action-manual";
 
-export const emergencyActionManualColumns: ColumnDef<EmergencyActionManualColumnType> = [
+export const emergencyActionManualColumns: ColumnDef<EmergencyActionManualColumnType>[] = [
+  {
+    accessorKey: 'id',
+    header: 'ID',
+    meta: {
+      hidden: true
+    }
+  },
   {
     accessorKey: 'manualId',
     header: '메뉴얼ID'

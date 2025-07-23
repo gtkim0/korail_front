@@ -11,7 +11,7 @@ type Option = {
 };
 
 type FilterSelectProps = {
-  options: Option[];
+  options: readonly Option[];
   value: string;
   onChange: (value: string) => void;
 };

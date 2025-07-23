@@ -35,7 +35,7 @@ interface ListPageProps<T extends { id: string | number }, F extends BaseModalFo
     page: number;
     size: number;
   }) => Promise<T[]>;
-  ModalBody: ForwardRefExoticComponent<PropsWithoutRef<F> & RefAttributes<any>>;
+  ModalBody: ForwardRefExoticComponent<PropsWithoutRef<F> & RefAttributes<any>> | any;
   modalBodyProps?: Omit<F, keyof BaseModalFormProps<T>>;
   initialFilter?: Record<string, any>;
   initialSortKey?: string;
@@ -154,6 +154,7 @@ function ListPage<T extends { id: string | number }, F extends BaseModalFormProp
     console.log(val);
     setFilter(val);
   }
+
   // @TODO tanstack/react-table 에서 항상 새로운 배열만들면서 참조달라짐. query key 에 넣을수없을듯.
   // 추후 방법 찾아보기.
   useEffect(() => {
@@ -166,6 +167,7 @@ function ListPage<T extends { id: string | number }, F extends BaseModalFormProp
     setEnabled(true);
   }, []);
 
+  // @ts-ignore
   return (
     <>
       <SearchFilter
@@ -210,11 +212,9 @@ function ListPage<T extends { id: string | number }, F extends BaseModalFormProp
       >
         <ModalBody
           ref={editAreaRef}
-          {...({
-            ...modalBodyProps,
-            editData: editTarget,
-            onCanSubmitChange: setCanSubmit,
-          } as PropsWithoutRef<F>)}
+          {...(modalBodyProps as Omit<F, keyof BaseModalFormProps<T>>)}
+          editData={editTarget}
+          onCanSubmitChange={setCanSubmit}
         />
       </BaseModal>
     </>
@@ -222,3 +222,4 @@ function ListPage<T extends { id: string | number }, F extends BaseModalFormProp
 }
 
 export default ListPage;
+

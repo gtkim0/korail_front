@@ -6,4 +6,4 @@ export const SELECT_OPTIONS = {
   POSITION_OPTIONS,
   ZONE_OPTIONS,
   SHIFT_TYPE_OPTIONS
-};
+} as const;

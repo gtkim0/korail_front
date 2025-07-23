@@ -1,7 +1,7 @@
 import {ColumnDef} from "@tanstack/react-table";
 import {ZoneInfoColumnType} from "@/types/zoneInfo";
 
-export const zoneInfoColumns: ColumnDef<ZoneInfoColumnType> = [
+export const zoneInfoColumns: ColumnDef<ZoneInfoColumnType>[] = [
   {
     accessorKey: 'routeName',
     header: '노선명'

@@ -1,4 +1,4 @@
-import {forwardRef} from "react";
+import {forwardRef, ChangeEvent} from "react";
 import {FormAddFormRef} from "@/types/common";
 import {
   EmergencyActionManualAddFormProps

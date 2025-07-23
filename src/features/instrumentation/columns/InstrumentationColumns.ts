@@ -1,7 +1,7 @@
 import {ColumnDef} from "@tanstack/react-table";
 import {InstrumentationColumnType} from "@/types/instrumentation";
 
-export const instrumentationColumns: ColumnDef<InstrumentationColumnType> = [
+export const instrumentationColumns: ColumnDef<InstrumentationColumnType>[] = [
   {
     accessorKey: 'managementNum',
     header: '관리번호'
