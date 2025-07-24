@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-
-export default function NotificationTextView() {
-  return (
-    <>
-    </>
-=======
 'use client';
 import {BaseModalFormProps, PageServerProps} from "@/types/common";
 import ListPage from "@/shared/components/listPage/ListPage";
@@ -41,6 +34,5 @@ export default function NotificationTextView({initialFilter,initialData}: PageSe
       }}
       initialData={initialData}
     />
->>>>>>> 1e81324 (fit(비상 대응) - 알림 규칙 퍼블리싱)
   )
 }

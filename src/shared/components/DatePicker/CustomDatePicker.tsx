@@ -27,7 +27,7 @@ export default function CustomDatePicker({date, onChange}: Props) {
       showYearDropdown
       showMonthDropdown
       dropdownMode="select"
-      customInput={<CustomInput/>}
+      customInput={<CustomInput />}
       renderCustomHeader={(props)=> (
         <CustomDatePickerHeader
           {...props}

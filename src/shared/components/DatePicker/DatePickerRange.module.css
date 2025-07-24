@@ -9,7 +9,7 @@
   height: 3.6rem;
   background: #fff;
   width: 100%;
-
+  cursor: pointer;
   &.fullWidth {
     width: 100% !important;
   }

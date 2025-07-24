@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-
-export default function NotificationRecipientView() {
-  return (
-    <></>
-=======
 'use client';
 import {BaseModalFormProps, PageServerProps} from "@/types/common";
 import ListPage from "@/shared/components/listPage/ListPage";
@@ -42,6 +36,5 @@ export default function NotificationRecipientView({initialFilter, initialData}: 
       }}
       initialData={initialData}
     />
->>>>>>> 1e81324 (fit(비상 대응) - 알림 규칙 퍼블리싱)
   )
 }

@@ -11,10 +11,7 @@ type Option = {
 };
 
 type FilterSelectProps = {
-<<<<<<< HEAD
-=======
   enabledAll?: boolean;
->>>>>>> 1e81324 (fit(비상 대응) - 알림 규칙 퍼블리싱)
   options: readonly Option[];
   value: string;
   onChange: (value: string) => void;
