@@ -18,11 +18,12 @@ interface Props {
   value: {[key:string]: any}
   onChange: ( value: any )=> void;
   onSubmit?: () => void;
+  enabledAdd?:boolean;
 }
 
 export const SearchFilter = forwardRef<HTMLInputElement, Props>((props, ref: ForwardedRef<HTMLInputElement>) => {
 
-  const { onAdd, type, value, onChange, onSubmit} = props;
+  const { onAdd, type, value, onChange, onSubmit, enabledAdd} = props;
   const {isOpen, open, close} = useModal();
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -45,9 +46,13 @@ export const SearchFilter = forwardRef<HTMLInputElement, Props>((props, ref: For
           </div>
         </div>
 
-        <div className={styles.buttonArea}>
-          <AddButton text={'등록'} onClick={onAdd}/>
-        </div>
+        {
+          enabledAdd &&
+            <div className={styles.buttonArea}>
+                <AddButton text={'등록'} onClick={onAdd}/>
+            </div>
+        }
+
       </div>
       <AnimatePresence initial={false}>
         {isOpen && (

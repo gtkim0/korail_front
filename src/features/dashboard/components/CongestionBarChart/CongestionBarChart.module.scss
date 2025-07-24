@@ -1,0 +1,146 @@
+.container {
+  background: linear-gradient(180deg, #0c1e3e 0%, #061223 100%);
+  border-radius: 12px;
+  padding: 12px;
+  color: white;
+  font-family: sans-serif;
+  width: 320px;
+}
+
+.header {
+  font-size: 13px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.time {
+  font-size: 12px;
+  color: #bbb;
+  margin-left: 4px;
+}
+
+.chart {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.label {
+  width: 36px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 4px;
+  padding: 2px 4px;
+
+  &.normal { background-color: #009856; box-shadow: 0 0 8px 0 #2B7D04; }
+  &.warning { background-color: #ffb800; box-shadow: 0 0 8px 0 #F80;}
+  &.congested { background-color: #ff6b00; box-shadow: 0 0 8px 0 #F80;}
+  &.critical { background-color: #e60012; box-shadow: 0 0 8px 0 #FF1105;}
+}
+
+.barArea {
+  position: relative;
+  flex: 1;
+  height: 18px;
+  background-color: rgba(255,255,255,0.08);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  transition: width 0.6s ease-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  &.normal {
+    background: repeating-linear-gradient(
+                    90deg,
+                    #009856,
+                    #009856 2px,
+                    transparent 2px,
+                    transparent 4px
+    );
+  }
+
+  &.warning {
+    background: repeating-linear-gradient(
+                    90deg,
+                    #ffb800,
+                    #ffb800 2px,
+                    transparent 2px,
+                    transparent 4px
+    );
+  }
+
+  &.congested {
+    background: repeating-linear-gradient(
+                    90deg,
+                    #ff6b00,
+                    #ff6b00 2px,
+                    transparent 2px,
+                    transparent 4px
+    );
+  }
+
+  &.critical {
+    background: repeating-linear-gradient(
+                    90deg,
+                    #e60012,
+                    #e60012 2px,
+                    transparent 2px,
+                    transparent 4px
+    );
+  }
+}
+
+.badge {
+  position: absolute;
+  right: -40px;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 12px;
+  border: 2px solid currentColor;
+  opacity: 0;
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+
+  height: 100%;
+  display: flex;
+  align-items: center;
+  &.normal {
+    color: #009856;
+    background-color: #021910;
+  }
+
+  &.warning {
+    color: #ffb800;
+    background-color: #231d02;
+  }
+
+  &.congested {
+    color: #ff6b00;
+    background-color: #2b1200;
+  }
+
+  &.critical {
+    color: #e60012;
+    background-color: #230004;
+  }
+}
+
+
+.showBadge {
+  opacity: 1;
+  transform: scale(1);
+}

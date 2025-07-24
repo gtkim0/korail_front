@@ -43,6 +43,7 @@ interface ListPageProps<T extends { id: string | number }, F> {
   onSubmitAdd?: (formData: Partial<T>) => Promise<boolean>;
   onDelete?: (id: string) => void;
   initialData?: T[]
+  modalMaxWidth?: 'lg' | 'xl'
 }
 
 function ListPage<T extends { id: string | number }, F>(
@@ -58,7 +59,8 @@ function ListPage<T extends { id: string | number }, F>(
     onSubmitEdit,
     onSubmitAdd,
     onDelete,
-    initialData
+    initialData,
+    modalMaxWidth = 'lg'
   }: ListPageProps<T, F>,
 ) {
   const {isOpen, open, close} = useModal();
@@ -177,6 +179,7 @@ function ListPage<T extends { id: string | number }, F>(
         onChange={handleChangeFilter}
         type={filterSchemaKey}
         onSubmit={handleSubmit}
+        enabledAdd={!!onSubmitAdd}
       />
 
       <TableWrapper<T>
@@ -207,7 +210,7 @@ function ListPage<T extends { id: string | number }, F>(
         title={MODAL_TITLE[pageType]}
         isOpen={isOpen}
         onCloseAction={close}
-        maxWidth={'lg'}
+        maxWidth={modalMaxWidth}
         footer={<BaseModalFooter disabled={!canSubmit} onSubmit={handleSubmitForm} close={close}/>}
       >
         <ModalBody

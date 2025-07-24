@@ -5,6 +5,7 @@ import {cookies} from "next/headers";
 import {menuServerApi} from "@/features/menu/api/server/menuServerApi";
 import {BaseMenu} from "@/types/menu";
 import PortalContentLayout from "@/features/lyaouts/PortalContentLayout/PortalContentLayout";
+import {notFound} from "next/navigation";
 
 /** 동적 import 로 routing **/
 export default async function PageMapper({ params }: { params: Promise<{page: string[]}> }) {
@@ -39,7 +40,8 @@ export default async function PageMapper({ params }: { params: Promise<{page: st
   try {
     Component = (await import(`@/app/pages/${currnet?.component}`)).default;
   } catch {
-    Component = () => <Banner />
+    throw notFound();
+    // Component = () => <Banner />
     // 추후 catch 에서는 404 에러페이지 띄우기.
    }
 

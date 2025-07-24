@@ -10,7 +10,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-
   // @TODO 개발어느정도 완료된 이후 제거
   // typescript: {
   //   ignoreBuildErrors: true,

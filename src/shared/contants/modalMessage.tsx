@@ -24,7 +24,8 @@ export const MODAL_TITLE: Partial<Record<PageType, string>> = {
   [PageType.NotificationPush]: '푸시알림 등록/수정',
   [PageType.NotificationLog]: '알림 등록/수정',
   [PageType.NotificationText]: '알림문구 등록/수정',
-  [PageType.NotificationRecipient]: '알림 수신문자 등록/수정'
+  [PageType.NotificationRecipient]: '알림 수신문자 등록/수정',
+  [PageType.CongestionVerificationTarget]: '대피안내도'
 }
 
 export const MODAL_MESSAGES = {

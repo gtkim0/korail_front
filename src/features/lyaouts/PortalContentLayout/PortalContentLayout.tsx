@@ -1,8 +1,9 @@
 import styles from './PortalContentLayout.module.scss';
 import MenuTitle from "@/shared/components/menuTitle/MenuTitle";
 import MenuBreadCrumb from "@/shared/components/menuBreadCrumb/MenuBreadCrumb";
-import {ReactNode} from "react";
+import {ReactNode, Suspense} from "react";
 import {BaseMenu} from "@/types/menu";
+import Loading from "@/shared/components/loading/Loading";
 
 interface Props {
   path: string;
@@ -21,9 +22,11 @@ export default function  PortalContentLayout ({path, menus, children}: Props) {
         <MenuBreadCrumb path={path} menus={menus}/>
       </div>
 
-      <div style={{display:'flex', flexDirection:'column', gap:'4rem', flex: 1}}>
-      { children }
-      </div>
+      {/*<Suspense fallback={<Loading />}>*/}
+        <div style={{display:'flex', flexDirection:'column', gap:'4rem', flex: 1}}>
+        { children }
+        </div>
+      {/*</Suspense>*/}
     </div>
   )
 }

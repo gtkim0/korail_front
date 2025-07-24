@@ -1,3 +1,6 @@
+import CongestionVerificationCompleteView
+  from "@/features/congestion-verification-complete/components/CongestionVerificationTargetView/CongestionVerificationCompleteView";
+
 export enum PageType {
   Menu = 'menu',
   RouteMap = 'routeMap',
@@ -23,4 +26,6 @@ export enum PageType {
   NotificationLog = 'notification-log',
   NotificationPush = 'notification-push',
   NotificationRecipient = 'notification-recipient',
+  CongestionVerificationComplete = 'congestion-verification-complete',
+  CongestionVerificationTarget = 'congestion-verification-target',
 }

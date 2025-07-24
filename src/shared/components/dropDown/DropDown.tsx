@@ -1,3 +1,4 @@
+'use client';
 import styles from './Dropdown.module.scss';
 import clsx from "clsx";
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";

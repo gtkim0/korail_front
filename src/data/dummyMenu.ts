@@ -1,6 +1,6 @@
 export const menuList = [
   { id: '0', pid: null, url: '/', component: 'Main', order: 1, depth: 0, name: 'Menu', description: '메인메뉴 에 대한설명' },
-  { id: '1', pid: '0', url: '/dashboard', component: '', order: 1, depth: 1, name: '대시보드', description: '대시보드 에 대한설명' },
+  { id: '1', pid: '0', url: '/dashboard', component: 'CongestionStep', order: 1, depth: 1, name: '대시보드', description: '대시보드 에 대한설명' },
   { id: '2', pid: '0', url: '/info', component: '', order: 2, depth: 1, name: '기본정보', description: '기본정보 에 대한설명' },
   { id: '3', pid: '0', url: '/a', component: '', order: 3, depth: 1, name: '혼잡도 통계', description: '혼잡도 통계 에 대한설명' },
   { id: '4', pid: '0', url: '/s', component: '', order: 4, depth: 1, name: '비상 대응', description: '비상 대응 에 대한설명' },
@@ -68,6 +68,12 @@ export const menuList = [
   { id: '456', pid: '453', url: '/emergency/notification-recipient', component: 'NotificationRecipient', order: 3, depth: 3, name: '알림 수신자', description: '' },
   { id: '457', pid: '453', url: '/emergency/notification-push', component: 'NotificationPush', order: 4, depth: 3, name: '푸시 알림', description: '' },
   { id: '458', pid: '453', url: '/emergency/notification-log', component: 'NotificationLog', order: 5, depth: 3, name: '알림 로그', description: '' },
+
+  // 혼잡도 검증 하위
+  { id: '459', pid: '5', url: '', component: '', order: 1, depth: 2, name: '검증 대상', description: '' },
+  { id: '460', pid: '459', url: '/congestion-verification/target', component: 'CongestionVerificationTarget', order: 1, depth: 3, name: '검증 대상', description: '' },
+  { id: '461', pid: '5', url: '', component: '', order: 2, depth: 2, name: '검증 완료', description: '' },
+  { id: '462', pid: '461', url: '/congestion-verification/complete', component: 'CongestionVerificationComplete', order: 1, depth: 3, name: '검증 완료', description: '' },
 
   // 권한 관리 하위
   { id: '700', pid: '7', url: '', component: '', order: 1, depth: 2, name: '권한 그룹', description: '' },
