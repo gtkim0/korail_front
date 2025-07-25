@@ -9,7 +9,6 @@ import {
   CongestionVerificationTargetAddFormProps
 } from "@/features/congestion-verification-target/components/CongestionVerificationTargetView/CongestionVerificationTargetView";
 import Image from "next/image";
-import FormFieldWrapper from "@/shared/components/formFieldWrapper/FormFieldWrapper";
 import {InputField} from "@/shared/components/Input/InputField";
 
 export type CongestionVerificationTargetFormType = {

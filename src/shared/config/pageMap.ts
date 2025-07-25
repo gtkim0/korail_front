@@ -31,7 +31,14 @@ export const pageComponentNameMap = {
     EmergencyFieldPersonnel: '현장 인원',
     EmergencyGuideInfo: '안내방송 정보',
     EmergencyBroadcastControl: '자동수동 발송',
-    NotificationRules: '알림 규칙'
+    NotificationRules: '알림 규칙',
+    NotificationLog: '알림 로그',
+    NotificationPush: '푸시 알림',
+    NotificationRecipient: '알림 수신자',
+    NotificationText: '알림 문구',
+    CongestionVerificationTarget: '검증 대상',
+    CongestionVerificationComplete: '검증 완료',
+
   }
 
 

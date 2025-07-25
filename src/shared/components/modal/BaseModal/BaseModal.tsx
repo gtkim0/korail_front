@@ -11,7 +11,7 @@ interface Props {
   isOpen: boolean;
   onCloseAction: () => void;
   children: ReactNode;
-  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'full';
   title?: string;
   footer?: ReactNode;
 }
