@@ -6,7 +6,7 @@ interface CongestionLevel {
   label: string;
   key: 'normal' | 'warning' | 'congested' | 'critical';
   count: number;
-  percent: number; // 0 ~ 100
+  percent: number;
 }
 
 interface CongestionBarChartProps {
@@ -33,7 +33,6 @@ export default function CongestionBarChart({ levels, time }: CongestionBarChartP
       clearTimeout(badgeTimeout);
     };
   }, [levels]);
-
 
   return (
     <div className={styles.container}>

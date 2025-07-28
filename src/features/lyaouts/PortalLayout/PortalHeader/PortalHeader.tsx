@@ -11,7 +11,6 @@ import {AnimatePresence, motion} from "framer-motion";
 import PortalLogo from '@/shared/assets/images/portal_logo.svg'
 import Image from "next/image";
 import clsx from "clsx";
-import {useResponsive} from "@/shared/hooks/useResponsive";
 
 export default function PortalHeader({ menus }: { menus: BaseMenu[] }) {
 
