@@ -17,15 +17,25 @@
   align-self: stretch;
   //padding: 12rem 0 4.4rem 0;
   justify-content: center;
+}
 
+.wrapper {
+  flex: 1;
+  padding: 16rem 3.2rem 3.2rem
+}
 
+.form {
+  display: flex;
+  gap: 5.6rem;
+  flex-direction: column;
+  flex: 1
 }
 
 .inner {
   display: flex;
   flex-direction: column;
   gap: 6.4rem;
-
+  height: 100%;
 }
 
 .logo_container {

@@ -12,3 +12,9 @@ export interface PageServerProps {
 export type FormAddFormRef = {
   submit: () => Promise<any>;
 };
+
+export interface ResponseType<T> {
+  code: number;
+  message: string;
+  data: T;
+}

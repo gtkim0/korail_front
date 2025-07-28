@@ -1,4 +1,5 @@
-// lib/fetchers/clientFetcher.ts
+import {ResponseType} from "@/types/common";
+
 export function buildQueryParams(params?: Record<string, any>): string {
   if (!params) return '';
   const searchParams = new URLSearchParams();
@@ -13,27 +14,52 @@ export function buildQueryParams(params?: Record<string, any>): string {
 export async function clientFetch<T>(
   url: string,
   options: RequestInit = { method: 'GET' }
-): Promise<T> {
+): Promise<ResponseType<T>> {
 
   const token = localStorage.getItem('access_token'); // 또는 쿠키 파싱해서 가져오기
 
   const rootFlag = '/apis'
 
-  const res = await fetch(`${rootFlag}${url}`, {
+  let res = await fetch(`${rootFlag}${url}`, {
     method: options.method ?? 'GET',
     ...options,
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
       ...options.headers,
-      ...(token && { Authorization: `Bearer ${token}` }),
+      // ...(token && { Authorization: `Bearer ${token}` }),
     },
     cache: "no-store"
   });
 
   if (!res.ok) {
-    const message = await res.text();
-    throw new Error(`클라이언트 API 요청 실패 (${res.status}): ${message}`);
+
+    if(res.status && Number(res.status) === 401) {
+
+      console.log(res);
+
+      // const refreshRes = await fetch('/auth/refresh', {
+      //   method: 'POST',
+      //   credentials: 'include'
+      // })
+
+      // if(refreshRes.ok) {
+      //   // res = await fetch()
+      // }
+
+      return res.json();
+
+      // const token = cookieStore.get('accessToken')
+      // console.log(token);
+    }
+
+    const message = await res.json();
+    return message as ResponseType<T>
+    // Error(`API 요청 실패 (${res.status}): ${message}`);
   }
+
+  // 여기서 401 인증 에러에 대한 로직 추가해야할듯.
+
 
   const contentType = res.headers.get('content-type');
 
@@ -41,7 +67,7 @@ export async function clientFetch<T>(
     return res.json();
   }
 
-  return {} as T;
+  return {} as ResponseType<T>;
 }
 
 export const clientGet = <T>(
@@ -54,7 +80,6 @@ export const clientGet = <T>(
 };
 
 export const clientPost = <T>(url: string, body: any) => {
-  console.log(body)
   return clientFetch<T>(url, {
     method: 'POST',
     body: JSON.stringify(body),

@@ -6,7 +6,7 @@ import {ColumnDef, OnChangeFn, RowSelectionState, SortingState} from "@tanstack/
 
 interface Props<T extends object> {
   onSelect: (v: { key: string, label: string})=> void;
-  onEdit?: (v: T)=> void;
+  onEdit?: ()=> void;
   onDelete?: ()=> void;
   columns: ColumnDef<T, any>[];
   data: T[];
@@ -23,6 +23,8 @@ interface Props<T extends object> {
   pageCount: number;
   setPageIndex: (index: number) => void;
   setPageSize: (size: number) => void;
+  enabledEdit?: boolean;
+  enabledDelete?: boolean;
 }
 
 export default function TableWrapper<T extends { id: string | number }>(props: Props<T>) {
@@ -39,7 +41,9 @@ export default function TableWrapper<T extends { id: string | number }>(props: P
     pageCount,
     onChangeClickedItem,
     setPageIndex,
-    setPageSize
+    setPageSize,
+    enabledEdit = true,
+    enabledDelete = true
   } = props;
 
   return (
@@ -48,6 +52,8 @@ export default function TableWrapper<T extends { id: string | number }>(props: P
         onSelect={onSelect}
         onEdit={onEdit}
         onDelete={onDelete}
+        enabledEdit={enabledEdit}
+        enabledDelete={enabledDelete}
       />
 
       <Table<T>

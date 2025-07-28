@@ -4,13 +4,16 @@ import styles from './PortalHeader.module.scss';
 import {useState, useMemo, useRef, useEffect} from "react";
 import {usePathname, useRouter} from "next/navigation";
 import PortalHeaderItem from "@/features/lyaouts/PortalLayout/PortalHeader/PortalHeaderItem/PortalHeaderItem";
-import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
 import {BaseMenu} from "@/types/menu";
 import HeaderRightSection from "@/features/lyaouts/PortalLayout/PortalHeader/RightSection/RightSection";
 import FullMenuDropdown from "@/features/lyaouts/PortalLayout/PortalHeader/FullMenuDropdown/FullMenuDropdown";
 import {AnimatePresence, motion} from "framer-motion";
+import PortalLogo from '@/shared/assets/images/portal_logo.svg'
+import Image from "next/image";
+import clsx from "clsx";
+import {useResponsive} from "@/shared/hooks/useResponsive";
 
-export default function PortalHeader({menus}: { menus: BaseMenu[] }) {
+export default function PortalHeader({ menus }: { menus: BaseMenu[] }) {
 
   const pathname = usePathname();
   const router = useRouter();
@@ -18,8 +21,11 @@ export default function PortalHeader({menus}: { menus: BaseMenu[] }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [containerHeight, setContainerHeight] = useState(0);
 
+
   const renderMenu = menus.filter(i => i.depth === 1);
   const [activeMenuId, setActiveMenuId] = useState<string>('');
+
+  const isDashboard = pathname === '/dashboard';
 
   const activeFirstDepthId = useMemo(() => {
     const current = menus.find(m => m.url === pathname);
@@ -78,8 +84,8 @@ export default function PortalHeader({menus}: { menus: BaseMenu[] }) {
       }
     };
 
-    updateHeight(); // 초기 측정
-    window.addEventListener('resize', updateHeight); // 리사이즈 대응
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
 
     return () => window.removeEventListener('resize', updateHeight);
   }, []);
@@ -87,14 +93,19 @@ export default function PortalHeader({menus}: { menus: BaseMenu[] }) {
   return (
     <>
       <header
-        className={styles.portalHeader}
+        className={clsx(styles.portalHeader, isDashboard && styles.dashboard)}
         onMouseLeave={() => setActiveMenuId('')}
       >
         <div ref={wrapperRef} className={styles.wrapper}>
           <div className={styles.menuArea}>
             <div className={styles.menuWrapper}>
-              <div style={{display: 'flex', gap: '1.2rem', alignItems: 'center'}}>
-                <ImageWrapper width={166} height={40} src={'/portal_logo.svg'}/>
+              <div className={styles.leftArea}>
+                <div
+                  onClick={()=> router.push('/dashboard')}
+                  className={styles.imageArea}
+                >
+                  <Image alt={''} src={PortalLogo} fill style={{objectFit:'contain'}}/>
+                </div>
                 <div className={styles.mainTitle}>혼잡도 관리시스템</div>
               </div>
               <div className={styles.contentWrapper}>
@@ -111,7 +122,7 @@ export default function PortalHeader({menus}: { menus: BaseMenu[] }) {
                 </div>
               </div>
             </div>
-            <HeaderRightSection/>
+            <HeaderRightSection />
           </div>
 
           {/*@TODO 추후 데이터 다 들어간후 any 제거*/}

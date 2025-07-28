@@ -1,6 +1,5 @@
 'use client';
 import {useRouter} from 'next/navigation';
-import {toast} from 'react-hot-toast'
 import PortalFooter from "@/features/lyaouts/PortalLayout/PortalFooter/PortalFooter";
 import styles from './login.module.scss';
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
@@ -15,6 +14,7 @@ import 'swiper/css/navigation';
 import {useRef} from "react";
 import {z} from 'zod';
 import FormSubmitButton from "@/shared/components/form/FormSubmitButton/FormSubmitButton";
+import {clientPost} from "@/shared/api/clientFetcher";
 
 const imageList = [
   {
@@ -69,25 +69,28 @@ export default function LoginPage() {
     },
     onSubmit: async ({value}) => {
       try {
-        console.log(value);
-        const res = await fetch('/apis/auth/login', {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(value),
-        });
+        // const res = await fetch('/apis/auth/login', {
+        //   method: 'POST',
+        //   credentials: 'include',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        //   body: JSON.stringify(value),
+        // });
 
-        if (!res.ok) {
-          const error = await res.text();
-          toast.error(`로그인 실패: ${error}`);
-          return;
-        }
+        // if (!res.ok) {
+        //   const error = await res.text();
+        //   toast.error(`로그인 실패: ${error}`);
+        //   return;
+        // }
+
+        await clientPost<Response>('/auth/login', {
+          ...value
+        })
 
         router.replace('/dashboard');
       } catch (err) {
-        toast.error('서버 오류: 로그인 요청 실패');
+        // toast.error('서버 오류: 로그인 요청 실패');
         console.error(err);
       }
     },
@@ -106,7 +109,7 @@ export default function LoginPage() {
             priority
           />
         </div>
-        <div style={{flex: 1, padding:'16rem 3.2rem 3.2rem'}}>
+        <div className={styles.wrapper}>
           <div className={styles.inner}>
             <div className={styles.logo_container}>
               <ImageWrapper width={200} height={48} src={'/portal_logo.svg'}/>
@@ -118,7 +121,7 @@ export default function LoginPage() {
                 e.preventDefault();
                 form.handleSubmit();
               }}
-              style={{display: 'flex', gap: '5.6rem', flexDirection: 'column'}}
+              className={styles.form}
             >
               <div className={styles.content_form}>
                 <div className={styles.form}>

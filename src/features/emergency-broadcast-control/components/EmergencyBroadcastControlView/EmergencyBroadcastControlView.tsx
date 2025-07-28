@@ -38,7 +38,6 @@ export default function EmergencyBroadcastControlView({initialFilter, initialDat
         return true;
       }}
       onSubmitAdd={async (value)=> {
-        console.log(value);
         return true;
       }}
       onDelete={async (ids)=> {

@@ -1,6 +1,7 @@
 import styles from './SearchInput.module.scss';
 import {forwardRef, KeyboardEvent} from "react";
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
+// import SearchSvg from "@/shared/assets/images/search.svg";
 
 interface Props {
   onKeyDown?: (e:KeyboardEvent<HTMLInputElement>)=> void;

@@ -35,7 +35,7 @@ interface ListPageProps<T extends { id: string | number }, F> {
     page: number;
     size: number;
   }) => Promise<T[]>;
-  ModalBody: ForwardRefExoticComponent<PropsWithoutRef<F> & RefAttributes<any>> | any;
+  ModalBody?: ForwardRefExoticComponent<PropsWithoutRef<F> & RefAttributes<any>> | any;
   modalBodyProps?: Omit<F, keyof BaseModalFormProps<T>>;
   initialFilter?: Record<string, any>;
   initialSortKey?: string;
@@ -117,8 +117,8 @@ function ListPage<T extends { id: string | number }, F>(
     setPagination(prev => ({...prev, pageIndex: 0}));
   };
 
-  const handleEdit = (row: T) => {
-    setEditTarget(row);
+  const handleEdit = () => {
+    // setEditTarget(row);
     open();
   }
 
@@ -204,22 +204,26 @@ function ListPage<T extends { id: string | number }, F>(
         pageCount={Math.ceil(dataSource.length / pagination.pageSize)}
         setPageIndex={index => setPagination(prev => ({...prev, pageIndex: index}))}
         setPageSize={size => setPagination(prev => ({...prev, pageSize: size}))}
+        enabledEdit={!!onSubmitEdit}
+        enabledDelete={!!onDelete}
       />
-
-      <BaseModal
-        title={MODAL_TITLE[pageType]}
-        isOpen={isOpen}
-        onCloseAction={close}
-        maxWidth={modalMaxWidth}
-        footer={<BaseModalFooter disabled={!canSubmit} onSubmit={handleSubmitForm} close={close}/>}
-      >
-        <ModalBody
-          ref={editAreaRef}
-          {...(modalBodyProps as Omit<F, keyof BaseModalFormProps<T>>)}
-          editData={editTarget}
-          onCanSubmitChange={setCanSubmit}
-        />
-      </BaseModal>
+      {
+        ModalBody &&
+          <BaseModal
+              title={MODAL_TITLE[pageType]}
+              isOpen={isOpen}
+              onCloseAction={close}
+              maxWidth={modalMaxWidth}
+              footer={<BaseModalFooter disabled={!canSubmit} onSubmit={handleSubmitForm} close={close}/>}
+          >
+              <ModalBody
+                  ref={editAreaRef}
+                  {...(modalBodyProps as Omit<F, keyof BaseModalFormProps<T>>)}
+                  editData={editTarget}
+                  onCanSubmitChange={setCanSubmit}
+              />
+          </BaseModal>
+      }
     </>
   );
 }

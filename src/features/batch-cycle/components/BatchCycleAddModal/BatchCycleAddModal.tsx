@@ -30,13 +30,12 @@ const BatchCycleAddModal = forwardRef<BatchCycleAddFormRef, Props>((_, ref) => {
       repeatType: '1'
     },
     onSubmit: async ({ value }) => {
-      console.log('🟢 제출된 데이터:', value);
+      console.log('제출된 데이터:', value);
     },
   });
 
   useImperativeHandle(ref, () => ({
     submit: () => {
-
       console.log('submit')
       form.handleSubmit(); // 또는 form.submit()
     },

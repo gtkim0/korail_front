@@ -17,12 +17,17 @@
   }
 }
 
+.dashboard {
+  background: #000 !important;
+}
+
 .wrapper {
   display: flex;
   /*flex-direction: column;*/
   justify-content: center;
   flex: 1;
   height: 100%;
+  color: #fff;
 }
 
 .contentWrapper {
@@ -59,6 +64,19 @@
   @include small-desktop {
     gap: 4.6rem;
   }
+}
+
+.leftArea {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+.imageArea {
+  width: 16.6rem;
+  height: 4rem;
+  position: relative;
+  cursor: pointer;
 }
 
 .mainTitle {

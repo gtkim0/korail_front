@@ -19,14 +19,16 @@
   background: #D5D5D6;
 }
 
+
 .buttonWrapper {
   display: flex;
   align-items: center;
   gap: .8rem;
+  height: 3.2rem;
 
   button {
     width: 8rem;
-    height: 3.2rem;
+    height: 100%;
     min-width: 6.4rem;
     padding: 0 1rem;
     display: flex;

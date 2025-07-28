@@ -15,28 +15,28 @@ export default function NotFound() {
         홈으로 돌아가기
       </Link>
 
-      {/*<div*/}
-      {/*  style={{*/}
-      {/*    marginTop:'10rem',*/}
-      {/*    display:'flex',*/}
-      {/*    gap:'1px'*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  <AlertBadge label={'혼잡'} backgroundColor={'#F4AA21'}/>*/}
-      {/*  <AlertBadge label={'심각'} backgroundColor={'#FF1500'}/>*/}
-      {/*  <AlertBadge label={'보통'} backgroundColor={'#009856'}/>*/}
-      {/*  <AlertBadge label={'주의'} backgroundColor={'#F4AA21'}/>*/}
-      {/*  <AlertBadge label={'주의'} backgroundColor={'#F4AA21'}/>*/}
-      {/*  <CongestionBarChart*/}
-      {/*    time="14:00"*/}
-      {/*    levels={[*/}
-      {/*      { key: 'normal', label: '보통', count: 402, percent: 60 },*/}
-      {/*      { key: 'warning', label: '주의', count: 108, percent: 18 },*/}
-      {/*      { key: 'congested', label: '혼잡', count: 94, percent: 14 },*/}
-      {/*      { key: 'critical', label: '심각', count: 32, percent: 8 },*/}
-      {/*    ]}*/}
-      {/*  />*/}
-      {/*</div>*/}
+      <div
+        style={{
+          marginTop:'10rem',
+          display:'flex',
+          gap:'1px'
+        }}
+      >
+        <AlertBadge label={'혼잡'} backgroundColor={'#F4AA21'}/>
+        <AlertBadge label={'심각'} backgroundColor={'#FF1500'}/>
+        <AlertBadge label={'보통'} backgroundColor={'#009856'}/>
+        <AlertBadge label={'주의'} backgroundColor={'#F4AA21'}/>
+        <AlertBadge label={'주의'} backgroundColor={'#F4AA21'}/>
+        <CongestionBarChart
+          time="14:00"
+          levels={[
+            { key: 'normal', label: '보통', count: 402, percent: 60 },
+            { key: 'warning', label: '주의', count: 108, percent: 18 },
+            { key: 'congested', label: '혼잡', count: 94, percent: 14 },
+            { key: 'critical', label: '심각', count: 32, percent: 8 },
+          ]}
+        />
+      </div>
     </div>
   );
 }

@@ -33,7 +33,7 @@ const StationInfoAddForm = forwardRef<HistoryInfoAddFormRef, StationInfoAddFormP
       transferRouteName: ''
     },
     onSubmit: async ({ value }) => {
-      console.log('🟢 제출된 데이터:', value);
+      console.log('제출된 데이터:', value);
       return value;
     },
     validators: {

@@ -21,18 +21,6 @@ export default function CongestionVerificationCompleteView ({initialFilter,initi
       fetchData={async ()=> {
         return []
       }}
-      ModalBody={<></>}
-      modalBodyProps={{}}
-      onSubmitEdit={async ()=> {
-        return true;
-      }}
-      onSubmitAdd={async (value)=> {
-        console.log(value);
-        return true;
-      }}
-      onDelete={async (ids)=> {
-        return true;
-      }}
       initialData={initialData}
     />
   )

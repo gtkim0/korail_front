@@ -21,7 +21,7 @@ const BannerAddForm = forwardRef<BannerAddFormRef>((_, ref) => {
       useYn: ''
     },
     onSubmit: async ({ value }) => {
-      console.log('🟢 제출된 데이터:', value);
+      console.log('제출된 데이터:', value);
     },
   });
 

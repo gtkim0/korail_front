@@ -5,11 +5,13 @@ import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
 
 interface Props {
   onSelect?: (value: {key: string, label: string})=> void;
-  onEdit?: (v: any)=> void;
+  onEdit?: ()=> void;
   onDelete?: ()=> void;
+  enabledEdit?: boolean;
+  enabledDelete?: boolean;
 }
 
-export default function TableFilter ({ onSelect, onEdit, onDelete }: Props) {
+export default function TableFilter ({ onSelect, onEdit, onDelete, enabledEdit, enabledDelete }: Props) {
 
   return (
     <div className={styles.tableFilter}>
@@ -38,8 +40,12 @@ export default function TableFilter ({ onSelect, onEdit, onDelete }: Props) {
       </div>
 
       <div className={styles.buttonWrapper}>
-        <button onClick={()=> onDelete?.()} className={styles.delete}>삭제</button>
-        <button onClick={()=> onEdit?.()} className={styles.edit}>수정</button>
+        {
+          enabledDelete && <button onClick={()=> onDelete?.()} className={styles.delete}>삭제</button>
+        }
+        {
+          enabledEdit && <button onClick={()=> onEdit?.()} className={styles.edit}>수정</button>
+        }
       </div>
     </div>
   )

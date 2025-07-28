@@ -38,7 +38,7 @@ export default function CongestionBarChart({ levels, time }: CongestionBarChartP
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        🚋 역사 혼잡도 통계 <span className={styles.time}>{time} 기준</span>
+        역사 혼잡도 통계 <span className={styles.time}>{time} 기준</span>
       </div>
       <div className={styles.chart}>
         {levels.map((level, index) => (

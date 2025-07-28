@@ -55,9 +55,7 @@ export default function SignUp() {
       onChange: SignUpSchema
     },
     onSubmit: async ({value}) => {
-      console.log("✅ 제출 값:", value);
       // TODO: API 요청 등 처리
-
       signUpOpen()
     },
   });

@@ -129,9 +129,9 @@ const NotificationPushAddForm =
           displayDataTypes={false}
           displayObjectSize={false}
           collapsed={false}
-          onEdit={(e) => console.log("수정됨:", e)}
-          onAdd={(e) => console.log("추가됨:", e)}
-          onDelete={(e) => console.log("삭제됨:", e)}
+          onEdit={(e) => console.log("수정:", e)}
+          onAdd={(e) => console.log("추가:", e)}
+          onDelete={(e) => console.log("삭제:", e)}
         />
         </div>
 

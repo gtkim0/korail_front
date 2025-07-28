@@ -6,6 +6,7 @@ import BaseModal from "@/shared/components/modal/BaseModal/BaseModal";
 import {useGlobalStore} from "@/shared/store/globalStore";
 import {BaseMenu} from "@/types/menu";
 import Sitemap from "@/shared/components/sitemap/Sitemap";
+import {useResponsive} from "@/shared/hooks/useResponsive";
 
 type MenuNode = BaseMenu & { children?: MenuNode[] };
 
@@ -41,8 +42,8 @@ const convertStruct = (flatData: BaseMenu[]) => {
 export default function HeaderRightSection() {
 
   const router = useRouter();
-
   const {isOpen, open, close} = useModal();
+  const {isMobile} = useResponsive();
 
   const menus = useGlobalStore(state => state.routeMenu);
 
@@ -77,14 +78,24 @@ export default function HeaderRightSection() {
   return (
     <div className={styles.container}>
       {
-        rightMenu.map(i => (
-          <div onClick={() => i.onClick?.()} key={i.label} className={styles.item}>
-            <div className={styles.logo}>
-              <ImageWrapper src={i.src} alt={'logo'} width={20} height={20}/>
+        !isMobile ?
+          rightMenu.map(i => (
+            <div onClick={() => i.onClick?.()} key={i.label} className={styles.item}>
+              <div className={styles.logo}>
+                <ImageWrapper src={i.src} alt={'logo'} width={20} height={20}/>
+              </div>
+              <span className={styles.label}>{i.label}</span>
             </div>
-            <span className={styles.label}>{i.label}</span>
-          </div>
-        ))
+          ))
+          :
+          rightMenu.filter(i=> i.label === '전체메뉴').map(i=> (
+            <div onClick={() => i.onClick?.()} key={i.label} className={styles.item}>
+              <div className={styles.logo}>
+                <ImageWrapper src={i.src} alt={'logo'} width={20} height={20}/>
+              </div>
+              <span className={styles.label}>{i.label}</span>
+            </div>
+          ))
       }
       <BaseModal
         isOpen={isOpen}

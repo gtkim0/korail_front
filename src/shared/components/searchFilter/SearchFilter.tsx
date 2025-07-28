@@ -1,8 +1,7 @@
 'use client';
 import Image from "next/image";
 import styles from './SearchFilter.module.scss'
-import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
-import {KeyboardEvent, ForwardedRef, forwardRef} from "react";
+import {KeyboardEvent, ForwardedRef, forwardRef, useEffect} from "react";
 import useModal from "@/shared/hooks/useModal";
 import AddButton from "@/shared/components/button/AddButton";
 import clsx from "clsx";
@@ -29,6 +28,12 @@ export const SearchFilter = forwardRef<HTMLInputElement, Props>((props, ref: For
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if(e.key  === 'Enter' && onSubmit) onSubmit();
   }
+
+  useEffect(() => {
+    window.addEventListener('resize', (e)=> {
+      console.log(e);
+    })
+  }, []);
 
   return (
     <div className={styles.container}>
