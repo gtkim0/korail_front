@@ -63,7 +63,7 @@
 :global(.react-datepicker__day--selected),
 :global(.react-datepicker__day--keyboard-selected) {
   background-color: #2563eb;
-  color: white;
+  color: white !important;
   border-radius: 8px;
 }
 

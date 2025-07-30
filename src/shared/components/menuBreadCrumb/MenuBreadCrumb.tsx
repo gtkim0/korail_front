@@ -34,10 +34,21 @@ export default function MenuBreadCrumb({ path , menus }: Props ) {
           <span
             className={clsx(idx === 0 && styles.isFirst, idx === breadcrumb.length - 1 && styles.isMatch)}
             key={item.id}
+            style={{
+              lineHeight: 0
+            }}
           >
-            { idx === 0 && <Image src={'/home-stroke.svg'} alt={'logo'} width={16} height={16}/> }
-            { item.name }
-            { idx < breadcrumb.length - 1 && <Image src={'/arrow-right.svg'} alt={'logo'} width={16} height={16}/> }
+            { idx === 0 &&
+                <div style={{position:'relative', width:'1.6rem',height:'1.6rem'}}>
+                  <Image src={'/home-stroke.svg'} alt={'logo'} fill style={{objectFit:'contain'}}/>
+                </div>
+            }
+            {item.name}
+            { idx < breadcrumb.length - 1 &&
+                <div style={{position:'relative', width:'1.6rem',height:'1.6rem'}}>
+                  <Image src={'/arrow-right.svg'} alt={'logo'} fill style={{objectFit:'contain'}}/>
+                </div>
+            }
         </span>
         )
       })}

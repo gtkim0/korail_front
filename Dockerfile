@@ -20,10 +20,14 @@ ENV NODE_ENV production
 COPY /next.config.js ./
 COPY /public ./public
 COPY /.next ./.next
+COPY /logs ./logs
 ARG ENV_FILE=.env.production
 COPY /${ENV_FILE} ./.env
 COPY /node_modules ./node_modules
 COPY /package.json ./package.json
+
+RUN mkdir -p /my-project/logs
+
 ENV HOSTNAME="0.0.0.0"
 EXPOSE 3000
 
