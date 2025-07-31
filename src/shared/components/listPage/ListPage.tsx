@@ -153,7 +153,6 @@ function ListPage<T extends { id: string | number }, F>(
   const handleDelete = useCallback(() => {},[])
 
   const handleChangeFilter = (val: any) => {
-    console.log(val);
     setFilter(val);
   }
 

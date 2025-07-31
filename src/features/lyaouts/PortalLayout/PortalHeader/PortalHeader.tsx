@@ -1,7 +1,7 @@
 'use client'
 import {useGlobalStore} from "@/shared/store/globalStore";
 import styles from './PortalHeader.module.scss';
-import {useState, useMemo, useRef, useEffect} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import {usePathname, useRouter} from "next/navigation";
 import PortalHeaderItem from "@/features/lyaouts/PortalLayout/PortalHeader/PortalHeaderItem/PortalHeaderItem";
 import {BaseMenu} from "@/types/menu";
@@ -11,9 +11,8 @@ import {AnimatePresence, motion} from "framer-motion";
 import PortalLogo from '@/shared/assets/images/portal_logo.svg'
 import Image from "next/image";
 import clsx from "clsx";
-import {useResponsive} from "@/shared/hooks/useResponsive";
 
-export default function PortalHeader({ menus }: { menus: BaseMenu[] }) {
+export default function PortalHeader({ menus, isDashboard }: { menus: BaseMenu[],isDashboard:boolean }) {
 
   const pathname = usePathname();
   const router = useRouter();
@@ -25,7 +24,6 @@ export default function PortalHeader({ menus }: { menus: BaseMenu[] }) {
   const renderMenu = menus.filter(i => i.depth === 1);
   const [activeMenuId, setActiveMenuId] = useState<string>('');
 
-  const isDashboard = pathname === '/dashboard';
 
   const activeFirstDepthId = useMemo(() => {
     const current = menus.find(m => m.url === pathname);
@@ -117,6 +115,7 @@ export default function PortalHeader({ menus }: { menus: BaseMenu[] }) {
                       onClick={handleMenuClick}
                       onHover={handleMenuHover}
                       isActive={activeFirstDepthId === i.id}
+                      isDashboard={isDashboard}
                     />
                   ))}
                 </div>

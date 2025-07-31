@@ -8,6 +8,7 @@
   padding: 0 4rem;
   min-height: 7.2rem;
   position: relative;
+  color: #363637;
   @include desktop {
     min-height: 6.4rem;
   }
@@ -19,6 +20,8 @@
 
 .dashboard {
   background: #000 !important;
+  color: #fff !important;
+  border-bottom: 0 !important;
 }
 
 .wrapper {
@@ -27,7 +30,6 @@
   justify-content: center;
   flex: 1;
   height: 100%;
-  color: #fff;
 }
 
 .contentWrapper {
@@ -80,7 +82,6 @@
 }
 
 .mainTitle {
-  color: #363637;
   font-size: 2.2rem;
   font-weight: 700;
   font-style: normal;
@@ -129,7 +130,7 @@
   @include laptop {
     grid-template-columns: repeat(6, 1fr);
   }
-  
+
   @media screen and (max-width: 1050px) {
     grid-template-columns: repeat(5, 1fr);
   }
@@ -156,6 +157,7 @@
   border-right: 1px solid #EBEBEB;
   align-self: stretch;
   will-change: transform, opacity;
+
   &:last-child {
     border-right: none;
   }
@@ -196,6 +198,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
   &::before {
     content: '';
     position: absolute;
@@ -207,6 +210,7 @@
     background-color: #59595C;
     border-radius: 50%
   }
+
   &:hover {
     background: #E3F9FF;
   }

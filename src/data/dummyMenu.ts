@@ -1,6 +1,6 @@
 export const menuList = [
   { id: '0', pid: null, url: '/', component: 'Main', order: 1, depth: 0, name: 'Menu', description: '메인메뉴 에 대한설명' },
-  { id: '1', pid: '0', url: '/dashboard', component: 'CongestionStep', order: 1, depth: 1, name: '대시보드', description: '대시보드 에 대한설명' },
+  { id: '1', pid: '0', url: '/dashboard', component: 'Dashboard', order: 1, depth: 1, name: '대시보드', description: '대시보드 에 대한설명' },
   { id: '2', pid: '0', url: '/info', component: '', order: 2, depth: 1, name: '기본정보', description: '기본정보 에 대한설명' },
   { id: '3', pid: '0', url: '/a', component: '', order: 3, depth: 1, name: '혼잡도 통계', description: '혼잡도 통계 에 대한설명' },
   { id: '4', pid: '0', url: '/s', component: '', order: 4, depth: 1, name: '비상 대응', description: '비상 대응 에 대한설명' },

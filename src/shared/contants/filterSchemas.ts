@@ -470,5 +470,7 @@ export const filterSchemas: Record<PageType, FilterSchema[]>= {
   [PageType.NotificationRecipient]: [],
   [PageType.NotificationText]: [],
   [PageType.NotificationLog]: [],
-  [PageType.NotificationRule]: []
+  [PageType.NotificationRule]: [],
+  [PageType.CongestionVerificationTarget]: [],
+  [PageType.CongestionVerificationComplete]: []
 }

@@ -2,9 +2,7 @@ import NotificationLogView from "@/features/notification-log/components/Notifica
 
 export default async function NotificationLogServer() {
 
-  const initialFilter = {
-
-  }
+  const initialFilter = {}
 
   return (
     <NotificationLogView

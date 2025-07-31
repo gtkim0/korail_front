@@ -134,7 +134,7 @@ input {
   color: #0061B8;
 }
 
-.chrome-picker  {
+.chrome-picker {
   width: 100% !important;
 }
 
@@ -149,4 +149,27 @@ input {
 
 .react-datepicker-popper {
   z-index: 10000 !important;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.01);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: #00417a;
 }

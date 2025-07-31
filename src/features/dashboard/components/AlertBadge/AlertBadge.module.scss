@@ -5,13 +5,54 @@
   font-size: 12px;
   font-weight: 600;
   position: relative;
-  overflow: hidden;
   text-align: center;
   white-space: nowrap;
   padding: 10px 0;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .text {
   transform: translateY(3px);
+}
+
+.badge:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(0, 0px);
+}
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  padding: 3px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  border-radius: 8px;
+  border: 1px solid #536688;
+  background: #162b4e;
+  color: #c3ccdd;
+  font-size: 10px;
+  align-items: baseline;
+  transform: translate(0, 10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+
+  & span:last-child {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+  }
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -10px;
+  border: 8px solid;
+  border-color: #536688 transparent transparent transparent;
 }

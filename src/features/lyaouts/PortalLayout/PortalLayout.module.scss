@@ -9,6 +9,12 @@
   /*align-items: stretch;*/
 }
 
+.dashboard {
+  overflow-y: hidden;
+  background: radial-gradient(41.69% 66.8% at 31.98% 45.09%, #276CC7 0%, rgba(0, 0, 0, 0.00) 100%),
+  radial-gradient(69% 99.4% at 50% 95.42%, #1E52D8 0%, #17213A 100%);
+}
+
 .portalContent {
   flex: 1;
   padding: 4rem 6.4rem;

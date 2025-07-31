@@ -1,9 +1,6 @@
 import PortalLayout from "@/features/lyaouts/PortalLayout/PortalLayout";
-import Banner from "@/app/pages/Banner";
 import {dummyMenu} from "@/data/dummyMenu";
 import {cookies} from "next/headers";
-import {menuServerApi} from "@/features/menu/api/server/menuServerApi";
-import {BaseMenu} from "@/types/menu";
 import PortalContentLayout from "@/features/lyaouts/PortalContentLayout/PortalContentLayout";
 import {notFound} from "next/navigation";
 
@@ -15,6 +12,7 @@ export default async function PageMapper({ params }: { params: Promise<{page: st
     return <div>Not Found</div>;
   }
   const path = "/" + (page?.join("/") ?? "");
+  const isDashboard =  path == "/dashboard";
 
   // const menus = await getMenus();
   // const menu = await getMenuByPath(path, menus); // 함수 내부에서 match
@@ -29,7 +27,7 @@ export default async function PageMapper({ params }: { params: Promise<{page: st
   // return <Component />
 
   const cookieStore = await cookies();
-  const token = cookieStore.get('access_token')
+  const token = cookieStore.get('access_token');
 
   // const menus = await menuServerApi.get(token) as BaseMenu[];
   const menus = dummyMenu;
@@ -44,9 +42,8 @@ export default async function PageMapper({ params }: { params: Promise<{page: st
     // Component = () => <Banner />
     // 추후 catch 에서는 404 에러페이지 띄우기.
    }
-
   return (
-    <PortalLayout menus={menus}>
+    <PortalLayout menus={menus} isDashboard={isDashboard}>
       <PortalContentLayout path={path} menus={menus}>
         <Component />
       </PortalContentLayout>

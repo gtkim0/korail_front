@@ -1,16 +1,18 @@
 import styles from './PortalHeaderItem.module.scss';
 import {BaseMenu} from "@/types/menu";
 import clsx from "clsx";
-import { motion } from "framer-motion";
+import {motion} from "framer-motion";
 
 interface Props {
   item: BaseMenu;
   onClick: (id: string) => void;
   onHover: (id: string) => void;
   isActive?: boolean;
+  isDashboard:boolean;
 }
 
-export default function PortalHeaderItem({item, onClick, onHover, isActive}: Props) {
+export default function PortalHeaderItem({item, onClick, onHover, isActive,isDashboard}: Props) {
+    const fontColor = isDashboard ? '#fff' : '#363637'
   return (
     <motion.div
       onClick={() => onClick(item.id)}
@@ -18,7 +20,7 @@ export default function PortalHeaderItem({item, onClick, onHover, isActive}: Pro
       className={clsx(styles.portalHeaderItem)}
       animate={{
         borderBottom: isActive ? '3px solid #1489F2' : '3px solid rgba(0, 0, 0, 0)',
-        color: isActive ? '#0061B8' : '#363637',
+        color: isActive ? '#0061B8' : fontColor,
       }}
       whileHover={{
         borderBottom: '3px solid #1489F2',
