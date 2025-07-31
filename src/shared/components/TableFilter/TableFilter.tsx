@@ -32,7 +32,7 @@ export default function TableFilter ({ onSelect, onEdit, onDelete, enabledEdit, 
           ]}
           renderSelected={(selected) => (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
-              <span style={{ fontWeight: 500, color: '#363637', fontSize:'1.4rem' }}>{selected.label}</span>
+              <span style={{ fontWeight: 500, color: '#363637', fontSize:'1.4rem', whiteSpace:'nowrap'}}>{selected.label}</span>
               <ImageWrapper width={16} height={16} src="/arrow-down.svg" />
             </div>
           )}

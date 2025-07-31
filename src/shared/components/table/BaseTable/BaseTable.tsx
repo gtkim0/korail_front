@@ -66,7 +66,7 @@ export default function Table<T extends { id: string | number }>(
   });
 
   return (
-    <div style={{overflowX: 'auto', minWidth: '100%'}}>
+    <div style={{overflowX: 'auto', minWidth: '100%', flex: 1}}>
       <table className={styles.table} style={{minWidth}}>
         <thead style={{borderRadius: '6px'}}>
         {table.getHeaderGroups().map(headerGroup => (

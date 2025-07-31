@@ -47,7 +47,7 @@ export default function TableWrapper<T extends { id: string | number }>(props: P
   } = props;
 
   return (
-    <div style={{ flex: 1}}>
+    <div style={{ flex: 1, display:'flex',flexDirection:'column'}}>
       <TableFilter
         onSelect={onSelect}
         onEdit={onEdit}

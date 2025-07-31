@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import DatePicker from "react-datepicker";
 import {CustomInput} from "./DatePickerRange";
 import {ko} from 'date-fns/locale'
-import '../../styles/DatePicker.module.scss';
+import '../../styles/DatePicker.module.css';
 import CustomDatePickerHeader from "@/shared/components/DatePicker/CustomDatePickerHeader";
 
 type Props = {

@@ -62,8 +62,12 @@ export default function RouteMapView () {
         onChange={(value)=> {}}
         type={PageType.RouteMap}
         onSubmit={handleSubmit}
+        enabledAdd={true}
+
       />
-      <TableFilter/>
+      <TableFilter
+
+      />
 
       <Table
         columns={withRowSelection(routeMapColumns)}

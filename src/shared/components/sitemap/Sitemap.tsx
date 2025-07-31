@@ -53,7 +53,7 @@ export default function Sitemap ({dataMenus, close}: Props) {
       </div>
 
       <div className={styles.footer}>
-        <button className={styles.closeButton}>
+        <button onClick={close} className={styles.closeButton}>
           <span className={styles.closeButtonText}>닫기</span>
         </button>
       </div>
