@@ -47,7 +47,7 @@ export default function DropDown ({onSelect, renderSelected, options}: Props) {
           ? renderSelected(selected)
           : (
             <>
-              <span className={clsx('font', 'font_md')} style={{flex: 1}}>{selected.label}</span>
+              <span className={clsx('font', 'font_md')} style={{flex: 1, whiteSpace:'nowrap'}}>{selected.label}</span>
               <ImageWrapper width={16} height={16} src={'/arrow-down.svg'} />
             </>
           )
@@ -71,7 +71,7 @@ export default function DropDown ({onSelect, renderSelected, options}: Props) {
                 onClick={() => handleSelect(option)}
                 style={{width:'100%'}}
               >
-                <span>{option.label}</span>
+                <span style={{whiteSpace:'nowrap'}}>{option.label}</span>
               </div>
             ))}
           </motion.div>

@@ -28,4 +28,7 @@ export enum PageType {
   NotificationRecipient = 'notification-recipient',
   CongestionVerificationComplete = 'congestion-verification-complete',
   CongestionVerificationTarget = 'congestion-verification-target',
+  PermissionGroup = 'permission-group',
+  PermissionUser = 'permission-user',
+  PermissionMenu = 'permission-menu'
 }

@@ -27,13 +27,12 @@ export const RouteMapAddForm = forwardRef<RouteMapAddFormRef>((_, ref) => {
     },
   });
 
-
   useImperativeHandle(ref, () => ({
     submit: () => {
       form.handleSubmit(); // 또는 form.submit()
     },
   }));
-
+  
   return (
     <div style={{display: 'flex', flexDirection: 'column'}}>
       <form>
@@ -48,7 +47,8 @@ export const RouteMapAddForm = forwardRef<RouteMapAddFormRef>((_, ref) => {
                   form.Field({
                     name: 'lineNumber',
                     children: (field) => (
-                      <InputField type={'number'} placeholder={'숫자로 입력해주세요.'} required={true} field={field} label={'노선번호'}/>
+                      <InputField type={'number'} placeholder={'숫자로 입력해주세요.'} required={true} field={field}
+                                  label={'노선번호'}/>
                     ),
                   })
                 }
@@ -117,7 +117,7 @@ export const RouteMapAddForm = forwardRef<RouteMapAddFormRef>((_, ref) => {
         </div>
       </form>
 
-      <RouteAddArea />
+      <RouteAddArea/>
     </div>
   )
 })

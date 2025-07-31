@@ -94,8 +94,8 @@ export default function PortalFooter() {
                             onClick={() => setOpenState(openState === 'gu' ? null : 'gu')}
                             className={clsx(styles.selectBox, openState === 'gu' && styles.select)}
                         >
-                          <span>계열사</span>
-                          <Image className={openState === 'gu' ? styles.open : ''} src={ArrowDown} alt="arrow" />
+                            <span>계열사</span>
+                            <Image className={openState === 'gu' ? styles.open : ''} src={ArrowDown} alt="arrow"/>
                         </div>
                       {
                         openState === 'gu' && (
@@ -189,13 +189,13 @@ export default function PortalFooter() {
           </div>
 
           <div className={clsx(styles.guideWrapper, isMobile && styles.column)}>
-            <div className={styles.guideItemWrapper}>
-              {guideInfo.map(i => (
-                <Link href={i.link} className={styles.guideItem} key={i.label}>
-                  {i.label}
-                </Link>
-              ))}
-            </div>
+            {/*<div className={styles.guideItemWrapper}>*/}
+            {/*  {guideInfo.map(i => (*/}
+            {/*    <Link href={i.link} className={styles.guideItem} key={i.label}>*/}
+            {/*      {i.label}*/}
+            {/*    </Link>*/}
+            {/*  ))}*/}
+            {/*</div>*/}
             <span className={styles.copyright}>
               COPYRIGHT ⓒ KOREA RAILROAD. ALL RIGHTS RESERVED.
             </span>

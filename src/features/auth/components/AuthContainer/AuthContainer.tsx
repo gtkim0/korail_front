@@ -10,7 +10,7 @@ interface Props {
   title: string;
 }
 
-export default function AuthContainer ({ children, title }: Props) {
+export default function AuthContainer({children, title}: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -18,14 +18,14 @@ export default function AuthContainer ({ children, title }: Props) {
           <span className={styles.systemLabel}>코레일 철도 혼잡도 관리시스템</span>
           <div className={styles.logoRow}>
             <div className={styles.logoImage}>
-              <Image src={PortalLogo} alt="logo" fill style={{objectFit:'contain'}} />
+              <Image src={PortalLogo} alt="logo" fill style={{objectFit: 'contain'}}/>
             </div>
             <span className={styles.title}>{title}</span>
           </div>
         </div>
         {children}
       </div>
-      <PortalFooter />
+      {/*<PortalFooter />*/}
     </div>
   )
 }

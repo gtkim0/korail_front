@@ -25,7 +25,10 @@ export const MODAL_TITLE: Partial<Record<PageType, string>> = {
   [PageType.NotificationLog]: '알림 등록/수정',
   [PageType.NotificationText]: '알림문구 등록/수정',
   [PageType.NotificationRecipient]: '알림 수신문자 등록/수정',
-  [PageType.CongestionVerificationTarget]: '대피안내도'
+  [PageType.CongestionVerificationTarget]: '대피안내도',
+  [PageType.PermissionGroup]: '권한그룹 등록/수정',
+  [PageType.PermissionStation]: '사용자별 권한',
+  [PageType.PermissionMenu]: '메뉴별 권한'
 }
 
 export const MODAL_MESSAGES = {

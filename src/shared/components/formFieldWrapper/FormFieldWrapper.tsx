@@ -39,7 +39,7 @@ export default function FormFieldWrapper({
               onChange={(e) => onCheckboxChange?.(e.target.checked)}
             />
           )}
-          <div>
+          <div style={{display:'flex',gap:'.2rem'}}>
             {label}
             {required && <span className={styles.required}>*</span>}
           </div>

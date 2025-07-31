@@ -16,19 +16,19 @@ interface Props {
 
 export default function PortalLayout(props: Props) {
 
-  const { children, menus } = props;
+  const {children, menus} = props;
 
   return (
     <div className={styles.portalLayout}>
       <MenuLoader menus={menus}/>
       <PortalHeader menus={menus}/>
-      <div style={{ flex: 1, display: 'flex'}}>
+      <div style={{flex: 1, display: 'flex'}}>
         <PortalSidebar menu={dummyMenu}/>
         <div className={styles.portalContent}>
-        { children }
+          {children}
         </div>
       </div>
-      <PortalFooter />
+      {/*<PortalFooter />*/}
     </div>
   )
 }
