@@ -1,0 +1,18 @@
+@import "src/shared/styles/scroll";
+
+.table {
+  flex: 1 1 0;
+  overflow-y: auto;
+  margin-top: 20px;
+  @extend .custom-scroll2;
+  padding-right: 5px;
+
+  tr {
+    background: transparent;
+  }
+
+  th {
+    background: #1f355d;
+    color: #98a6c0;
+  }
+}

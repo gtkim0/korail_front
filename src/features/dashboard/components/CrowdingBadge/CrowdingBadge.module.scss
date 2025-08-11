@@ -1,0 +1,44 @@
+.badge {
+  border-radius: 20px;
+  border: 1px;
+  padding: 4px 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+
+  .title {
+    color: #fff;
+  }
+
+  .o {
+    width: 8px;
+    height: 8px;
+    aspect-ratio: 1/1;
+    border-radius: 4px;
+  }
+}
+
+.badge.normal {
+}
+
+.badge.warning {
+}
+
+.badge.congested {
+}
+
+.badge.critical {
+  background: #5e0800;
+  border: #ff1500;
+  box-shadow: 0 0 8px 0 #ff1105;
+
+  .o {
+    background: #ff1500;
+    box-shadow: 0 0 8px 0 #ff1105;
+  }
+
+  .per {
+    color: #ff948b;
+  }
+}

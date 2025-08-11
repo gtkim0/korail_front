@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 1.2rem;
   font-weight: 600;
   position: relative;
   text-align: center;
@@ -33,7 +33,7 @@
   border: 1px solid #536688;
   background: #162b4e;
   color: #c3ccdd;
-  font-size: 10px;
+  font-size: 1rem;
   align-items: baseline;
   transform: translate(0, 10px);
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -42,7 +42,7 @@
 
   & span:last-child {
     color: #fff;
-    font-size: 15px;
+    font-size: 1.5rem;
     font-weight: 700;
   }
 }

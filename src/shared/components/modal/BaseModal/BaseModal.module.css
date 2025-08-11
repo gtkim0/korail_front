@@ -20,6 +20,19 @@
     position: relative;
 }
 
+.modal.darkMode {
+    background-color: #0e172b;
+    box-shadow: 0 0 10px 5px rgba(0, 25, 48, 0.05);
+
+    .header {
+        border-bottom: 1px solid #3b4868;
+    }
+
+    .title {
+        color: #fff;
+    }
+}
+
 .header {
     display: flex;
     padding: 1.2rem 1.6rem;

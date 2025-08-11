@@ -2,7 +2,7 @@
 import styles from './Dropdown.module.scss';
 import clsx from "clsx";
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
-import {CSSProperties, ReactNode, useEffect, useRef, useState} from "react";
+import {ReactNode, useEffect, useRef, useState} from "react";
 import {AnimatePresence, motion} from "framer-motion";
 
 interface Props {
@@ -44,8 +44,8 @@ export default function DropDown({onSelect, renderSelected, options, parentClass
     }, [isOpen]);
 
     return (
-        <div ref={dropdownRef} className={`${styles.container} ${parentClass}`}>
-            <div onClick={toggleDropdown} className={`${styles.dropdown} ${dropdownClass}`}>
+        <div ref={dropdownRef} className={clsx(styles.container, parentClass)}>
+            <div onClick={toggleDropdown} className={clsx(styles.dropdown, dropdownClass)}>
                 {renderSelected
                     ? renderSelected(selected)
                     : (
@@ -61,7 +61,7 @@ export default function DropDown({onSelect, renderSelected, options, parentClass
                 <AnimatePresence>
                     <motion.div
                         key="dropdown"
-                        className={`${clsx(styles.dropdown_content)} ${optionClass}`}
+                        className={clsx(styles.dropdown_content, optionClass)}
                         initial={{opacity: 0, y: -8}}
                         animate={{opacity: 1, y: 0}}
                         exit={{opacity: 0, y: -8}}

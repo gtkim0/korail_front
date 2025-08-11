@@ -1,0 +1,154 @@
+@import "src/shared/styles/scroll";
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+
+  .total_route_button {
+    padding: 8.5px 16.5px;
+    background: rgba(0, 120, 227, 0.20);
+    border-radius: 28px;
+    color: #fff;
+    font-size: 1.7rem;
+    font-weight: 500;
+  }
+}
+
+.border {
+  width: 1px;
+  height: 12px;
+  background: #536688;
+}
+
+.toggle {
+  display: flex;
+  background: #004799;
+  border-radius: 40px;
+  color: #c3ccdd;
+  position: relative;
+  width: 115px;
+  height: 40px;
+  padding: 2px;
+
+  .toggle_bg {
+    width: calc(50% - 4px);
+    height: calc(100% - 4px);
+    border-radius: 40px;
+    background: #fff;
+    position: absolute;
+    top: 2px;
+    z-index: 0;
+  }
+
+  .toggle_item {
+    z-index: 1;
+    cursor: pointer;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 14px;
+
+    &.active {
+      color: black;
+      font-weight: 700;
+    }
+  }
+}
+
+.dropdown_container {
+  position: relative;
+}
+
+.button {
+  color: #fff;
+  display: flex;
+  width: 220px;
+  padding: 8px 12px 8px 16px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.00);
+  font-size: 1.7rem;
+  font-weight: 500;
+
+  &.open {
+    border: 1px solid #0078e3;
+  }
+
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  border-radius: 16px;
+  background: #1f355d;
+  box-shadow: 0.5px 0.5px 1px 0 rgba(255, 255, 244, 0.40) inset, 0 8px 15px 5px #001930;
+  z-index: 10;
+  width: 240px;
+  color: #c3ccdd;
+  font-size: 15px;
+
+  .scroll {
+    height: 332px;
+    overflow-y: scroll;
+    @extend .custom-scroll3;
+  }
+
+  .item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .line_item {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    gap: 4px;
+
+    .arrow_item {
+      cursor: pointer;
+    }
+  }
+
+  .span_name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: auto;
+    cursor: pointer;
+  }
+
+  .station_item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 24px;
+    border-left: 2px solid #536688;
+    padding: 4px 0 4px 20px;
+  }
+
+  .station_item::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 12px;
+    height: 0;
+    border-top: 2px solid #536688;
+    transform: translateY(-50%);
+  }
+}
+

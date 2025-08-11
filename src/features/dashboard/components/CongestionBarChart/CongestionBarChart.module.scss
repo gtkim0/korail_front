@@ -1,3 +1,5 @@
+@import "src/shared/styles/scroll";
+
 .chart {
   display: flex;
   flex-direction: column;
@@ -12,7 +14,7 @@
 }
 
 .label {
-  font-size: 14px;
+  font-size: 1.4rem;
   font-weight: bold;
   text-align: center;
   border-radius: 4px;
@@ -99,7 +101,7 @@
 .badge {
   position: absolute;
   right: -40px;
-  font-size: 13px;
+  font-size: 1.3rem;
   font-weight: bold;
   padding: 2px 6px;
   border-radius: 12px;
@@ -135,4 +137,20 @@
 .showBadge {
   opacity: 1;
   transform: scale(1);
+}
+
+.table {
+  max-height: 210px;
+  overflow-y: auto;
+  @extend .custom-scroll2;
+  padding-right: 5px;
+
+  tr {
+    background: transparent;
+  }
+
+  th {
+    background: rgba(255, 255, 255, 0.05);
+    color: #98a6c0;
+  }
 }

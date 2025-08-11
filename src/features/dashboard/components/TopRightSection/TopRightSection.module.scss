@@ -1,0 +1,65 @@
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: 16px
+}
+
+.timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #E0E4D9;
+
+  .date {
+    font-size: 14px;
+  }
+
+  .time {
+    font-size: 22px;
+    font-weight: 700;
+  }
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  gap: 3px
+}
+
+.alarm {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: #162b4e;
+  border-radius: 28px;
+
+  .toggle {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    gap: 6px;
+
+    span {
+      width: 20px;
+      font-size: 14px;
+    }
+  }
+}
+
+.button {
+  width: 61px;
+  height: 24px;
+  border-radius: 4px;
+  background: #3b4868;
+  color: #fff;
+
+  &.active {
+    background: #ff1500;
+    box-shadow: 0 0 8px 0 rgba(247, 55, 80, 0.40);
+  }
+}

@@ -1,0 +1,177 @@
+@import "src/shared/styles/scroll";
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  border: 1px solid #1f355d;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header {
+  position: relative;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #536688;
+  font-size: 16px;
+  font-weight: 600;
+  color: #e0e4e9;
+  padding-right: 8px;
+  z-index: 1;
+
+  & div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+}
+
+.separator {
+  position: relative;
+  width: 24px;
+  height: 100%;
+  background: #243955;
+  z-index: 1;
+  //background: rgba(255, 255, 255, 0.05);
+
+}
+
+.up_route {
+  position: relative;
+  flex: 1;
+}
+
+.station_info {
+  position: relative;
+  width: 250px;
+  color: #fff;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.down_route {
+  position: relative;
+  flex: 1;
+}
+
+.crowding {
+  border-radius: 4px;
+  background: #004799;
+  box-shadow: 0 0 8px 0 #004799;
+  padding: 4.5px 10px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.content {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  @extend .custom-scroll1;
+  z-index: 2;
+
+  .item {
+    position: relative;
+    flex: 0 0 auto;
+    width: 100%;
+    height: 86px;
+    border-bottom: 1px solid #162b4e;
+    display: flex;
+
+
+    & div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .down_route {
+      .train_info {
+        left: 15px;
+        top: 10%;
+      }
+
+      .icon {
+        left: -27px;
+        transform: translate(-50%, -30%);
+        position: absolute;
+        z-index: 9999;
+      }
+    }
+
+    .up_route {
+      .train_info {
+        right: 15px;
+        top: 10%;
+      }
+
+      .icon {
+        position: absolute;
+        right: -27px;
+        transform: translate(50%, 20%);
+        z-index: 9999;
+      }
+    }
+
+    .train_info {
+      display: flex;
+      padding: 8px 10px;
+      align-items: center;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      width: 143px;
+      height: 40px;
+      background: radial-gradient(55.21% 49.85% at 50% 0%, rgba(0, 132, 255, 0.20) 0%, rgba(0, 132, 255, 0.00) 100%), #162b3e;
+      border-radius: 8px;
+      box-shadow: 0.5px 0.5px 2px 0 rgba(255, 255, 255, 0.40) inset, 0 8px 15px 0 rgba(0, 0, 0, 0.20);
+      position: absolute;
+      transform: translateY(-50%);
+      z-index: 2;
+
+      .destination {
+        margin-left: 8px;
+
+      }
+
+      .express {
+        color: #ff1500;
+        border-radius: 80px;
+        width: 14px;
+        height: 14px;
+        border: 1px solid #ff1500;
+        font-size: 10px;
+
+      }
+
+      .train_num {
+        color: #98a6c0;
+        font-size: 14px;
+        margin-left: auto;
+      }
+    }
+
+    .station_info {
+      gap: 6px;
+      font-size: 16px;
+
+      & div:nth-child(2) {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
+
+.rotate {
+  transform: rotate(180deg);
+}

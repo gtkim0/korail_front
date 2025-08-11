@@ -166,10 +166,12 @@ input {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.01);
+  background: #bfbfbf;
+  border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 8px;
-  background-color: #00417a;
+  background-color: #8f8f8f
 }
+

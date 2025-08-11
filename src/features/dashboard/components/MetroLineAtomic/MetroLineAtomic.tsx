@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
-import styles from './AlertBadge.module.scss';
+import styles from './MetroLineAtomic.module.scss';
 
-interface AlertBadgeProps {
+interface Props {
     label: string;
     width?: number;
     height?: number;
@@ -10,6 +10,7 @@ interface AlertBadgeProps {
     stripeColor?: string;
     textColor?: string;
     borderRadius?: number;
+
 }
 
 function getStripeColor(bgColor: string): string {
@@ -26,7 +27,7 @@ function getStripeColor(bgColor: string): string {
         : 'rgba(255, 255, 255, 0.3)';
 }
 
-export default function AlertBadge(
+export default function MetroLineAtomic(
     {
         label,
         width = 25,
@@ -34,11 +35,11 @@ export default function AlertBadge(
         backgroundColor = '#FFB800',
         textColor = '#fff',
         borderRadius = 4
-    }: AlertBadgeProps) {
+    }: Props) {
 
     const stripeColor = getStripeColor(backgroundColor);
 
-    console.log(stripeColor);
+    // console.log(stripeColor);
 
     const customStyle = {
         width,
@@ -55,6 +56,7 @@ export default function AlertBadge(
         <span className={styles.text}>
       {label}
         </span>
+
                 <div className={styles.tooltip}><span>혼잡도</span><span>120%</span></div>
             </div>
         </>

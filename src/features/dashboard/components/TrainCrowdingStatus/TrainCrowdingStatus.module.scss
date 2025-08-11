@@ -1,3 +1,4 @@
+@import "src/shared/styles/scroll";
 
 .filter {
   position: relative;
@@ -22,6 +23,7 @@
 
 .dropdown_option {
   width: 100% !important;
+  //background: #1f355d !important;
 }
 
 .search_parent {
@@ -31,14 +33,23 @@
 
   input {
     background: transparent;
+    color: #fff;
   }
 
   input::placeholder {
-    font-size: 14px;
+    font-size: 1.4rem;
   }
 
   svg path {
     fill: #fff;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 10px;
   }
 }
 
@@ -52,6 +63,8 @@
   margin-top: 12px;
   margin-bottom: 20px;
   padding-right: 5px;
+  @extend .custom-scroll2
+
 }
 
 .item {
@@ -72,7 +85,7 @@
 
 .train_name {
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -83,42 +96,6 @@
   color: #c3ccdd;
 }
 
-.train_badge {
-  border-radius: 20px;
-  border: 1px;
-  padding: 4px 6px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-
-  .o {
-    width: 8px;
-    height: 8px;
-    aspect-ratio: 1/1;
-    border-radius: 4px;
-  }
-}
-
-.train_badge.normal {
-}
-
-.train_badge.warning {
-}
-
-.train_badge.congested {
-}
-
-.train_badge.critical {
-  background: #5e0800;
-  border: #ff1500;
-  box-shadow: 0 0 8px 0 #ff1105;
-
-  .o {
-    background: #ff1500;
-    box-shadow: 0 0 8px 0 #ff1105;
-  }
-}
 
 .item_route {
   display: flex;
@@ -127,6 +104,7 @@
   font-size: 15px;
   font-weight: 600;
   padding: 4px 0;
+  color: #e0e4e9;
 }
 
 .item_train {

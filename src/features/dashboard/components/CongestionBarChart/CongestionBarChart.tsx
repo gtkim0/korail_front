@@ -2,6 +2,9 @@
 import React, {useEffect, useState} from 'react';
 import styles from './CongestionBarChart.module.scss';
 import Table from "@/shared/components/table/BaseTable/BaseTable";
+import {SearchTargetType} from "@/types/dashboard";
+import {AnimatePresence, motion} from "framer-motion";
+import clsx from "clsx";
 
 interface CongestionLevel {
     label: string;
@@ -10,20 +13,18 @@ interface CongestionLevel {
     percent: number;
 }
 
-type dataKey = "name" | "normal" | "warning" | "congested" | "critical";
+type DataKey = "name" | "normal" | "warning" | "congested" | "critical";
 type keyValue = {
-    key: dataKey;
-    value: string | number
+    [key in DataKey]: string | number
 }
 
-interface CongestionBarChartProps {
+interface Props {
     levels: CongestionLevel[];
-    time: string;
-    title: string;
     data: keyValue[]
+    searchTarget: SearchTargetType;
 }
 
-export default function CongestionBarChart({levels, time, title, data}: CongestionBarChartProps) {
+export default function CongestionBarChart({levels, data, searchTarget}: Props) {
 
     const [animatedPercents, setAnimatedPercents] = useState<number[]>([]);
     const [showBadges, setShowBadges] = useState<boolean>(false);
@@ -48,14 +49,14 @@ export default function CongestionBarChart({levels, time, title, data}: Congesti
             <div className={styles.chart}>
                 {levels.map((level, index) => (
                     <div key={level.key} className={styles.row}>
-                        <div className={`${styles.label} ${styles[level.key]}`}>{level.label}</div>
+                        <div className={clsx(styles.label, styles[level.key])}>{level.label}</div>
                         <div className={styles.barArea}>
                             <div
-                                className={`${styles.barFill} ${styles[level.key]}`}
+                                className={clsx(styles.barFill, styles[level.key])}
                                 style={{width: `${animatedPercents[index] || 0}%`, transition: 'width 0.6s ease-out'}}
                             >
                                 <div
-                                    className={`${styles.badge} ${styles[level.key]} ${showBadges ? styles.showBadge : ''}`}
+                                    className={clsx([styles.badge, styles[level.key], showBadges && styles.showBadge])}
                                 >
                                     {level.count}
                                 </div>
@@ -64,39 +65,49 @@ export default function CongestionBarChart({levels, time, title, data}: Congesti
                     </div>
                 ))}
             </div>
-            <div className={styles.table}>
-                <Table<T>
-                    columns={[
-                        {accessorKey: "name", header: "노선", enableSorting: false},
-                        {
-                            accessorKey: "normal", header: "보통", enableSorting: false, cell: info => {
-                                const value = info.getValue<string>()
-                                return <span style={{color: "#009856"}}>{value}</span>
-                            }
-                        },
-                        {
-                            accessorKey: "warning", header: "주의", enableSorting: false, cell: info => {
-                                const value = info.getValue<string>()
-                                return <span style={{color: "#ffb800"}}>{value}</span>
-                            }
-                        },
-                        {
-                            accessorKey: "congested", header: "혼잡", enableSorting: false, cell: info => {
-                                const value = info.getValue<string>()
-                                return <span style={{color: "#ff6b00"}}>{value}</span>
-                            }
-                        },
-                        {
-                            accessorKey: "critical", header: "심각", enableSorting: false, cell: info => {
-                                const value = info.getValue<string>()
-                                return <span style={{color: "#e60012"}}>{value}</span>
-                            }
-                        }
-                    ]}
-                    data={data}
-                    minWidth={"0"}
-                />
-            </div>
+            <AnimatePresence initial={false}>
+                {searchTarget.type == "all" &&
+                    <motion.div
+                        className={styles.table}
+                        key="table"
+                        initial={{height: 0, opacity: 0, y: -5}}
+                        animate={{height: 'auto', opacity: 1, y: 0}}
+                        exit={{height: 0, opacity: 0, y: -5}}
+                        transition={{duration: 0.25, ease: 'easeInOut'}}>
+                        <Table<T>
+                            columns={[
+                                {accessorKey: "name", header: "노선", enableSorting: false},
+                                {
+                                    accessorKey: "normal", header: "보통", enableSorting: false, cell: info => {
+                                        const value = info.getValue<string>()
+                                        return <span style={{color: "#009856"}}>{value}</span>
+                                    }
+                                },
+                                {
+                                    accessorKey: "warning", header: "주의", enableSorting: false, cell: info => {
+                                        const value = info.getValue<string>()
+                                        return <span style={{color: "#ffb800"}}>{value}</span>
+                                    }
+                                },
+                                {
+                                    accessorKey: "congested", header: "혼잡", enableSorting: false, cell: info => {
+                                        const value = info.getValue<string>()
+                                        return <span style={{color: "#ff6b00"}}>{value}</span>
+                                    }
+                                },
+                                {
+                                    accessorKey: "critical", header: "심각", enableSorting: false, cell: info => {
+                                        const value = info.getValue<string>()
+                                        return <span style={{color: "#e60012"}}>{value}</span>
+                                    }
+                                }
+                            ]}
+                            data={data}
+                            minWidth={"0"}
+                        />
+                    </motion.div>}
+            </AnimatePresence>
+
         </>
     );
 }

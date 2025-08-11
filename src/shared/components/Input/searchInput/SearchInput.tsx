@@ -1,6 +1,7 @@
 import styles from './SearchInput.module.scss';
 import {CSSProperties, forwardRef, KeyboardEvent} from "react";
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
+import clsx from "clsx";
 
 // import SearchSvg from "@/shared/assets/images/search.svg";
 
@@ -24,16 +25,17 @@ export const SearchInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
         placeholder = '검색어를 입력해주세요.',
         width = 'auto',
         disabled = false,
-        parentClass = "",
-        inputClass = ""
+        parentClass,
+        inputClass
     } = props;
 
     return (
-        <div className={`${styles.container} ${parentClass}`}
+        <div className={clsx(styles.container, parentClass)}
              style={{width, background: disabled ? '#EBEBEB' : '#fff'}}>
             <input style={{flex: 1, height: '100%', pointerEvents: disabled ? 'none' : 'auto'}}
                    disabled={disabled}
-                   onKeyDown={(e) => onKeyDown?.(e)} placeholder={placeholder} ref={ref} className={inputClass}/>
+                   onKeyDown={(e) => onKeyDown?.(e)} placeholder={placeholder} ref={ref}
+                   className={inputClass && inputClass}/>
             <button type={'button'} onClick={() => onSubmit?.()}
                     style={{background: 'none', pointerEvents: disabled ? 'none' : 'auto'}}>
                 {
