@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  display: inline-flex;
+  padding: 0 1.6rem .6rem 1.6rem;
+  font-size: 1.3rem;
+  align-items: center;
+}
+
+.star {
+  color: #F73750;
+}

@@ -20,11 +20,17 @@ interface StationListProps {
   isOrdered?: boolean;
 }
 
-export default function StationList({items, selectedIds, onClick, onCheckToggle, source, isOrdered = false}: StationListProps) {
+export default function StationList({
+                                      items,
+                                      selectedIds,
+                                      onClick,
+                                      onCheckToggle,
+                                      source,
+                                      isOrdered = false
+                                    }: StationListProps) {
   return (
     <>
       {items.map((station, idx) => {
-
         const isSelected = selectedIds.includes(station.id);
 
         return (
@@ -39,7 +45,7 @@ export default function StationList({items, selectedIds, onClick, onCheckToggle,
             {
               <div className={styles.item}>
                 <input
-                  onClick={e=> e.stopPropagation()}
+                  onClick={e => e.stopPropagation()}
                   onChange={() => {
                     onCheckToggle?.(station, source);
                   }}

@@ -1,9 +1,7 @@
-import {BaseMenu} from "@/types/menu";
-import PortalContentLayout from "@/features/lyaouts/PortalContentLayout/PortalContentLayout";
-import BatchCycleView from "@/features/batch-cycle/components/BatchCycleView/BatchCycleView";
+import BatchCycleServer from "@/features/batch-cycle/components/BatchCycleView/BatchCycleServer";
 
-export default async function BatchCycle () {
+export default async function BatchCycle() {
   return (
-    <BatchCycleView />
+    <BatchCycleServer/>
   )
 }

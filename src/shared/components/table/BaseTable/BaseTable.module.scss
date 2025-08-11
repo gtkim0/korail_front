@@ -21,7 +21,7 @@
 
 .th,
 .td {
-  padding: .6rem 1.2rem;
+  padding: 1rem 1.2rem;
   border-bottom: 1px solid #eee;
   text-align: left;
 }
@@ -72,8 +72,8 @@ tbody tr:first-child .td {
 }
 
 .cellContent {
-  max-height: 3rem; /* ✅ 원하는 최대 높이 설정 */
-  overflow: hidden;
+  max-height: 3rem !important;
+  overflow: auto;
   text-overflow: ellipsis;
   white-space: nowrap; /* 또는 여러 줄 허용할 경우 제거 */
   display: -webkit-box;

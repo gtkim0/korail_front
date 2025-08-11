@@ -1,0 +1,99 @@
+.container {
+  width: 100%;
+  display: flex;
+  padding: .6rem 1.6rem;
+  gap: 2.4rem;
+  align-items: center;
+  background: #e2f0fe;
+  border-radius: 8px;
+
+  .leftBox {
+    display: flex;
+    justify-content: center;
+    gap: .6rem;
+
+    span {
+      color: #59595c;
+      font-size: 1.5rem;
+    }
+
+    .date {
+      color: #363637;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+  }
+
+  .line {
+    width: 1px;
+    height: 1.6rem;
+    background: #a3a3a9;
+  }
+
+  .rightBox {
+    display: flex;
+    gap: 2.4rem;
+    align-items: center;
+
+    .normalize {
+      display: flex;
+      gap: .6rem;
+      padding: .8rem 0;
+      align-items: center;
+
+      span {
+        font-size: 1.5rem;
+      }
+    }
+
+    .title {
+      color: #2a2a2b;
+    }
+
+    .percent {
+      color: #0061b8;
+      font-weight: 700;
+    }
+
+    .errorBox {
+      display: flex;
+      padding: .4rem 1.2rem;
+      align-items: center;
+      gap: .6rem;
+      border-radius: 8px;
+      border: 1px solid #f73750;
+      background: #feecef;
+      box-shadow: 0 0 6px 0 #ff1105;
+
+      .errorBoxWrapper {
+        display: flex;
+        align-items: center;
+        gap: .2rem;
+      }
+
+      .circle {
+        width: 8px;
+        height: 8px;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        background: #f73750;
+        box-shadow: 0 0 8px 0 #ff1105;
+      }
+
+      .span {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: #2a2a2b;
+        text-align: center;
+      }
+
+      .count {
+        color: #f77283;
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+    }
+
+  }
+}
+

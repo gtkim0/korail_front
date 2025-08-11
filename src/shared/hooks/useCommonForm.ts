@@ -1,5 +1,5 @@
 import {useForm, useStore} from '@tanstack/react-form';
-import {useEffect, useImperativeHandle} from 'react';
+import {useEffect, useImperativeHandle, useState} from 'react';
 
 export function useCommonForm<T extends object>(
   ref: any,
@@ -15,16 +15,20 @@ export function useCommonForm<T extends object>(
       ...(initialValues ?? {}),
     } as T,
     onSubmit: ({value}) => value,
+    validateOnMount: true,
     validators: schema
       ? {
-        // onSubmit: schema,
-        onChange: schema,
+        onSubmit: schema,
+        // onChange: schema,
       }
       : undefined,
   });
 
-  const canSubmit = useStore(form.store, (state) => state.canSubmit);
+  const isValid = useStore(form.store, s => s.isValid);
+  const isTouched = useStore(form.store, s => s.isTouched);
 
+  const canSubmit = isValid && isTouched;
+  // const canSubmit = useStore(form.store, (state) => state.canSubmit);
 
   const values = useStore(form.store, (state) => state.values)
 
@@ -43,7 +47,7 @@ export function useCommonForm<T extends object>(
 
   useEffect(() => {
     onCanSubmitChange?.(canSubmit);
-  }, [canSubmit]);
+  }, [canSubmit, onCanSubmitChange]);
 
   useEffect(() => {
     if (editData) {

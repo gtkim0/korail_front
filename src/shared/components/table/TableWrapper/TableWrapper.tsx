@@ -5,12 +5,12 @@ import {dummyMenuData} from "@/features/menu/columns/menuColumns";
 import {ColumnDef, OnChangeFn, RowSelectionState, SortingState} from "@tanstack/react-table";
 
 interface Props<T extends object> {
-  onSelect: (v: { key: string, label: string})=> void;
-  onEdit?: ()=> void;
-  onDelete?: ()=> void;
+  onSelect: (v: { key: string, label: string }) => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
   columns: ColumnDef<T, any>[];
   data: T[];
-  clickedItem: T | undefined;
+  clickedItem: T | null;
   sorting: SortingState;
   rowSelection: RowSelectionState;
   onRowSelectionChange: OnChangeFn<RowSelectionState>;
@@ -34,7 +34,9 @@ export default function TableWrapper<T extends { id: string | number }>(props: P
     onEdit, onDelete,
     columns, data,
     clickedItem,
-    sorting, rowSelection, onRowSelectionChange,onSortingChange,
+    sorting, rowSelection,
+    onRowSelectionChange,
+    onSortingChange,
     setPagination,
     pageIndex,
     pageSize,
@@ -47,7 +49,7 @@ export default function TableWrapper<T extends { id: string | number }>(props: P
   } = props;
 
   return (
-    <div style={{ flex: 1, display:'flex',flexDirection:'column'}}>
+    <div style={{flex: 1, display: 'flex', flexDirection: 'column'}}>
       <TableFilter
         onSelect={onSelect}
         onEdit={onEdit}

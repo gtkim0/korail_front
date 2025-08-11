@@ -2,18 +2,18 @@ import {ColumnDef} from "@tanstack/react-table";
 import {Menu} from "@/features/menu/columns/menuColumns";
 
 export type ProgrammingInfoColumnsType = {
-  division: string;
+  id: string;
+  routeType: string;
   routeNum: string;
+  orgNum: string;
   routeName: string;
-  proNUm: string;
   trainCnt: string;
-  trainNum: string;
   date: string;
 }
 
 export const ProgrammingInfoColumns: ColumnDef<ProgrammingInfoColumnsType>[] = [
   {
-    accessorKey: 'division',
+    accessorKey: 'routeType',
     header: '구분',
   },
   {
@@ -25,7 +25,7 @@ export const ProgrammingInfoColumns: ColumnDef<ProgrammingInfoColumnsType>[] = [
     header: '노선명',
   },
   {
-    accessorKey: 'proNum',
+    accessorKey: 'orgNum',
     header: '편성번호',
   },
   {
@@ -41,3 +41,11 @@ export const ProgrammingInfoColumns: ColumnDef<ProgrammingInfoColumnsType>[] = [
     header: '데이터기준일자',
   },
 ];
+
+export type ProgrammingInfoAddFormType = {
+  routeType: string;
+  routeNum: string;
+  orgNum: string;
+  routeName: string;
+  trainCnt: string;
+}

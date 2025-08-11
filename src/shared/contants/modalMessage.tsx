@@ -7,9 +7,9 @@ export const MODAL_TITLE: Partial<Record<PageType, string>> = {
   [PageType.RouteMap]: '노선정보 등록/수정',
   [PageType.OperationInfo]: '운행정보 등록/수정',
   [PageType.BatchCycle]: 'DB 업데이트 주기 등록/수정',
-  [PageType.ProgrammingInfo] : '편성정보 등록/수정',
+  [PageType.ProgrammingInfo]: '편성정보 등록/수정',
   [PageType.StationInfo]: '역사정보 등록/수정',
-  [PageType.CarriageInfo]: '객차정보 등록/수정',
+  [PageType.CarriageInfo]: '차량정보 등록/수정',
   [PageType.EvacuationInfo]: '대피안내정보 등록/수정',
   [PageType.ZoneInfo]: '구역 정보 등록/수정',
   [PageType.SpecialPeriod]: '특수기간정보 등록/수정',
@@ -27,8 +27,8 @@ export const MODAL_TITLE: Partial<Record<PageType, string>> = {
   [PageType.NotificationRecipient]: '알림 수신문자 등록/수정',
   [PageType.CongestionVerificationTarget]: '대피안내도',
   [PageType.PermissionGroup]: '권한그룹 등록/수정',
-  [PageType.PermissionStation]: '사용자별 권한',
-  [PageType.PermissionMenu]: '메뉴별 권한'
+  [PageType.PermissionUser]: '사용자별 권한 등록/수정',
+  [PageType.PermissionMenu]: '메뉴별 권한 등록/수정'
 }
 
 export const MODAL_MESSAGES = {
@@ -42,7 +42,7 @@ export const MODAL_MESSAGES = {
     title: '확인',
     message: (
       <>
-        회원가입이 완료 되었습니다.<br />
+        회원가입이 완료 되었습니다.<br/>
         [확인]버튼을 누르면 회원로그인 페이지로 이동합니다.
       </>
     )
@@ -53,10 +53,10 @@ export const MODAL_MESSAGES = {
     message: (
       <>
         입력하신 이메일 주소로 인증메일이 발송 되었습니다.
-        <br />
-        <br />
+        <br/>
+        <br/>
         이메일 확인 후 내용에 기입된 인증번호를
-        <br />
+        <br/>
         아래 인증번호 입력란에 입력후 회원가입을 계속 진행하세요.
       </>
     )
@@ -87,7 +87,12 @@ export const MODAL_MESSAGES = {
   },
   deleteMenu: {
     message: '해당 메뉴를 삭제하시겠습니까?'
+  },
+
+  deleteContent: {
+    message: '선택된 항목을 삭제하시겠습니까?'
   }
+
   // ...
 } as const;
 

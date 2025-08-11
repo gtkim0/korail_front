@@ -1,7 +1,7 @@
-import ProgrammingInfoView from "@/features/programming-info/components/ProgrammingInfoView/ProgrammingInfoView";
+import ProgrammingInfoServer from "@/features/programming-info/components/ProgrammingInfoView/ProgrammingInfoServer";
 
-export default async function ProgrammingInfo () {
+export default async function ProgrammingInfo() {
   return (
-    <ProgrammingInfoView />
+    <ProgrammingInfoServer/>
   )
 }

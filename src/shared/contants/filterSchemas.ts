@@ -3,7 +3,7 @@ import {isAccessorColumn} from "@/shared/utils/isAccessorColumn";
 import {BannerColumns} from "@/features/banner/columns/BannerColumns";
 import {routeMapColumns} from "@/features/routeMap/columns/routeMapColumns";
 import {FilterType} from "@/shared/enum/FilterType";
-import { PageType } from "@/shared/enum/PageType";
+import {PageType} from "@/shared/enum/PageType";
 import {Page} from "react-pdf";
 import {OPERATING_STATUS_OPTIONS} from "@/shared/contants/selectOptions/operatingStatusOptions";
 import {SELECT_OPTIONS} from "@/shared/contants/selectOptions";
@@ -13,11 +13,12 @@ type FilterSchema = {
   key: string;
   label: string;
   options?: readonly { key: string, label: string }[];
+  style?: any;
   endPoint?: string;
 }
 
 const categoryFilters = {
-  routeMap: ['1','2','3','4']
+  routeMap: ['1', '2', '3', '4']
 }
 
 function buildColumnOptions(columns: any[], filterKeys?: string[]) {
@@ -31,11 +32,11 @@ function buildColumnOptions(columns: any[], filterKeys?: string[]) {
 }
 
 const onOffOptions = [
-  { key: 'ON', label: 'ON' },
-  { key: 'OFF', label: 'OFF' },
+  {key: 'ON', label: 'ON'},
+  {key: 'OFF', label: 'OFF'},
 ];
 
-export const filterSchemas: Record<PageType, FilterSchema[]>= {
+export const filterSchemas: Record<PageType, FilterSchema[]> = {
   [PageType.Menu]: [
     {
       type: FilterType.Checkbox,
@@ -139,7 +140,7 @@ export const filterSchemas: Record<PageType, FilterSchema[]>= {
       label: '검색어 필터',
       options: routeMapColumns
         .filter(isAccessorColumn)
-        .filter(i=> categoryFilters.routeMap.includes(i.accessorKey))
+        .filter(i => categoryFilters.routeMap.includes(i.accessorKey))
         .map(col => ({
           key: col.accessorKey,
           label: col.header,
@@ -279,9 +280,9 @@ export const filterSchemas: Record<PageType, FilterSchema[]>= {
       label: '개통일자',
     },
   ],
-  [PageType.StationInfo] : [],
-  [PageType.CarriageInfo] : [],
-  [PageType.EvacuationInfo] : [
+  [PageType.StationInfo]: [],
+  [PageType.CarriageInfo]: [],
+  [PageType.EvacuationInfo]: [
     {
       type: FilterType.Checkbox,
       key: 'category',
@@ -472,5 +473,37 @@ export const filterSchemas: Record<PageType, FilterSchema[]>= {
   [PageType.NotificationLog]: [],
   [PageType.NotificationRule]: [],
   [PageType.CongestionVerificationTarget]: [],
-  [PageType.CongestionVerificationComplete]: []
+  [PageType.CongestionVerificationComplete]: [],
+  [PageType.PermissionUser]: [],
+  [PageType.PermissionMenu]: [],
+  [PageType.PermissionGroup]: [],
+  [PageType.TrainStatistics]: [
+    {
+      type: FilterType.Select,
+      key: 'areaOrTrunk',
+      label: '광역/간선',
+      options: SELECT_OPTIONS.POSITION_OPTIONS,
+      style: {
+        width: '16rem'
+      }
+    },
+    {
+      type: FilterType.Select,
+      key: 'route',
+      label: '노선선택',
+      options: SELECT_OPTIONS.POSITION_OPTIONS,
+      style: {
+        width: '16rem'
+      }
+    },
+    {
+      type: FilterType.Select,
+      key: 'dayMonthYear',
+      label: '기간별',
+      options: SELECT_OPTIONS.POSITION_OPTIONS,
+      style: {
+        width: '16rem'
+      }
+    },
+  ]
 }

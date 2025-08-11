@@ -1,89 +1,117 @@
-import {forwardRef, useEffect, useImperativeHandle} from "react";
-import {useForm, useStore} from "@tanstack/react-form";
-import {z} from "zod";
+import {forwardRef, useEffect} from "react";
 import {InputField} from "@/shared/components/Input/InputField";
-import Image from "next/image";
-
-export type ProgrammingAddFormRef = {
-  submit: () => void;
-}
+import {FormAddFormRef} from "@/types/common";
+import {useCommonForm} from "@/shared/hooks/useCommonForm";
+import ModalAddFormLayout from "@/shared/components/modalAddFormLayout/ModalAddFormLayout";
+import TransferList from "@/shared/components/transferList/TransferList/TransferList";
+import TransferListHeaderTitle from "@/shared/components/transferList/TransferListHeader/TransferListHeader";
+import TransferListWrapper from "@/shared/components/transferList/TransferListWrapper/TransferListWrapper";
+import {trainColumns} from "@/shared/columns/trainColumns";
+import FormFieldWrapper from "@/shared/components/formFieldWrapper/FormFieldWrapper";
+import FilterSelect from "@/shared/components/searchFilter/Filters/FilterSelect/FilterSelect";
+import {ROUTE_TYPE_OPTIONS} from "@/shared/contants/selectOptions/routeTypeOptions";
+import styles from './ProgrammingInfoAddForm.module.scss'
+import {programmingInfoSchema} from "@/features/programming-info/schema/programmingInfoSchema";
+import {
+  ProgrammingInfoAddFormType,
+} from "@/features/programming-info/columns/ProgramminInfoColumns";
 
 interface Props {
   editData?: any;
   onCanSubmitChange?: () => void;
+  routeInfo: any[];
 }
 
-const ResetSchema = z.object({
-  division: z
-    .string(),
-  routeNum: z.string(),
-  proNum: z.string(),
-  routeName: z.string(),
-  trainCnt: z.number(),
-})
-
 const ProgrammingInfoAddForm =
-  forwardRef<ProgrammingAddFormRef, Props>(({editData, onCanSubmitChange}, ref) => {
+  forwardRef<FormAddFormRef, Props>(({editData, onCanSubmitChange, routeInfo}, ref) => {
 
-    const form = useForm({
-      defaultValues: {
-        division: '',
+    const form = useCommonForm<ProgrammingInfoAddFormType>(
+      ref,
+      editData,
+      onCanSubmitChange,
+      programmingInfoSchema,
+      {
+        routeType: ROUTE_TYPE_OPTIONS[0].key,
         routeNum: '',
-        proNum: '',
+        orgNum: '',
         routeName: '',
         trainCnt: ''
-      },
-      onSubmit: async ({value}) => {
-        console.log('제출된 데이터:', value);
-      },
-      validators: {
-        onSubmit: ResetSchema,
-        onChange: ResetSchema
       }
-    });
-
-    const canSubmit = useStore(form.store, (s) => s.canSubmit ?? false);
-
-    useImperativeHandle(ref, () => ({
-      submit: async () => {
-        return await form.handleSubmit();
-      },
-    }));
+    )
 
     useEffect(() => {
-      if (editData) {
-        form.reset(editData);
+      const findItem = routeInfo.find(i => i.key === form.getFieldValue('routeNum'));
+      if (findItem) {
+        form.setFieldValue('routeName', findItem.key);
       }
-    }, [editData])
-
-    useEffect(() => {
-      onCanSubmitChange?.(canSubmit);
-    }, [canSubmit]);
+    }, [form.getFieldValue('routeNum')])
 
     return (
-      <form style={{width: '100%', display: 'flex', flexDirection: 'column', gap: '3.6rem'}}>
-        <div style={{display: 'flex', padding: '1.6rem', flexDirection: 'column', gap: '1rem'}}>
-          <span style={{fontSize: '1.4rem', color: '#2A2A2B', fontWeight: 600}}>편성 기본 정보</span>
-          <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', columnGap: '3.6rem', rowGap: '3.6rem'}}>
+      <ModalAddFormLayout style={{padding: 0}}>
+        <div className={styles.formWrapper}>
+          <span className={styles.title}>
+            편성 기본 정보
+          </span>
+          <div className={styles.gridWrapper}>
             {
               form.Field({
-                name: 'name',
+                name: 'routeType',
+                children: (field) => (
+                  <FormFieldWrapper
+                    label={'구분'}
+                  >
+                    <FilterSelect
+                      enabledAll={false}
+                      options={ROUTE_TYPE_OPTIONS}
+                      value={field.getValue()}
+                      onChange={(v) => field.handleChange(v)}
+                    />
+                  </FormFieldWrapper>
+                ),
+              })
+            }
+
+            {
+              form.Field({
+                name: 'orgNum',
                 children: (field) => (
                   <InputField
-                    placeholder={'구분'}
+                    height={'3.6rem'}
+                    name={field.name}
+                    placeholder={'편성번호'}
                     required={true}
                     field={field}
-                    label={'구분'}
+                    label={'편성번호'}
                   />
                 ),
               })
             }
             {
               form.Field({
-                name: 'name',
+                name: 'trainCnt',
                 children: (field) => (
                   <InputField
-                    placeholder={'노선번호.'}
+                    type={'number'}
+                    height={'3.6rem'}
+                    placeholder={'차량수'}
+                    required={true}
+                    field={field}
+                    label={'차량수'}
+                    name={field.name}
+                  />
+                ),
+              })
+            }
+
+            {
+              form.Field({
+                name: 'routeName',
+                children: (field) => (
+                  <InputField
+                    disabled
+                    height={'3.6rem'}
+                    name={field.name}
+                    placeholder={'노선번호'}
                     required={true}
                     field={field}
                     label={'노선번호'}
@@ -93,130 +121,40 @@ const ProgrammingInfoAddForm =
             }
             {
               form.Field({
-                name: 'name',
-                children: (field) => (
-                  <InputField
-                    type={'name'}
-                    placeholder={'편성번호'}
-                    required={true}
-                    field={field}
-                    label={'편성번호'}
-                  />
-                ),
-              })
-            }
-            {
-              form.Field({
-                name: 'name',
-                children: (field) => (
-                  <InputField
-                    type={'name'}
-                    placeholder={'편성번호'}
-                    required={true}
-                    field={field}
-                    label={'편성번호'}
-                  />
-                ),
-              })
-            }
-            {
-              form.Field({
-                name: 'name',
-                children: (field) => (
-                  <InputField
-                    type={'name'}
-                    placeholder={'편성번호'}
-                    required={true}
-                    field={field}
-                    label={'편성번호'}
-                  />
-                ),
+                name: 'routeNum',
+                children: (field) => {
+
+                  // const findItem = routeInfo.find(i => i.key === field.getValue());
+                  //
+                  // if (findItem) {
+                  //   form.setFieldValue('routeName', findItem.key);
+                  // }
+
+                  return (
+                    <FormFieldWrapper label={'노선명'}>
+                      <FilterSelect
+                        enabledAll={false}
+                        options={routeInfo}
+                        value={field.getValue()}
+                        onChange={(v) => field.handleChange(v)}
+                      />
+                    </FormFieldWrapper>
+                  )
+                },
               })
             }
           </div>
         </div>
 
-        <div
-          style={{
-            display: 'flex',
-            paddingTop: '3.2rem',
-            flexDirection: 'column',
-            gap: '1rem'
-          }}
-        >
-          <span style={{fontSize: '1.4rem', color: '#2A2A2B', fontWeight: 600, padding: '0 1.6rem'}}>
-            차량 구성 (차량 등록)
-          </span>
-
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column'
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                padding: '0 1.6rem .6rem 1.6rem',
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
-                gap: '1rem'
-              }}
-            >
-              <div style={{display: 'flex', gap: '.2rem'}}>
-                <span style={{color: '#363637', fontSize: '1.3rem'}}>차량 구성</span>
-                <span style={{color: '#F73750', fontSize: '1.3rem'}}>*</span>
-              </div>
-            </div>
-
-            <div style={{display: 'flex', borderTop: '1px solid #EBEBEB'}}>
-              <div
-                style={{
-                  display: 'flex',
-                  width: '32rem',
-                  flexDirection: 'column',
-                  borderTop: '1px solid #EBEBEB',
-                  borderRight: '1px solid #EBEBEB',
-                  background: '#F1F1F2'
-                }}
-              >
-                <div style={{display: 'flex', padding: '1.6rem 1.6rem 1.2rem 1.6rem', alignItems: 'center'}}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      height: '3.6rem',
-                      padding: '0 1.2rem',
-                      width: '100%',
-                      background: '#fff',
-                      borderRadius: '6px',
-                      border: '1px solid #D5D5D6',
-                      alignItems: 'center'
-                    }}
-                  >
-                    <input
-                      placeholder={'차량번호, 차량종류 검색'}
-                      style={{
-                        flex: 1,
-                      }}
-                    />
-                    <Image src={'/search.svg'} alt={'logo'} width={24} height={24}/>
-                  </div>
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    padding: '0 1.6rem 1.6rem 1.6rem',
-                    flex: 1
-                  }}
-                >
-
-                </div>
-                <div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
+        <TransferListWrapper title={'차량 구성(차량 등록)'}>
+          <TransferListHeaderTitle title={'차량 구성'}/>
+          <TransferList<{ [key in typeof trainColumns[number]['key']]: string | boolean | unknown }>
+            columns={trainColumns}
+            initialItems={[]}
+            selectedItems={[]}
+          />
+        </TransferListWrapper>
+      </ModalAddFormLayout>
     )
   })
 

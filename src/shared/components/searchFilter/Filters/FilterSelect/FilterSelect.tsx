@@ -15,13 +15,14 @@ type FilterSelectProps = {
   options: readonly Option[];
   value: string;
   onChange: (value: string) => void;
+  style?: any;
 };
 
-export default function FilterSelect({options, value, enabledAll = true, onChange}: FilterSelectProps) {
+export default function FilterSelect({options, value, enabledAll = true, onChange, style}: FilterSelectProps) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const selectedLabel = options.find(opt => opt.key === value)?.label || ( enabledAll ? '전체' : '선택');
+  const selectedLabel = options.find(opt => opt.key === value)?.label || (enabledAll ? '전체' : '선택');
 
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
@@ -34,7 +35,7 @@ export default function FilterSelect({options, value, enabledAll = true, onChang
   }, []);
 
   return (
-    <div className={styles.customSelectWrapper} ref={dropdownRef}>
+    <div style={style} className={styles.customSelectWrapper} ref={dropdownRef}>
       <div className={styles.selectedBox} onClick={() => setOpen(prev => !prev)}>
         <span style={{flex: 1}}>{selectedLabel}</span>
         <ImageWrapper width={16} height={16} src={'/arrow-down.svg'} alt=""/>
@@ -52,7 +53,7 @@ export default function FilterSelect({options, value, enabledAll = true, onChang
                   setOpen(false);
                 }}
             >
-              전체
+                전체
             </li>
         }
         {options.map(opt => (

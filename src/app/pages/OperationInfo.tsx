@@ -1,7 +1,7 @@
-import OperationInfoView from "@/features/operationInfo/components/OperationInfoView/OperationInfoView";
+import OperationInfoServer from "@/features/operationInfo/components/OperationInfoView/OperationInfoServer";
 
-export default async function OperationInfo () {
+export default async function OperationInfo() {
   return (
-    <OperationInfoView />
+    <OperationInfoServer/>
   )
 }

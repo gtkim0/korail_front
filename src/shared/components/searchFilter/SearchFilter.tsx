@@ -1,7 +1,7 @@
 'use client';
 import Image from "next/image";
 import styles from './SearchFilter.module.scss'
-import {KeyboardEvent, ForwardedRef, forwardRef, useEffect} from "react";
+import {KeyboardEvent, ForwardedRef, forwardRef, useEffect, ReactNode} from "react";
 import useModal from "@/shared/hooks/useModal";
 import AddButton from "@/shared/components/button/AddButton";
 import clsx from "clsx";
@@ -12,25 +12,26 @@ import {SearchInput} from "@/shared/components/Input/searchInput/SearchInput";
 import {PageType} from "@/shared/enum/PageType";
 
 interface Props {
-  onAdd: ()=> void;
+  onAdd: () => void;
   type: PageType;
-  value: {[key:string]: any}
-  onChange: ( value: any )=> void;
+  value: { [key: string]: any } | any;
+  onChange: (value: any) => void;
   onSubmit?: () => void;
-  enabledAdd?:boolean;
+  enabledAdd?: boolean;
+  CustomFilterSubRender?: ReactNode;
 }
 
 export const SearchFilter = forwardRef<HTMLInputElement, Props>((props, ref: ForwardedRef<HTMLInputElement>) => {
 
-  const { onAdd, type, value, onChange, onSubmit, enabledAdd} = props;
+  const {onAdd, type, value, onChange, onSubmit, enabledAdd} = props;
   const {isOpen, open, close} = useModal();
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if(e.key  === 'Enter' && onSubmit) onSubmit();
+    if (e.key === 'Enter' && onSubmit) onSubmit();
   }
 
   useEffect(() => {
-    window.addEventListener('resize', (e)=> {
+    window.addEventListener('resize', (e) => {
       console.log(e);
     })
   }, []);
@@ -42,7 +43,7 @@ export const SearchFilter = forwardRef<HTMLInputElement, Props>((props, ref: For
           <SearchInput
             width={'32rem'}
             onKeyDown={handleKeyDown}
-            onSubmit={()=> onSubmit?.()}
+            onSubmit={() => onSubmit?.()}
             ref={ref}
           />
           <div onClick={() => isOpen ? close() : open()} className={clsx(styles.filter, isOpen && styles.open)}>
@@ -62,10 +63,10 @@ export const SearchFilter = forwardRef<HTMLInputElement, Props>((props, ref: For
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            initial={{opacity: 0, height: 0}}
+            animate={{opacity: 1, height: 'auto'}}
+            exit={{opacity: 0, height: 0}}
+            transition={{duration: 0.3, ease: 'easeInOut'}}
           >
             <DynamicFilterRenderer
               schema={filterSchemas[type]}

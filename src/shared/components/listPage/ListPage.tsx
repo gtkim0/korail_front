@@ -1,4 +1,4 @@
-import {
+import React, {
   useRef,
   useState,
   useEffect,
@@ -6,7 +6,7 @@ import {
   RefAttributes,
   ForwardRefExoticComponent,
   useMemo,
-  useCallback
+  useCallback, ComponentType
 } from 'react';
 import useModal from '@/shared/hooks/useModal';
 import TableWrapper from '@/shared/components/table/TableWrapper/TableWrapper';
@@ -14,30 +14,51 @@ import BaseModal from '@/shared/components/modal/BaseModal/BaseModal';
 import {BaseModalFooter} from '@/shared/components/modal/BaseModal/BaseModalFooter/BaseModalFooter';
 import {SearchFilter} from "@/shared/components/searchFilter/SearchFilter";
 import {PageType} from "@/shared/enum/PageType";
-import {MODAL_TITLE} from "@/shared/contants/modalMessage";
+import {MODAL_MESSAGES, MODAL_TITLE} from "@/shared/contants/modalMessage";
 import {keepPreviousData, useQuery} from "@tanstack/react-query";
 import {toast} from "react-hot-toast";
 import {useTableSelection} from "@/shared/hooks/useTableSelection";
+import {ActionButtons} from "@/shared/components/actionButtons/ActionButtons";
+import ConfirmModal from "@/shared/components/modal/ConfirmModal/ConfirmModal";
+import {ColumnDef} from "@tanstack/react-table";
 
 export interface BaseModalFormProps<T> {
   editData: T | null;
   onCanSubmitChange: (v: boolean) => void;
 }
 
-interface ListPageProps<T extends { id: string | number }, F> {
+export interface FilterProps<V> {
+  value: V;
+  onChange: (v: V) => void;
+  onSubmit: () => void;
+  onAdd: () => void;
+  type: PageType;
+  enabledAdd: boolean;
+  CustomFilterSubRender: any;
+}
+
+type PolymorphicComponent<P> =
+  | ComponentType<P>
+  | React.ForwardRefExoticComponent<P & React.RefAttributes<HTMLInputElement>
+>
+
+interface ListPageProps<T extends { id: string | number }, F, V = Record<string, any>, FP = Record<string, any>> {
   pageType: PageType;
   filterSchemaKey: PageType;
-  columns: any;
+  // FilterComponent?: FilterComponentType<V>;
+  FilterComponent?: PolymorphicComponent<FilterProps<V | undefined>>
+  CustomFilterSubRender?: ComponentType<FilterProps<V>>;
+  columns: ColumnDef<T, any>[];
   fetchData: (opts: {
     sortKey: string;
     sortOrder: string;
-    filter: Record<string, any>;
+    filter: V;
     page: number;
     size: number;
   }) => Promise<T[]>;
   ModalBody?: ForwardRefExoticComponent<PropsWithoutRef<F> & RefAttributes<any>> | any;
   modalBodyProps?: Omit<F, keyof BaseModalFormProps<T>>;
-  initialFilter?: Record<string, any>;
+  initialFilter: V;
   initialSortKey?: string;
   onSubmitEdit?: (formData: Partial<T>) => Promise<boolean>;
   onSubmitAdd?: (formData: Partial<T>) => Promise<boolean>;
@@ -46,10 +67,13 @@ interface ListPageProps<T extends { id: string | number }, F> {
   modalMaxWidth?: 'lg' | 'xl'
 }
 
-function ListPage<T extends { id: string | number }, F>(
+
+function ListPage<T extends { id: string | number }, F, V, FP>(
   {
     pageType,
     filterSchemaKey,
+    FilterComponent = SearchFilter,
+    CustomFilterSubRender,
     columns,
     fetchData,
     ModalBody,
@@ -61,18 +85,19 @@ function ListPage<T extends { id: string | number }, F>(
     onDelete,
     initialData,
     modalMaxWidth = 'lg'
-  }: ListPageProps<T, F>,
+  }: ListPageProps<T, F, V, FP>,
 ) {
   const {isOpen, open, close} = useModal();
+
+  const {isOpen: closeModalIsOpen, open: closeModalOpen, close: closeModalClose} = useModal();
+
   const inputRef = useRef<HTMLInputElement>(null);
   const editAreaRef = useRef<any>(null);
 
   const [editTarget, setEditTarget] = useState<T | null>(null);
   const [pagination, setPagination] = useState({pageIndex: 0, pageSize: 10});
-
-  const [clickedItem, setClickedItem] = useState<T | undefined>();
-
-  const [filter, setFilter] = useState<Record<string, any>>(initialFilter || {});
+  const [clickedItem, setClickedItem] = useState<T | null>(null);
+  const [filter, setFilter] = useState<V>(initialFilter);
 
   const [sorting, setSorting] = useState<{ id: string; desc: boolean }[]>([
     {id: initialSortKey || 'id', desc: false}
@@ -109,6 +134,7 @@ function ListPage<T extends { id: string | number }, F>(
   });
 
   const {rowSelection, onRowSelectionChange} = useTableSelection<T>(dataSource, ids => {
+    console.log(dataSource);
     console.log(`${pageType} selected`, ids);
   });
 
@@ -118,14 +144,19 @@ function ListPage<T extends { id: string | number }, F>(
   };
 
   const handleEdit = () => {
-    // setEditTarget(row);
+    if (!clickedItem) {
+      toast.error('수정할 항목을 선택해주세요.')
+      return;
+    }
+
+    setEditTarget(clickedItem)
     open();
   }
 
   const handleAdd = useCallback(() => {
     setEditTarget(null);
     open();
-  },[setEditTarget, open]);
+  }, [setEditTarget, open]);
 
   const handleSubmitForm = async () => {
 
@@ -150,7 +181,13 @@ function ListPage<T extends { id: string | number }, F>(
     }
   }
 
-  const handleDelete = useCallback(() => {},[])
+  const handleDelete = useCallback(() => {
+    if (Object.keys(rowSelection).length === 0) {
+      toast.error('삭제할 항목을 선택해주세요.');
+      return;
+    }
+    closeModalOpen();
+  }, [rowSelection])
 
   const handleChangeFilter = (val: any) => {
     setFilter(val);
@@ -171,7 +208,7 @@ function ListPage<T extends { id: string | number }, F>(
   // @ts-ignore
   return (
     <>
-      <SearchFilter
+      <FilterComponent
         onAdd={handleAdd}
         ref={inputRef}
         value={filter}
@@ -179,10 +216,13 @@ function ListPage<T extends { id: string | number }, F>(
         type={filterSchemaKey}
         onSubmit={handleSubmit}
         enabledAdd={!!onSubmitAdd}
+        CustomFilterSubRender={CustomFilterSubRender}
+        // customFilterSubProps={dataSource}
+        // customFilterSubProps 에 현재 날짜랑 응답 데이터 같이 넣어줘야함.
       />
-
       <TableWrapper<T>
-        onSelect={() => {}}
+        onSelect={() => {
+        }}
         onEdit={handleEdit}
         onDelete={handleDelete}
         columns={columns}
@@ -223,6 +263,32 @@ function ListPage<T extends { id: string | number }, F>(
               />
           </BaseModal>
       }
+
+      <ConfirmModal
+        title={'삭제'}
+        isOpen={closeModalIsOpen}
+        onCloseAction={closeModalClose}
+        actionButtons={
+          <ActionButtons
+            buttons={[
+              {
+                label: '취소',
+                onClick: close,
+                variant: 'normal',
+              },
+              {
+                label: '삭제',
+                onClick: () => {
+                },
+                variant: 'primary',
+                disabled: false,
+              },
+            ]}
+          />
+        }
+      >
+        {MODAL_MESSAGES.deleteContent.message}
+      </ConfirmModal>
     </>
   );
 }

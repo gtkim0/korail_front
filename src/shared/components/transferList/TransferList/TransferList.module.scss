@@ -1,0 +1,134 @@
+$header-height: 3.6rem;
+
+.container {
+  display: flex;
+  height: 46rem;
+  border-top: 1px solid #ebebeb;
+}
+
+.leftArea {
+  display: flex;
+  width: 40%;
+  flex-direction: column;
+  padding: 1.6rem;
+  background: #f1f1f2;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.inputArea {
+  display: flex;
+  //padding: 1.2rem 0;
+  //height: 6rem;
+  align-items: center;
+  padding-bottom: 1.6rem;
+  //background: #fff;
+
+  .input {
+    display: flex;
+    line-height: $header-height; // 텍스트 수직 중앙
+    padding: 0 1.2rem;
+    height: $header-height;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    border-radius: 6px;
+    border: 1px solid #D5D5D6;
+    background: #fff;
+  }
+}
+
+.stationArea {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: calc(100% - 6rem);
+  overflow-y: auto;
+  //padding-bottom: 1.6rem;
+
+  .header {
+    display: flex;
+    width: 100%;
+    background: #EBEBEB;
+    border-radius: 6px 6px 0 0;
+    align-items: center;
+    min-height: $header-height;
+
+    .checkbox {
+      font-size: 1.4rem;
+      font-weight: 600;
+      padding: 0 1.2rem;
+    }
+
+    .item {
+      font-size: 1.4rem;
+      font-weight: 600;
+      padding: 0 1.2rem;
+      flex: 1
+    }
+  }
+
+  .stationList {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    background: #fff;
+    border: 1px solid #d5d5d6;
+    border-top: none !important;
+    border-radius: 0 0 6px 6px;
+
+    .station {
+      display: flex;
+      font-size: 1.5rem;
+      cursor: pointer;
+      user-select: none;
+      border-bottom: 1px solid #d2d2d2;
+
+      &:hover {
+        background: #E2F0FE;
+      }
+
+      .item {
+        padding: .6rem 1.2rem;
+      }
+
+      .number {
+        width: 40%;
+      }
+
+      .name {
+        width: 60%;
+      }
+    }
+  }
+}
+
+.buttonArea {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  height: 100%;
+
+  button {
+    display: flex;
+    padding: 6px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    background: #fff;
+    border: 1px solid #d5d5d6;
+  }
+}
+
+.deleteBtn {
+  display: flex;
+  height: 100%;
+  padding: 0 1rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  border: 1px solid #d5d5d6;
+  background: #fff;
+}

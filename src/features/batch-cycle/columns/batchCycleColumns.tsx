@@ -36,8 +36,11 @@ export const dummyBatchCycleData = [
 
 export const batchCycleColumns: ColumnDef<BatchCycleColumns>[] = [
   {
-    accessorKey: 'code',
+    accessorKey: 'id',
     header: '번호',
+    meta: {
+      hidden: true,
+    }
   },
   {
     accessorKey: 'tableName',
@@ -52,34 +55,15 @@ export const batchCycleColumns: ColumnDef<BatchCycleColumns>[] = [
     header: '방식',
   },
   {
-    accessorKey: 'cycleVal',
-    header: '주기값',
-  },
-  {
-    accessorKey: 'cycleUnit',
-    header: '주기단위',
-  },
-  {
-    accessorKey: 'time',
-    header: '특정시간',
-  },
-  {
-    accessorKey: 'timeUnit',
-    header: '특정시간단위',
-  },
-  {
-    accessorKey: 'day',
-    header: '반복요일',
-  },
-  {
-    accessorKey: 'recount',
-    header: '재시도횟수',
-  },
-  {
-    accessorKey: 'minute',
-    header: '간격(분)',
-  }, {
     accessorKey: 'lastUpDt',
     header: '최근 업데이트 시각',
   },
+  {
+    accessorKey: 'nextUpDt',
+    header: '다음예정시각',
+  },
+  {
+    accessorKey: 'date',
+    header: '데이터 기준 일자',
+  }
 ];

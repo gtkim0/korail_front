@@ -17,15 +17,16 @@ const PermissionUserAddForm =
       editData,
       onCanSubmitChange,
       permissionUserSchema,
-      {
-      }
+      {}
     )
 
-  return (
-    <ModalAddFormLayout>
-      <></>
-    </ModalAddFormLayout>
-  )
-})
+    return (
+      <ModalAddFormLayout
+        padding={0}
+      >
+        <></>
+      </ModalAddFormLayout>
+    )
+  })
 
 export default PermissionUserAddForm;

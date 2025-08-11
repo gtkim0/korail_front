@@ -1,6 +1,3 @@
-import CongestionVerificationCompleteView
-  from "@/features/congestion-verification-complete/components/CongestionVerificationTargetView/CongestionVerificationCompleteView";
-
 export enum PageType {
   Menu = 'menu',
   RouteMap = 'routeMap',
@@ -30,5 +27,6 @@ export enum PageType {
   CongestionVerificationTarget = 'congestion-verification-target',
   PermissionGroup = 'permission-group',
   PermissionUser = 'permission-user',
-  PermissionMenu = 'permission-menu'
+  PermissionMenu = 'permission-menu',
+  TrainStatistics = 'train-statistics'
 }

@@ -12,7 +12,7 @@ export interface StationInfoAddFormProps extends BaseModalFormProps<StationInfoC
   // optional: readonly?: boolean;
 }
 
-export default function StationInfoView ({ initialFilter, initialData, initialSortKey }: PageServerProps) {
+export default function StationInfoView({initialFilter, initialData, initialSortKey}: PageServerProps) {
 
   return (
     <ListPage<StationInfoColumnsType, StationInfoAddFormProps>
@@ -21,7 +21,7 @@ export default function StationInfoView ({ initialFilter, initialData, initialSo
       columns={withRowSelection(stationInfoColumns)}
       initialFilter={initialFilter}
       initialSortKey={'id'}
-      fetchData={async ({ sortKey, sortOrder, filter, page, size }) => {
+      fetchData={async ({sortKey, sortOrder, filter, page, size}) => {
         const params = {
           sort: sortKey,
           order: sortOrder,
@@ -34,13 +34,13 @@ export default function StationInfoView ({ initialFilter, initialData, initialSo
       }}
       ModalBody={StationInfoAddForm}
       modalBodyProps={{}}
-      onSubmitEdit={ async (formData: Partial<StationInfoColumnsType>) => {
+      onSubmitEdit={async (formData: Partial<StationInfoColumnsType>) => {
         const res = await stationApi.put(formData);
         // if(res) return true;
         return true;
       }}
-      onSubmitAdd={ async (formData) => {
-        const res = await clientPost('/apis/board',formData);
+      onSubmitAdd={async (formData) => {
+        const res = await clientPost('/apis/board', formData);
         return true;
       }}
       onDelete={async (ids) => {

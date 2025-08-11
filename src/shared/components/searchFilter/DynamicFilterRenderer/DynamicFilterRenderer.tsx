@@ -13,6 +13,7 @@ type FilterSchema = {
   key: string;
   label: string;
   options?: readonly { key: string, label: string }[];
+  style?: any;
   endPoint?: string;
 }
 
@@ -53,12 +54,25 @@ export function DynamicFilterRenderer({schema, value, onChange, modalEndPoint}: 
   // }, [schema]);
 
   return (
-    <div style={{display: 'flex', flexWrap:'wrap', gap:'3.6rem', padding:'1.6rem',background:'#EBEBEB', borderTop:'1px solid #D5D5D6'}}>
+    <div style={{
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '3.6rem',
+      padding: '1.6rem',
+      background: '#EBEBEB',
+      borderTop: '1px solid #D5D5D6'
+    }}>
       {schema.map(filter => (
         <FilterGroup key={filter.key}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', justifyContent:'space-between', height:'100%' }}>
-            <div style={{ fontSize: '1.3rem', fontWeight: '600', lineHeight:'150%' }}>{filter.label}</div>
-            <div style={{ display: 'flex', gap: '1rem', flexWrap:'wrap'  }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.8rem',
+            justifyContent: 'space-between',
+            height: '100%'
+          }}>
+            <div style={{fontSize: '1.3rem', fontWeight: '600', lineHeight: '150%'}}>{filter.label}</div>
+            <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
               {filter.type === FilterType.Checkbox && (
                 <>
                   <FilterCheckbox
@@ -103,6 +117,7 @@ export function DynamicFilterRenderer({schema, value, onChange, modalEndPoint}: 
                   options={filter.options!}
                   value={value[filter.key] || ''}
                   onChange={(value) => handleChange(filter.key, value)}
+                  style={filter.style}
                 />
               )}
 
@@ -110,7 +125,7 @@ export function DynamicFilterRenderer({schema, value, onChange, modalEndPoint}: 
                 <DatePickerRange
                   startDate={value[filter.key]?.startDate}
                   endDate={value[filter.key]?.endDate}
-                  onChange={({ startDate, endDate}) => handleChange(filter.key, { startDate, endDate })}
+                  onChange={({startDate, endDate}) => handleChange(filter.key, {startDate, endDate})}
                 />
               )}
 
@@ -125,11 +140,13 @@ export function DynamicFilterRenderer({schema, value, onChange, modalEndPoint}: 
                 <SearchModalTrigger
                   columns={[]}
                   value={value[filter.key]}
-                  onSelect={(v)=> handleChange(filter.key, v)}
+                  onSelect={(v) => handleChange(filter.key, v)}
                   endPoint={modalEndPoint}
                   isOpen={false}
-                  onOpen={()=> {}}
-                  onClose={()=> {}}
+                  onOpen={() => {
+                  }}
+                  onClose={() => {
+                  }}
                 />
               )}
 
@@ -138,7 +155,7 @@ export function DynamicFilterRenderer({schema, value, onChange, modalEndPoint}: 
                   name={filter.key}
                   options={filter.options!}
                   selected={value[filter.key]}
-                  onChange={(val)=> handleChange(filter.key, val)}
+                  onChange={(val) => handleChange(filter.key, val)}
                 />
               )}
             </div>

@@ -1,4 +1,4 @@
-import { ColumnDef } from '@tanstack/react-table';
+import {ColumnDef} from '@tanstack/react-table';
 import styles from './BaseTable/BaseTable.module.scss';
 
 export function withRowSelection<T extends object>(
@@ -7,7 +7,7 @@ export function withRowSelection<T extends object>(
   return [
     {
       id: 'select',
-      header: ({ table }) => (
+      header: ({table}) => (
         <input
           type="checkbox"
           className={styles.checkbox}
@@ -15,7 +15,7 @@ export function withRowSelection<T extends object>(
           onChange={table.getToggleAllPageRowsSelectedHandler()}
         />
       ),
-      cell: ({ row }) => (
+      cell: ({row}) => (
         <input
           type="checkbox"
           className={styles.checkbox}
@@ -28,6 +28,8 @@ export function withRowSelection<T extends object>(
         />
       ),
       size: 40,
+      minSize: 40,
+      maxSize: 40
     },
     ...columns,
   ];

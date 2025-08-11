@@ -1,7 +1,8 @@
-import CarriageInfoView from "@/features/carriageInfo/components/CarriageInfoView/CarriageInfoView";
+import CarriageInfoServer from "@/features/carriageInfo/components/CarriageInfoView/CarriageInfoServer";
 
-export default async function CarriageInfo () {
+export default async function CarriageInfo() {
+
   return (
-    <CarriageInfoView />
+    <CarriageInfoServer/>
   )
 }

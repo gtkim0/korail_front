@@ -43,47 +43,47 @@ export const menuList = [
         description: ''
     },
 
-    {id: '11', pid: '2', url: '', component: '', order: 3, depth: 2, name: '열차정보', description: ''},
-    {
-        id: '30',
-        pid: '11',
-        url: '/basic/train/operation',
-        component: 'OperationInfo',
-        order: 1,
-        depth: 3,
-        name: '운행정보',
-        description: ''
-    },
-    {
-        id: '31',
-        pid: '11',
-        url: '/basic/train/programming',
-        component: 'ProgrammingInfo',
-        order: 2,
-        depth: 3,
-        name: '편성정보',
-        description: ''
-    },
-    {
-        id: '32',
-        pid: '11',
-        url: '/basic/train/carriage',
-        component: 'CarriageInfo',
-        order: 3,
-        depth: 3,
-        name: '객차정보',
-        description: ''
-    },
-    {
-        id: '33',
-        pid: '11',
-        url: '/basic/train/dispatch',
-        component: 'BatchCycle',
-        order: 4,
-        depth: 3,
-        name: '배차주기',
-        description: ''
-    },
+  {id: '11', pid: '2', url: '', component: '', order: 3, depth: 2, name: '열차정보', description: ''},
+  {
+    id: '30',
+    pid: '11',
+    url: '/basic/train/operation',
+    component: 'OperationInfo',
+    order: 1,
+    depth: 3,
+    name: '운행정보',
+    description: ''
+  },
+  {
+    id: '31',
+    pid: '11',
+    url: '/basic/train/programming',
+    component: 'ProgrammingInfo',
+    order: 2,
+    depth: 3,
+    name: '편성정보',
+    description: ''
+  },
+  {
+    id: '32',
+    pid: '11',
+    url: '/basic/train/carriage',
+    component: 'CarriageInfo',
+    order: 3,
+    depth: 3,
+    name: '차량정보',
+    description: ''
+  },
+  {
+    id: '33',
+    pid: '11',
+    url: '/basic/train/dispatch',
+    component: 'BatchCycle',
+    order: 4,
+    depth: 3,
+    name: '배치주기',
+    description: ''
+  },
 
     {id: '12', pid: '2', url: '', component: '', order: 4, depth: 2, name: '역사정보', description: ''},
     {
@@ -174,71 +174,81 @@ export const menuList = [
     },
 
 
-    // 혼잡도 통계 하위
-    {id: '333', pid: '3', url: '', component: '', order: 1, depth: 2, name: '열차 통계', description: ''},
-    {
-        id: '334',
-        pid: '333',
-        url: '/congestion-statistics/train/statistics',
-        component: 'TrainStatistics',
-        order: 1,
-        depth: 3,
-        name: '열차 통계',
-        description: ''
-    },
-    {id: '335', pid: '3', url: '', component: '', order: 2, depth: 2, name: '역사 통계', description: ''},
-    {
-        id: '336',
-        pid: '335',
-        url: '/congestion-statistics/stations/statistics',
-        component: 'StationStatistics',
-        order: 1,
-        depth: 3,
-        name: '역사 통계',
-        description: ''
-    },
-    {id: '337', pid: '3', url: '', component: '', order: 3, depth: 2, name: '인프라모니터링', description: ''},
-    {
-        id: '338',
-        pid: '337',
-        url: '/congestion-statistics/infra/model',
-        component: 'InfraModelAnalysis',
-        order: 1,
-        depth: 3,
-        name: '분석모델',
-        description: ''
-    },
-    {
-        id: '339',
-        pid: '337',
-        url: '/congestion-statistics/infra/equipment',
-        component: 'InfraEquipmentAnalysis',
-        order: 2,
-        depth: 3,
-        name: '분석장비',
-        description: ''
-    },
-    {id: '340', pid: '3', url: '', component: '', order: 4, depth: 2, name: '데이터보관', description: ''},
-    {
-        id: '341',
-        pid: '340',
-        url: '/congestion-statistics/data/storage-cycle',
-        component: 'DataStorageCycle',
-        order: 1,
-        depth: 3,
-        name: '데이터보관주기',
-        description: ''
-    },
-    {
-        id: '342',
-        pid: '340',
-        url: '/congestion-statistics/data/backup-path',
-        component: 'DataBackupPath',
-        order: 2,
-        depth: 3,
-        name: '데이터백업경로',
-        description: ''
-    },
+  // 혼잡도 통계 하위
+  {id: '333', pid: '3', url: '', component: '', order: 1, depth: 2, name: '열차 통계', description: ''},
+  {
+    id: '334',
+    pid: '333',
+    url: '/congestion-statistics/train/statistics',
+    component: 'TrainStatistics',
+    order: 1,
+    depth: 3,
+    name: '열차 통계',
+    description: ''
+  },
+  {id: '335', pid: '3', url: '', component: '', order: 2, depth: 2, name: '역사 통계', description: ''},
+  {
+    id: '336',
+    pid: '335',
+    url: '/congestion-statistics/stations/statistics',
+    component: 'StationStatistics',
+    order: 1,
+    depth: 3,
+    name: '역사 통계',
+    description: ''
+  },
+  {id: '337', pid: '3', url: '', component: '', order: 3, depth: 2, name: '인프라모니터링', description: ''},
+  // {
+  //   id: '338',
+  //   pid: '337',
+  //   url: '/congestion-statistics/infra/model',
+  //   component: 'InfraModelAnalysis',
+  //   order: 1,
+  //   depth: 3,
+  //   name: '분석모델',
+  //   description: ''
+  // },
+  // {
+  //   id: '339',
+  //   pid: '337',
+  //   url: '/congestion-statistics/infra/equipment',
+  //   component: 'InfraEquipmentAnalysis',
+  //   order: 2,
+  //   depth: 3,
+  //   name: '분석장비',
+  //   description: ''
+  // },
+  {
+    id: '339',
+    pid: '337',
+    url: '/congestion-statistics/infra/congestion-analysis',
+    component: 'CongestionAnalysisInfra',
+    order: 1,
+    depth: 3,
+    name: '혼잡도분석 인프라',
+    description: ''
+  },
+  {id: '340', pid: '3', url: '', component: '', order: 4, depth: 2, name: '데이터보관', description: ''},
+  {
+    id: '341',
+    pid: '340',
+    url: '/congestion-statistics/data/storage-cycle',
+    component: 'DataStorageCycle',
+    order: 1,
+    depth: 3,
+    name: '데이터보관주기',
+    description: ''
+  },
+  {
+    id: '342',
+    pid: '340',
+    url: '/congestion-statistics/data/backup-path',
+    component: 'DataBackupPath',
+    order: 2,
+    depth: 3,
+    name: '데이터백업경로',
+    description: ''
+  },
 
     // 비상 대응 하위
     {id: '444', pid: '4', url: '', component: '', order: 1, depth: 2, name: '비상 대응 메뉴얼', description: ''},

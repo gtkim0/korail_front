@@ -3,8 +3,8 @@ import {clientDelete, clientGet, clientPost, clientPut} from "@/shared/api/clien
 const prefix = '/pro'
 
 export const programmingApi = {
-  get: (url, params) => clientGet(url,params),
+  get: (url: string, params: Record<string, any>) => clientGet(url, params),
   create: (body: any) => clientPost(`${prefix}`, body),
-  put: (body) => clientPut(`${prefix}`,body),
-  delete: (id) => clientDelete(`${prefix}/${id}`)
+  put: (body: any) => clientPut(`${prefix}`, body),
+  delete: (ids: string[]) => clientDelete(`${prefix}/${ids}`)
 };

@@ -1,36 +1,41 @@
 'use client';
-import {PageType} from "@/shared/enum/PageType";
-import {ProgrammingInfoColumns} from "@/features/programming-info/columns/ProgramminInfoColumns";
+import {
+  ProgrammingInfoColumns,
+  ProgrammingInfoColumnsType
+} from "@/features/programming-info/columns/ProgramminInfoColumns";
 import ListPage from "@/shared/components/listPage/ListPage";
-import ProgrammingInfoAddForm from "@/features/programming-info/components/ProgrammingInfoAddForm/ProgrammingInfoAddForm";
-import {useState} from "react";
 import {programmingApi} from "@/features/programming-info/api/client/programmingApi";
 import {format} from "date-fns";
+import {BaseModalFormProps, PageServerProps} from "@/types/common";
+import {PageType} from "@/shared/enum/PageType";
+import ProgrammingInfoAddForm
+  from "@/features/programming-info/components/ProgrammingInfoAddForm/ProgrammingInfoAddForm";
+import {withRowSelection} from "@/shared/components/table/withRowSelection";
 
-export default function ProgrammingInfoView() {
+export interface ProgrammingInfoAddFormProps extends BaseModalFormProps<ProgrammingInfoColumnsType> {
+  routeInfo: any[];
+}
 
-  const [ initialFilter, setInitialFilter ] = useState({
-    category: ['1','2','3','4'],
-    type: '',
-    range1: {
-      startDate: new Date(),
-      endDate: new Date()
-    }
-  })
+interface Props extends PageServerProps {
+  routeInfo: any[]
+}
 
+export default function ProgrammingInfoView({initialFilter, initialData, routeInfo}: Props) {
   return (
-    <ListPage
+    <ListPage<ProgrammingInfoColumnsType, ProgrammingInfoAddFormProps, Record<string, any>>
+      modalMaxWidth={'lg'}
       pageType={PageType.ProgrammingInfo}
       filterSchemaKey={PageType.ProgrammingInfo}
-      columns={ProgrammingInfoColumns}
+      columns={withRowSelection(ProgrammingInfoColumns)}
       initialFilter={initialFilter}
+      initialData={initialData}
       initialSortKey={'id'}
-      fetchData={ async ({ sortKey, sortOrder, filter, page,size }) => {
+      fetchData={async ({sortKey, sortOrder, filter, page, size}) => {
         const newFilter = {
           ...filter,
           category: filter.category.toString(),
-          startDate: format(filter.range1.startDate,'yyyy-MM-dd'),
-          endDate: format(filter.range1.endDate,'yyyy-MM-dd'),
+          startDate: format(filter.range1.startDate, 'yyyy-MM-dd'),
+          endDate: format(filter.range1.endDate, 'yyyy-MM-dd'),
         }
         const params = {
           sort: sortKey,
@@ -39,19 +44,22 @@ export default function ProgrammingInfoView() {
           size,
           ...newFilter
         }
-        return programmingApi.get(`/api/menus`, params);
+        const res = await programmingApi.get('/api/menus', params);
+        return Array.isArray(res) ? res : []
       }}
       ModalBody={ProgrammingInfoAddForm}
-      onSubmitEdit={ async (formData) => {
-        console.log(formData)
+      modalBodyProps={{
+        routeInfo
+      }}
+      onSubmitEdit={async (formData) => {
         // await fetch()
         // toast.success('')
+        return true;
       }}
-      onSubmitAdd={ async (formData) => {
-        console.log(formData)
+      onSubmitAdd={async (formData) => {
+        return true;
       }}
       onDelete={async (ids) => {
-        console.log(ids);
         // await fetch()
       }}
     />

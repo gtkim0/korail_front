@@ -1,0 +1,19 @@
+.formWrapper {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  padding: 1.6rem;
+
+  .title {
+    color: #2a2a2b;
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+
+  .gridWrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 3.6rem;
+    row-gap: 3.6rem;
+  }
+}

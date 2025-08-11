@@ -9,7 +9,8 @@ import NotificationRecipientAddForm, {
 } from "@/features/notification-recipient/components/NotificationRecipientAddForm/NotificationRecipientAddForm";
 import {NotificationRecipientColumnType} from "@/types/notification-recipient";
 
-export interface NotificationRecipientAddFormProps extends BaseModalFormProps<NotificationRecipientFormType>{}
+export interface NotificationRecipientAddFormProps extends BaseModalFormProps<NotificationRecipientFormType> {
+}
 
 export default function NotificationRecipientView({initialFilter, initialData}: PageServerProps) {
   return (
@@ -19,19 +20,19 @@ export default function NotificationRecipientView({initialFilter, initialData}: 
       columns={withRowSelection(notificationRecipientColumns)}
       initialFilter={initialFilter}
       initialSortKey={'id'}
-      fetchData={async ()=> {
+      fetchData={async () => {
         return []
       }}
       ModalBody={NotificationRecipientAddForm}
       modalBodyProps={{}}
-      onSubmitEdit={async ()=> {
+      onSubmitEdit={async () => {
         return true;
       }}
-      onSubmitAdd={async (value)=> {
+      onSubmitAdd={async (value) => {
         console.log(value);
         return true;
       }}
-      onDelete={async (ids)=> {
+      onDelete={async (ids) => {
         return true;
       }}
       initialData={initialData}
