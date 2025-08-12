@@ -51,14 +51,12 @@ export const SearchFilter = forwardRef<HTMLInputElement, Props>((props, ref: For
             <span>검색 필터</span>
           </div>
         </div>
-
         {
           enabledAdd &&
             <div className={styles.buttonArea}>
                 <AddButton text={'등록'} onClick={onAdd}/>
             </div>
         }
-
       </div>
       <AnimatePresence initial={false}>
         {isOpen && (

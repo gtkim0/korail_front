@@ -1,3 +1,6 @@
+import CongestionEquipStatusServer
+  from "@/features/congestion-equip-status/components/CongestionEquipStatusView/CongestionEquipStatusServer";
+
 export enum PageType {
   Menu = 'menu',
   RouteMap = 'routeMap',
@@ -28,5 +31,9 @@ export enum PageType {
   PermissionGroup = 'permission-group',
   PermissionUser = 'permission-user',
   PermissionMenu = 'permission-menu',
-  TrainStatistics = 'train-statistics'
+  TrainStatistics = 'train-statistics',
+  CongestionEquipStatus = 'congestion-equip-status',
+  CongestionAmountUse = 'congestion-amount-use',
+  CongestionArea = 'congestion-area',
+  CongestionStation = 'congestion-station'
 }

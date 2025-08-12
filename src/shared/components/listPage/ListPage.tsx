@@ -42,7 +42,7 @@ type PolymorphicComponent<P> =
   | React.ForwardRefExoticComponent<P & React.RefAttributes<HTMLInputElement>
 >
 
-interface ListPageProps<T extends { id: string | number }, F, V = Record<string, any>, FP = Record<string, any>> {
+interface ListPageProps<T extends { id: string | number }, F, V = Record<string, any>> {
   pageType: PageType;
   filterSchemaKey: PageType;
   // FilterComponent?: FilterComponentType<V>;
@@ -68,7 +68,7 @@ interface ListPageProps<T extends { id: string | number }, F, V = Record<string,
 }
 
 
-function ListPage<T extends { id: string | number }, F, V, FP>(
+function ListPage<T extends { id: string | number }, F, V>(
   {
     pageType,
     filterSchemaKey,
@@ -85,7 +85,7 @@ function ListPage<T extends { id: string | number }, F, V, FP>(
     onDelete,
     initialData,
     modalMaxWidth = 'lg'
-  }: ListPageProps<T, F, V, FP>,
+  }: ListPageProps<T, F, V>,
 ) {
   const {isOpen, open, close} = useModal();
 

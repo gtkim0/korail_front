@@ -1,7 +1,7 @@
 import {ColumnDef} from "@tanstack/react-table";
-import {PermissionUserColumnType} from "@/types/permission-user";
+import {PermissionMenuColumnType} from "@/types/permission-menu";
 
-export const permissionMenuColumns: ColumnDef<PermissionUserColumnType>[] = [
+export const permissionMenuColumns: ColumnDef<PermissionMenuColumnType>[] = [
   {
     accessorKey: 'id',
     header: '번호',

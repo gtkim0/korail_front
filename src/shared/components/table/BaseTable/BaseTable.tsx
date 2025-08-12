@@ -1,50 +1,48 @@
-'use client';
-
 import {
-    ColumnDef,
-    flexRender,
-    getCoreRowModel,
-    OnChangeFn, RowSelectionState, SortingState, getPaginationRowModel,
-    useReactTable,
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  OnChangeFn, RowSelectionState, SortingState, getPaginationRowModel,
+  useReactTable,
 } from '@tanstack/react-table';
 import styles from './BaseTable.module.scss';
 
 type CustomMeta = {
-    hidden?: boolean;
+  hidden?: boolean;
 };
 
 interface TableProps<T extends { id: string | number }> {
-    columns: ColumnDef<T, unknown>[];
-    data: T[];
-    clickedItem: T | undefined;
-    sorting: SortingState;
-    rowSelection: RowSelectionState;
-    onRowSelectionChange: OnChangeFn<RowSelectionState>;
-    onSortingChange: OnChangeFn<SortingState>;
-    onRowSelectChange?: (selectedRows: T[]) => void;
-    minWidth?: string;
-    pageIndex: number;
-    pageSize: number;
-    pageCount: number;
-    onChangeClickedItem: (item: T) => void;
-    bgColor?: string;
+  columns: ColumnDef<T, unknown>[];
+  data: T[];
+  clickedItem: T | null;
+  sorting: SortingState;
+  rowSelection: RowSelectionState;
+  onRowSelectionChange: OnChangeFn<RowSelectionState>;
+  onSortingChange: OnChangeFn<SortingState>;
+  onRowSelectChange?: (selectedRows: T[]) => void;
+  minWidth?: string;
+  pageIndex: number;
+  pageSize: number;
+  pageCount: number;
+  onChangeClickedItem: (item: T) => void;
+  bgColor?: string;
 }
 
 export default function Table<T extends { id: string | number }>(
-    {
-        columns,
-        data,
-        clickedItem,
-        sorting,
-        rowSelection,
-        onRowSelectionChange,
-        onSortingChange,
-        onChangeClickedItem,
-        onRowSelectChange,
-        minWidth = '120rem',
-        bgColor = "transparent",
-        pageCount, pageSize, pageIndex
-    }: TableProps<T>) {
+  {
+    columns,
+    data,
+    clickedItem,
+    sorting,
+    rowSelection,
+    onRowSelectionChange,
+    onSortingChange,
+    onChangeClickedItem,
+    onRowSelectChange,
+    minWidth = '120rem',
+    bgColor = "transparent",
+    pageCount, pageSize, pageIndex
+  }: TableProps<T>) {
 
   const table = useReactTable({
     data,
