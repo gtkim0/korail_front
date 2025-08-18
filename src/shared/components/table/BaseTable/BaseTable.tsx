@@ -6,6 +6,10 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import styles from './BaseTable.module.scss';
+import Image from "next/image";
+import ArrowSort from '@/shared/assets/images/arrow-sort-both.svg'
+import ArrowSortAsc from '@/shared/assets/images/arrow-sort-both-asc.svg';
+import ArrowSortDesc from '@/shared/assets/images/arrow-sort-both-desc.svg';
 
 type CustomMeta = {
   hidden?: boolean;
@@ -77,30 +81,42 @@ export default function Table<T extends { id: string | number }>(
           >
             {headerGroup.headers
               .filter(header => header.column.columnDef.meta?.hidden !== true)
-              .map(header => (
-                <th
-                  style={{
-                    width: header.getSize(),
-                    maxWidth: header.column.columnDef.maxSize,
-                    minWidth: header.column.columnDef.minSize
-                  }}
-                  key={header.id}
-                  className={styles.th}
-                  onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
-                >
-                  {flexRender(header.column.columnDef.header, header.getContext())}
+              .map(header => {
+                return (
+                  <th
+                    style={{
+                      width: header.getSize(),
+                      maxWidth: header.column.columnDef.maxSize,
+                      minWidth: header.column.columnDef.minSize
+                    }}
+                    key={header.id}
+                    className={styles.th}
+                    onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
+                  >
+                    <div style={{display: 'flex', alignItems: 'center'}}>
+                      {flexRender(header.column.columnDef.header, header.getContext())}
 
-                  {header.column.getCanSort() && (
-                    <span className={styles.sortIcon}>
-                  {{
-                    asc: '↑',
-                    desc: '↓',
-                    false: '⇅',
-                  }[header.column.getIsSorted() as string || 'false']}
-                </span>
-                  )}
-                </th>
-              ))}
+                      {header.column.getCanSort() && (
+                        <span className={styles.sortIcon}>
+                          {/*{{*/}
+                          {/*  asc: '↑',*/}
+                          {/*  desc: '↓',*/}
+                          {/*  false: '⇅',*/}
+                          {/*}[header.column.getIsSorted() as string || 'false']}*/}
+
+                          {{
+                            // asc: '↑',
+                            asc: <Image src={ArrowSortAsc} alt={''}/>,
+                            desc: <Image src={ArrowSortDesc} alt={''}/>,
+                            false: <Image src={ArrowSort} alt={''}/>,
+                          }[header.column.getIsSorted() as string || 'false']}
+
+                      </span>
+                      )}
+                    </div>
+                  </th>
+                )
+              })}
           </tr>
         ))}
         </thead>
@@ -113,7 +129,6 @@ export default function Table<T extends { id: string | number }>(
               className={styles.tr}
               onClick={(e) => {
                 e.stopPropagation();
-                console.log('Row:', row.original);
                 onChangeClickedItem?.(row.original);
               }}
             >

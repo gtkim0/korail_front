@@ -1,6 +1,3 @@
-import CongestionEquipStatusServer
-  from "@/features/congestion-equip-status/components/CongestionEquipStatusView/CongestionEquipStatusServer";
-
 export enum PageType {
   Menu = 'menu',
   RouteMap = 'routeMap',

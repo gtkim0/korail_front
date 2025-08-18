@@ -8,7 +8,8 @@ import {withRowSelection} from "@/shared/components/table/withRowSelection";
 import EmergencyGuideInfoAddForm
   from "@/features/emergency-guide-info/components/EmergencyGuideInfoAddForm/EmergencyGuideInfoAddForm";
 
-export interface EmergencyGuideInfoAddFormProps extends BaseModalFormProps<EmergencyGuideInfoColumnType>{}
+export interface EmergencyGuideInfoAddFormProps extends BaseModalFormProps<EmergencyGuideInfoColumnType> {
+}
 
 export default function EmergencyGuideInfoView({initialFilter, initialData}: PageServerProps) {
   return (
@@ -18,19 +19,18 @@ export default function EmergencyGuideInfoView({initialFilter, initialData}: Pag
       columns={withRowSelection(emergencyGuideInfoColumns)}
       initialFilter={initialFilter}
       initialSortKey={'id'}
-      fetchData={async ()=> {
+      fetchData={async () => {
         return []
       }}
       ModalBody={EmergencyGuideInfoAddForm}
       modalBodyProps={{}}
-      onSubmitEdit={async ()=> {
+      onSubmitEdit={async () => {
         return true;
       }}
-      onSubmitAdd={async (value)=> {
-        console.log(value);
+      onSubmitAdd={async (value) => {
         return true;
       }}
-      onDelete={async (ids)=> {
+      onDelete={async (ids) => {
         return true;
       }}
       initialData={initialData}

@@ -19,8 +19,14 @@ export default function CongestionAreaView({initialFilter, initialData, columns}
       initialFilter={initialFilter}
       initialSortKey={'id'}
       initialData={initialData}
-      fetchData={async () => {
+      fetchData={async ({sortKey, sortOrder}) => {
+        console.log('asd');
+        console.log(sortKey);
+        console.log(sortOrder);
+
         return []
+      }}
+      onDownload={() => {
       }}
     />
   )

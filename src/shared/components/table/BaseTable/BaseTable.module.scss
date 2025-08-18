@@ -66,6 +66,9 @@ tbody tr:first-child .td {
 }
 
 .sortIcon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   margin-left: 6px;
   font-size: 1.2rem;
   opacity: 1;

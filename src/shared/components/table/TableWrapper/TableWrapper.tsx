@@ -8,6 +8,7 @@ interface Props<T extends object> {
   onSelect: (v: { key: string, label: string }) => void;
   onEdit?: () => void;
   onDelete?: () => void;
+  onDownload?: () => void;
   columns: ColumnDef<T, any>[];
   data: T[];
   clickedItem: T | null;
@@ -16,7 +17,6 @@ interface Props<T extends object> {
   onRowSelectionChange: OnChangeFn<RowSelectionState>;
   onSortingChange: OnChangeFn<SortingState>;
   // onRowSelectChange?: (selectedRows: T[]) => void;
-  setPagination?: any;
   onChangeClickedItem: (item: T) => void;
   pageIndex: number;
   pageSize: number;
@@ -31,13 +31,15 @@ export default function TableWrapper<T extends { id: string | number }>(props: P
 
   const {
     onSelect,
-    onEdit, onDelete,
+    onEdit,
+    onDelete,
+    onDownload,
     columns, data,
     clickedItem,
-    sorting, rowSelection,
+    sorting,
+    rowSelection,
     onRowSelectionChange,
     onSortingChange,
-    setPagination,
     pageIndex,
     pageSize,
     pageCount,
@@ -54,6 +56,7 @@ export default function TableWrapper<T extends { id: string | number }>(props: P
         onSelect={onSelect}
         onEdit={onEdit}
         onDelete={onDelete}
+        onDownload={onDownload}
         enabledEdit={enabledEdit}
         enabledDelete={enabledDelete}
       />

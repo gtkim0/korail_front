@@ -23,8 +23,8 @@ interface Props<T extends object> {
   placeholder?: string;
   height?: string;
   isOpen: boolean;
-  onOpen: ()=> void;
-  onClose: ()=> void;
+  onOpen: () => void;
+  onClose: () => void;
 }
 
 export default function SearchModalTrigger<T extends object>(
@@ -51,7 +51,7 @@ export default function SearchModalTrigger<T extends object>(
   const [searchResult, setSearchResult] = useState<{ key: string; label: string }[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [ selectedRow, setSelectedRow ] = useState(null);
+  const [selectedRow, setSelectedRow] = useState(null);
 
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -88,9 +88,8 @@ export default function SearchModalTrigger<T extends object>(
     console.log(ids);
   });
 
-  const onSubmit = () => {}
-
-  console.log('asd')
+  const onSubmit = () => {
+  }
 
   useEffect(() => {
     if (!isOpen || search.length < 2 || !endPoint) return;
@@ -111,9 +110,16 @@ export default function SearchModalTrigger<T extends object>(
           {renderTrigger}
         </div>
       ) : (
-        <div style={{display: 'flex', alignItems: 'flex-start', gap: '.8rem', alignSelf: 'stretch', cursor: 'pointer', flex: 1}}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          gap: '.8rem',
+          alignSelf: 'stretch',
+          cursor: 'pointer',
+          flex: 1
+        }}>
           <div onClick={onOpen} style={{height: height, width: '100%', cursor: 'pointer'}}>
-            <SearchInput placeholder={placeholder} disabled={true} />
+            <SearchInput placeholder={placeholder} disabled={true}/>
           </div>
         </div>
       )}
@@ -125,8 +131,10 @@ export default function SearchModalTrigger<T extends object>(
               <div style={{height: '3.6rem'}}>
                 <SearchInput
                   ref={inputRef}
-                  onKeyDown={() => {}}
-                  onSubmit={() => {}}
+                  onKeyDown={() => {
+                  }}
+                  onSubmit={() => {
+                  }}
                 />
               </div>
 
@@ -135,16 +143,15 @@ export default function SearchModalTrigger<T extends object>(
                 // data={sortedData}
                 data={[
                   {
-                    number:'2',
-                    name:'123'
+                    number: '2',
+                    name: '123'
                   }
                 ]}
                 sorting={sorting}
                 onSortingChange={onSortingChange}
                 rowSelection={rowSelection}
                 onRowSelectionChange={onRowSelectionChange}
-                onRowSelectChange={(row)=> {
-                  console.log(row);
+                onRowSelectChange={(row) => {
                   setSelectedRow(row)
                 }}
                 setPagination={setPagination}

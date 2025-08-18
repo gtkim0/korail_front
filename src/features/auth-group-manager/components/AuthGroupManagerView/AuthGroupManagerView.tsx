@@ -28,7 +28,6 @@ export default function AuthGroupManagerView({initialFilter, initialData}: PageS
         return true;
       }}
       onSubmitAdd={async (value) => {
-        console.log(value);
         return true;
       }}
       onDelete={async (ids) => {

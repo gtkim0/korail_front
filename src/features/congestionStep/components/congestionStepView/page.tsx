@@ -22,16 +22,18 @@ export default function CongestionStepView({initialFilter, initialData}: Props) 
       columns={withRowSelection(congestionStepColumns)}
       initialFilter={initialFilter}
       initialSortKey={'id'}
-      fetchData={ async ({})=> {
+      fetchData={async ({sortKey, sortOrder}) => {
+        console.log(sortKey);
+        console.log(sortOrder);
         return []
       }}
       ModalBody={CongestionAddForm}
       modalBodyProps={{}}
-      onSubmitEdit={ async (formData) => {
+      onSubmitEdit={async (formData) => {
         return true;
       }}
-      onSubmitAdd={ async (formData) => {
-        const res = await clientPost('/apis/board',formData);
+      onSubmitAdd={async (formData) => {
+        const res = await clientPost('/apis/board', formData);
         return true;
       }}
       onDelete={async (ids) => {

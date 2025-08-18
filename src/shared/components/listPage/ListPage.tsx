@@ -45,7 +45,6 @@ type PolymorphicComponent<P> =
 interface ListPageProps<T extends { id: string | number }, F, V = Record<string, any>> {
   pageType: PageType;
   filterSchemaKey: PageType;
-  // FilterComponent?: FilterComponentType<V>;
   FilterComponent?: PolymorphicComponent<FilterProps<V | undefined>>
   CustomFilterSubRender?: ComponentType<FilterProps<V>>;
   columns: ColumnDef<T, any>[];
@@ -63,6 +62,7 @@ interface ListPageProps<T extends { id: string | number }, F, V = Record<string,
   onSubmitEdit?: (formData: Partial<T>) => Promise<boolean>;
   onSubmitAdd?: (formData: Partial<T>) => Promise<boolean>;
   onDelete?: (id: string) => void;
+  onDownload?: () => void;
   initialData?: T[]
   modalMaxWidth?: 'lg' | 'xl'
 }
@@ -83,6 +83,7 @@ function ListPage<T extends { id: string | number }, F, V>(
     onSubmitEdit,
     onSubmitAdd,
     onDelete,
+    onDownload,
     initialData,
     modalMaxWidth = 'lg'
   }: ListPageProps<T, F, V>,
@@ -118,6 +119,8 @@ function ListPage<T extends { id: string | number }, F, V>(
   const {data: dataSource = [], isLoading, isFetching, refetch} = useQuery({
     queryKey: ['list', pageType],
     queryFn: () => {
+      console.log('ddd')
+      console.log(fetchData)
       return fetchData({
         sortKey,
         sortOrder,
@@ -151,6 +154,10 @@ function ListPage<T extends { id: string | number }, F, V>(
 
     setEditTarget(clickedItem)
     open();
+  }
+
+  const handleDownload = () => {
+
   }
 
   const handleAdd = useCallback(() => {
@@ -225,6 +232,7 @@ function ListPage<T extends { id: string | number }, F, V>(
         }}
         onEdit={handleEdit}
         onDelete={handleDelete}
+        onDownload={onDownload}
         columns={columns}
         data={dataSource}
         sorting={sorting}

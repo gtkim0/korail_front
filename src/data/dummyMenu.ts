@@ -183,7 +183,7 @@ export const menuList = [
     component: 'TrainStatistics',
     order: 1,
     depth: 3,
-    name: '열차 통계',
+    name: '열차 통계 조회',
     description: ''
   },
   {id: '335', pid: '3', url: '', component: '', order: 2, depth: 2, name: '역사 통계', description: ''},
@@ -204,7 +204,7 @@ export const menuList = [
     component: 'CongestionAreaStatistics',
     order: 1,
     depth: 3,
-    name: '역사 통계 조회',
+    name: '구역 통계 조회',
     description: ''
   },
 
