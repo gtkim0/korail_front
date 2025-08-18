@@ -4,7 +4,6 @@ import {BannerColumns} from "@/features/banner/columns/BannerColumns";
 import {routeMapColumns} from "@/features/routeMap/columns/routeMapColumns";
 import {FilterType} from "@/shared/enum/FilterType";
 import {PageType} from "@/shared/enum/PageType";
-import {Page} from "react-pdf";
 import {OPERATING_STATUS_OPTIONS} from "@/shared/contants/selectOptions/operatingStatusOptions";
 import {SELECT_OPTIONS} from "@/shared/contants/selectOptions";
 
@@ -491,6 +490,64 @@ export const filterSchemas: Record<PageType, FilterSchema[]> = {
       type: FilterType.Select,
       key: 'route',
       label: '노선선택',
+      options: [],
+      style: {
+        width: '16rem'
+      }
+    },
+    {
+      type: FilterType.Select,
+      key: 'dayMonthYear',
+      label: '열차/역사',
+      options: SELECT_OPTIONS.POSITION_OPTIONS,
+      style: {
+        width: '16rem'
+      }
+    },
+  ],
+  [PageType.CongestionEquipStatus]: [
+    {
+      type: FilterType.Select,
+      key: 'areaOrTrunk',
+      label: '광역/간선',
+      options: SELECT_OPTIONS.POSITION_OPTIONS,
+      style: {
+        width: '16rem'
+      }
+    },
+    {
+      type: FilterType.Select,
+      key: 'route',
+      label: '노선선택',
+      options: SELECT_OPTIONS.POSITION_OPTIONS,
+      style: {
+        width: '16rem'
+      },
+    },
+    {
+      type: FilterType.Select,
+      key: 'dayMonthYear',
+      label: '열차/역사',
+      options: SELECT_OPTIONS.POSITION_OPTIONS,
+      style: {
+        width: '16rem'
+      }
+    },
+  ],
+  [PageType.CongestionAmountUse]: [
+    {
+      type: FilterType.Select,
+      key: 'areaOrTrunk',
+      label: '광역/간선',
+      options: SELECT_OPTIONS.POSITION_OPTIONS,
+      style: {
+        width: '16rem'
+      }
+    },
+    {
+      type: FilterType.Select,
+      key: 'route',
+      label: '노선선택',
       options: SELECT_OPTIONS.POSITION_OPTIONS,
       style: {
         width: '16rem'
@@ -499,7 +556,29 @@ export const filterSchemas: Record<PageType, FilterSchema[]> = {
     {
       type: FilterType.Select,
       key: 'dayMonthYear',
-      label: '기간별',
+      label: '열차/역사',
+      options: SELECT_OPTIONS.POSITION_OPTIONS,
+      style: {
+        width: '16rem'
+      }
+    },
+  ],
+  [PageType.CongestionStation]: [
+    {
+      type: FilterType.Select,
+      key: 'areaOrTrunk',
+      label: '광역/간선',
+      options: SELECT_OPTIONS.POSITION_OPTIONS,
+      style: {
+        width: '16rem'
+      }
+    },
+  ],
+  [PageType.CongestionArea]: [
+    {
+      type: FilterType.Select,
+      key: 'areaOrTrunk',
+      label: '광역/간선',
       options: SELECT_OPTIONS.POSITION_OPTIONS,
       style: {
         width: '16rem'

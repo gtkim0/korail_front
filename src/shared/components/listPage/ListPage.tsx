@@ -42,10 +42,9 @@ type PolymorphicComponent<P> =
   | React.ForwardRefExoticComponent<P & React.RefAttributes<HTMLInputElement>
 >
 
-interface ListPageProps<T extends { id: string | number }, F, V = Record<string, any>, FP = Record<string, any>> {
+interface ListPageProps<T extends { id: string | number }, F, V = Record<string, any>> {
   pageType: PageType;
   filterSchemaKey: PageType;
-  // FilterComponent?: FilterComponentType<V>;
   FilterComponent?: PolymorphicComponent<FilterProps<V | undefined>>
   CustomFilterSubRender?: ComponentType<FilterProps<V>>;
   columns: ColumnDef<T, any>[];
@@ -63,12 +62,13 @@ interface ListPageProps<T extends { id: string | number }, F, V = Record<string,
   onSubmitEdit?: (formData: Partial<T>) => Promise<boolean>;
   onSubmitAdd?: (formData: Partial<T>) => Promise<boolean>;
   onDelete?: (id: string) => void;
+  onDownload?: () => void;
   initialData?: T[]
   modalMaxWidth?: 'lg' | 'xl'
 }
 
 
-function ListPage<T extends { id: string | number }, F, V, FP>(
+function ListPage<T extends { id: string | number }, F, V>(
   {
     pageType,
     filterSchemaKey,
@@ -83,9 +83,10 @@ function ListPage<T extends { id: string | number }, F, V, FP>(
     onSubmitEdit,
     onSubmitAdd,
     onDelete,
+    onDownload,
     initialData,
     modalMaxWidth = 'lg'
-  }: ListPageProps<T, F, V, FP>,
+  }: ListPageProps<T, F, V>,
 ) {
   const {isOpen, open, close} = useModal();
 
@@ -118,6 +119,8 @@ function ListPage<T extends { id: string | number }, F, V, FP>(
   const {data: dataSource = [], isLoading, isFetching, refetch} = useQuery({
     queryKey: ['list', pageType],
     queryFn: () => {
+      console.log('ddd')
+      console.log(fetchData)
       return fetchData({
         sortKey,
         sortOrder,
@@ -151,6 +154,10 @@ function ListPage<T extends { id: string | number }, F, V, FP>(
 
     setEditTarget(clickedItem)
     open();
+  }
+
+  const handleDownload = () => {
+
   }
 
   const handleAdd = useCallback(() => {
@@ -225,6 +232,7 @@ function ListPage<T extends { id: string | number }, F, V, FP>(
         }}
         onEdit={handleEdit}
         onDelete={handleDelete}
+        onDownload={onDownload}
         columns={columns}
         data={dataSource}
         sorting={sorting}

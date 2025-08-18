@@ -7,6 +7,7 @@ import DatePickerRange from "@/shared/components/DatePicker/DatePickerRange";
 import SearchModalTrigger from "@/shared/components/searchModalTrigger/searchModalTrigger";
 import {FilterType} from "@/shared/enum/FilterType";
 import FilterRadioGroup from "@/shared/components/searchFilter/Filters/FilterRadioGroup/FilterRadioGroup";
+import {useEffect, useState} from "react";
 
 type FilterSchema = {
   type: string;
@@ -29,29 +30,44 @@ export function DynamicFilterRenderer({schema, value, onChange, modalEndPoint}: 
   };
 
   /** @TODO 추후 동적으로 데이터 받아와서 필터에 넣어야되는경우 사용하기. **/
-  // const [optionsMap, setOptionsMap] = useState<Record<string, any[]>>({});
-  //
-  // useEffect(() => {
-  //   const fetchAllOptions = async () => {
-  //     const entries = await Promise.all(
-  //       schema.map(async (item) => {
-  //         if (item.endPoint) {
-  //           const res = await fetch(item.endPoint);
-  //           const data = await res.json();
-  //           const options = data.map((d: any) => ({
-  //             key: d.id?.toString() ?? d.code,
-  //             label: d.name ?? d.label ?? d.title,
-  //           }));
-  //           return [item.key, options] as const;
-  //         }
-  //         return [item.key, item.options ?? []] as const;
-  //       })
-  //     );
-  //     setOptionsMap(Object.fromEntries(entries));
-  //   };
-  //
-  //   fetchAllOptions();
-  // }, [schema]);
+  const [optionsMap, setOptionsMap] = useState<FilterSchema[]>([]);
+
+  useEffect(() => {
+    const fetchAllOptions = async () => {
+      const entries = await Promise.all(
+        schema.map(async (item) => {
+          if (item.endPoint) {
+            const res = await fetch(item.endPoint);
+            const data = await res.json();
+            const options = data.map((d: any) => ({
+              key: d.id?.toString() ?? d.code,
+              label: d.name ?? d.label ?? d.title,
+            }));
+            // return [item.key, options] as const;
+            return {
+              key: item.key,
+              options: options,
+              label: item.label,
+              type: item.type,
+              style: item.style
+            }
+          }
+          return {
+            key: item.key,
+            options: item.options,
+            label: item.label,
+            type: item.type,
+            style: item.style
+          }
+          // return [item.key, item.options ?? []] as const;
+        })
+      );
+      setOptionsMap(entries)
+      // setOptionsMap(Object.fromEntries(entries));
+    };
+
+    fetchAllOptions();
+  }, [schema]);
 
   return (
     <div style={{
@@ -62,7 +78,7 @@ export function DynamicFilterRenderer({schema, value, onChange, modalEndPoint}: 
       background: '#EBEBEB',
       borderTop: '1px solid #D5D5D6'
     }}>
-      {schema.map(filter => (
+      {optionsMap.map(filter => (
         <FilterGroup key={filter.key}>
           <div style={{
             display: 'flex',

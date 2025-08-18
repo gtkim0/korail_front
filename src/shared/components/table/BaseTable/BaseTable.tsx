@@ -1,50 +1,52 @@
-'use client';
-
 import {
-    ColumnDef,
-    flexRender,
-    getCoreRowModel,
-    OnChangeFn, RowSelectionState, SortingState, getPaginationRowModel,
-    useReactTable,
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  OnChangeFn, RowSelectionState, SortingState, getPaginationRowModel,
+  useReactTable,
 } from '@tanstack/react-table';
 import styles from './BaseTable.module.scss';
+import Image from "next/image";
+import ArrowSort from '@/shared/assets/images/arrow-sort-both.svg'
+import ArrowSortAsc from '@/shared/assets/images/arrow-sort-both-asc.svg';
+import ArrowSortDesc from '@/shared/assets/images/arrow-sort-both-desc.svg';
 
 type CustomMeta = {
-    hidden?: boolean;
+  hidden?: boolean;
 };
 
 interface TableProps<T extends { id: string | number }> {
-    columns: ColumnDef<T, unknown>[];
-    data: T[];
-    clickedItem: T | undefined;
-    sorting: SortingState;
-    rowSelection: RowSelectionState;
-    onRowSelectionChange: OnChangeFn<RowSelectionState>;
-    onSortingChange: OnChangeFn<SortingState>;
-    onRowSelectChange?: (selectedRows: T[]) => void;
-    minWidth?: string;
-    pageIndex: number;
-    pageSize: number;
-    pageCount: number;
-    onChangeClickedItem: (item: T) => void;
-    bgColor?: string;
+  columns: ColumnDef<T, unknown>[];
+  data: T[];
+  clickedItem: T | null;
+  sorting: SortingState;
+  rowSelection: RowSelectionState;
+  onRowSelectionChange: OnChangeFn<RowSelectionState>;
+  onSortingChange: OnChangeFn<SortingState>;
+  onRowSelectChange?: (selectedRows: T[]) => void;
+  minWidth?: string;
+  pageIndex: number;
+  pageSize: number;
+  pageCount: number;
+  onChangeClickedItem: (item: T) => void;
+  bgColor?: string;
 }
 
 export default function Table<T extends { id: string | number }>(
-    {
-        columns,
-        data,
-        clickedItem,
-        sorting,
-        rowSelection,
-        onRowSelectionChange,
-        onSortingChange,
-        onChangeClickedItem,
-        onRowSelectChange,
-        minWidth = '120rem',
-        bgColor = "transparent",
-        pageCount, pageSize, pageIndex
-    }: TableProps<T>) {
+  {
+    columns,
+    data,
+    clickedItem,
+    sorting,
+    rowSelection,
+    onRowSelectionChange,
+    onSortingChange,
+    onChangeClickedItem,
+    onRowSelectChange,
+    minWidth = '120rem',
+    bgColor = "transparent",
+    pageCount, pageSize, pageIndex
+  }: TableProps<T>) {
 
   const table = useReactTable({
     data,
@@ -79,30 +81,42 @@ export default function Table<T extends { id: string | number }>(
           >
             {headerGroup.headers
               .filter(header => header.column.columnDef.meta?.hidden !== true)
-              .map(header => (
-                <th
-                  style={{
-                    width: header.getSize(),
-                    maxWidth: header.column.columnDef.maxSize,
-                    minWidth: header.column.columnDef.minSize
-                  }}
-                  key={header.id}
-                  className={styles.th}
-                  onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
-                >
-                  {flexRender(header.column.columnDef.header, header.getContext())}
+              .map(header => {
+                return (
+                  <th
+                    style={{
+                      width: header.getSize(),
+                      maxWidth: header.column.columnDef.maxSize,
+                      minWidth: header.column.columnDef.minSize
+                    }}
+                    key={header.id}
+                    className={styles.th}
+                    onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
+                  >
+                    <div style={{display: 'flex', alignItems: 'center'}}>
+                      {flexRender(header.column.columnDef.header, header.getContext())}
 
-                  {header.column.getCanSort() && (
-                    <span className={styles.sortIcon}>
-                  {{
-                    asc: '↑',
-                    desc: '↓',
-                    false: '⇅',
-                  }[header.column.getIsSorted() as string || 'false']}
-                </span>
-                  )}
-                </th>
-              ))}
+                      {header.column.getCanSort() && (
+                        <span className={styles.sortIcon}>
+                          {/*{{*/}
+                          {/*  asc: '↑',*/}
+                          {/*  desc: '↓',*/}
+                          {/*  false: '⇅',*/}
+                          {/*}[header.column.getIsSorted() as string || 'false']}*/}
+
+                          {{
+                            // asc: '↑',
+                            asc: <Image src={ArrowSortAsc} alt={''}/>,
+                            desc: <Image src={ArrowSortDesc} alt={''}/>,
+                            false: <Image src={ArrowSort} alt={''}/>,
+                          }[header.column.getIsSorted() as string || 'false']}
+
+                      </span>
+                      )}
+                    </div>
+                  </th>
+                )
+              })}
           </tr>
         ))}
         </thead>
@@ -115,7 +129,6 @@ export default function Table<T extends { id: string | number }>(
               className={styles.tr}
               onClick={(e) => {
                 e.stopPropagation();
-                console.log('Row:', row.original);
                 onChangeClickedItem?.(row.original);
               }}
             >

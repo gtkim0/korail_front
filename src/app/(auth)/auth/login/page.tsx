@@ -15,6 +15,7 @@ import {useRef} from "react";
 import {z} from 'zod';
 import FormSubmitButton from "@/shared/components/form/FormSubmitButton/FormSubmitButton";
 import {clientPost} from "@/shared/api/clientFetcher";
+import logger from "@/lib/logger";
 
 const imageList = [
   {
@@ -99,13 +100,21 @@ export default function LoginPage() {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <div style={{flex: 1,position:'relative'}}>
+        <div style={{flex: 1, position: 'relative'}}>
           <Image
             src={'/login_bg.svg'}
             alt={''}
             width={960}
             height={818}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', top: 0, left: 0, zIndex: -1 }}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              zIndex: -1
+            }}
             priority
           />
         </div>

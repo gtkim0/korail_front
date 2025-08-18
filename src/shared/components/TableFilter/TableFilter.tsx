@@ -2,20 +2,19 @@ import styles from './TableFilter.module.scss'
 import clsx from "clsx";
 import DropDown from "@/shared/components/dropDown/DropDown";
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
-import ConfirmModal from "@/shared/components/modal/ConfirmModal/ConfirmModal";
-import useModal from "@/shared/hooks/useModal";
-import {ActionButtons} from "@/shared/components/actionButtons/ActionButtons";
-import {MODAL_MESSAGES} from "@/shared/contants/modalMessage";
+import Download from '@/shared/assets/images/download.svg';
+import Image from "next/image";
 
 interface Props {
   onSelect?: (value: { key: string, label: string }) => void;
   onEdit?: () => void;
   onDelete?: () => void;
+  onDownload?: () => void;
   enabledEdit?: boolean;
   enabledDelete?: boolean;
 }
 
-export default function TableFilter({onSelect, onEdit, onDelete, enabledEdit, enabledDelete}: Props) {
+export default function TableFilter({onSelect, onEdit, onDelete, onDownload, enabledEdit, enabledDelete}: Props) {
 
   return (
     <div className={styles.tableFilter}>
@@ -49,12 +48,20 @@ export default function TableFilter({onSelect, onEdit, onDelete, enabledEdit, en
         />
       </div>
 
+
       <div className={styles.buttonWrapper}>
         {
           enabledDelete && <button onClick={() => onDelete?.()} className={styles.delete}>삭제</button>
         }
         {
           enabledEdit && <button onClick={() => onEdit?.()} className={styles.edit}>수정</button>
+        }
+        {
+          onDownload &&
+            <button className={styles.download}>
+                내려받기
+                <Image src={Download} alt={'logo'}/>
+            </button>
         }
       </div>
     </div>

@@ -28,5 +28,9 @@ export enum PageType {
   PermissionGroup = 'permission-group',
   PermissionUser = 'permission-user',
   PermissionMenu = 'permission-menu',
-  TrainStatistics = 'train-statistics'
+  TrainStatistics = 'train-statistics',
+  CongestionEquipStatus = 'congestion-equip-status',
+  CongestionAmountUse = 'congestion-amount-use',
+  CongestionArea = 'congestion-area',
+  CongestionStation = 'congestion-station'
 }

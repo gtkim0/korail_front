@@ -1,15 +1,16 @@
 'use client';
 import {BaseModalFormProps, PageServerProps} from "@/types/common";
 import ListPage from "@/shared/components/listPage/ListPage";
-import { PageType } from "@/shared/enum/PageType";
+import {PageType} from "@/shared/enum/PageType";
 import {notificationTextColumns} from "@/features/notification-text/columns/notificationTextColumns";
 import {withRowSelection} from "@/shared/components/table/withRowSelection";
 import NotificationTextAddForm
   from "@/features/notification-text/components/NotificationTextAddForm/NotificationTextAddForm";
 
-export interface NotificationTextAddFormProps extends BaseModalFormProps<any>{};
+export interface NotificationTextAddFormProps extends BaseModalFormProps<any> {
+}
 
-export default function NotificationTextView({initialFilter,initialData}: PageServerProps) {
+export default function NotificationTextView({initialFilter, initialData}: PageServerProps) {
   return (
     <ListPage
       pageType={PageType.NotificationText}
@@ -17,19 +18,18 @@ export default function NotificationTextView({initialFilter,initialData}: PageSe
       columns={withRowSelection(notificationTextColumns)}
       initialFilter={initialFilter}
       initialSortKey={'id'}
-      fetchData={async ()=> {
+      fetchData={async () => {
         return []
       }}
       ModalBody={NotificationTextAddForm}
       modalBodyProps={{}}
-      onSubmitEdit={async ()=> {
+      onSubmitEdit={async () => {
         return true;
       }}
-      onSubmitAdd={async (value)=> {
-        console.log(value);
+      onSubmitAdd={async (value) => {
         return true;
       }}
-      onDelete={async (ids)=> {
+      onDelete={async (ids) => {
         return true;
       }}
       initialData={initialData}

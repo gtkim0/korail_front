@@ -25,6 +25,7 @@
   align-items: center;
   gap: .8rem;
   height: 3.2rem;
+
   button {
     width: 8rem;
     height: 100%;
@@ -40,6 +41,7 @@
     border: 1px solid #D5D5D6;
     background: #FFF;
     color: #363637;
+
     &:hover {
       background: rgba(0, 0, 0, 0.05);
     }
@@ -49,8 +51,18 @@
     border: 1px solid #5EB2FE;
     background: #E2F0FE;
     color: #00417A;
+
     &:hover {
       background: #CEE7FD;
     }
+  }
+
+  .download {
+    display: flex;
+    background: #e2f0fe;
+    border: 1px solid #5eb2fe;
+    color: #00417a;
+    width: auto;
+    gap: .2rem;
   }
 }

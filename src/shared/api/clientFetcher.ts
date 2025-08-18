@@ -1,4 +1,5 @@
 import {ResponseType} from "@/types/common";
+import Router from 'next/router';
 
 export function buildQueryParams(params?: Record<string, any>): string {
   if (!params) return '';
@@ -13,7 +14,7 @@ export function buildQueryParams(params?: Record<string, any>): string {
 
 export async function clientFetch<T>(
   url: string,
-  options: RequestInit = { method: 'GET' }
+  options: RequestInit = {method: 'GET'}
 ): Promise<ResponseType<T>> {
 
   const token = localStorage.getItem('access_token'); // 또는 쿠키 파싱해서 가져오기
@@ -34,9 +35,14 @@ export async function clientFetch<T>(
 
   if (!res.ok) {
 
-    if(res.status && Number(res.status) === 401) {
+    if (res.status && Number(res.status) === 401) {
 
       console.log(res);
+      await fetch(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/logout`, {
+        method: 'post'
+      }).then(res => {
+        Router.push('/auth/login')
+      })
 
       // const refreshRes = await fetch('/auth/refresh', {
       //   method: 'POST',
@@ -58,9 +64,6 @@ export async function clientFetch<T>(
     // Error(`API 요청 실패 (${res.status}): ${message}`);
   }
 
-  // 여기서 401 인증 에러에 대한 로직 추가해야할듯.
-
-
   const contentType = res.headers.get('content-type');
 
   if (contentType && contentType.includes('application/json')) {
@@ -76,7 +79,7 @@ export const clientGet = <T>(
 ) => {
   const queryString = buildQueryParams(queryParams);
   const fullUrl = queryString ? `${url}?${queryString}` : url;
-  return clientFetch<T>(fullUrl, { method: 'GET' });
+  return clientFetch<T>(fullUrl, {method: 'GET'});
 };
 
 export const clientPost = <T>(url: string, body: any) => {

@@ -6,9 +6,7 @@ interface Props {
   title?: string
 }
 
-export default function MenuTitle ({title}: Props) {
-
-  console.log(title);
+export default function MenuTitle({title}: Props) {
 
   // const pathname = usePathname();
   // const { routeMenu } = useGlobalStore(state => state);
@@ -23,7 +21,7 @@ export default function MenuTitle ({title}: Props) {
 
   return (
     <div className={styles.menuTitle}>
-      { title }
+      {title}
     </div>
   )
 }

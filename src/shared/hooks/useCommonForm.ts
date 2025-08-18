@@ -38,7 +38,6 @@ export function useCommonForm<T extends object>(
       if (!schema) return values;
 
       const result = schema.safeParse(values);
-      console.log(result);
       if (!result.success) return null;
 
       return result.data;

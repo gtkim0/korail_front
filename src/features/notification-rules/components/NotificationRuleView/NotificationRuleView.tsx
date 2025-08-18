@@ -9,29 +9,30 @@ import NotificationRuleAddForm, {
   NotificationRuleFormType
 } from "@/features/notification-rules/components/NotificationRuleAddForm/NotificationRuleAddForm";
 
-export interface NotificationRuleAddFormProps extends BaseModalFormProps<NotificationRuleFormType> {}
+export interface NotificationRuleAddFormProps extends BaseModalFormProps<NotificationRuleFormType> {
+}
 
 export default function NotificationRuleView({initialFilter, initialData}: PageServerProps) {
   return (
-    <ListPage<NotificationRuleColumnType, NotificationRuleAddFormProps>
+    <ListPage<NotificationRuleColumnType, NotificationRuleAddFormProps, any>
       pageType={PageType.NotificationRule}
       filterSchemaKey={PageType.NotificationRule}
       columns={withRowSelection(notificationRuleColumns)}
       initialFilter={initialFilter}
       initialSortKey={'id'}
-      fetchData={async ()=> {
+      fetchData={async () => {
         return []
       }}
       ModalBody={NotificationRuleAddForm}
       modalBodyProps={{}}
-      onSubmitEdit={async ()=> {
+      onSubmitEdit={async () => {
         return true;
       }}
-      onSubmitAdd={async (value)=> {
+      onSubmitAdd={async (value) => {
         console.log(value);
         return true;
       }}
-      onDelete={async (ids)=> {
+      onDelete={async (ids) => {
         return true;
       }}
       initialData={initialData}

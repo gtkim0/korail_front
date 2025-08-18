@@ -13,12 +13,13 @@ export interface PermissionMenuAddFormProps extends BaseModalFormProps<Permissio
 export default function PermissionMenuView({initialFilter, initialData}: PageServerProps) {
 
   return (
-    <ListPage<PermissionMenuColumnType, PermissionMenuAddFormProps>
+    <ListPage<PermissionMenuColumnType, PermissionMenuAddFormProps, any>
       pageType={PageType.PermissionMenu}
       filterSchemaKey={PageType.PermissionMenu}
       columns={withRowSelection(permissionMenuColumns)}
       initialFilter={initialFilter}
       initialSortKey={'id'}
+      initialData={initialData}
       fetchData={async () => {
         return []
       }}
@@ -33,7 +34,6 @@ export default function PermissionMenuView({initialFilter, initialData}: PageSer
       onDelete={async (ids) => {
         return true;
       }}
-      initialData={initialData}
     />
   )
 }
