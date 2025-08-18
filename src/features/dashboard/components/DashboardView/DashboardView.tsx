@@ -15,6 +15,7 @@ import BaseModal from "@/shared/components/modal/BaseModal/BaseModal";
 import CrowdingModal from "@/features/dashboard/components/CrowdingModal/CrowdingModal";
 import {BaseModalFooter} from "@/shared/components/modal/BaseModal/BaseModalFooter/BaseModalFooter";
 import BoxHeader from "@/features/dashboard/components/BoxHeader/BoxHeader";
+import TopCenterSection from "@/features/dashboard/components/TopCenterSection/TopCenterSection";
 
 export default function DashboardView() {
     const [searchTarget, setSearchTarget] = useState<SearchTargetType>(searchTargetInit);
@@ -26,6 +27,7 @@ export default function DashboardView() {
         <div className={styles.container}>
             <div className={styles.top_contents}>
                 <TopLeftSection setSearchTarget={setSearchTarget} searchTarget={searchTarget}/>
+                {/*<TopCenterSection/>*/}
                 <TopRightSection/>
             </div>
             <div className={styles.bottom_contents}>

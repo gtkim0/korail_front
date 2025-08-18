@@ -15,15 +15,15 @@ export default function TopLeftSection(props: Props) {
     const {searchTarget, setSearchTarget} = props;
     const data = [
         {
-            line: "1호선",
-            stations: [{name: "가산디지털단지", stars: true}, {name: "안양", stars: false}]
+            line: "인천-연천",
+            stations: [{name: "구로", stars: true}, {name: "안양", stars: false}]
         },
         {
-            line: "경의중앙선", stations: [{name: "회기", stars: true}, {name: "중랑", stars: false}]
+            line: "광운대-신창", stations: [{name: "구로", stars: true}, {name: "중랑", stars: false}]
         }, {
-            line: "경의중앙선", stations: [{name: "회기", stars: true}, {name: "중랑", stars: false}]
+            line: "영등포-광명", stations: [{name: "구로", stars: true}, {name: "중랑", stars: false}]
         }, {
-            line: "경의중앙선", stations: [{name: "회기", stars: true}, {name: "중랑", stars: false}]
+            line: "의정부-서동탄", stations: [{name: "구로", stars: true}, {name: "중랑", stars: false}]
         }, {
             line: "경의중앙선", stations: [{name: "회기", stars: true}, {name: "중랑", stars: false}]
         }, {

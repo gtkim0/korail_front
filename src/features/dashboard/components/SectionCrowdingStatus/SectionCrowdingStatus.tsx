@@ -33,7 +33,7 @@ export default function SectionCrowdingStatus() {
                 {
                     accessorKey: "crowding", header: "혼잡도", cell: info => {
                         const value = info.getValue<string>()
-                        return <CrowdingBadge level={1} percent={21}/>
+                        return <CrowdingBadge level={1} percent={21} noBoxShadow={true}/>
                     }
                 },
             ]}

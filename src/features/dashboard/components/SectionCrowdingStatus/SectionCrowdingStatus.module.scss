@@ -2,13 +2,34 @@
 
 .table {
   flex: 1 1 0;
-  overflow-y: auto;
   margin-top: 20px;
-  @extend .custom-scroll2;
-  padding-right: 5px;
+  overflow-y: auto;
+
+  div {
+    overflow-y: auto;
+    @extend .custom-scroll2;
+    padding-right: 5px;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    overflow: auto;
+    border: none;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+  }
 
   tr {
     background: transparent;
+  }
+
+  td {
+    border: none;
+    padding: 4px 16px;
   }
 
   th {

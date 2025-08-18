@@ -6,9 +6,10 @@ interface Props {
     // 1 = 심각 , 2 = 혼잡 , 3 = 주의 , 4 = 보통
     level: 1 | 2 | 3 | 4;
     percent?: number;
+    noBoxShadow?: boolean;
 }
 
-export default function CrowdingBadge({level, percent}: Props) {
+export default function CrowdingBadge({level, percent, noBoxShadow = false}: Props) {
     const data = {
         1: {className: styles.critical, title: "심각"},
         2: {className: styles.congested, title: "혼잡"},
@@ -16,7 +17,7 @@ export default function CrowdingBadge({level, percent}: Props) {
         4: {className: styles.normal, title: "보통"},
     }
     const element = data[level]
-    return <div className={clsx(styles.badge, element.className)}>
+    return <div className={clsx(styles.badge, element.className, noBoxShadow && styles.noBoxShadow)}>
         <div className={styles.o}></div>
         <span className={styles.title}>{element.title}</span>
         {

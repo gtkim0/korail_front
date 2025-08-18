@@ -88,6 +88,12 @@
 }
 
 .table {
+  overflow: hidden;
+
+  div {
+    height: auto !important;
+  }
+
   table {
     border-radius: 0;
     border: none;
