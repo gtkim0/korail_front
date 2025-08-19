@@ -4,7 +4,6 @@ import upTrain from "@/shared/assets/images/up_train_icon.svg"
 import downTrain from "@/shared/assets/images/down_train_icon.svg"
 import React from "react";
 import markIcon from "@/shared/assets/images/arrow-drop-down.svg";
-import OlMap from "@/features/dashboard/components/OlMap/OlMap";
 
 export default function LineRealTime() {
     const data = []

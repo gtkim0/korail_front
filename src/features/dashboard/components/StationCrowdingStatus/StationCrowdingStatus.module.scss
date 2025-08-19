@@ -101,6 +101,14 @@
 
   thead {
     border-radius: 0 !important;
+
+    th {
+      div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
   }
 
   tr {

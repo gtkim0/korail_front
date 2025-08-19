@@ -1,5 +1,5 @@
 import styles from "./CrowdingModal.module.scss"
-import CrowdingBadge from "@/features/dashboard/components/CrowdingBadge/CrowdingBadge";
+import CrowdingBadge from "@/shared/components/CrowdingBadge/CrowdingBadge";
 import Table from "@/shared/components/table/BaseTable/BaseTable";
 import React from "react";
 

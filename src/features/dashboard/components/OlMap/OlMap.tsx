@@ -12,34 +12,18 @@ import {fromLonLat} from "ol/proj";
 import Overlay from "ol/Overlay";
 import {LineString} from "ol/geom";
 import {line_dummy} from "@/data/dashboard-dummy";
-import ReactDOM from "react-dom/client";
 import {DEVICE_PIXEL_RATIO} from "ol/has"
 import {hexToRgba} from "@/utils/darkenHexColor";
 import {defaults as defaultControls} from "ol/control"
+import {createRoot} from "react-dom/client";
+import StationOverLay from "@/features/dashboard/components/OlMap/StationOverLay";
 
-function Popup({name}: { name: string }) {
-    return (
-        <div
-            id="popup-container"
-            style={{
-                backgroundColor: "red",
-                padding: "5px 10px",
-                border: "1px solid black",
-                borderRadius: "4px",
-            }}
-        >
-            <strong>{name}</strong>
-        </div>
-    );
-}
 
 export default function OlMap() {
     const pixelRatio = DEVICE_PIXEL_RATIO;
 
     const mapRef = useRef<HTMLDivElement>(null);
     const mapInstance = useRef<Map | null>(null);
-    const overlayRef = useRef<Overlay | null>(null);
-    const overlayRootRef = useRef<ReactDOM.Root | null>(null);
     const polygonLayerRef = useRef<VectorLayer<VectorSource> | null>(null);
     const [data, setData] = useState<any[] | null>(null);
 
@@ -76,20 +60,17 @@ export default function OlMap() {
         map.addLayer(vectorLayer);
 
         // 오버레이 생성
-        const container = document.createElement("div");
-        container.id = "garam"
-        const overlay = new Overlay({
-            element: container,
-            offset: [0, -15],
-            positioning: "bottom-center",
-        });
-        map.addOverlay(overlay);
-        overlayRef.current = overlay;
 
-        // 한 번만 createRoot
-        if (!overlayRootRef.current) {
-            overlayRootRef.current = ReactDOM.createRoot(container);
-        }
+        const targetEl = map.getTargetElement()
+
+        map.on("pointermove", (evt) => {
+            const hit = map.forEachFeatureAtPixel(evt.pixel, (feat, layer) => {
+                if (layer == polygonLayerRef.current) return true;
+            })
+            targetEl.style.cursor = hit ? "pointer" : ""
+        })
+
+        let currentOverlay: Overlay | null = null;
 
         // 클릭 이벤트 (polygonLayer만)
         map.on("click", (evt) => {
@@ -97,14 +78,32 @@ export default function OlMap() {
                 if (layer === polygonLayerRef.current) return feat;
             });
 
+            const coordKey = `${evt.coordinate[0]} - ${evt.coordinate[1]}`
             if (feature) {
+                if (currentOverlay) {
+                    map.removeOverlay(currentOverlay);
+                    currentOverlay = null;
+                }
+                const container = document.createElement("div");
+                const root = createRoot(container);
+                container.id = "overlay-container"
+                const overlay = new Overlay({
+                    element: container,
+                    offset: [0, -15],
+                    positioning: "bottom-center",
+                });
+                map.addOverlay(overlay);
                 overlay.setPosition(evt.coordinate);
 
-                overlayRootRef.current?.render(
-                    <Popup name={feature.get("name") || "No Name"}/>,
-                );
+                root.render(
+                    <StationOverLay feature={feature} coordKey={coordKey}/>
+                )
+                currentOverlay = overlay;
             } else {
-                overlay.setPosition(undefined);
+                if (currentOverlay) {
+                    map.removeOverlay(currentOverlay);
+                    currentOverlay = null
+                }
             }
         });
 
@@ -147,5 +146,14 @@ export default function OlMap() {
         polygonLayerRef.current = polygonLayer;
     }, [data]);
 
-    return <div className={styles.container} ref={mapRef}></div>
+    return <div className={styles.container} ref={mapRef}>
+        {data && data.length > 0 && <div className={styles.legend}>
+            {data.map((el, idx) => {
+                return <div key={idx} className={styles.item}>
+                    <div className={styles.dot} style={{background: el.color}}></div>
+                    <div>{el.name}</div>
+                </div>
+            })}
+        </div>}
+    </div>
 }

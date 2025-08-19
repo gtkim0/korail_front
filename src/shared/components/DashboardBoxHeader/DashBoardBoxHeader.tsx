@@ -7,7 +7,7 @@ interface Props {
     time: string;
 }
 
-export default function BoxHeader({name, time}: Props) {
+export default function DashBoardBoxHeader({name, time}: Props) {
     return (
         <div className={styles.box_header}>
             <Image
