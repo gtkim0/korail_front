@@ -7,9 +7,10 @@ import clsx from "clsx";
 import {motion} from "framer-motion";
 import DownUp from '@/shared/assets/images/down_up.svg'
 import {SearchTargetType} from "@/types/dashboard";
-import Map from "@/features/dashboard/components/Map/Map";
-import LineRealTime from "@/features/dashboard/LineRealTime/LineRealTime";
+import OlMap from "@/features/dashboard/components/OlMap/OlMap";
+import LineRealTime from "@/features/dashboard/components/LineRealTime/LineRealTime";
 import resetIcon from "@/shared/assets/images/reset.svg"
+import SpecialPeriodInfo from "@/features/dashboard/components/SpecialPeriodInfo/SpecialPeriodInfo";
 
 interface Props {
     searchTarget: SearchTargetType
@@ -86,15 +87,13 @@ export default function RealTimeStatus({searchTarget}: Props) {
                 </div>
             </div>
             <div className={styles.right_content}>
-                {searchTarget.type == "all" ? <Map/> : searchTarget.type == "line" ? <LineRealTime/> :
+                {searchTarget.type == "all" ? <OlMap/> : searchTarget.type == "line" ? <LineRealTime/> :
                     <div className={styles.img_wrap}>
                         <Image src={'/exam_exit.svg'} alt={""} fill
                                style={{objectFit: "contain", background: "#fff", borderRadius: "12px"}}/>
                     </div>}
             </div>
         </div>
-        <div className={styles.banner}>
-            특수기간정보
-        </div>
+        <SpecialPeriodInfo/>
     </>
 }

@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  padding: 4px;
+}
+
+.item {
+  position: relative;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+
+  span {
+    position: relative;
+    z-index: 1;
+    color: #c3ccdd;
+  }
+
+  span.active {
+    color: #fff;
+  }
+}
+
+.activeTab {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #1489F2;
+  border-radius: 20px;
+  z-index: 0;
+}

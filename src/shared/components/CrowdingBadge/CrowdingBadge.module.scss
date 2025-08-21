@@ -7,6 +7,10 @@
   gap: 6px;
   font-size: 13px;
 
+  &.noBoxShadow {
+    box-shadow: none !important;
+  }
+
   .title {
     color: #fff;
   }

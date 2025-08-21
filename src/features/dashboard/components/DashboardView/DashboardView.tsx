@@ -14,7 +14,8 @@ import useModal from "@/shared/hooks/useModal";
 import BaseModal from "@/shared/components/modal/BaseModal/BaseModal";
 import CrowdingModal from "@/features/dashboard/components/CrowdingModal/CrowdingModal";
 import {BaseModalFooter} from "@/shared/components/modal/BaseModal/BaseModalFooter/BaseModalFooter";
-import BoxHeader from "@/features/dashboard/components/BoxHeader/BoxHeader";
+import DashBoardBoxHeader from "@/shared/components/DashboardBoxHeader/DashBoardBoxHeader";
+import TopCenterSection from "@/features/dashboard/components/TopCenterSection/TopCenterSection";
 
 export default function DashboardView() {
     const [searchTarget, setSearchTarget] = useState<SearchTargetType>(searchTargetInit);
@@ -26,6 +27,7 @@ export default function DashboardView() {
         <div className={styles.container}>
             <div className={styles.top_contents}>
                 <TopLeftSection setSearchTarget={setSearchTarget} searchTarget={searchTarget}/>
+                {/*<TopCenterSection/>*/}
                 <TopRightSection/>
             </div>
             <div className={styles.bottom_contents}>
@@ -36,11 +38,11 @@ export default function DashboardView() {
                                     animate={{opacity: 1}} exit={{opacity: 0}}
                                     transition={{duration: 0.25, ease: 'easeInOut'}}>
                             <div className={styles.box_container} style={{flex: "1 1 0"}}>
-                                <BoxHeader name={"상행 도착 정보"} time={"14:00"}/>
+                                <DashBoardBoxHeader name={"상행 도착 정보"} time={"14:00"}/>
                                 <TrainCrowdingStatus/>
                             </div>
                             <div className={styles.box_container} style={{flex: "1 1 0"}}>
-                                <BoxHeader name={"하행 도착 정보"} time={"14:00"}/>
+                                <DashBoardBoxHeader name={"하행 도착 정보"} time={"14:00"}/>
                                 <TrainCrowdingStatus/>
                             </div>
                         </motion.div>
@@ -48,7 +50,7 @@ export default function DashboardView() {
                                       animate={{opacity: 1}} exit={{opacity: 0}}
                                       transition={{duration: 0.25, ease: 'easeInOut'}}>
                             <div className={styles.box_container} style={{flex: "0 0 auto", overflow: "hidden"}}>
-                                <BoxHeader name={"열차 혼잡도 통계"} time={"14:00"}/>
+                                <DashBoardBoxHeader name={"열차 혼잡도 통계"} time={"14:00"}/>
                                 <CongestionBarChart
                                     searchTarget={searchTarget}
                                     levels={[
@@ -68,7 +70,7 @@ export default function DashboardView() {
                                 />
                             </div>
                             <div className={styles.box_container} style={{flex: "1 1 0"}}>
-                                <BoxHeader name={"열차 혼잡도 현황"} time={"14:00"}/>
+                                <DashBoardBoxHeader name={"열차 혼잡도 현황"} time={"14:00"}/>
                                 <TrainCrowdingStatus/>
                             </div>
                         </motion.div>}
@@ -88,7 +90,7 @@ export default function DashboardView() {
                                     animate={{opacity: 1}} exit={{opacity: 0}}
                                     transition={{duration: 0.25, ease: 'easeInOut'}}>
                             <div className={styles.box_container} style={{flex: "1"}}>
-                                <BoxHeader name={"구역별 실시간 혼잡도"} time={"14:00"}/>
+                                <DashBoardBoxHeader name={"구역별 실시간 혼잡도"} time={"14:00"}/>
                                 <SectionCrowdingStatus/>
                             </div>
                         </motion.div> :
@@ -96,7 +98,7 @@ export default function DashboardView() {
                                     animate={{opacity: 1}} exit={{opacity: 0}}
                                     transition={{duration: 0.25, ease: 'easeInOut'}}>
                             <div className={styles.box_container} style={{flex: "0 0 auto", overflow: "hidden"}}>
-                                <BoxHeader name={"역사 혼잡도 통계"} time={"14:00"}/>
+                                <DashBoardBoxHeader name={"역사 혼잡도 통계"} time={"14:00"}/>
                                 <CongestionBarChart
                                     searchTarget={searchTarget}
                                     levels={[
@@ -115,7 +117,7 @@ export default function DashboardView() {
                                 />
                             </div>
                             <div className={styles.box_container} style={{flex: "1 1 0"}}>
-                                <BoxHeader name={"역사 혼잡도 현황"} time={"14:00"}/>
+                                <DashBoardBoxHeader name={"역사 혼잡도 현황"} time={"14:00"}/>
                                 <StationCrowdingStatus/>
                             </div>
                         </motion.div>

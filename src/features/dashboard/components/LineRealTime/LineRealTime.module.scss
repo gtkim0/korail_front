@@ -12,6 +12,11 @@
   overflow: hidden;
 }
 
+.tab {
+  position: absolute;
+  top: -16px;
+}
+
 .header {
   position: relative;
   height: 40px;
@@ -42,7 +47,7 @@
 
 }
 
-.up_route {
+.down_route {
   position: relative;
   flex: 1;
 }
@@ -55,7 +60,7 @@
   background: rgba(0, 0, 0, 0.25);
 }
 
-.down_route {
+.up_route {
   position: relative;
   flex: 1;
 }
@@ -93,7 +98,7 @@
       align-items: center;
     }
 
-    .down_route {
+    .up_route {
       .train_info {
         left: 15px;
         top: 10%;
@@ -101,13 +106,13 @@
 
       .icon {
         left: -27px;
-        transform: translate(-50%, -30%);
+        transform: translate(-50%, 10%);
         position: absolute;
         z-index: 9999;
       }
     }
 
-    .up_route {
+    .down_route {
       .train_info {
         right: 15px;
         top: 10%;
@@ -116,7 +121,7 @@
       .icon {
         position: absolute;
         right: -27px;
-        transform: translate(50%, 20%);
+        transform: translate(50%, -30%);
         z-index: 9999;
       }
     }

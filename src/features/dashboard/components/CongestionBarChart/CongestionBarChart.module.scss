@@ -141,9 +141,11 @@
 
 .table {
   max-height: 210px;
-  overflow-y: auto;
-  @extend .custom-scroll2;
-  padding-right: 5px;
+
+  div {
+    @extend .custom-scroll2;
+    padding-right: 5px;
+  }
 
   tr {
     background: transparent;

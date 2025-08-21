@@ -1,7 +1,7 @@
 import styles from "./LineRealTime.module.scss"
 import Image from "next/image";
-import downTrain from "@/shared/assets/images/up_train_icon.svg"
-import upTrain from "@/shared/assets/images/down_train_icon.svg"
+import upTrain from "@/shared/assets/images/up_train_icon.svg"
+import downTrain from "@/shared/assets/images/down_train_icon.svg"
 import React from "react";
 import markIcon from "@/shared/assets/images/arrow-drop-down.svg";
 
@@ -9,16 +9,16 @@ export default function LineRealTime() {
     const data = []
     return <div className={styles.container}>
         <div className={styles.header}>
-            <div className={styles.up_route}>연천방면</div>
+            <div className={styles.down_route}>인천방면</div>
             <div className={styles.separator}></div>
             <div className={styles.station_info}>역사정보</div>
             <div className={styles.separator}></div>
-            <div className={styles.down_route}>인천방면</div>
+            <div className={styles.up_route}>연천방면</div>
         </div>
         <div className={styles.content}>
             <div className={styles.item}>
-                <div className={styles.up_route}>
-                    <Image alt="" src={markIcon} className={styles.rotate}/>
+                <div className={styles.down_route}>
+                    <Image alt="" src={markIcon}/>
                     {/*해당 역에 접근중 , 도착 , 출발 중인 열차들 정보 train_info 반복문 돌리기*/}
                     <div className={styles.train_info} style={{top: "50%"}}>
                         <div className={styles.crowding}>보통</div>
@@ -43,8 +43,8 @@ export default function LineRealTime() {
                     />
                 </div>
                 <div className={styles.separator}></div>
-                <div className={styles.down_route}>
-                    <Image alt="" src={markIcon}/>
+                <div className={styles.up_route}>
+                    <Image alt="" src={markIcon} className={styles.rotate}/>
                     <div className={styles.train_info} style={{top: "50%"}}>
                         <div className={styles.crowding}>보통</div>
                         <div className={styles.destination}>신창</div>
@@ -55,8 +55,8 @@ export default function LineRealTime() {
                 </div>
             </div>
             <div className={styles.item} style={{height: "100px"}}>
-                <div className={styles.up_route}>
-                    <Image src={markIcon} alt="" className={styles.rotate}/>
+                <div className={styles.down_route}>
+                    <Image src={markIcon} alt=""/>
                     {/*해당 역에 접근중 , 도착 , 출발 중인 열차들 정보 train_info 반복문 돌리기*/}
                     <div className={styles.train_info} style={{top: "50%"}}>
                         <div className={styles.crowding}>보통</div>
@@ -118,8 +118,8 @@ export default function LineRealTime() {
                 </div>
                 <div className={styles.separator}>
                 </div>
-                <div className={styles.down_route}>
-                    <Image alt="" src={markIcon}/>
+                <div className={styles.up_route}>
+                    <Image alt="" src={markIcon} className={styles.rotate}/>
                     <div className={styles.train_info} style={{top: "50%"}}>
                         <div className={styles.crowding}>보통</div>
                         <div className={styles.destination}>신창</div>
@@ -129,6 +129,8 @@ export default function LineRealTime() {
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 }
+
