@@ -5,8 +5,10 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: "/apis/:path*",         // 프론트 요청
-        destination: "http://10.141.10.200:8080/:path*", // 백엔드 서버로 프록시
+        source: "/apis/:path*",
+        destination: "http://10.141.10.209:8080/:path*", // 백엔드 서버로 프록시
+        // destination: "http://10.141.10.200:8080/:path*", // 백엔드 서버로 프록시
+
       },
     ];
   },

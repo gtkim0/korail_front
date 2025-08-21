@@ -1,15 +1,16 @@
 'use client';
 
-import { create } from 'zustand';
-import { immer } from 'zustand/middleware/immer';
+import {create} from 'zustand';
+import {immer} from 'zustand/middleware/immer';
 
-import { createMenuSlice, MenuSlice } from './slice/menuSlice';
-import { createUserSlice, UserSlice } from './slice/userSlice';
-import { createRouteSlice, RouteSlice } from './slice/routeSlice';
+import {createMenuSlice, MenuSlice} from './slice/menuSlice';
+import {createUserSlice, UserSlice} from './slice/userSlice';
+import {createRouteSlice, RouteSlice} from './slice/routeSlice';
+import {createCommonCodeSlice, CommonCodeSlice} from "@/shared/store/slice/commonCodeSlice";
 
-import { StoreApi } from 'zustand';
+import {StoreApi} from 'zustand';
 
-type GlobalStore = MenuSlice & UserSlice & RouteSlice;
+type GlobalStore = MenuSlice & UserSlice & RouteSlice & CommonCodeSlice;
 
 export const useGlobalStore = create<GlobalStore>()(
   immer((set, get, store) => ({
@@ -28,5 +29,10 @@ export const useGlobalStore = create<GlobalStore>()(
       get as StoreApi<RouteSlice>['getState'],
       store as StoreApi<RouteSlice>
     ),
+    ...createCommonCodeSlice(
+      set as StoreApi<CommonCodeSlice>['setState'],
+      get as StoreApi<CommonCodeSlice>['getState'],
+      store as StoreApi<CommonCodeSlice>
+    )
   }))
 );

@@ -25,7 +25,7 @@ export default function CongestionStepView({initialFilter, initialData}: Props) 
       fetchData={async ({sortKey, sortOrder}) => {
         console.log(sortKey);
         console.log(sortOrder);
-        return []
+        return {}
       }}
       ModalBody={CongestionAddForm}
       modalBodyProps={{}}

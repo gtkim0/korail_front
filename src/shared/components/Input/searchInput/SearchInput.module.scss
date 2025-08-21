@@ -9,3 +9,12 @@
   border-radius: 8px;
   width: 100%;
 }
+
+.disable {
+  pointer-events: none !important;
+}
+
+.inputProps {
+  background: red;
+  border-radius: 300px;
+}

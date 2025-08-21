@@ -27,9 +27,9 @@ export function withRowSelection<T extends object>(
           }}
         />
       ),
-      size: 40,
-      minSize: 40,
-      maxSize: 40
+      size: 10,
+      minSize: 10,
+      maxSize: 10
     },
     ...columns,
   ];

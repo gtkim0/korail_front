@@ -1,11 +1,10 @@
 'use client';
 
-import { useEffect, useState, useRef } from "react";
+import {useEffect, useState, useRef} from "react";
 import MenuTree from "@/features/menu/MenuTree/MenuTree";
 import styles from './MenuNode.module.css';
-import Image from "next/image";
 import clsx from "clsx";
-import { BaseMenu } from "@/types/menu";
+import {BaseMenu} from "@/types/menu";
 import useExpand from '@/features/menu/hooks/useExpand';
 import isDescendant from '@/shared/utils/isDescendant';
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
@@ -23,8 +22,8 @@ interface Props {
 
 export default function MenuNode(props: Props) {
 
-  const { item, data, defaultExpandAll, level, storageKey, selectedMenu, onSelect } = props;
-  const { isOpen, toggle, loadItem } = useExpand({
+  const {item, data, defaultExpandAll, level, storageKey, selectedMenu, onSelect} = props;
+  const {isOpen, toggle, loadItem} = useExpand({
     storageKey,
     defaultExpandAll,
     id: item.id
@@ -67,15 +66,26 @@ export default function MenuNode(props: Props) {
         styles.menu
       )}
     >
-      <div className={selectedMenu?.id === item.id ? styles.selected : ''} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+      <div className={selectedMenu?.id === item.id ? styles.selected : ''}
+           style={{display: 'flex', alignItems: 'center'}}>
         {hasChildren ? (
-          <span onClick={toggle} style={{ cursor: 'pointer', userSelect: 'none' }}>
-            <ImageWrapper width={16} height={16} src={isOpen ? '/tree_up.svg' : '/tree_down.svg'} />
+          <span onClick={toggle} style={{cursor: 'pointer', userSelect: 'none'}}>
+            <ImageWrapper width={16} height={16} src={isOpen ? '/tree_up.svg' : '/tree_down.svg'}/>
           </span>
         ) : (
-          <span style={{ width: '1em' }} />
+          <span style={{width: '1rem'}}/>
+          // <span/>
         )}
-        <div onClick={() => onSelect(item)} style={{ display: 'flex', gap: '.3rem', alignItems: 'center', cursor: 'pointer', color:'#2A2A2B' }}>
+        <div
+          onClick={() => onSelect(item)}
+          style={{
+            display: 'flex',
+            gap: '.3rem',
+            alignItems: 'center',
+            cursor: 'pointer',
+            color: '#2A2A2B',
+          }}
+        >
           {/*<Image src={*/}
           {/*  (!item.component && hasChildren) ? '/folder-open.svg' :*/}
           {/*    (!item.component && !hasChildren) ? '/folder-close.svg' : '/file.svg'*/}

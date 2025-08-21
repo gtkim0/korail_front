@@ -6,7 +6,7 @@ import {serverStationApi} from "@/features/history-info/api/serverStationInfoApi
 export default async function StationInfoViewServer() {
 
   const initialFilter = {
-    category: ['1','2','3','4'],
+    category: ['1', '2', '3', '4'],
     type: '',
     range1: {
       startDate: new Date(),
@@ -24,15 +24,13 @@ export default async function StationInfoViewServer() {
     endDate: format(initialFilter.range1.endDate, 'yyyy-MM-dd'),
   };
 
-  const res = await serverStationApi.list( {
+  const res = await serverStationApi.list({
     page: 0,
     size: 10,
     sort: sortKey,
     order: sortOrder,
     ...newFilter
   });
-
-  logger.info({ message: 'res >>>', data: res });
 
   return (
     <StationInfoView

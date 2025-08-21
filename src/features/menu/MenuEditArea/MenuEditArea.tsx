@@ -15,13 +15,15 @@ export type MenuEditAreaRef = {
   submit: () => void;
 };
 
-const MenuEditArea = forwardRef<MenuEditAreaRef>((_,ref) =>  {
+const MenuEditArea = forwardRef<MenuEditAreaRef>((_, ref) => {
 
   const {
     menu, setMenu, selectedMenu, setSelectMenu, addMenu, delMenu, upMenu, downMenu
   } = useGlobalStore(state => state);
 
-  const { isOpen, open: setOpen, close: setClose } = useModal();
+  console.log(menu);
+
+  const {isOpen, open: setOpen, close: setClose} = useModal();
 
   useImperativeHandle(ref, () => ({
     submit: () => {
@@ -31,7 +33,7 @@ const MenuEditArea = forwardRef<MenuEditAreaRef>((_,ref) =>  {
     }
   }));
 
-  const { open } = useExpand({storageKey: 'menuState', defaultExpandAll: false, id: selectedMenu.id});
+  const {open} = useExpand({storageKey: 'menuState', defaultExpandAll: false, id: selectedMenu.id});
   const [addedMenuId, setAddedMenuId] = useState<string | null>(null);
 
   const handleAddMenu = () => {
@@ -86,7 +88,8 @@ const MenuEditArea = forwardRef<MenuEditAreaRef>((_,ref) =>  {
               },
               {
                 label: '삭제',
-                onClick: () => {},
+                onClick: () => {
+                },
                 variant: 'primary',
                 disabled: false,
               },

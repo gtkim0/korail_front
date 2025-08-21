@@ -37,7 +37,6 @@ export async function clientFetch<T>(
 
     if (res.status && Number(res.status) === 401) {
 
-      console.log(res);
       await fetch(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/logout`, {
         method: 'post'
       }).then(res => {

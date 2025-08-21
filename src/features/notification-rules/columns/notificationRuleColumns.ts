@@ -1,8 +1,6 @@
 import {ColumnDef} from "@tanstack/react-table";
 import {NotificationRuleColumnType} from "@/types/notification-rule";
 
-s
-
 export const notificationRuleColumns: ColumnDef<NotificationRuleColumnType>[] = [
   {
     accessorKey: 'id',

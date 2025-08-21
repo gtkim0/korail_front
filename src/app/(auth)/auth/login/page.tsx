@@ -3,7 +3,7 @@ import {useRouter} from 'next/navigation';
 import PortalFooter from "@/features/lyaouts/PortalLayout/PortalFooter/PortalFooter";
 import styles from './login.module.scss';
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
-import {useForm} from "@tanstack/react-form";
+import {useForm, useStore} from "@tanstack/react-form";
 import {InputField} from "@/shared/components/Input/InputField";
 import {Swiper} from "swiper/react";
 import {SwiperSlide} from "swiper/react";
@@ -14,8 +14,10 @@ import 'swiper/css/navigation';
 import {useRef} from "react";
 import {z} from 'zod';
 import FormSubmitButton from "@/shared/components/form/FormSubmitButton/FormSubmitButton";
-import {clientPost} from "@/shared/api/clientFetcher";
-import logger from "@/lib/logger";
+import {clientGet, clientPost} from "@/shared/api/clientFetcher";
+import {useGlobalStore} from "@/shared/store/globalStore";
+import {ResponseType} from "@/types/common";
+import {useAuth} from "@/shared/hooks/useAuth";
 
 const imageList = [
   {
@@ -45,50 +47,38 @@ const imageList = [
 ]
 
 const LoginSchema = z.object({
-  username: z.string().min(3, '이메일을 입력해주세요.'),
-  password: z
+  userId: z.string().min(3, '이메일을 입력해주세요.'),
+  lgnPswdCn: z
     .string()
     .min(10, '비밀번호는 최소 10자리여야 합니다.')
     .regex(/^(?=.*[a-zA-Z])(?=.*[0-9!@#$%^&*])/, '영문 + 숫자/특수문자 조합 필수'),
 })
+
 
 // cookie 에 있으면 이쪽페이지 못들어오게 수정
 
 
 export default function LoginPage() {
 
+  const {user, setUser} = useGlobalStore(state => state)
+  const {isLoggedIn} = useAuth();
+
   const router = useRouter();
   const swiperRef = useRef<any>(null);
   const form = useForm({
     defaultValues: {
-      username: '',
-      password: '',
+      userId: '',
+      lgnPswdCn: '',
     },
     validators: {
-      onSubmit: LoginSchema,
-      onChange: LoginSchema
+      // onSubmit: LoginSchema,
+      // onChange: LoginSchema
     },
     onSubmit: async ({value}) => {
       try {
-        // const res = await fetch('/apis/auth/login', {
-        //   method: 'POST',
-        //   credentials: 'include',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //   },
-        //   body: JSON.stringify(value),
-        // });
-
-        // if (!res.ok) {
-        //   const error = await res.text();
-        //   toast.error(`로그인 실패: ${error}`);
-        //   return;
-        // }
-
-        await clientPost<Response>('/auth/login', {
+        await clientPost<ResponseType<any>>('/api/auths/login', {
           ...value
         })
-
         router.replace('/dashboard');
       } catch (err) {
         // toast.error('서버 오류: 로그인 요청 실패');
@@ -96,6 +86,11 @@ export default function LoginPage() {
       }
     },
   })
+
+
+  // if (isLoggedIn) {
+  //   router.replace('/dashboard');
+  // }
 
   return (
     <div className={styles.container}>
@@ -136,7 +131,7 @@ export default function LoginPage() {
                 <div className={styles.form}>
                   {
                     form.Field({
-                      name: 'username',
+                      name: 'userId',
                       children: (field) => (
                         <InputField name={'username'} placeholder={'이메일 주소를 입력해 주세요.'} required field={field}
                                     label={'회원아이디'}/>
@@ -148,7 +143,7 @@ export default function LoginPage() {
                 <div className={styles.form}>
                   {
                     form.Field({
-                      name: 'password',
+                      name: 'lgnPswdCn',
                       children: (field) => (
                         <InputField type={'password'} placeholder={'비밀번호를 입력해 주세요.'} required={true} field={field}
                                     label={'비밀번호'}/>

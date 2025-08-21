@@ -24,14 +24,13 @@ const PermissionGroupAddForm =
       onCanSubmitChange,
       permissionGroupSchema,
       {
-        groupId: '',
-        groupNm: '',
-        priLevel: '',
-        description: '',
-        create: false,
-        read: false,
-        update: false,
-        delete: false,
+        authrtId: '',
+        authrtNm: '',
+        authrtExplnCn: '',
+        // create: false,
+        // read: false,
+        // update: false,
+        // delete: false,
         useYn: true
       }
     )
@@ -40,7 +39,7 @@ const PermissionGroupAddForm =
       <ModalAddFormLayout>
         {
           form.Field({
-            name: 'groupId',
+            name: 'authrtId',
             children: (field) => {
               return (
                 <InputField
@@ -56,7 +55,7 @@ const PermissionGroupAddForm =
         }
         {
           form.Field({
-            name: 'groupNm',
+            name: 'authrtNm',
             children: (field) => {
               return (
                 <InputField
@@ -70,26 +69,26 @@ const PermissionGroupAddForm =
             }
           })
         }
+        {/*{*/}
+        {/*  form.Field({*/}
+        {/*    name: 'priLevel',*/}
+        {/*    children: (field) => {*/}
+        {/*      return (*/}
+        {/*        <FormFieldWrapper required label={'권한레벨'}>*/}
+        {/*          <FilterSelect*/}
+        {/*            options={[]}*/}
+        {/*            value={''}*/}
+        {/*            onChange={() => {*/}
+        {/*            }}*/}
+        {/*          />*/}
+        {/*        </FormFieldWrapper>*/}
+        {/*      )*/}
+        {/*    }*/}
+        {/*  })*/}
+        {/*}*/}
         {
           form.Field({
-            name: 'priLevel',
-            children: (field) => {
-              return (
-                <FormFieldWrapper required label={'권한레벨'}>
-                  <FilterSelect
-                    options={[]}
-                    value={''}
-                    onChange={() => {
-                    }}
-                  />
-                </FormFieldWrapper>
-              )
-            }
-          })
-        }
-        {
-          form.Field({
-            name: 'description',
+            name: 'authrtExplnCn',
             children: (field) => {
               return (
                 <InputField
@@ -104,45 +103,49 @@ const PermissionGroupAddForm =
           })
         }
 
-        <FormFieldWrapper label={'CRUD 권한'} required>
-          <div style={{display: 'flex', gap: '1.6rem'}}>
-            {
-              form.Field({
-                name: 'create',
-                children: (field) =>
-                  <FilterCheckbox onChange={()=>field.handleChange(!field.getValue())} checked={field.getValue()} label={'쓰기(C)'}/>
-              })
-            }
-            {
-              form.Field({
-                name: 'read',
-                children: (field) =>
-                  <FilterCheckbox onChange={()=>field.handleChange(!field.getValue())} checked={field.getValue()} label={'읽기(R)'}/>
-              })
-            }
-            {
-              form.Field({
-                name: 'update',
-                children: (field) =>
-                  <FilterCheckbox onChange={()=>field.handleChange(!field.getValue())} checked={field.getValue()} label={'수정(U)'}/>
-              })
-            }
-            {
-              form.Field({
-                name: 'delete',
-                children: (field) =>
-                  <FilterCheckbox onChange={()=>field.handleChange(!field.getValue())} checked={field.getValue()} label={'삭제(D)'}/>
-              })
-            }
-          </div>
-        </FormFieldWrapper>
+        {/*<FormFieldWrapper label={'CRUD 권한'} required>*/}
+        {/*  <div style={{display: 'flex', gap: '1.6rem'}}>*/}
+        {/*    {*/}
+        {/*      form.Field({*/}
+        {/*        name: 'create',*/}
+        {/*        children: (field) =>*/}
+        {/*          <FilterCheckbox onChange={() => field.handleChange(!field.getValue())} checked={field.getValue()}*/}
+        {/*                          label={'쓰기(C)'}/>*/}
+        {/*      })*/}
+        {/*    }*/}
+        {/*    {*/}
+        {/*      form.Field({*/}
+        {/*        name: 'read',*/}
+        {/*        children: (field) =>*/}
+        {/*          <FilterCheckbox onChange={() => field.handleChange(!field.getValue())} checked={field.getValue()}*/}
+        {/*                          label={'읽기(R)'}/>*/}
+        {/*      })*/}
+        {/*    }*/}
+        {/*    {*/}
+        {/*      form.Field({*/}
+        {/*        name: 'update',*/}
+        {/*        children: (field) =>*/}
+        {/*          <FilterCheckbox onChange={() => field.handleChange(!field.getValue())} checked={field.getValue()}*/}
+        {/*                          label={'수정(U)'}/>*/}
+        {/*      })*/}
+        {/*    }*/}
+        {/*    {*/}
+        {/*      form.Field({*/}
+        {/*        name: 'delete',*/}
+        {/*        children: (field) =>*/}
+        {/*          <FilterCheckbox onChange={() => field.handleChange(!field.getValue())} checked={field.getValue()}*/}
+        {/*                          label={'삭제(D)'}/>*/}
+        {/*      })*/}
+        {/*    }*/}
+        {/*  </div>*/}
+        {/*</FormFieldWrapper>*/}
         {
           form.Field({
             name: 'useYn',
             children: (field) => {
               return (
                 <FormFieldWrapper required direction={'horizontal'} label={'사용여부'}>
-                  <ToggleSwitch checked={field.getValue()} onChange={(checked)=> field.handleChange(checked)} />
+                  <ToggleSwitch checked={field.getValue()} onChange={(checked) => field.handleChange(checked)}/>
                 </FormFieldWrapper>
               )
             }

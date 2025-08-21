@@ -25,14 +25,12 @@ export const SearchFilter = forwardRef<HTMLInputElement, Props>((props, ref: For
 
   const {onAdd, type, value, onChange, onSubmit, enabledAdd} = props;
   const {isOpen, open, close} = useModal();
-
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && onSubmit) onSubmit();
   }
 
   useEffect(() => {
     window.addEventListener('resize', (e) => {
-      console.log(e);
     })
   }, []);
 
@@ -45,6 +43,10 @@ export const SearchFilter = forwardRef<HTMLInputElement, Props>((props, ref: For
             onKeyDown={handleKeyDown}
             onSubmit={() => onSubmit?.()}
             ref={ref}
+            parentClass={styles.inputProps}
+            inputClass={styles.input}
+            showBorder
+            showSearchTitle
           />
           <div onClick={() => isOpen ? close() : open()} className={clsx(styles.filter, isOpen && styles.open)}>
             <Image src={isOpen ? '/basic-search.svg' : '/multi-search.svg'} alt={'logo'} width={16} height={16}/>

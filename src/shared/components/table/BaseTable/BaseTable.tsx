@@ -82,10 +82,12 @@ export default function Table<T extends { id: string | number }>(
             {headerGroup.headers
               .filter(header => header.column.columnDef.meta?.hidden !== true)
               .map(header => {
+                console.log(header.column.columnDef.meta?.width);
+                console.log(header.getSize())
                 return (
                   <th
                     style={{
-                      width: header.getSize(),
+                      width: header.column.columnDef.meta?.width ?? header.getSize(),
                       maxWidth: header.column.columnDef.maxSize,
                       minWidth: header.column.columnDef.minSize
                     }}
@@ -103,7 +105,6 @@ export default function Table<T extends { id: string | number }>(
                           {/*  desc: '↓',*/}
                           {/*  false: '⇅',*/}
                           {/*}[header.column.getIsSorted() as string || 'false']}*/}
-
                           {{
                             // asc: '↑',
                             asc: <Image src={ArrowSortAsc} alt={''}/>,

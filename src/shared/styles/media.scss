@@ -1,4 +1,5 @@
-$breakpoint-fork-desktop: 2560px;
+$breakpoint-fk: 3400px;
+$breakpoint-fork-desktop: 2559px;
 
 $breakpoint-fullScreen-desktop: 1919px;
 $breakpoint-small-desktop: 1650px;
@@ -11,7 +12,7 @@ $breakpoint-small-mobile: 360px;
 // Mixin 정의
 
 @mixin fork-desktop {
-  @media (max-width: #{$breakpoint-fork-desktop}) {
+  @media (min-width: #{$breakpoint-fork-desktop}) {
     @content;
   }
 }

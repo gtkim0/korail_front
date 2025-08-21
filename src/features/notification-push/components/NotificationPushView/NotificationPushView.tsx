@@ -9,7 +9,8 @@ import NotificationPushAddForm, {
 import {withRowSelection} from "@/shared/components/table/withRowSelection";
 import {NotificationPushColumnType} from "@/types/notification-push";
 
-export interface NotificationPushAddFormProps extends BaseModalFormProps<NotificationPushFormType> {}
+export interface NotificationPushAddFormProps extends BaseModalFormProps<NotificationPushFormType> {
+}
 
 export default function NotificationPushView({initialFilter, initialData}: PageServerProps) {
   return (
@@ -19,19 +20,19 @@ export default function NotificationPushView({initialFilter, initialData}: PageS
       columns={withRowSelection(notificationPushColumns)}
       initialFilter={initialFilter}
       initialSortKey={'id'}
-      fetchData={async ()=> {
+      fetchData={async () => {
         return []
       }}
       ModalBody={NotificationPushAddForm}
       modalBodyProps={{}}
-      onSubmitEdit={async ()=> {
+      onSubmitEdit={async () => {
         return true;
       }}
-      onSubmitAdd={async (value)=> {
+      onSubmitAdd={async (value) => {
         console.log(value);
         return true;
       }}
-      onDelete={async (ids)=> {
+      onDelete={async (ids) => {
         return true;
       }}
       initialData={initialData}

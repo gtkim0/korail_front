@@ -22,7 +22,7 @@ const PermissionUserAddForm =
 
     return (
       <ModalAddFormLayout
-        padding={0}
+        style={{padding: 0}}
       >
         <></>
       </ModalAddFormLayout>

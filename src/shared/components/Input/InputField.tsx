@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import FormFieldWrapper from "@/shared/components/formFieldWrapper/FormFieldWrapper";
 import styles from './InputField.module.css';
 import clsx from "clsx";
@@ -71,7 +71,7 @@ export const InputField = (
           updateMenuField?.(val);
         })}
         className={clsx(styles.input, isDisabled && styles.disabled)}
-        style={{ height }}
+        style={{height, fontFamily: 'Pretendard'}}
       />
       {
         showError && <div className={styles.error}>{field.state.meta.errors?.[0].message}</div>
