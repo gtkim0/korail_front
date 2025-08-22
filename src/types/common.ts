@@ -14,7 +14,14 @@ export type FormAddFormRef = {
 };
 
 export interface ResponseType<T> {
-  code: number;
-  message: string;
-  data: T;
+  resultCode: string;
+  resultMessage: string;
+  result: T;
+}
+
+export interface PaginationResponseType<T> {
+  list: T[];
+  page: number;
+  pagePerSize: number;
+  totalCount: number;
 }

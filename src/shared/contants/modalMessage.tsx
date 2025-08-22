@@ -28,7 +28,8 @@ export const MODAL_TITLE: Partial<Record<PageType, string>> = {
   [PageType.CongestionVerificationTarget]: '대피안내도',
   [PageType.PermissionGroup]: '권한그룹 등록/수정',
   [PageType.PermissionUser]: '사용자별 권한 등록/수정',
-  [PageType.PermissionMenu]: '메뉴별 권한 등록/수정'
+  [PageType.PermissionMenu]: '메뉴별 권한 등록/수정',
+  [PageType.MemberManagement]: '회원정보  수정/등록'
 }
 
 export const MODAL_MESSAGES = {

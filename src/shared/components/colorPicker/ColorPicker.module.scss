@@ -12,6 +12,7 @@
   position: relative;
   cursor: pointer;
   width: 100%;
+  /*width: 15rem;*/
 }
 
 .colorLabel {
@@ -32,7 +33,6 @@
 }
 
 .colorInput {
-  font-family: monospace;
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
   background: white;
@@ -40,9 +40,23 @@
   cursor: pointer;
   flex: 1;
   border: none;
+  font-family: Pretendard;
+  color: #a3a3a9;
+  line-height: 25.5px;
+  font-size: 1.5rem;
+  width: 100%;
 }
 
 .colorInput:focus {
   border-color: #888;
 }
 
+.sketchPickerWrapper {
+  position: absolute;
+  top: 5rem;
+  min-width: 24rem;
+  transform: translateX(-50%);
+  width: 100%;
+  left: 50%;
+  z-index: 100;
+}

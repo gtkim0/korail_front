@@ -1,7 +1,8 @@
 'use client';
-import styles from './ColorPicker.module.css';
+import styles from './ColorPicker.module.scss';
 import {useState, useRef, useEffect, CSSProperties} from 'react';
 import dynamic from 'next/dynamic';
+import clsx from "clsx";
 
 const SketchPicker = dynamic(() => import('react-color').then(mod => mod.ChromePicker), {
   ssr: false,
@@ -10,9 +11,10 @@ const SketchPicker = dynamic(() => import('react-color').then(mod => mod.ChromeP
 type Props = {
   color: string;
   onChangeAction: (color: string) => void;
+  className?: string;
 }
 
-export default function ColorPicker ({color, onChangeAction}: Props) {
+export default function ColorPicker({color, onChangeAction, className}: Props) {
 
   const [showPicker, setShowPicker] = useState(false);
   const pickerRef = useRef<HTMLDivElement>(null);
@@ -20,7 +22,6 @@ export default function ColorPicker ({color, onChangeAction}: Props) {
 
   useEffect(() => {
     const handleClickOutside = (e: PointerEvent) => {
-      // setTimeout으로 SketchPicker 내부 클릭 DOM이 완전히 마운트되기를 기다림
       setTimeout(() => {
         if (
           pickerRef.current &&
@@ -40,7 +41,7 @@ export default function ColorPicker ({color, onChangeAction}: Props) {
   return (
     <div
       ref={containerRef}
-      className={styles.container}
+      className={clsx(styles.container, className)}
       onClick={() => setShowPicker((prev) => !prev)}
     >
       <input
@@ -60,15 +61,16 @@ export default function ColorPicker ({color, onChangeAction}: Props) {
       />
       <div
         className={styles.colorPreview}
-        style={{ '--color': color } as CSSProperties}
+        style={{'--color': color} as CSSProperties}
       />
 
       {showPicker && (
-        <div onClick={(e)=> e.stopPropagation()} ref={pickerRef} style={{ position: 'absolute', top: '3rem', width:'100%', left: 0, zIndex: 100 }}>
+        <div
+          onClick={(e) => e.stopPropagation()}
+          ref={pickerRef}
+          className={styles.sketchPickerWrapper}
+        >
           <SketchPicker
-            styles={{
-              width:'100%'
-            }}
             color={color}
             onChange={(updatedColor) => onChangeAction(updatedColor.hex)}
           />

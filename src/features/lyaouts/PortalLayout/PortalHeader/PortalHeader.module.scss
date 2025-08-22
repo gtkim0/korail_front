@@ -72,13 +72,14 @@
   display: flex;
   gap: 1.2rem;
   align-items: center;
+  cursor: pointer;
 }
 
 .imageArea {
   width: 16.6rem;
   height: 4rem;
   position: relative;
-  cursor: pointer;
+  //cursor: pointer;
 }
 
 .mainTitle {

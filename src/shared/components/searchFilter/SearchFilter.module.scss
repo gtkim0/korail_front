@@ -3,7 +3,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 1.6rem;
+  gap: 1rem;
   align-self: stretch;
 }
 
@@ -48,9 +48,24 @@
   }
 }
 
+.input {
+  flex: 1;
+  height: 100%;
+  pointer-events: auto;
+  background: none;
+  font-size: 1.5rem;
+}
+
 .inputWrapper input {
   width: 100%;
   height: 100%;
+  border-radius: 50px;
+}
+
+.inputProps {
+  border-radius: 24px !important;
+  box-shadow: 0 0 12px 0 rgba(0, 71, 134, 0.10) !important;
+  border: 1px solid #9fd1ff !important;
 }
 
 .filter {

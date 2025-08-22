@@ -3,6 +3,7 @@ import Table from "@/shared/components/table/BaseTable/BaseTable";
 import Pagination from "@/shared/components/table/Pagination/Pagination";
 import {dummyMenuData} from "@/features/menu/columns/menuColumns";
 import {ColumnDef, OnChangeFn, RowSelectionState, SortingState} from "@tanstack/react-table";
+import CustomPagination from "@/shared/components/table/CustomPagination";
 
 interface Props<T extends object> {
   onSelect: (v: { key: string, label: string }) => void;
@@ -50,6 +51,8 @@ export default function TableWrapper<T extends { id: string | number }>(props: P
     enabledDelete = true
   } = props;
 
+  console.log(pageCount);
+
   return (
     <div style={{flex: 1, display: 'flex', flexDirection: 'column'}}>
       <TableFilter
@@ -75,13 +78,20 @@ export default function TableWrapper<T extends { id: string | number }>(props: P
         pageSize={pageSize}
       />
 
-      <Pagination
-        pageIndex={pageIndex}
-        pageSize={pageSize}
-        pageCount={Math.ceil(dummyMenuData.length / pageSize)} // 또는 서버에서 받은 totalPages
-        setPageIndex={setPageIndex}
-        setPageSize={setPageSize}
+      <CustomPagination
+        currentPage={pageIndex}
+        totalPages={pageCount}
+        onChange={(p) => {
+          setPageIndex(p)
+        }}
       />
+      {/*<Pagination*/}
+      {/*  pageIndex={pageIndex}*/}
+      {/*  pageSize={pageSize}*/}
+      {/*  pageCount={Math.ceil(dummyMenuData.length / pageSize)}*/}
+      {/*  setPageIndex={setPageIndex}*/}
+      {/*  setPageSize={setPageSize}*/}
+      {/*/>*/}
     </div>
   )
 }

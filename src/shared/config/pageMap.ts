@@ -69,9 +69,11 @@ export const pageComponentNameMap = {
     PermissionMenu: '메뉴별 권한',
 
     MyProfile: '기본 정보',
-    UserListPage: '회원 정보',
+    MemberManagement: '회원 정보',
     MyMenuAuthorityView: '권한 조회',
     PermissionRequest: '권한 요청',
+
+
     VideoViewList: '영상 조회',
 
     VideoExportRequest: '반출 요청',

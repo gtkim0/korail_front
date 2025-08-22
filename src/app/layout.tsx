@@ -8,6 +8,7 @@ import localFont from "next/font/local";
 import SplashWrapper from "@/shared/components/splashWrapper/SplashWrapper";
 import {ReactNode} from "react";
 import "./globals.scss";
+import ZustandHydrator from "@/shared/provider/ZustandHydrator";
 
 const pretendard = localFont({
   src: '../../public/fonts/pretendard/PretendardVariable.woff2',
@@ -20,21 +21,30 @@ export const metadata: Metadata = {
   description: "철도 혼잡도 관리시스템",
 };
 
-export default function RootLayout({children}: Readonly<{ children: ReactNode }>) {
+const getCommonCode = async () => {
+  const res = await fetch(`http://localhost:8080/menus`);
+  return res.json();
+}
+
+export default async function RootLayout({children}: Readonly<{ children: ReactNode }>) {
+
+  const code = await getCommonCode();
 
   return (
     <html lang="en">
     <body className={`${pretendard.variable} antialiased`}>
     <RQProviders>
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          style: {fontSize: '14px', zIndex: 100000},
-        }}
-      />
-      <SplashWrapper>
-        {children}
-      </SplashWrapper>
+      <ZustandHydrator initial={code}>
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            style: {fontSize: '14px', zIndex: 100000},
+          }}
+        />
+        <SplashWrapper>
+          {children}
+        </SplashWrapper>
+      </ZustandHydrator>
     </RQProviders>
     </body>
     </html>

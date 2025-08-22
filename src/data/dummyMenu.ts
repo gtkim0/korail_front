@@ -1,5 +1,5 @@
 export const menuList = [
-  {id: '0', pid: null, url: '/', component: 'Main', order: 1, depth: 0, name: 'Menu', description: '메인메뉴 에 대한설명'},
+  {id: '0', pid: null, url: '/', component: 'Main', order: 1, depth: 0, name: '홈', description: '메인메뉴 에 대한설명'},
   {
     id: '1',
     pid: '0',
@@ -17,6 +17,7 @@ export const menuList = [
   {id: '6', pid: '0', url: '/d', component: '', order: 5, depth: 1, name: 'API 관리', description: '혼잡도 검증 에 대한설명'},
   {id: '7', pid: '0', url: '/d', component: '', order: 5, depth: 1, name: '권한 관리', description: '혼잡도 검증 에 대한설명'},
   {id: '8', pid: '0', url: '/d', component: '', order: 5, depth: 1, name: '영상조회반출', description: '혼잡도 검증 에 대한설명'},
+  {id: '110', pid: '0', url: '/d', component: '', order: 5, depth: 1, name: '마이페이지', description: '마이페이지 설명'},
 
   // 기본정보 하위
   {id: '9', pid: '2', url: '', component: '', order: 1, depth: 2, name: '혼잡도 단계', description: ''},
@@ -428,6 +429,66 @@ export const menuList = [
     name: '메뉴별 권한',
     description: ''
   },
+  {
+    id: '1101',
+    pid: '110',
+    url: '',
+    component: '',
+    order: 1,
+    depth: 2,
+    name: '회원 정보',
+    description: ''
+  },
+  {
+    id: '1102',
+    pid: '1101',
+    url: '/mypage/profile',
+    component: 'MyProfile',
+    order: 1,
+    depth: 3,
+    name: '기본 정보',
+    description: ''
+  },
+  {
+    id: '1103',
+    pid: '1101',
+    url: '/mypage/member-management',
+    component: 'MemberManagement',
+    order: 2,
+    depth: 3,
+    name: '회원 정보',
+    description: ''
+  },
+  {
+    id: '1201',
+    pid: '110',
+    url: '',
+    component: '',
+    order: 2,
+    depth: 2,
+    name: '권한 조회',
+    description: ''
+  },
+  {
+    id: '1202',
+    pid: '1201',
+    url: '/mypage/authority-view',
+    component: 'MyMenuAuthorityView',
+    order: 1,
+    depth: 3,
+    name: '권한 조회',
+    description: ''
+  },
+  {
+    id: '1203',
+    pid: '1201',
+    url: '/mypage/permission-request',
+    component: 'PermissionRequest',
+    order: 2,
+    depth: 3,
+    name: '권한 요청',
+    description: ''
+  }
 
   // 마이페이지
 

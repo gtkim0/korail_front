@@ -8,6 +8,7 @@ import SearchModalTrigger from "@/shared/components/searchModalTrigger/searchMod
 import {FilterType} from "@/shared/enum/FilterType";
 import FilterRadioGroup from "@/shared/components/searchFilter/Filters/FilterRadioGroup/FilterRadioGroup";
 import {useEffect, useState} from "react";
+import styles from './DynamicFilterRenderer.module.scss';
 
 type FilterSchema = {
   type: string;
@@ -147,6 +148,7 @@ export function DynamicFilterRenderer({schema, value, onChange, modalEndPoint}: 
 
               {filter.type === FilterType.ColorPicker && (
                 <ColorPicker
+                  className={styles.colorPicker}
                   color={value[filter.key] || '#000000'}
                   onChangeAction={(val: string) => handleChange(filter.key, val)}
                 />

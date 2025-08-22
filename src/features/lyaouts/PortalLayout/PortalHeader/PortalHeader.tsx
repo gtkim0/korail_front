@@ -12,7 +12,7 @@ import PortalLogo from '@/shared/assets/images/portal_logo.svg'
 import Image from "next/image";
 import clsx from "clsx";
 
-export default function PortalHeader({ menus, isDashboard }: { menus: BaseMenu[],isDashboard:boolean }) {
+export default function PortalHeader({menus, isDashboard}: { menus: BaseMenu[], isDashboard: boolean }) {
 
   const pathname = usePathname();
   const router = useRouter();
@@ -97,12 +97,12 @@ export default function PortalHeader({ menus, isDashboard }: { menus: BaseMenu[]
         <div ref={wrapperRef} className={styles.wrapper}>
           <div className={styles.menuArea}>
             <div className={styles.menuWrapper}>
-              <div className={styles.leftArea}>
-                <div
-                  onClick={()=> router.push('/dashboard')}
-                  className={styles.imageArea}
-                >
-                  <Image alt={''} src={PortalLogo} fill style={{objectFit:'contain'}}/>
+              <div
+                className={styles.leftArea}
+                onClick={() => router.push('/dashboard')}
+              >
+                <div className={styles.imageArea}>
+                  <Image alt={''} src={PortalLogo} fill style={{objectFit: 'contain'}}/>
                 </div>
                 <div className={styles.mainTitle}>혼잡도 관리시스템</div>
               </div>
@@ -121,7 +121,7 @@ export default function PortalHeader({ menus, isDashboard }: { menus: BaseMenu[]
                 </div>
               </div>
             </div>
-            <HeaderRightSection />
+            <HeaderRightSection/>
           </div>
 
           {/*@TODO 추후 데이터 다 들어간후 any 제거*/}

@@ -1,5 +1,6 @@
-import { cookies } from 'next/headers';
+import {cookies} from 'next/headers';
 import logger from "@/lib/logger";
+import {ResponseType} from "@/types/common";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 
@@ -17,29 +18,31 @@ export function buildQueryParams(params?: Record<string, any>): string {
 
 export async function serverFetch<T>(
   url: string,
-  options: RequestInit & { revalidate?: number } = { method: 'GET' }
+  options: RequestInit & { revalidate?: number } = {method: 'GET'}
 ): Promise<T> {
 
-  const storeCookie = await cookies();
-  const token = storeCookie.get('access_token');
+  const {revalidate, ...fetchOptions} = options;
 
-  const { revalidate, ...fetchOptions } = options;
+  const cook = await cookies();
+  const cookieHeader = cook.toString()
 
   const res = await fetch(BASE_URL + url, {
     method: options.method ?? 'GET',
     ...fetchOptions,
     headers: {
       'Content-Type': 'application/json',
+      Cookie: cookieHeader,
       ...fetchOptions.headers,
-      ...(token && { Authorization: `Bearer ${token}` }),
+      // ...(token && { Authorization: `Bearer ${token}` }),
     },
-    cache: 'force-cache',
-    ...(revalidate && { next: { revalidate } }),
+    // cache: 'force-cache',
+    ...(revalidate && {next: {revalidate}}),
   });
 
-  if (!res.ok) {
-    const message = await res.text();
-    logger.error({ message: 'res >>>', data: {
+  // @TODO json 타입인지 확인하는 처리해야할듯.
+
+  logger.error({
+    message: 'res >>>', data: {
       endPoint: '/board',
       method: 'GET',
       body: {},
@@ -49,9 +52,29 @@ export async function serverFetch<T>(
         status: res.status,
         statusText: res.statusText,
         headers: res.headers,
-        body: message
+        url: res.url,
       }
-    }});
+    }
+  });
+
+
+  if (!res.ok) {
+    const message = await res.text();
+    logger.error({
+      message: 'res >>>', data: {
+        endPoint: '/board',
+        method: 'GET',
+        body: {},
+        headers: {},
+        params: {},
+        response: {
+          status: res.status,
+          statusText: res.statusText,
+          headers: res.headers,
+          body: message
+        }
+      }
+    });
     throw new Error(`서버 API 요청 실패 (${res.status}): ${message}`);
   }
 
@@ -66,7 +89,7 @@ export const serverGet = <T>(
   const queryString = buildQueryParams(queryParams);
   const fullUrl = queryString ? `${url}?${queryString}` : url;
 
-  return serverFetch<T>(fullUrl, {
+  return serverFetch<ResponseType<T>>(fullUrl, {
     method: 'GET',
     ...options,
   });

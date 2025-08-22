@@ -1,0 +1,20 @@
+### 2. 메뉴 생성
+POST {{backend_url}}/api/auths/login
+#Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "userId": "test0001",
+  "lgnPswdCn": "1q2w3e4r"
+}
+
+
+#### 2. 메뉴 생성
+#GET {{backend_url}}/api/auths/me
+##Authorization: Bearer {{access_token}}
+#Content-Type: application/json
+#
+#{
+#  "userId": "test0001",
+#  "lgnPswdCn": "1q2w3e4r"
+#}

@@ -1,0 +1,19 @@
+.page {
+  width: 3.6rem;
+  height: 3.6rem;
+  background: #fff;
+  font-family: Pretendard;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background: #e2f0fe;
+  }
+}
+
+.checked {
+  background: #0061b8 !important;
+  color: #fff;
+}

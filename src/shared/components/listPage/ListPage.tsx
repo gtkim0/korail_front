@@ -21,6 +21,7 @@ import {useTableSelection} from "@/shared/hooks/useTableSelection";
 import {ActionButtons} from "@/shared/components/actionButtons/ActionButtons";
 import ConfirmModal from "@/shared/components/modal/ConfirmModal/ConfirmModal";
 import {ColumnDef} from "@tanstack/react-table";
+import {PaginationResponseType} from "@/types/common";
 
 export interface BaseModalFormProps<T> {
   editData: T | null;
@@ -48,13 +49,13 @@ interface ListPageProps<T extends { id: string | number }, F, V = Record<string,
   FilterComponent?: PolymorphicComponent<FilterProps<V | undefined>>
   CustomFilterSubRender?: ComponentType<FilterProps<V>>;
   columns: ColumnDef<T, any>[];
-  fetchData: (opts: {
+  fetchData: (params: {
     sortKey: string;
     sortOrder: string;
     filter: V;
     page: number;
-    size: number;
-  }) => Promise<T[]>;
+    pagePerSize: number;
+  }) => Promise<PaginationResponseType<T>>;
   ModalBody?: ForwardRefExoticComponent<PropsWithoutRef<F> & RefAttributes<any>> | any;
   modalBodyProps?: Omit<F, keyof BaseModalFormProps<T>>;
   initialFilter: V;
@@ -96,7 +97,7 @@ function ListPage<T extends { id: string | number }, F, V>(
   const editAreaRef = useRef<any>(null);
 
   const [editTarget, setEditTarget] = useState<T | null>(null);
-  const [pagination, setPagination] = useState({pageIndex: 0, pageSize: 10});
+  const [pagination, setPagination] = useState({pageIndex: 1, pageSize: 10});
   const [clickedItem, setClickedItem] = useState<T | null>(null);
   const [filter, setFilter] = useState<V>(initialFilter);
 
@@ -116,27 +117,25 @@ function ListPage<T extends { id: string | number }, F, V>(
 
   const [canSubmit, setCanSubmit] = useState(false);
 
-  const {data: dataSource = [], isLoading, isFetching, refetch} = useQuery({
+  const {data: dataSource, isLoading, isFetching, refetch} = useQuery({
     queryKey: ['list', pageType],
     queryFn: () => {
-      console.log('ddd')
-      console.log(fetchData)
       return fetchData({
         sortKey,
         sortOrder,
         filter,
         page: pagination.pageIndex,
-        size: pagination.pageSize
+        pagePerSize: pagination.pageSize
       });
     },
-    initialData: initialData,
+    // initialData: initialData,
     placeholderData: keepPreviousData,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     enabled
   });
 
-  const {rowSelection, onRowSelectionChange} = useTableSelection<T>(dataSource, ids => {
+  const {rowSelection, onRowSelectionChange} = useTableSelection<T>(dataSource?.list || [], ids => {
     console.log(dataSource);
     console.log(`${pageType} selected`, ids);
   });
@@ -157,7 +156,6 @@ function ListPage<T extends { id: string | number }, F, V>(
   }
 
   const handleDownload = () => {
-
   }
 
   const handleAdd = useCallback(() => {
@@ -180,7 +178,7 @@ function ListPage<T extends { id: string | number }, F, V>(
     }
 
     if (success) {
-      toast.success(editTarget ? '수정 완료' : '등록 완료');
+      toast.success(editTarget ? '수정이 완료되었습니다.' : '등록되었습니다.');
       refetch();
       close();
     } else {
@@ -212,6 +210,8 @@ function ListPage<T extends { id: string | number }, F, V>(
     setEnabled(true);
   }, []);
 
+  console.log(dataSource);
+
   // @ts-ignore
   return (
     <>
@@ -227,33 +227,37 @@ function ListPage<T extends { id: string | number }, F, V>(
         // customFilterSubProps={dataSource}
         // customFilterSubProps 에 현재 날짜랑 응답 데이터 같이 넣어줘야함.
       />
-      <TableWrapper<T>
-        onSelect={() => {
-        }}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-        onDownload={onDownload}
-        columns={columns}
-        data={dataSource}
-        sorting={sorting}
-        clickedItem={clickedItem}
-        onChangeClickedItem={(item) => setClickedItem(item)}
-        onSortingChange={(updater) => {
-          const next = typeof updater === 'function' ? updater(sorting) : updater;
-          if (Array.isArray(next)) {
-            setSorting(next);
-          }
-        }}
-        rowSelection={rowSelection}
-        onRowSelectionChange={onRowSelectionChange}
-        pageIndex={pagination.pageIndex}
-        pageSize={pagination.pageSize}
-        pageCount={Math.ceil(dataSource.length / pagination.pageSize)}
-        setPageIndex={index => setPagination(prev => ({...prev, pageIndex: index}))}
-        setPageSize={size => setPagination(prev => ({...prev, pageSize: size}))}
-        enabledEdit={!!onSubmitEdit}
-        enabledDelete={!!onDelete}
-      />
+      {
+        dataSource &&
+          <TableWrapper<T>
+              onSelect={() => {
+              }}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onDownload={onDownload}
+              columns={columns}
+              data={dataSource?.list || []}
+              sorting={sorting}
+              clickedItem={clickedItem}
+              onChangeClickedItem={(item) => setClickedItem(item)}
+              onSortingChange={(updater) => {
+                const next = typeof updater === 'function' ? updater(sorting) : updater;
+                if (Array.isArray(next)) {
+                  setSorting(next);
+                }
+              }}
+              rowSelection={rowSelection}
+              onRowSelectionChange={onRowSelectionChange}
+              pageIndex={pagination.pageIndex}
+              pageSize={pagination.pageSize}
+              pageCount={Math.ceil(dataSource?.totalCount / pagination.pageSize)}
+              setPageIndex={index => setPagination(prev => ({...prev, pageIndex: index}))}
+              setPageSize={size => setPagination(prev => ({...prev, pageSize: size}))}
+              enabledEdit={!!onSubmitEdit}
+              enabledDelete={!!onDelete}
+          />
+      }
+
       {
         ModalBody &&
           <BaseModal

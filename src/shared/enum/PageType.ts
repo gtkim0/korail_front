@@ -32,5 +32,9 @@ export enum PageType {
   CongestionEquipStatus = 'congestion-equip-status',
   CongestionAmountUse = 'congestion-amount-use',
   CongestionArea = 'congestion-area',
-  CongestionStation = 'congestion-station'
+  CongestionStation = 'congestion-station',
+  MyProfile = 'my-profile',
+  MemberManagement = 'member-management',
+  MyMenuAuthorityView = 'authority-view',
+  PermissionRequest = 'permission-request'
 }

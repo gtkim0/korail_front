@@ -36,6 +36,9 @@ const onOffOptions = [
 ];
 
 export const filterSchemas: Record<PageType, FilterSchema[]> = {
+  [PageType.MyProfile]: [],
+  [PageType.MyMenuAuthorityView]: [],
+  [PageType.PermissionRequest]: [],
   [PageType.Menu]: [
     {
       type: FilterType.Checkbox,
@@ -70,7 +73,7 @@ export const filterSchemas: Record<PageType, FilterSchema[]> = {
     {
       type: FilterType.DateRange,
       key: 'range',
-      label: '기간',
+      label: '데이터기준일자',
     },
     {
       type: FilterType.Switch,
@@ -86,7 +89,7 @@ export const filterSchemas: Record<PageType, FilterSchema[]> = {
     {
       type: FilterType.Checkbox,
       key: 'category',
-      label: '검색 기준',
+      label: '검색어 필터',
       options: [
         {key: '1', label: '번호(코드)'},
         {key: '2', label: '임계치'},
@@ -129,7 +132,7 @@ export const filterSchemas: Record<PageType, FilterSchema[]> = {
     {
       type: FilterType.DateRange,
       key: 'range',
-      label: '기간',
+      label: '데이터기준일자',
     },
   ],
   [PageType.RouteMap]: [
@@ -163,7 +166,7 @@ export const filterSchemas: Record<PageType, FilterSchema[]> = {
     // {
     //   type: FilterType.SearchModal,
     //   key: 'searchModal',
-    //   label: '기간',
+    //   label: '데이터기준일자',
     // },
   ],
   [PageType.OperationInfo]: [
@@ -285,7 +288,7 @@ export const filterSchemas: Record<PageType, FilterSchema[]> = {
     {
       type: FilterType.Checkbox,
       key: 'category',
-      label: '검색 기준',
+      label: '검색어 필터',
       options: [
         {key: '1', label: '노선번호'},
         {key: '2', label: '노선명'},
@@ -303,7 +306,7 @@ export const filterSchemas: Record<PageType, FilterSchema[]> = {
     {
       type: FilterType.Checkbox,
       key: 'category',
-      label: '검색 기준',
+      label: '검색어 필터',
       options: [
         {key: '1', label: '노선명'},
         {key: '2', label: '역사명'},
@@ -328,7 +331,7 @@ export const filterSchemas: Record<PageType, FilterSchema[]> = {
     {
       type: FilterType.Checkbox,
       key: 'category',
-      label: '검색 기준',
+      label: '검색어 필터',
       options: [
         {key: '1', label: '노선번호'},
         {key: '2', label: '노선명'},
@@ -355,7 +358,7 @@ export const filterSchemas: Record<PageType, FilterSchema[]> = {
     {
       type: FilterType.Checkbox,
       key: 'category',
-      label: '검색 기준',
+      label: '검색어 필터',
       options: [
         {key: '1', label: '관리번호'},
         {key: '2', label: 'IP'},
@@ -379,7 +382,7 @@ export const filterSchemas: Record<PageType, FilterSchema[]> = {
     {
       type: FilterType.Checkbox,
       key: 'category',
-      label: '검색 기준',
+      label: '검색어 필터',
       options: [
         {key: '1', label: '메뉴얼ID'},
         {key: '2', label: '상황구분'},
@@ -406,7 +409,7 @@ export const filterSchemas: Record<PageType, FilterSchema[]> = {
     {
       type: FilterType.Checkbox,
       key: 'category',
-      label: '검색 기준',
+      label: '검색어 필터',
       options: [
         {key: '1', label: '메뉴얼ID'},
         {key: '2', label: '상황구분'},
@@ -433,7 +436,7 @@ export const filterSchemas: Record<PageType, FilterSchema[]> = {
     {
       type: FilterType.Checkbox,
       key: 'category',
-      label: '검색 기준',
+      label: '검색어 필터',
       options: [
         {key: '1', label: '노선명'},
         {key: '2', label: '역사명'},
@@ -456,7 +459,7 @@ export const filterSchemas: Record<PageType, FilterSchema[]> = {
     {
       type: FilterType.Checkbox,
       key: 'category',
-      label: '검색 기준',
+      label: '검색어 필터',
       options: [
         {key: '1', label: '방송규칙명'},
         {key: '2', label: '혼잡도'},
@@ -475,7 +478,31 @@ export const filterSchemas: Record<PageType, FilterSchema[]> = {
   [PageType.CongestionVerificationComplete]: [],
   [PageType.PermissionUser]: [],
   [PageType.PermissionMenu]: [],
-  [PageType.PermissionGroup]: [],
+  [PageType.PermissionGroup]: [
+    {
+      type: FilterType.Checkbox,
+      key: 'category',
+      label: '검색어 필터',
+      options: [
+        {key: '1', label: '그룹ID'},
+        {key: '2', label: '그룹명'},
+      ]
+    },
+    {
+      type: FilterType.Switch,
+      key: 'useYn',
+      label: '사용여부',
+      options: [
+        {key: 'ON', label: 'ON'},
+        {key: 'OFF', label: 'OFF'}
+      ]
+    },
+    {
+      type: FilterType.DateRange,
+      key: 'range1',
+      label: '데이터기준 일자',
+    },
+  ],
   [PageType.TrainStatistics]: [
     {
       type: FilterType.Select,
@@ -584,5 +611,6 @@ export const filterSchemas: Record<PageType, FilterSchema[]> = {
         width: '16rem'
       }
     },
-  ]
+  ],
+  [PageType.MemberManagement]: []
 }

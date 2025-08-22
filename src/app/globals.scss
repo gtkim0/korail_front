@@ -29,16 +29,11 @@ body {
 /*}*/
 
 html {
-
   font-size: 62.5%; /* 1rem = 10px */
 
-  //@include fork-desktop {
-  //  font-size: 80%;
-  //}
-  //
-  //@include fullScreen-desktop {
-  //  font-size: 62.5%;
-  //}
+  @include fork-desktop {
+    font-size: 62.5%;
+  }
 
   @include small-desktop {
     font-size: 58%; // 9.28px
@@ -198,7 +193,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .react-datepicker__header__dropdown {
-  padding: 2rem 0;
+  padding: .5rem 0;
 }
 
 .react-datepicker__current-month {
