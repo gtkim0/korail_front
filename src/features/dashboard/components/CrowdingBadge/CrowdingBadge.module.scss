@@ -6,6 +6,7 @@
   align-items: center;
   gap: 6px;
   font-size: 13px;
+  height: 24px;
 
   &.noBoxShadow {
     box-shadow: none !important;
@@ -13,6 +14,7 @@
 
   .title {
     color: #fff;
+    white-space: nowrap;
   }
 
   .o {

@@ -10,6 +10,11 @@
 
 .footer.darkMode {
     border-top: 1px solid #3b4868;
+
+    .cancel {
+        border-color: #3b4868;
+        color: #c3ccdd;
+    }
 }
 
 .button {
@@ -26,7 +31,7 @@
 
 .cancel {
     border: 1px solid #A3A3A9;
-    background: #fff;
+    background: transparent;
 }
 
 .save {

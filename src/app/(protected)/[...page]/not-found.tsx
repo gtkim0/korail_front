@@ -1,6 +1,6 @@
 import styles from './404.module.scss';
 import Link from 'next/link';
-import MetroLineAtomic from "@/shared/components/MetroLineAtomic/MetroLineAtomic";
+import MetroLineAtomic from "@/features/dashboard/components/MetroLineAtomic/MetroLineAtomic";
 import CongestionBarChart from "@/features/dashboard/components/CongestionBarChart/CongestionBarChart";
 
 export default function NotFound() {

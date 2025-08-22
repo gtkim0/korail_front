@@ -1,3 +1,4 @@
+
 .container {
   display: flex;
   flex-direction: column;
@@ -56,6 +57,38 @@
       border: 1px solid #004799;
       background: #002952;
       color: #5eb2fe;
+      font-size: 14px;
+    }
+  }
+
+  .table {
+    flex: 1;
+    color: #fff;
+
+    div {
+      font-size: 15px;
+      font-weight: 500;
+      border-radius: 6px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      overflow: auto;
+      border-color: transparent;
+    }
+
+    tr {
+      background: transparent;
+    }
+
+    td {
+      border-color: transparent;
+    }
+
+    th {
+      background: #1f355d;
+      color: #98a6c0;
     }
   }
 }

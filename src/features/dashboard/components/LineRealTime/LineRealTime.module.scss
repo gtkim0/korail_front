@@ -91,6 +91,10 @@
     border-bottom: 1px solid #162b4e;
     display: flex;
 
+    &.height {
+      height: 100px !important;
+    }
+
 
     & div {
       display: flex;
@@ -133,7 +137,7 @@
       color: #fff;
       font-size: 13px;
       font-weight: 600;
-      width: 143px;
+      width: 144px;
       height: 40px;
       background: radial-gradient(55.21% 49.85% at 50% 0%, rgba(0, 132, 255, 0.20) 0%, rgba(0, 132, 255, 0.00) 100%), #162b3e;
       border-radius: 8px;
@@ -141,6 +145,13 @@
       position: absolute;
       transform: translateY(-50%);
       z-index: 2;
+      cursor: pointer;
+      border: 1px solid transparent;
+
+      &.active {
+        background: linear-gradient(180deg, #416fc3 0%, #005cb8 100%);
+        border-color: #0078e3;
+      }
 
       .destination {
         margin-left: 8px;
@@ -167,11 +178,46 @@
     .station_info {
       gap: 6px;
       font-size: 16px;
+      position: relative;
+      cursor: pointer;
 
-      & div:nth-child(2) {
+      &.active {
+        background: linear-gradient(180deg, #416fc3 0%, #005cb8 100%);
+        border: 1px solid #0078e3;
+
+        .other_side span {
+          fill: transparent;
+        }
+
+      }
+
+      .title {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+      }
+
+    }
+
+    .other_side {
+      position: absolute;
+      top: 15px;
+      left: -10px;
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+
+      span {
+        width: 66px;
+        height: 29px;
+        fill: #243955;
+      }
+
+      button {
+        font-size: 10px;
+        margin-top: -2px;
+        background: transparent;
+        color: #fff;
       }
     }
   }
@@ -179,4 +225,96 @@
 
 .rotate {
   transform: rotate(180deg);
+}
+
+.tooltip_container {
+  position: absolute;
+  width: auto;
+  border: 1.5px solid #536688;
+  background: #1f355d;
+  border-radius: 12px;
+  z-index: 9999;
+
+  .arrow {
+    position: absolute;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+  }
+}
+
+.station_tooltip {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  .station_tooltip_header {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    .title {
+      flex: 1;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+
+  .station_tooltip_body {
+    color: #fff;
+    overflow: hidden;
+    padding: 0 0 5px 0;
+
+    & div {
+      @extend .custom-scroll1;
+    }
+
+    table {
+      border-radius: 0;
+      border: none;
+      overflow: auto;
+      border-collapse: collapse;
+    }
+
+    thead {
+      border-radius: 0 !important;
+
+      th {
+        position: sticky;
+        top: 0;
+
+        div {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+
+    tr {
+      background: transparent;
+      border-radius: 0;
+    }
+
+    th {
+      background: #172846;
+      border: none;
+      text-align: center;
+      border-radius: 0 !important;
+    }
+
+    td {
+      border: none;
+    }
+
+    td div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 }
