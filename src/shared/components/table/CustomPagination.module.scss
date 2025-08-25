@@ -1,12 +1,13 @@
 .page {
   width: 3.6rem;
   height: 3.6rem;
-  background: #fff;
+  //background: #fff;
   font-family: Pretendard;
   border-radius: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: inherit;
 
   &:hover {
     background: #e2f0fe;

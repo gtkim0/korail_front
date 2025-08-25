@@ -28,7 +28,13 @@ const getCommonCode = async () => {
 
 export default async function RootLayout({children}: Readonly<{ children: ReactNode }>) {
 
-  const code = await getCommonCode();
+  let code = null;
+
+  try {
+    code = await getCommonCode();
+  } catch (err) {
+    console.error(err);
+  }
 
   return (
     <html lang="en">

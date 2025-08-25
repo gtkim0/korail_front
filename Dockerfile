@@ -14,10 +14,10 @@
 #RUN yarn build
 
 # 3. Runner 단계
-FROM node:18.17.0
+FROM node:18.19.0-alpine
 WORKDIR /my-project
 ENV NODE_ENV production
-COPY /next.config.js ./
+COPY /next.config.ts ./
 COPY /public ./public
 COPY /.next ./.next
 COPY /logs ./logs

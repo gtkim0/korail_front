@@ -488,6 +488,61 @@ export const menuList = [
     depth: 3,
     name: '권한 요청',
     description: ''
+  },
+
+  // 영상조회반출
+  {id: '800', pid: '8', depth: 2, name: '반출관리', url: '', component: '', code: 'MS-MP-037'},
+  {
+    id: '8000',
+    pid: '800',
+    order: 1,
+    depth: 3,
+    name: '반출요청',
+    url: '/image-export/management/request',
+    component: 'ImageExportManagementRequest',
+    code: 'MS-MP-037-01'
+  },
+
+  {id: '801', pid: '8', depth: 2, name: '결제 수신', url: '', component: '', code: 'MS-MP-038'},
+  {
+    id: '8010',
+    pid: '801',
+    order: 1,
+    depth: 3,
+    name: '결제 대기',
+    url: '/image-export/payment-receive/pending',
+    component: 'ImageExportPaymentReceivePending',
+    code: 'MS-MP-038-01'
+  },
+  {
+    id: '8011',
+    pid: '801',
+    order: 2,
+    depth: 3,
+    name: '결재 완료',
+    url: '/image-export/payment-receive/complete',
+    component: 'ImageExportPaymentReceiveComplete',
+    code: 'MS-MP-039-01'
+  },
+
+  {id: '802', pid: '8', depth: 2, name: '결재 상신', url: '', component: '', code: 'MS-MP-040'},
+  {
+    id: '8021',
+    pid: '802',
+    order: 1,
+    depth: 3,
+    name: '결재 대기',
+    url: '/image-export/payment-submit/pending',
+    component: 'ImageExportPaymentSubmitPending',
+  },
+  {
+    id: '8022',
+    pid: '802',
+    order: 2,
+    depth: 3,
+    name: '결재 완료',
+    url: '/image-export/payment-submit/complete',
+    component: 'ImageExportPaymentSubmitComplete',
   }
 
   // 마이페이지
@@ -516,20 +571,7 @@ export const menuList = [
   // { id: '68', pid: null, depth: 2, name: '회원 탈퇴', url: '', component: '', code: 'MS-MP-036' },
   // { id: '68-1', pid: '68', depth: 3, name: '회원탈퇴', url: '/mypage/withdraw', component: 'UserWithdraw', code: 'MS-MP-036-01' },
   //
-  // // 영상조회반출
-  // { id: '69', pid: null, depth: 2, name: '영상 조회', url: '', component: '', code: 'MS-MP-037' },
-  // { id: '69-1', pid: '69', depth: 3, name: '영상조회', url: '/video/export/view', component: 'VideoView', code: 'MS-MP-037-01' },
-  //
-  // { id: '70', pid: null, depth: 2, name: '반출 요청', url: '', component: '', code: 'MS-MP-038' },
-  // { id: '70-1', pid: '70', depth: 3, name: '반출 요청', url: '/video/export/request', component: 'ExportRequest', code: 'MS-MP-038-01' },
-  //
-  // { id: '71', pid: null, depth: 2, name: '결재 수신', url: '', component: '', code: 'MS-MP-039' },
-  // { id: '71-1', pid: '71', depth: 3, name: '결재 대기', url: '/video/export/receive/pending', component: 'ApprovalReceivePending', code: 'MS-MP-039-01' },
-  // { id: '71-2', pid: '71', depth: 3, name: '결재 완료', url: '/video/export/receive/completed', component: 'ApprovalReceiveCompleted', code: 'MS-MP-039-02' },
-  //
-  // { id: '73', pid: null, depth: 2, name: '결재 상신', url: '', component: '', code: 'MS-MP-040' },
-  // { id: '73-1', pid: '73', depth: 3, name: '결재 대기', url: '/video/export/request/pending', component: 'ApprovalSubmitPending', code: 'MS-MP-040-01' },
-  // { id: '73-2', pid: '73', depth: 3, name: '결재 완료', url: '/video/export/request/completed', component: 'ApprovalSubmitCompleted', code: 'MS-MP-040-02' }
+
   //
 ];
 

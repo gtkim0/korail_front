@@ -29,7 +29,8 @@ export const MODAL_TITLE: Partial<Record<PageType, string>> = {
   [PageType.PermissionGroup]: '권한그룹 등록/수정',
   [PageType.PermissionUser]: '사용자별 권한 등록/수정',
   [PageType.PermissionMenu]: '메뉴별 권한 등록/수정',
-  [PageType.MemberManagement]: '회원정보  수정/등록'
+  [PageType.MemberManagement]: '회원정보  수정/등록',
+  [PageType.ImageExportManagementRequest]: '반출요청'
 }
 
 export const MODAL_MESSAGES = {

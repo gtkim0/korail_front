@@ -51,7 +51,7 @@ export default function CustomPagination(
         <button
           onClick={goPrev}
           style={{
-            background: '#fff',
+            background: 'inherit',
             padding: '0 6px 0 2px',
             display: 'flex',
             alignItems: 'center'
@@ -73,7 +73,7 @@ export default function CustomPagination(
         <button
           onClick={goNext}
           style={{
-            background: '#fff',
+            background: 'inherit',
             padding: '0 2px 0 6px',
             display: 'flex',
             alignItems: 'center'

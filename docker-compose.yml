@@ -4,7 +4,10 @@ services:
   nextjs:
     image: www
     environment:
-      TZ: "Asia/Seoul"
+      API_BASE_URL: http://10.141.10.209:8080
+      API_FRONT_URL: http://nginx
+      TZ: Asia/Seoul
+    #      TZ: "Asia/Seoul"
     restart: always
     network_mode: 'host'
     volumes:
@@ -16,9 +19,11 @@ services:
       TZ: "Asia/Seoul"
     restart: always
     network_mode: 'host'
+
     volumes:
-#      - ./volumes/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./volumes/nginx/conf.d/:/etc/nginx/conf.d/
+    ports:
+      - "80:80"
     depends_on:
       - nextjs
 

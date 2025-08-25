@@ -4,6 +4,7 @@ import DropDown from "@/shared/components/dropDown/DropDown";
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
 import Download from '@/shared/assets/images/download.svg';
 import Image from "next/image";
+import {ReactNode} from "react";
 
 interface Props {
   onSelect?: (value: { key: string, label: string }) => void;
@@ -12,9 +13,19 @@ interface Props {
   onDownload?: () => void;
   enabledEdit?: boolean;
   enabledDelete?: boolean;
+  rightSlot?: () => ReactNode | undefined;
 }
 
-export default function TableFilter({onSelect, onEdit, onDelete, onDownload, enabledEdit, enabledDelete}: Props) {
+export default function TableFilter({
+                                      onSelect,
+                                      onEdit,
+                                      onDelete,
+                                      onDownload,
+                                      enabledEdit,
+                                      enabledDelete,
+                                      rightSlot
+                                    }: Props) {
+
 
   return (
     <div className={styles.tableFilter}>
@@ -48,20 +59,30 @@ export default function TableFilter({onSelect, onEdit, onDelete, onDownload, ena
         />
       </div>
 
+      {/*{*/}
+      {/*  customTableFilter*/}
+      {/*}*/}
 
       <div className={styles.buttonWrapper}>
         {
-          enabledDelete && <button onClick={() => onDelete?.()} className={styles.delete}>삭제</button>
-        }
-        {
-          enabledEdit && <button onClick={() => onEdit?.()} className={styles.edit}>수정</button>
-        }
-        {
-          onDownload &&
-            <button className={styles.download}>
-                내려받기
-                <Image src={Download} alt={'logo'}/>
-            </button>
+          <>
+            {
+              enabledDelete && <button onClick={() => onDelete?.()} className={styles.delete}>삭제</button>
+            }
+            {
+              enabledEdit && <button onClick={() => onEdit?.()} className={styles.edit}>수정</button>
+            }
+            {
+              onDownload &&
+                <button className={styles.download}>
+                    내려받기
+                    <Image src={Download} alt={'logo'}/>
+                </button>
+            }
+            {
+              rightSlot && rightSlot()
+            }
+          </>
         }
       </div>
     </div>

@@ -1,5 +1,5 @@
 import {ResponseType} from "@/types/common";
-import Router from 'next/router';
+import {Router} from "next/router";
 
 export function buildQueryParams(params?: Record<string, any>): string {
   if (!params) return '';
@@ -17,8 +17,6 @@ export async function clientFetch<T>(
   options: RequestInit = {method: 'GET'}
 ): Promise<ResponseType<T>> {
 
-  const token = localStorage.getItem('access_token'); // 또는 쿠키 파싱해서 가져오기
-
   const rootFlag = '/apis'
 
   let res = await fetch(`${rootFlag}${url}`, {
@@ -34,13 +32,10 @@ export async function clientFetch<T>(
   });
 
   if (!res.ok) {
-
     if (res.status && Number(res.status) === 401) {
 
       await fetch(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/logout`, {
         method: 'post'
-      }).then(res => {
-        Router.push('/auth/login')
       })
 
       // const refreshRes = await fetch('/auth/refresh', {

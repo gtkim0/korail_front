@@ -9,6 +9,7 @@ export function withRowSelection<T extends object>(
       id: 'select',
       header: ({table}) => (
         <input
+          onClick={(e) => e.stopPropagation()}
           type="checkbox"
           className={styles.checkbox}
           checked={table.getIsAllPageRowsSelected()}
@@ -27,9 +28,9 @@ export function withRowSelection<T extends object>(
           }}
         />
       ),
-      size: 10,
-      minSize: 10,
-      maxSize: 10
+      size: 40,
+      minSize: 40,
+      maxSize: 40
     },
     ...columns,
   ];

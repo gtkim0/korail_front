@@ -4,8 +4,10 @@ import Pagination from "@/shared/components/table/Pagination/Pagination";
 import {dummyMenuData} from "@/features/menu/columns/menuColumns";
 import {ColumnDef, OnChangeFn, RowSelectionState, SortingState} from "@tanstack/react-table";
 import CustomPagination from "@/shared/components/table/CustomPagination";
+import {ReactNode} from "react";
 
-interface Props<T extends object> {
+interface Props<T> {
+  pkColumn: keyof T;
   onSelect: (v: { key: string, label: string }) => void;
   onEdit?: () => void;
   onDelete?: () => void;
@@ -26,11 +28,14 @@ interface Props<T extends object> {
   setPageSize: (size: number) => void;
   enabledEdit?: boolean;
   enabledDelete?: boolean;
+  toolbarRight?: () => ReactNode | undefined;
+  renderToolbarRight?: () => ReactNode | undefined;
 }
 
-export default function TableWrapper<T extends { id: string | number }>(props: Props<T>) {
+export default function TableWrapper<T>(props: Props<T>) {
 
   const {
+    pkColumn,
     onSelect,
     onEdit,
     onDelete,
@@ -48,10 +53,9 @@ export default function TableWrapper<T extends { id: string | number }>(props: P
     setPageIndex,
     setPageSize,
     enabledEdit = true,
-    enabledDelete = true
+    enabledDelete = true,
+    toolbarRight
   } = props;
-
-  console.log(pageCount);
 
   return (
     <div style={{flex: 1, display: 'flex', flexDirection: 'column'}}>
@@ -62,9 +66,11 @@ export default function TableWrapper<T extends { id: string | number }>(props: P
         onDownload={onDownload}
         enabledEdit={enabledEdit}
         enabledDelete={enabledDelete}
+        rightSlot={toolbarRight}
       />
 
       <Table<T>
+        pkColumn={pkColumn}
         columns={columns}
         data={data}
         clickedItem={clickedItem}

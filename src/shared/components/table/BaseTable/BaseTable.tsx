@@ -11,29 +11,28 @@ import ArrowSort from '@/shared/assets/images/arrow-sort-both.svg'
 import ArrowSortAsc from '@/shared/assets/images/arrow-sort-both-asc.svg';
 import ArrowSortDesc from '@/shared/assets/images/arrow-sort-both-desc.svg';
 
-type CustomMeta = {
-  hidden?: boolean;
-};
-
-interface TableProps<T extends { id: string | number }> {
+interface TableProps<T> {
+  pkColumn?: keyof T;
   columns: ColumnDef<T, unknown>[];
   data: T[];
-  clickedItem: T | null;
-  sorting: SortingState;
-  rowSelection: RowSelectionState;
-  onRowSelectionChange: OnChangeFn<RowSelectionState>;
-  onSortingChange: OnChangeFn<SortingState>;
+  clickedItem?: T | null;
+  sorting?: SortingState;
+  rowSelection?: RowSelectionState;
+  onRowSelectionChange?: OnChangeFn<RowSelectionState>;
+  onSortingChange?: OnChangeFn<SortingState>;
   onRowSelectChange?: (selectedRows: T[]) => void;
   minWidth?: string;
-  pageIndex: number;
-  pageSize: number;
-  pageCount: number;
-  onChangeClickedItem: (item: T) => void;
+  maxWidth?: string;
+  pageIndex?: number;
+  pageSize?: number;
+  pageCount?: number;
+  onChangeClickedItem?: (item: T) => void;
   bgColor?: string;
 }
 
-export default function Table<T extends { id: string | number }>(
+export default function Table<T>(
   {
+    pkColumn = '',
     columns,
     data,
     clickedItem,
@@ -44,7 +43,8 @@ export default function Table<T extends { id: string | number }>(
     onChangeClickedItem,
     onRowSelectChange,
     minWidth = '120rem',
-    bgColor = "transparent",
+    maxWidth = 'auto',
+    bgColor = "#c8e5ff",
     pageCount, pageSize, pageIndex
   }: TableProps<T>) {
 
@@ -70,9 +70,10 @@ export default function Table<T extends { id: string | number }>(
     columnResizeMode: 'onChange'
   });
 
+
   return (
     <div style={{overflowX: 'auto', minWidth: '100%', flex: 1, height: '100%'}}>
-      <table className={styles.table} style={{minWidth}}>
+      <table className={styles.table} style={{minWidth, maxWidth}}>
         <thead style={{borderRadius: '6px'}}>
         {table.getHeaderGroups().map(headerGroup => (
           <tr
@@ -82,8 +83,6 @@ export default function Table<T extends { id: string | number }>(
             {headerGroup.headers
               .filter(header => header.column.columnDef.meta?.hidden !== true)
               .map(header => {
-                console.log(header.column.columnDef.meta?.width);
-                console.log(header.getSize())
                 return (
                   <th
                     style={{
@@ -97,7 +96,6 @@ export default function Table<T extends { id: string | number }>(
                   >
                     <div style={{display: 'flex', alignItems: 'center'}}>
                       {flexRender(header.column.columnDef.header, header.getContext())}
-
                       {header.column.getCanSort() && (
                         <span className={styles.sortIcon}>
                           {/*{{*/}
@@ -125,7 +123,7 @@ export default function Table<T extends { id: string | number }>(
         {table.getRowModel().rows.map(row => {
           return (
             <tr
-              style={{background: row.original.id === clickedItem?.id ? bgColor : '#fff'}}
+              style={{background: clickedItem && (row.original[pkColumn] === clickedItem[pkColumn]) ? bgColor : '#fff'}}
               key={row.id}
               className={styles.tr}
               onClick={(e) => {
@@ -139,6 +137,7 @@ export default function Table<T extends { id: string | number }>(
                   <td
                     style={{
                       width: cell.column.getSize(),
+                      // width: cell.column.columnDef.meta?.width ?? cell.column.getSize(),
                       maxWidth: cell.column.columnDef.maxSize,
                       minWidth: cell.column.columnDef.minSize,
                     }}
