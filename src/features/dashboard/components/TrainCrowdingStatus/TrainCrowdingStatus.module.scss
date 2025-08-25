@@ -1,5 +1,19 @@
 @import "src/shared/styles/scroll";
 
+.header {
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  .radio {
+    margin-left: auto;
+    font-size: 13px;
+    font-weight: 500;
+  }
+}
+
 .filter {
   position: relative;
   display: flex;
@@ -64,6 +78,5 @@
   margin-bottom: 20px;
   padding-right: 5px;
   @extend .custom-scroll2
-
 }
 

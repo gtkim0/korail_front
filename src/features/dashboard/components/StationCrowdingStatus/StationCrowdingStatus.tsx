@@ -1,4 +1,4 @@
-// 대시보드 - 관심역사 혼잡도 현황
+// 대시보드 - 역사 혼잡도 현황
 import styles from "./StationCrowdingStatus.module.scss"
 import {SearchInput} from "@/shared/components/Input/searchInput/SearchInput";
 import React, {useState} from "react";
@@ -6,7 +6,7 @@ import Image from "next/image";
 import Table from "@/shared/components/table/BaseTable/BaseTable";
 import {AnimatePresence, motion} from "framer-motion";
 import clsx from "clsx";
-import CrowdingBadge from "@/shared/components/CrowdingBadge/CrowdingBadge";
+import CrowdingBadge from "@/features/dashboard/components/CrowdingBadge/CrowdingBadge";
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
 
 export default function StationCrowdingStatus() {

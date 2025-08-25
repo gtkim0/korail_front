@@ -4,13 +4,13 @@ import Image from "next/image";
 import React, {useState} from "react";
 import {AnimatePresence, motion} from "framer-motion";
 import Table from "@/shared/components/table/BaseTable/BaseTable";
-import CrowdingBadge from "@/shared/components/CrowdingBadge/CrowdingBadge";
+import CrowdingBadge from "@/features/dashboard/components/CrowdingBadge/CrowdingBadge";
 import TrainCrowdingCard from "@/features/dashboard/components/TrainCrowdingCard/TrainCrowdingCard";
 
 
 export default function StationOverLay({feature, coordKey}: { feature: Feature, coordKey: string }) {
     const [visibleTable, setVisibleTable] = useState<"train" | "station" | null>(null)
-    console.log(visibleTable);
+
     const data = [{name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {
         name: "승강장",
         crowding: "심각"
@@ -127,7 +127,6 @@ export default function StationOverLay({feature, coordKey}: { feature: Feature, 
                                 {data.map((el, idx) => (<TrainCrowdingCard key={idx}/>))}
                             </div>
                         </div>
-
                     </motion.div>}
             </AnimatePresence>
         </AnimatePresence>)

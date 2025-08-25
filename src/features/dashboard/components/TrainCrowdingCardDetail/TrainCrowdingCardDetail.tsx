@@ -1,9 +1,10 @@
 import styles from "./TrainCrowdingCardDetail.module.scss";
 import Image from "next/image";
-import CrowdingBadge from "@/shared/components/CrowdingBadge/CrowdingBadge";
+import CrowdingBadge from "@/features/dashboard/components/CrowdingBadge/CrowdingBadge";
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
-import MetroLineAtomic from "@/shared/components/MetroLineAtomic/MetroLineAtomic";
+import MetroLineAtomic from "@/features/dashboard/components/MetroLineAtomic/MetroLineAtomic";
 import React from "react";
+import arrowIcon from "@/shared/assets/images/left-arrow.svg"
 
 export default function TrainCrowdingCardDetail() {
     return <div className={styles.item}>
@@ -22,16 +23,27 @@ export default function TrainCrowdingCardDetail() {
             </div>
             <CrowdingBadge level={1} percent={21}/>
         </div>
-        <div className={styles.item_route}>
-            <span className={styles.station}>가산디지털단지역</span>
-            <ImageWrapper width={24} height={24} src={'/arrow_circle_right.svg'} enableCursor={false}/>
-            <span className={styles.station}>디지털미디어시티역</span>
-        </div>
-        <div className={styles.item_train}>
-            <MetroLineAtomic label={'혼잡'} backgroundColor={'#F4AA21'}/>
-            <MetroLineAtomic label={'심각'} backgroundColor={'#FF1500'}/>
-            <MetroLineAtomic label={'보통'} backgroundColor={'#009856'}/>
-            <MetroLineAtomic label={'주의'} backgroundColor={'#F4AA21'}/>
+        <div className={styles.item_content}>
+            <div className={styles.item_route}>
+                <div className={styles.departure_defore}>전역출발</div>
+                <div className={styles.route}>
+                    <span className={styles.station}>가산디지털단지역</span>
+                    <Image src={arrowIcon} alt=""/>
+                    <span className={styles.station}>디지털미디어시티역</span>
+                </div>
+            </div>
+            <div className={styles.item_train}>
+                <MetroLineAtomic label={'혼잡'} backgroundColor={'#F4AA21'}/>
+                <MetroLineAtomic label={'심각'} backgroundColor={'#FF1500'}/>
+                <MetroLineAtomic label={'보통'} backgroundColor={'#009856'}/>
+                <MetroLineAtomic label={'주의'} backgroundColor={'#F4AA21'}/>
+                <MetroLineAtomic label={'주의'} backgroundColor={'#F4AA21'}/>
+                <MetroLineAtomic label={'주의'} backgroundColor={'#F4AA21'}/>
+                <MetroLineAtomic label={'주의'} backgroundColor={'#F4AA21'}/>
+                <MetroLineAtomic label={'주의'} backgroundColor={'#F4AA21'}/>
+                <MetroLineAtomic label={'주의'} backgroundColor={'#F4AA21'}/>
+                <MetroLineAtomic label={'주의'} backgroundColor={'#F4AA21'}/>
+            </div>
         </div>
     </div>
 }

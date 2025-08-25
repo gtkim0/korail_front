@@ -1,10 +1,15 @@
 import styles from './loading.module.scss';
+import icon from "@/shared/assets/images/loading.svg"
+import {createPortal} from "react-dom";
+import Image from "next/image";
 
-export function Loading() {
-  return (
-    <div className={styles.container}>
-      <div className={styles.spinner}/>
-      <p className={styles.text}>페이지를 불러오는 중입니다...</p>
-    </div>
-  );
+export default function Loading() {
+    return createPortal(
+        (
+            <div className={styles.container}>
+                <Image src={icon} className={styles.icon}/>
+            </div>
+        ),
+        document.body,
+    );
 }

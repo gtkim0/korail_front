@@ -140,11 +140,23 @@
 }
 
 .table {
-  max-height: 210px;
+  max-height: 200px;
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    overflow: auto;
+    border: none;
+  }
 
   div {
     @extend .custom-scroll2;
     padding-right: 5px;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
   }
 
   tr {
@@ -152,7 +164,13 @@
   }
 
   th {
-    background: rgba(255, 255, 255, 0.05);
+    //background: rgba(255, 255, 255, 0.05);
+    background: #1a2336;
     color: #98a6c0;
+  }
+
+  td {
+    border: none;
+    padding: 4px 12px;
   }
 }

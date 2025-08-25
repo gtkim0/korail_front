@@ -1,5 +1,5 @@
 import styles from "./CrowdingModal.module.scss"
-import CrowdingBadge from "@/shared/components/CrowdingBadge/CrowdingBadge";
+import CrowdingBadge from "@/features/dashboard/components/CrowdingBadge/CrowdingBadge";
 import Table from "@/shared/components/table/BaseTable/BaseTable";
 import React from "react";
 
@@ -43,16 +43,19 @@ export default function CrowdingModal() {
                 <span>현장근무인원 정보</span>
                 <button>현장조치 메뉴얼</button>
             </div>
-            <Table<T>
-                columns={[
-                    {accessorKey: "name", header: "노선", enableSorting: false},
-                    {accessorKey: "part", header: "부서", enableSorting: false},
-                    {accessorKey: "grade", header: "직급", enableSorting: false},
-                    {accessorKey: "num", header: "연락처", enableSorting: false},
-                ]}
-                data={data}
-                minWidth={"0"}
-            />
+            <div className={styles.table}>
+                <Table<T>
+                    columns={[
+                        {accessorKey: "name", header: "이름", enableSorting: false},
+                        {accessorKey: "part", header: "소속", enableSorting: false},
+                        {accessorKey: "grade", header: "직급", enableSorting: false},
+                        {accessorKey: "num", header: "연락처", enableSorting: false},
+                    ]}
+                    data={data}
+                    minWidth={"0"}
+                    bgColor={"#162b4e"}
+                />
+            </div>
         </div>
     </div>
 }

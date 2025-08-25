@@ -1,0 +1,14 @@
+@import "src/shared/styles/scroll";
+
+.container {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+  margin-top: 12px;
+  margin-bottom: 20px;
+  padding-right: 5px;
+  @extend .custom-scroll2
+}

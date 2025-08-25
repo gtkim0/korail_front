@@ -1,7 +1,7 @@
 import styles from './TrainCrowdingCard.module.scss'
 import Image from "next/image";
 import React from "react";
-import CrowdingBadge from "@/shared/components/CrowdingBadge/CrowdingBadge";
+import CrowdingBadge from "@/features/dashboard/components/CrowdingBadge/CrowdingBadge";
 
 export default function TrainCrowdingCard() {
     return <div className={styles.container}>

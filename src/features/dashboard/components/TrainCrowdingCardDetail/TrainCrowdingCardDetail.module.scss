@@ -1,17 +1,26 @@
 .item {
   width: 100%;
-  background: #1f355d;
+  background: #162b4e;
   border-radius: 16px;
-  padding: 16px 20px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
 }
 
 .item_header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid #0c172b;
+  background: #1f355d;
+  border-radius: 16px 16px 0 0;
+  color: #fff;
+}
+
+.item_content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px 12px 12px 12px;
 }
 
 .train_name {
@@ -30,12 +39,36 @@
 
 .item_route {
   display: flex;
-  justify-content: space-between;
+  gap: 6px;
   align-items: center;
   font-size: 15px;
   font-weight: 600;
-  padding: 4px 0;
   color: #e0e4e9;
+}
+
+.route {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  overflow: hidden;
+
+  img {
+    flex-shrink: 0;
+    margin: 0 6px;
+  }
+
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.departure_defore {
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 4px;
+  font-size: 13px;
 }
 
 .item_train {

@@ -1,5 +1,5 @@
 // 대시보드 - 혼잡도 실시간 현황
-import styles from "./RealTimeStatus.module.scss"
+import styles from "./RealTimeSection.module.scss"
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
 import Image from "next/image";
 import React, {useState} from "react";
@@ -11,14 +11,15 @@ import OlMap from "@/features/dashboard/components/OlMap/OlMap";
 import LineRealTime from "@/features/dashboard/components/LineRealTime/LineRealTime";
 import resetIcon from "@/shared/assets/images/reset.svg"
 import SpecialPeriodInfo from "@/features/dashboard/components/SpecialPeriodInfo/SpecialPeriodInfo";
+import RealTimeStationList from "@/features/dashboard/components/RealTimeStationList/RealTimeStationList";
+import RealTimeLineList from "@/features/dashboard/components/RealTimeLineList/RealTimeLineList";
 
 interface Props {
     searchTarget: SearchTargetType
 }
 
-export default function RealTimeStatus({searchTarget}: Props) {
-    const [activeTab, setActiveTab] = useState<"train" | "station">("train")
-    const data = [{line: "경인선", img: "",}]
+export default function RealTimeSection({searchTarget}: Props) {
+    const [activeCrowding, setActiveCrowding] = useState(null);
     return <>
         <div className={styles.container}>
             <div className={styles.left_content}>
@@ -41,49 +42,55 @@ export default function RealTimeStatus({searchTarget}: Props) {
 
                 </div>
                 <div className={styles.item_container}>
-                    <div className={styles.item}>
+                    <div className={clsx(styles.item, activeCrowding == "보통" && styles.active)}
+                         onClick={() => {
+                             if (activeCrowding == "보통") {
+                                 setActiveCrowding(null)
+                             } else {
+                                 setActiveCrowding("보통")
+                             }
+                         }}>
                         <div className={styles.step_box}>보통</div>
                         <span className={styles.step_num}>134</span>
                     </div>
-                    <div className={styles.item}>
-                        <div className={styles.step_box}>보통</div>
+                    <div className={clsx(styles.item, activeCrowding == "주의" && styles.active)}
+                         onClick={() => {
+                             if (activeCrowding == "주의") {
+                                 setActiveCrowding(null)
+                             } else {
+                                 setActiveCrowding("주의")
+                             }
+                         }}>
+                        <div className={styles.step_box}>주의</div>
                         <span className={styles.step_num}>134</span>
                     </div>
-                    <div className={styles.item}>
-                        <div className={styles.step_box}>보통</div>
+                    <div className={clsx(styles.item, activeCrowding == "혼잡" && styles.active)}
+                         onClick={() => {
+                             if (activeCrowding == "혼잡") {
+                                 setActiveCrowding(null)
+                             } else {
+                                 setActiveCrowding("혼잡")
+                             }
+                         }}>
+                        <div className={styles.step_box}>혼잡</div>
                         <span className={styles.step_num}>134</span>
                     </div>
-                    <div className={styles.item}>
-                        <div className={styles.step_box}>보통</div>
+                    <div className={clsx(styles.item, activeCrowding == "심각" && styles.active)}
+                         onClick={() => {
+                             if (activeCrowding == "심각") {
+                                 setActiveCrowding(null)
+                             } else {
+                                 setActiveCrowding("심각")
+                             }
+                         }}>
+                        <div className={styles.step_box}>심각</div>
                         <span className={styles.step_num}>134</span>
                     </div>
                 </div>
                 <div className={styles.list_container}>
-                    <div className={styles.tab}>
-                        <motion.div className={styles.tab_bg} layout
-                                    transition={{type: "spring", stiffness: 500, damping: 30}}
-                                    style={{left: `${activeTab == "train" ? "0%" : "50%"}`}}></motion.div>
-                        <div className={clsx(styles.tab_item, activeTab == "train" && styles.active)}
-                             onClick={() => {
-                                 setActiveTab("train")
-                             }}>열차별
-                        </div>
-                        <div className={clsx(styles.tab_item, activeTab == "station" && styles.active)}
-                             onClick={() => {
-                                 setActiveTab("station")
-                             }}>역사별
-                        </div>
-                    </div>
-                    <div className={styles.button_wrap}>
-                        <button>
-                            <span>오름차순</span>
-                            <Image
-                                src={DownUp}
-                                alt={"오름차순"}
-                            />
-                        </button>
-                    </div>
-                    <div className={styles.list}></div>
+                    {
+                        searchTarget.type == "station" ? <RealTimeStationList/> : <RealTimeLineList/>
+                    }
                 </div>
             </div>
             <div className={styles.right_content}>
