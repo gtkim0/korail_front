@@ -44,7 +44,7 @@ export default function Table<T>(
     onRowSelectChange,
     minWidth = '120rem',
     maxWidth = 'auto',
-    bgColor = "#c8e5ff",
+    bgColor,
     pageCount, pageSize, pageIndex
   }: TableProps<T>) {
 
