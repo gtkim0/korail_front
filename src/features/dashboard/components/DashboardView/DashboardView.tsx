@@ -13,7 +13,6 @@ import SectionCrowdingStatus from "@/features/dashboard/components/SectionCrowdi
 import BoxHeader from "@/features/dashboard/components/BoxHeader/BoxHeader";
 import TopCenterSection from "@/features/dashboard/components/TopCenterSection/TopCenterSection";
 import ArrivalInfo from "@/features/dashboard/components/ArrivalInfo/ArrivalInfo";
-import Loading from "@/shared/components/loading/Loading";
 
 export default function DashboardView() {
     const [searchTarget, setSearchTarget] = useState<SearchTargetType>(searchTargetInit);

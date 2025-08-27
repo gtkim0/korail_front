@@ -1,11 +1,8 @@
 // 대시보드 - 혼잡도 실시간 현황
 import styles from "./RealTimeSection.module.scss"
-import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
 import Image from "next/image";
 import React, {useState} from "react";
 import clsx from "clsx";
-import {motion} from "framer-motion";
-import DownUp from '@/shared/assets/images/down_up.svg'
 import {SearchTargetType} from "@/types/dashboard";
 import OlMap from "@/features/dashboard/components/OlMap/OlMap";
 import LineRealTime from "@/features/dashboard/components/LineRealTime/LineRealTime";
@@ -37,7 +34,7 @@ export default function RealTimeSection({searchTarget}: Props) {
                         <span className={styles.time}>( 구역 수, 14:00 기준 )</span>
                     </div>
                     <button className={styles.refresh}>
-                        <ImageWrapper src={resetIcon}/>
+                        <Image src={resetIcon} alt="reset"/>
                     </button>
 
                 </div>

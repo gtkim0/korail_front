@@ -39,15 +39,17 @@ export default function OlMap() {
                 featureProjection: "EPSG:3857",
             }),
         });
+        const seoulFeature = vectorSource.getFeatures().find((r) => r.get("CTP_ENG_NM") == "Seoul")
+        const extent = seoulFeature.getGeometry().getExtent();
 
         const vectorLayer = new VectorLayer({
             source: vectorSource,
             style: new Style({
-                stroke: new Stroke({color: "#2C2F3A", width: 2}),
+                stroke: new Stroke({color: "rgba(255,255,255,0.05)", width: 2}),
                 fill: new Fill({color: "rgba(43,82,198,0.2)"}),
             }),
         });
-        const zoom = pixelRatio == 1 ? 7.9 : 7.5
+        const zoom = pixelRatio == 1 ? 7.9 : 7.5;
         const map = new Map({
             target: mapRef.current,
             view: new View({
@@ -106,6 +108,13 @@ export default function OlMap() {
                 }
             }
         });
+
+        // map.getTargetElement().addEventListener("wheel", () => {
+        //     if (currentOverlay) {
+        //         map.removeOverlay(currentOverlay);
+        //         currentOverlay = null;
+        //     }
+        // })
 
         mapInstance.current = map;
         return () => {
