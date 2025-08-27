@@ -123,7 +123,9 @@ export default function Table<T>(
         {table.getRowModel().rows.map(row => {
           return (
             <tr
-              style={{background: clickedItem && (row.original[pkColumn] === clickedItem[pkColumn]) ? bgColor : '#fff'}}
+              // style={{background: clickedItem && (row.original[pkColumn] === clickedItem[pkColumn]) ? bgColor : 'transparent'}}
+              style={{background: bgColor ?? 'transparent'}}
+
               key={row.id}
               className={styles.tr}
               onClick={(e) => {
