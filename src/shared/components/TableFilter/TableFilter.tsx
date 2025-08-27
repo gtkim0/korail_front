@@ -14,6 +14,9 @@ interface Props {
   enabledEdit?: boolean;
   enabledDelete?: boolean;
   rightSlot?: () => ReactNode | undefined;
+  renderToolbarRight: any;
+  filteredOps: any;
+  actions?: any;
 }
 
 export default function TableFilter({
@@ -23,9 +26,13 @@ export default function TableFilter({
                                       onDownload,
                                       enabledEdit,
                                       enabledDelete,
-                                      rightSlot
+                                      rightSlot,
+                                      renderToolbarRight,
+                                      filteredOps,
+                                      actions
                                     }: Props) {
 
+  const renderActions = actions
 
   return (
     <div className={styles.tableFilter}>
@@ -62,28 +69,47 @@ export default function TableFilter({
       {/*{*/}
       {/*  customTableFilter*/}
       {/*}*/}
-
       <div className={styles.buttonWrapper}>
         {
-          <>
-            {
-              enabledDelete && <button onClick={() => onDelete?.()} className={styles.delete}>삭제</button>
-            }
-            {
-              enabledEdit && <button onClick={() => onEdit?.()} className={styles.edit}>수정</button>
-            }
-            {
-              onDownload &&
-                <button className={styles.download}>
-                    내려받기
-                    <Image src={Download} alt={'logo'}/>
+          renderActions ?
+            renderActions.map((a) => {
+              const className =
+                a.variant === 'danger'
+                  ? styles.delete
+                  : a.variant === 'primary'
+                    ? styles.edit :
+                    styles.normal
+
+              return (
+                <button key={a.key} onClick={a.onClick()}>
+                  {a.label}
                 </button>
-            }
-            {
-              rightSlot && rightSlot()
-            }
-          </>
+              )
+            })
+            :
+            renderToolbarRight ?
+              renderToolbarRight()
+              :
+              <>
+                {
+                  enabledDelete && <button onClick={() => onDelete?.()} className={styles.delete}>삭제</button>
+                }
+                {
+                  enabledEdit && <button onClick={() => onEdit?.()} className={styles.edit}>수정</button>
+                }
+                {
+                  onDownload &&
+                    <button className={styles.download}>
+                        내려받기
+                        <Image src={Download} alt={'logo'}/>
+                    </button>
+                }
+                {
+                  rightSlot && rightSlot()
+                }
+              </>
         }
+
       </div>
     </div>
   )

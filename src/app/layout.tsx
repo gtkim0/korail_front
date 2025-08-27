@@ -28,19 +28,20 @@ const getCommonCode = async () => {
 
 export default async function RootLayout({children}: Readonly<{ children: ReactNode }>) {
 
-  let code = null;
-
-  try {
-    code = await getCommonCode();
-  } catch (err) {
-    console.error(err);
-  }
+  // let code = null;
+  //
+  // try {
+  //   code = await getCommonCode();
+  // } catch (err) {
+  //   console.error(err);
+  // }
 
   return (
     <html lang="en">
     <body className={`${pretendard.variable} antialiased`}>
     <RQProviders>
-      <ZustandHydrator initial={code}>
+      {/*<ZustandHydrator initial={code}>*/}
+      <ZustandHydrator initial={[]}>
         <Toaster
           position="top-center"
           toastOptions={{

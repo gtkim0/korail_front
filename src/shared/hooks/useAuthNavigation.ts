@@ -1,5 +1,6 @@
 'use client';
 import {useRouter, usePathname, useSearchParams} from "next/navigation";
+import {toast} from "react-hot-toast";
 
 let loggingOut = false;
 
@@ -32,6 +33,7 @@ export function useAuthNavigation() {
     } catch {
 
     } finally {
+      toast.error('로그인 세션시간이 만료되었습니다.')
       goLogin();
       loggingOut = false;
     }

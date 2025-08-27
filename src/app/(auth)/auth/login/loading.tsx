@@ -1,7 +1,7 @@
-import {Loading as LoadingComponent} from "@/shared/components/loading/Loading";
+import Loading from "@/shared/components/loading/Loading";
 
-export default function Loading() {
+export default function GlobalLoading() {
   return (
-    <LoadingComponent/>
+    <Loading/>
   )
 }

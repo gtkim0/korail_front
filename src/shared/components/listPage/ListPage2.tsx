@@ -87,8 +87,6 @@ interface ListPageProps<T, F, V = Record<string, any>> {
   toolbarRight?: (helpers: { open: () => void, item: T | null }) => ReactNode;
   renderToolbarRight?: RenderToolbarRight<T>
   renderModals?: any;
-
-  buildActions?: any;
 }
 
 
@@ -113,9 +111,7 @@ function ListPage<T, F, V>(
     modalMaxWidth = 'lg',
     toolbarRight,
     renderToolbarRight,
-    renderModals,
-
-    buildActions
+    renderModals
   }: ListPageProps<T, F, V>,
 ) {
   const {isOpen, open, close} = useModal();
@@ -214,7 +210,6 @@ function ListPage<T, F, V>(
   }
 
   const handleAdd = useCallback(() => {
-    console.log('asd');
     setEditTarget(null);
     open();
   }, [setEditTarget, open]);
@@ -271,25 +266,6 @@ function ListPage<T, F, V>(
     setEnabled(true);
   }, []);
 
-  const ctx = useMemo(
-    () => ({
-      selectedRows,
-      clickedItem,
-      filter
-    }),
-    []
-  )
-
-  const helpers = useMemo(
-    () => ({openAdd: handleAdd, openEdit: handleAdd, openPermission: handleAdd}),
-    [handleAdd, handleEdit]
-  )
-
-  const actions = useMemo(
-    () => (buildActions ? buildActions(ctx, helpers) : undefined),
-    [buildActions, ctx, helpers]
-  )
-
   // @ts-ignore
   return (
     <>
@@ -341,7 +317,6 @@ function ListPage<T, F, V>(
               enabledEdit={!!onSubmitEdit}
               enabledDelete={!!onDelete}
               toolbarRight={() => toolbarRight?.({open: handleAdd, item: clickedItem})}
-              actions={actions}
               renderToolbarRight={
                 renderToolbarRight
                   ? () => renderToolbarRight({

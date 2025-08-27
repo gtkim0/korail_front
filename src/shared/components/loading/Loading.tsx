@@ -1,15 +1,16 @@
+'use client';
 import styles from './loading.module.scss';
 import icon from "@/shared/assets/images/loading.svg"
 import {createPortal} from "react-dom";
 import Image from "next/image";
 
 export default function Loading() {
-    return createPortal(
-        (
-            <div className={styles.container}>
-                <Image src={icon} className={styles.icon}/>
-            </div>
-        ),
-        document.body,
-    );
+  return createPortal(
+    (
+      <div className={styles.container}>
+        <Image src={icon} className={styles.icon} alt={''}/>
+      </div>
+    ),
+    document.body,
+  );
 }

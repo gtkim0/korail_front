@@ -30,6 +30,8 @@ interface Props<T> {
   enabledDelete?: boolean;
   toolbarRight?: () => ReactNode | undefined;
   renderToolbarRight?: () => ReactNode | undefined;
+  filteredOps?: any;
+  actions?: any;
 }
 
 export default function TableWrapper<T>(props: Props<T>) {
@@ -54,7 +56,10 @@ export default function TableWrapper<T>(props: Props<T>) {
     setPageSize,
     enabledEdit = true,
     enabledDelete = true,
-    toolbarRight
+    toolbarRight,
+    renderToolbarRight,
+    filteredOps,
+    actions
   } = props;
 
   return (
@@ -67,6 +72,9 @@ export default function TableWrapper<T>(props: Props<T>) {
         enabledEdit={enabledEdit}
         enabledDelete={enabledDelete}
         rightSlot={toolbarRight}
+        renderToolbarRight={renderToolbarRight}
+        filteredOps={filteredOps}
+        actions={actions}
       />
 
       <Table<T>
@@ -91,13 +99,6 @@ export default function TableWrapper<T>(props: Props<T>) {
           setPageIndex(p)
         }}
       />
-      {/*<Pagination*/}
-      {/*  pageIndex={pageIndex}*/}
-      {/*  pageSize={pageSize}*/}
-      {/*  pageCount={Math.ceil(dummyMenuData.length / pageSize)}*/}
-      {/*  setPageIndex={setPageIndex}*/}
-      {/*  setPageSize={setPageSize}*/}
-      {/*/>*/}
     </div>
   )
 }

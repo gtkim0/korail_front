@@ -16,7 +16,7 @@ export const menuList = [
   {id: '5', pid: '0', url: '/d', component: '', order: 5, depth: 1, name: '혼잡도 검증', description: '혼잡도 검증 에 대한설명'},
   {id: '6', pid: '0', url: '/d', component: '', order: 5, depth: 1, name: 'API 관리', description: '혼잡도 검증 에 대한설명'},
   {id: '7', pid: '0', url: '/d', component: '', order: 5, depth: 1, name: '권한 관리', description: '혼잡도 검증 에 대한설명'},
-  {id: '8', pid: '0', url: '/d', component: '', order: 5, depth: 1, name: '영상조회반출', description: '혼잡도 검증 에 대한설명'},
+  {id: '8', pid: '0', url: '/d', component: '', order: 5, depth: 1, name: '이미지 반출', description: '혼잡도 검증 에 대한설명'},
   {id: '110', pid: '0', url: '/d', component: '', order: 5, depth: 1, name: '마이페이지', description: '마이페이지 설명'},
 
   // 기본정보 하위
