@@ -8,14 +8,18 @@ import {PageType} from "@/shared/enum/PageType";
 import PermissionGroupAddForm
   from "@/features/permission-group/components/PermissionGroupAddForm/PermissionGroupAddForm";
 import {clientGet, clientPost} from "@/shared/api/clientFetcher";
+import {useClientApi} from "@/shared/hooks/useClientApi";
 
 export interface PermissionGroupAddFormProps extends BaseModalFormProps<PermissionGroupColumnType> {
 }
 
 export default function PermissionGroupView({initialFilter, initialData}: PageServerProps) {
 
+  const api = useClientApi();
+
   return (
     <ListPage<PermissionGroupColumnType, PermissionGroupAddFormProps, any>
+      pkColumn={'authrtId'}
       pageType={PageType.PermissionGroup}
       filterSchemaKey={PageType.PermissionGroup}
       columns={withRowSelection(permissionGroupColumns)}
@@ -27,21 +31,23 @@ export default function PermissionGroupView({initialFilter, initialData}: PageSe
           page,
           pagePerSize
         }
-        const res = await clientGet<PaginationResponseType<PermissionGroupColumnType>>('/api/auths/groups/get-list', newParams)
+        const res = await api.get('/api/auths/groups/get-list', newParams)
+        // const res = await clientGet<PaginationResponseType<PermissionGroupColumnType>>('/api/auths/groups/get-list', newParams)
         return res.result
       }}
       ModalBody={PermissionGroupAddForm}
       modalBodyProps={{}}
-      onSubmitAdd={async (value) => {
-        const res = await clientPost("/api/auths/groups/create", value)
+      onSubmitAdd={async (body) => {
+        const res = await clientPost("/api/auths/groups/create", body)
         return res.resultCode === '0000';
       }}
-      onSubmitEdit={async (value) => {
-        const res = clientPost("/api/auths/groups/update", value);
-        return true;
+      onSubmitEdit={async (body) => {
+        const res = await clientPost("/api/auths/groups/update", body);
+        return res.resultCode === '0000';
       }}
       onDelete={async (ids) => {
-        return true;
+        const res = await clientPost('/api/auths/groups/delete', {authrtIds: ids});
+        return res.resultCode === '0000'
       }}
       initialData={initialData}
     />

@@ -8,17 +8,18 @@ import {
 import {withRowSelection} from "@/shared/components/table/withRowSelection";
 import {CongestionVerificationCompleteColumnType} from "@/types/congestion-verification-complete";
 
-export interface CongestionVerificationCompleteAddFormProps extends BaseModalFormProps<any> {}
+export interface CongestionVerificationCompleteAddFormProps extends BaseModalFormProps<any> {
+}
 
-export default function CongestionVerificationCompleteView ({initialFilter,initialData}: PageServerProps) {
+export default function CongestionVerificationCompleteView({initialFilter, initialData}: PageServerProps) {
   return (
-    <ListPage<CongestionVerificationCompleteColumnType, CongestionVerificationCompleteAddFormProps>
+    <ListPage<CongestionVerificationCompleteColumnType, CongestionVerificationCompleteAddFormProps, any>
       pageType={PageType.CongestionVerificationComplete}
       filterSchemaKey={PageType.CongestionVerificationComplete}
       columns={withRowSelection(congestionVerificationCompleteColumns)}
       initialFilter={initialFilter}
       initialSortKey={'id'}
-      fetchData={async ()=> {
+      fetchData={async () => {
         return []
       }}
       initialData={initialData}

@@ -24,9 +24,9 @@ const PermissionGroupAddForm =
       onCanSubmitChange,
       permissionGroupSchema,
       {
-        authrtId: '',
-        authrtNm: '',
-        authrtExplnCn: '',
+        authrtId: editData?.authrtId ?? '',
+        authrtNm: editData?.authrtNm ?? '',
+        authrtExplnCn: editData?.authrtExplnCn ?? '',
         // create: false,
         // read: false,
         // update: false,

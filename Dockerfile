@@ -17,7 +17,7 @@
 FROM node:18.17.0
 WORKDIR /my-project
 ENV NODE_ENV production
-COPY /next.config.js ./
+COPY /next.config.ts ./
 COPY /public ./public
 COPY /.next ./.next
 COPY /logs ./logs

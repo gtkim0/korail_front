@@ -1,7 +1,7 @@
+import MyMenuAuthorityServer from "@/features/mymenu-authority/components/MyMenuAuthorityView/MyMenuAuthorityServer";
+
 export default async function MyMenuAuthorityView() {
   return (
-    <>
-      권한 조회
-    </>
+    <MyMenuAuthorityServer/>
   )
 }

@@ -36,5 +36,11 @@ export enum PageType {
   MyProfile = 'my-profile',
   MemberManagement = 'member-management',
   MyMenuAuthorityView = 'authority-view',
-  PermissionRequest = 'permission-request'
+  PermissionRequest = 'permission-request',
+  ImageExportManagementRequest = 'image-export-management-request',
+  ImageExportPaymentReceivePending = 'image-export-payment-receive-pending',
+  ImageExportPaymentReceiveComplete = 'image-export-payment-receive-complete',
+
+  ImageExportPaymentSubmitPending = 'image-export-payment-submit-pending',
+  ImageExportPaymentSubmitComplete = 'image-export-payment-submit-complete'
 }

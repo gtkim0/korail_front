@@ -55,7 +55,16 @@ export default function PortalHeader({menus, isDashboard}: { menus: BaseMenu[], 
 
   const menuGroup = activeMenuId ? allMenuGroups[activeMenuId] ?? [] : [];
 
-  const handleMenuClick = (id: string) => {
+  const handleMenuClick = (item: BaseMenu) => {
+
+    console.log(item);
+
+    if (item.component === 'Dashboard') {
+      router.push('/dashboard')
+    }
+
+
+    const id = item.id
 
     const secondDepthList = menus.filter(i => i.depth === 2 && i.pid === id);
     const thirdDepth = menus.find(i =>

@@ -6,7 +6,7 @@ import React, {
   RefAttributes,
   ForwardRefExoticComponent,
   useMemo,
-  useCallback, ComponentType
+  useCallback, ComponentType, ReactNode
 } from 'react';
 import useModal from '@/shared/hooks/useModal';
 import TableWrapper from '@/shared/components/table/TableWrapper/TableWrapper';
@@ -43,7 +43,25 @@ type PolymorphicComponent<P> =
   | React.ForwardRefExoticComponent<P & React.RefAttributes<HTMLInputElement>
 >
 
-interface ListPageProps<T extends { id: string | number }, F, V = Record<string, any>> {
+export type ToolbarCtx<T> = {
+  selectedIds: string[];
+  selectedRows: T[];
+  clickedItem: T | null;
+  totalRows: number;
+}
+
+export type ToolbarHelpers = {
+  refetch?: () => void;
+  notify?: (msg: string, type?: 'success' | 'error') => void;
+  confirm?: (message: string) => Promise<boolean>;
+  openModal?: (content: ReactNode) => void;
+  closeModal?: () => void;
+}
+
+export type RenderToolbarRight<T> = (args: ToolbarCtx<T> & ToolbarHelpers) => ReactNode;
+
+interface ListPageProps<T, F, V = Record<string, any>> {
+  pkColumn: keyof T;
   pageType: PageType;
   filterSchemaKey: PageType;
   FilterComponent?: PolymorphicComponent<FilterProps<V | undefined>>
@@ -62,15 +80,21 @@ interface ListPageProps<T extends { id: string | number }, F, V = Record<string,
   initialSortKey?: string;
   onSubmitEdit?: (formData: Partial<T>) => Promise<boolean>;
   onSubmitAdd?: (formData: Partial<T>) => Promise<boolean>;
-  onDelete?: (id: string) => void;
+  onDelete?: (ids: string[]) => Promise<boolean>;
   onDownload?: () => void;
   initialData?: T[]
-  modalMaxWidth?: 'lg' | 'xl'
+  modalMaxWidth?: 'lg' | 'xl';
+  toolbarRight?: (helpers: { open: () => void, item: T | null }) => ReactNode;
+  renderToolbarRight?: RenderToolbarRight<T>
+  renderModals?: any;
+
+  buildActions?: any;
 }
 
 
-function ListPage<T extends { id: string | number }, F, V>(
+function ListPage<T, F, V>(
   {
+    pkColumn,
     pageType,
     filterSchemaKey,
     FilterComponent = SearchFilter,
@@ -86,7 +110,12 @@ function ListPage<T extends { id: string | number }, F, V>(
     onDelete,
     onDownload,
     initialData,
-    modalMaxWidth = 'lg'
+    modalMaxWidth = 'lg',
+    toolbarRight,
+    renderToolbarRight,
+    renderModals,
+
+    buildActions
   }: ListPageProps<T, F, V>,
 ) {
   const {isOpen, open, close} = useModal();
@@ -115,6 +144,8 @@ function ListPage<T extends { id: string | number }, F, V>(
   const sortKey = currentSort.id;
   const sortOrder = currentSort.desc ? 'desc' : 'asc';
 
+  const [delItems, setDelItems] = useState<any[]>([]);
+
   const [canSubmit, setCanSubmit] = useState(false);
 
   const {data: dataSource, isLoading, isFetching, refetch} = useQuery({
@@ -135,10 +166,34 @@ function ListPage<T extends { id: string | number }, F, V>(
     enabled
   });
 
-  const {rowSelection, onRowSelectionChange} = useTableSelection<T>(dataSource?.list || [], ids => {
-    console.log(dataSource);
-    console.log(`${pageType} selected`, ids);
-  });
+  // const {
+  //   rowSelection,
+  //   onRowSelectionChange
+  // } = useTableSelection<T>(dataSource?.list || [], ids => {
+  //   console.log(ids);
+  //   const delCheckItem = ids.map((i) => dataSource?.list[Number(i)][pkColumn])
+  //   setDelItems(delCheckItem)
+  // });
+
+  const {
+    rowSelection,
+    onRowSelectionChange,
+    selectedIds,
+    selectedRows,
+    clearSelection
+  } = useTableSelection<T>(dataSource?.list ?? [], {
+    onChangeIds: (ids) => {
+
+
+      const toDelete = ids
+        .map((i) => dataSource?.list[Number(i)]?.[pkColumn as keyof T])
+        .filter(Boolean) as (string | number)[];
+
+      console.log(toDelete)
+
+      setDelItems(toDelete)
+    }
+  })
 
   const handleSubmit = () => {
     setFilterVersion(prev => prev + 1)
@@ -159,6 +214,7 @@ function ListPage<T extends { id: string | number }, F, V>(
   }
 
   const handleAdd = useCallback(() => {
+    console.log('asd');
     setEditTarget(null);
     open();
   }, [setEditTarget, open]);
@@ -168,11 +224,16 @@ function ListPage<T extends { id: string | number }, F, V>(
     if (!editAreaRef.current?.submit) return;
     const result = await editAreaRef.current.submit();
 
+    const body = editTarget ? {
+      target: clickedItem![pkColumn],
+      ...result
+    } : result
+
     if (!result) return;
     let success = false;
 
     if (editTarget && onSubmitEdit) {
-      success = await onSubmitEdit(result);
+      success = await onSubmitEdit(body);
     } else if (onSubmitAdd) {
       success = await onSubmitAdd(result);
     }
@@ -210,7 +271,24 @@ function ListPage<T extends { id: string | number }, F, V>(
     setEnabled(true);
   }, []);
 
-  console.log(dataSource);
+  const ctx = useMemo(
+    () => ({
+      selectedRows,
+      clickedItem,
+      filter
+    }),
+    []
+  )
+
+  const helpers = useMemo(
+    () => ({openAdd: handleAdd, openEdit: handleAdd, openPermission: handleAdd}),
+    [handleAdd, handleEdit]
+  )
+
+  const actions = useMemo(
+    () => (buildActions ? buildActions(ctx, helpers) : undefined),
+    [buildActions, ctx, helpers]
+  )
 
   // @ts-ignore
   return (
@@ -230,6 +308,7 @@ function ListPage<T extends { id: string | number }, F, V>(
       {
         dataSource &&
           <TableWrapper<T>
+              pkColumn={pkColumn}
               onSelect={() => {
               }}
               onEdit={handleEdit}
@@ -239,7 +318,13 @@ function ListPage<T extends { id: string | number }, F, V>(
               data={dataSource?.list || []}
               sorting={sorting}
               clickedItem={clickedItem}
-              onChangeClickedItem={(item) => setClickedItem(item)}
+              onChangeClickedItem={(item) => {
+                if ((clickedItem && clickedItem[pkColumn]) === item[pkColumn]) {
+                  setClickedItem(null)
+                } else {
+                  setClickedItem(item)
+                }
+              }}
               onSortingChange={(updater) => {
                 const next = typeof updater === 'function' ? updater(sorting) : updater;
                 if (Array.isArray(next)) {
@@ -255,9 +340,21 @@ function ListPage<T extends { id: string | number }, F, V>(
               setPageSize={size => setPagination(prev => ({...prev, pageSize: size}))}
               enabledEdit={!!onSubmitEdit}
               enabledDelete={!!onDelete}
+              toolbarRight={() => toolbarRight?.({open: handleAdd, item: clickedItem})}
+              actions={actions}
+              renderToolbarRight={
+                renderToolbarRight
+                  ? () => renderToolbarRight({
+                    selectedIds,
+                    selectedRows,
+                    clickedItem,
+                    totalRows: 3,
+                  })
+                  :
+                  undefined
+              }
           />
       }
-
       {
         ModalBody &&
           <BaseModal
@@ -276,6 +373,10 @@ function ListPage<T extends { id: string | number }, F, V>(
           </BaseModal>
       }
 
+      {
+        renderModals?.({selectedRows, selectedIds, clickedItem, totalRows: 3, refetch})
+      }
+
       <ConfirmModal
         title={'삭제'}
         isOpen={closeModalIsOpen}
@@ -290,7 +391,16 @@ function ListPage<T extends { id: string | number }, F, V>(
               },
               {
                 label: '삭제',
-                onClick: () => {
+                onClick: async () => {
+                  if (!onDelete) return;
+                  const res = await onDelete(delItems)
+                  if (res) {
+                    await refetch();
+                    toast.success('삭제되었습니다.');
+                    onRowSelectionChange({});
+                    closeModalClose();
+                  }
+
                 },
                 variant: 'primary',
                 disabled: false,

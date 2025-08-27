@@ -4,6 +4,7 @@ import DropDown from "@/shared/components/dropDown/DropDown";
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
 import Download from '@/shared/assets/images/download.svg';
 import Image from "next/image";
+import {ReactNode} from "react";
 
 interface Props {
   onSelect?: (value: { key: string, label: string }) => void;
@@ -12,9 +13,26 @@ interface Props {
   onDownload?: () => void;
   enabledEdit?: boolean;
   enabledDelete?: boolean;
+  rightSlot?: () => ReactNode | undefined;
+  renderToolbarRight: any;
+  filteredOps: any;
+  actions?: any;
 }
 
-export default function TableFilter({onSelect, onEdit, onDelete, onDownload, enabledEdit, enabledDelete}: Props) {
+export default function TableFilter({
+                                      onSelect,
+                                      onEdit,
+                                      onDelete,
+                                      onDownload,
+                                      enabledEdit,
+                                      enabledDelete,
+                                      rightSlot,
+                                      renderToolbarRight,
+                                      filteredOps,
+                                      actions
+                                    }: Props) {
+
+  const renderActions = actions
 
   return (
     <div className={styles.tableFilter}>
@@ -48,21 +66,50 @@ export default function TableFilter({onSelect, onEdit, onDelete, onDownload, ena
         />
       </div>
 
-
+      {/*{*/}
+      {/*  customTableFilter*/}
+      {/*}*/}
       <div className={styles.buttonWrapper}>
         {
-          enabledDelete && <button onClick={() => onDelete?.()} className={styles.delete}>삭제</button>
+          renderActions ?
+            renderActions.map((a) => {
+              const className =
+                a.variant === 'danger'
+                  ? styles.delete
+                  : a.variant === 'primary'
+                    ? styles.edit :
+                    styles.normal
+
+              return (
+                <button key={a.key} onClick={a.onClick()}>
+                  {a.label}
+                </button>
+              )
+            })
+            :
+            renderToolbarRight ?
+              renderToolbarRight()
+              :
+              <>
+                {
+                  enabledDelete && <button onClick={() => onDelete?.()} className={styles.delete}>삭제</button>
+                }
+                {
+                  enabledEdit && <button onClick={() => onEdit?.()} className={styles.edit}>수정</button>
+                }
+                {
+                  onDownload &&
+                    <button className={styles.download}>
+                        내려받기
+                        <Image src={Download} alt={'logo'}/>
+                    </button>
+                }
+                {
+                  rightSlot && rightSlot()
+                }
+              </>
         }
-        {
-          enabledEdit && <button onClick={() => onEdit?.()} className={styles.edit}>수정</button>
-        }
-        {
-          onDownload &&
-            <button className={styles.download}>
-                내려받기
-                <Image src={Download} alt={'logo'}/>
-            </button>
-        }
+
       </div>
     </div>
   )

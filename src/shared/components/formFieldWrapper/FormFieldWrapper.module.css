@@ -12,6 +12,7 @@
   flex-direction: row;
   align-items: center;
 }
+
 .vertical {
   flex-direction: column;
   align-items: flex-start;
@@ -22,9 +23,10 @@
   align-items: center;
   gap: .6rem;
   align-self: stretch;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   line-height: 150%;
   letter-spacing: 0;
+  font-weight: 600;
 }
 
 .required {

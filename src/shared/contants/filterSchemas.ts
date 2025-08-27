@@ -37,7 +37,14 @@ const onOffOptions = [
 
 export const filterSchemas: Record<PageType, FilterSchema[]> = {
   [PageType.MyProfile]: [],
-  [PageType.MyMenuAuthorityView]: [],
+  [PageType.MyMenuAuthorityView]: [
+    {
+      type: FilterType.Select,
+      key: '구분',
+      label: '구분',
+      options: [],
+    },
+  ],
   [PageType.PermissionRequest]: [],
   [PageType.Menu]: [
     {
@@ -612,5 +619,5 @@ export const filterSchemas: Record<PageType, FilterSchema[]> = {
       }
     },
   ],
-  [PageType.MemberManagement]: []
+  [PageType.MemberManagement]: [],
 }

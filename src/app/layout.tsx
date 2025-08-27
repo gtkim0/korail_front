@@ -32,25 +32,32 @@ const getCommonCode = async () => {
 
 export default async function RootLayout({children}: Readonly<{ children: ReactNode }>) {
 
-    const code = await getCommonCode();
+  // let code = null;
+  //
+  // try {
+  //   code = await getCommonCode();
+  // } catch (err) {
+  //   console.error(err);
+  // }
 
-    return (
-        <html lang="en">
-        <body className={`${pretendard.variable} antialiased`}>
-        <RQProviders>
-            <ZustandHydrator initial={code}>
-                <Toaster
-                    position="top-center"
-                    toastOptions={{
-                        style: {fontSize: '14px', zIndex: 100000},
-                    }}
-                />
-                <SplashWrapper>
-                    {children}
-                </SplashWrapper>
-            </ZustandHydrator>
-        </RQProviders>
-        </body>
-        </html>
-    );
+  return (
+    <html lang="en">
+    <body className={`${pretendard.variable} antialiased`}>
+    <RQProviders>
+      {/*<ZustandHydrator initial={code}>*/}
+      <ZustandHydrator initial={[]}>
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            style: {fontSize: '14px', zIndex: 100000},
+          }}
+        />
+        <SplashWrapper>
+          {children}
+        </SplashWrapper>
+      </ZustandHydrator>
+    </RQProviders>
+    </body>
+    </html>
+  );
 }

@@ -1,3 +1,4 @@
+'use client';
 import styles from './loading.module.scss';
 import icon from "@/shared/assets/images/loading.svg"
 import {createPortal} from "react-dom";

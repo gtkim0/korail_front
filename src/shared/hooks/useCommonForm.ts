@@ -3,7 +3,7 @@ import {useEffect, useImperativeHandle, useState} from 'react';
 
 export function useCommonForm<T extends object>(
   ref: any,
-  editData: T | null,
+  editData?: T | null,
   onCanSubmitChange?: (v: boolean) => void,
   schema?: any,
   initialValues?: Partial<T>
@@ -45,7 +45,8 @@ export function useCommonForm<T extends object>(
   }));
 
   useEffect(() => {
-    onCanSubmitChange?.(canSubmit);
+    if (onCanSubmitChange && typeof onCanSubmitChange === 'function')
+      onCanSubmitChange?.(canSubmit);
   }, [canSubmit, onCanSubmitChange]);
 
   useEffect(() => {
