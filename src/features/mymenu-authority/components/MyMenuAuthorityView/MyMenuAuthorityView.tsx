@@ -9,8 +9,6 @@ import MyMenuAuthorityAddForm
 
 const buildActions = (ctx: any, {openAdd, openEdit, openPermission}: any) => {
 
-  console.log(ctx);
-
   return [
     // {
     //   key: 'edit',
