@@ -1,5 +1,5 @@
 import styles from './Sitemap.module.scss';
-import { useRouter } from "next/navigation";
+import {useRouter} from "next/navigation";
 
 type Menu = {
   link: string;
@@ -15,7 +15,7 @@ interface Props {
   close: () => void;
 }
 
-export default function Sitemap ({dataMenus, close}: Props) {
+export default function Sitemap({dataMenus, close}: Props) {
 
   const router = useRouter();
 
@@ -23,7 +23,7 @@ export default function Sitemap ({dataMenus, close}: Props) {
     <div className={styles.wrapper}>
       <div className={styles.scrollArea}>
         <div className={styles.menuGrid}>
-          {dataMenus[0]?.children.map((i: any) => (
+          {dataMenus?.map((i: any) => (
             <div key={i.name} className={styles.menuGroup}>
               <div className={styles.menuGroupTitle}>{i.name}</div>
               {i.children?.length > 0 && (
@@ -40,7 +40,7 @@ export default function Sitemap ({dataMenus, close}: Props) {
                             router.push(k.link);
                           }}
                         >
-                          <div style={{ width: '100%' }}>{k.name}</div>
+                          <div style={{width: '100%'}}>{k.name}</div>
                         </div>
                       ))}
                     </div>

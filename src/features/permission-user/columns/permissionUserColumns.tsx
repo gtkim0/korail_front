@@ -3,14 +3,7 @@ import {PermissionUserColumnType} from "@/types/permission-user";
 
 export const permissionUserColumns: ColumnDef<PermissionUserColumnType>[] = [
   {
-    accessorKey: 'id',
-    header: '번호',
-    meta: {
-      hidden: true,
-    }
-  },
-  {
-    accessorKey: 'priGrpNm',
+    accessorKey: 'authrtNm',
     header: '권한그룹명'
   },
   {
@@ -18,19 +11,19 @@ export const permissionUserColumns: ColumnDef<PermissionUserColumnType>[] = [
     header: '회원아이디'
   },
   {
-    accessorKey: 'name',
+    accessorKey: 'userNm',
     header: '이름'
   },
   {
-    accessorKey: 'affiliation',
+    accessorKey: 'jbgdCd',
     header: '소속'
   },
   {
-    accessorKey: 'position',
+    accessorKey: 'deptCd',
     header: '직책',
   },
   {
-    accessorKey: 'contact',
+    accessorKey: 'cpNo',
     header: '연락처',
   },
   {
@@ -42,11 +35,11 @@ export const permissionUserColumns: ColumnDef<PermissionUserColumnType>[] = [
     header: '관심역사',
   },
   {
-    accessorKey: 'useYn',
+    accessorKey: 'acntLockYn',
     header: '사용여부'
   },
   {
-    accessorKey: 'date',
+    accessorKey: 'joinDt',
     header: '데이터 기준 일자'
   },
 ]

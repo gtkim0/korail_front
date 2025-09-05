@@ -3,6 +3,16 @@ import logger from "@/lib/logger";
 import {ResponseType} from "@/types/common";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+export type QueryPrimitive = string | number | boolean | null | undefined;
+export type QueryValue = QueryPrimitive | QueryPrimitive[];
+export type QueryParams = Record<string, QueryValue>;
+
+export type RevalidateOption = {
+  next?: { revalidate?: number; tags?: string[] };
+  revalidate?: number;
+};
+
+export type ServerGetOptions = Omit<RequestInit, "method" | "body"> & RevalidateOption;
 
 export function buildQueryParams(params?: Record<string, any>): string {
   if (!params) return '';
@@ -81,17 +91,37 @@ export async function serverFetch<T>(
   return res.json();
 }
 
-export const serverGet = <T>(
+// export const serverGet = <T>(
+//   url: string,
+//   queryParams?: Record<string, any>,
+//   options?: RequestInit & { revalidate?: number }
+// ) => {
+//   const queryString = buildQueryParams(queryParams);
+//   const fullUrl = queryString ? `${url}?${queryString}` : url;
+//
+//   return serverFetch<ResponseType<T>>(fullUrl, {
+//     method: 'GET',
+//     ...options,
+//   });
+// };
+
+export const serverGet = async <T>(
   url: string,
-  queryParams?: Record<string, any>,
-  options?: RequestInit & { revalidate?: number }
-) => {
+  queryParams?: QueryParams,
+  options?: ServerGetOptions
+): Promise<ResponseType<T>> => {
   const queryString = buildQueryParams(queryParams);
   const fullUrl = queryString ? `${url}?${queryString}` : url;
 
+  const next =
+    options?.next || options?.revalidate
+      ? {...(options?.next ?? {}), revalidate: options?.next?.revalidate ?? options?.revalidate}
+      : undefined;
+
   return serverFetch<ResponseType<T>>(fullUrl, {
-    method: 'GET',
+    method: "GET",
     ...options,
+    ...(next ? {next} : {}),
   });
 };
 

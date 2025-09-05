@@ -19,9 +19,17 @@ export interface ResponseType<T> {
   result: T;
 }
 
-export interface PaginationResponseType<T> {
-  list: T[];
+export interface PageProps {
   page: number;
   pagePerSize: number;
+}
+
+export interface NormalizeResponseType<T> {
+  list: T;
+  totalCount: number;
+}
+
+export interface PaginationResponseType<T> extends PageProps {
+  list: T[];
   totalCount: number;
 }

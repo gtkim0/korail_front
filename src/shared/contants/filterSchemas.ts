@@ -6,15 +6,7 @@ import {FilterType} from "@/shared/enum/FilterType";
 import {PageType} from "@/shared/enum/PageType";
 import {OPERATING_STATUS_OPTIONS} from "@/shared/contants/selectOptions/operatingStatusOptions";
 import {SELECT_OPTIONS} from "@/shared/contants/selectOptions";
-
-type FilterSchema = {
-  type: string;
-  key: string;
-  label: string;
-  options?: readonly { key: string, label: string }[];
-  style?: any;
-  endPoint?: string;
-}
+import {FilterSchema} from "@/shared/components/searchFilter/DynamicFilterRenderer/DynamicFilterRenderer";
 
 const categoryFilters = {
   routeMap: ['1', '2', '3', '4']
@@ -483,8 +475,90 @@ export const filterSchemas: Record<PageType, FilterSchema[]> = {
   [PageType.NotificationRule]: [],
   [PageType.CongestionVerificationTarget]: [],
   [PageType.CongestionVerificationComplete]: [],
-  [PageType.PermissionUser]: [],
-  [PageType.PermissionMenu]: [],
+  [PageType.PermissionUser]: [
+    {
+      type: FilterType.Select,
+      key: 'authGroup',
+      label: '권한그룹',
+      enabledAll: false,
+      asyncOptions: {
+        endpoint: '/api/auths/groups/get-list',
+        method: 'GET',
+        // params: () => ({page: 1, size: 9999}),
+        map: (raw) => (raw?.list ?? raw ?? []).map((g: any) => {
+          return {
+            key: g.authrtId,
+            label: g.authrtNm
+          }
+        })
+      },
+    },
+  ],
+  [PageType.PermissionMenu]: [
+    {
+      type: FilterType.Select,
+      key: 'authGroup',
+      label: '권한그룹',
+      enabledAll: false,
+      asyncOptions: {
+        endpoint: '/api/auths/groups/get-list',
+        method: 'GET',
+        // params: () => ({page: 1, size: 9999}),
+        map: (raw) => (raw?.list ?? raw ?? []).map((g: any) => {
+          return {
+            key: g.authrtId,
+            label: g.authrtNm
+          }
+        })
+      },
+    },
+    {
+      type: FilterType.Select,
+      key: 'topMenu',
+      label: '대메뉴',
+      preload: {
+        endpoint: '/api/menus/get-list',
+        method: 'GET',
+        datasetKey: 'top',
+      },
+      derivedOptions: {
+        fromDataset: 'top',
+        dependsOn: [],
+        derive: (ds) => {
+          return ds.filter((i: any) => i.depth === 1).map((m: any) => ({key: m.menuId, label: m.menuNm}))
+        }
+      },
+      style: {width: '16rem'},
+    },
+    {
+      type: FilterType.Select,
+      key: 'midMenu',
+      label: '중메뉴',
+      derivedOptions: {
+        fromDataset: 'top',
+        dependsOn: ['topMenu'],
+        derive: (ds, v) => {
+          const top = (ds ?? []).filter((m: any) => m.upMenuId === v.topMenu);
+          return (top ?? []).map((c: any) => ({key: c.menuId, label: c.menuNm}));
+        },
+      },
+      style: {width: '16rem'},
+    },
+    {
+      type: FilterType.Select,
+      key: 'subMenu',
+      label: '소메뉴',
+      derivedOptions: {
+        fromDataset: 'top',
+        dependsOn: ['topMenu', 'midMenu'],
+        derive: (ds, v) => {
+          const mid = (ds ?? []).filter((m: any) => m.upMenuId === v.midMenu);
+          return (mid ?? []).map((c: any) => ({key: c.menuId, label: c.menuNm}))
+        },
+      },
+      style: {width: '16rem'},
+    },
+  ],
   [PageType.PermissionGroup]: [
     {
       type: FilterType.Checkbox,

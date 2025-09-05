@@ -12,34 +12,34 @@ export default function PortalSidebar({menu}: { menu: BaseMenu[] }) {
   const setExpandedMenuId = useGlobalStore(state => state.setExpandedMenuId);
 
   const currentMenu = useMemo(() => {
-    return menu.find(m => m.url === pathname);
+    return menu.find(m => m.lnkgUrlAddrCn === pathname);
   }, [pathname, menu]);
 
   const current2DepthId = useMemo(() => {
     if (currentMenu?.depth === 3) {
-      const parent2 = menu.find(m => m.id === currentMenu.pid);
-      return parent2?.id ?? null;
+      const parent2 = menu.find(m => m.menuId === currentMenu.upMenuId);
+      return parent2?.menuId ?? null;
     }
     if (currentMenu?.depth === 2) {
-      return currentMenu.id;
+      return currentMenu.menuId;
     }
     return null;
   }, [currentMenu, menu]);
   const current1DepthId = useMemo(() => {
-    const current2 = menu.find(m => m.id === current2DepthId);
-    return current2?.pid ?? null;
+    const current2 = menu.find(m => m.menuId === current2DepthId);
+    return current2?.upMenuId ?? null;
   }, [current2DepthId, menu]);
 
-  const title = menu.find(i=> i.id === current1DepthId)?.name
+  const title = menu.find(i => i.menuId === current1DepthId)?.menuNm
 
   const secondDepthMenus = useMemo(() => {
-    return menu.filter(m => m.depth === 2 && m.pid === current1DepthId);
+    return menu.filter(m => m.depth === 2 && m.upMenuId === current1DepthId);
   }, [menu, current1DepthId]);
 
   const structuredMenus = useMemo(() => {
     return secondDepthMenus.map(parent => {
-      const children = menu.filter(m => m.pid === parent.id);
-      const isExpanded = parent.id === current2DepthId;
+      const children = menu.filter(m => m.upMenuId === parent.menuId);
+      const isExpanded = parent.menuId === current2DepthId;
 
       return {
         ...parent,
@@ -49,13 +49,13 @@ export default function PortalSidebar({menu}: { menu: BaseMenu[] }) {
     });
   }, [secondDepthMenus, current2DepthId, menu]);
 
-  useEffect(() =>  {
-    const currentMenu = menu.find(m => m.url === pathname);
+  useEffect(() => {
+    const currentMenu = menu.find(m => m.lnkgUrlAddrCn === pathname);
 
     if (currentMenu?.depth === 3) {
-      const parent2Depth = menu.find(m => m.id === currentMenu.pid);
+      const parent2Depth = menu.find(m => m.menuId === currentMenu.upMenuId);
       if (parent2Depth) {
-        setExpandedMenuId(parent2Depth.id);
+        setExpandedMenuId(parent2Depth.menuId);
       }
     }
   }, [pathname, menu, setExpandedMenuId]);
@@ -69,7 +69,7 @@ export default function PortalSidebar({menu}: { menu: BaseMenu[] }) {
       </div>
       <div className={styles.menuScrollArea}>
         {structuredMenus.map(item => (
-          <PortalMenuItem key={item.id} item={item}/>
+          <PortalMenuItem key={item.menuId} item={item}/>
         ))}
       </div>
     </div>

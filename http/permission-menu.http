@@ -1,0 +1,7 @@
+### 권한관리 > 권한관리 > 메뉴별 권한
+
+### 1. 권한에 따른 메뉴 조회
+GET {{backend_url}}/api/auths/menus/get-list?page=1&pagePerSize=10&authrtId=MASTER
+Content-Type: application/json
+
+

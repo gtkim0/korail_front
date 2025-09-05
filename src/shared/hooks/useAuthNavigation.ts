@@ -33,7 +33,7 @@ export function useAuthNavigation() {
     } catch {
 
     } finally {
-      toast.error('로그인 세션시간이 만료되었습니다.')
+      // toast.error('로그인 세션시간이 만료되었습니다.')
       goLogin();
       loggingOut = false;
     }

@@ -10,20 +10,49 @@ import FilterRadioGroup from "@/shared/components/searchFilter/Filters/FilterRad
 import MultiSelect from "@/shared/components/searchFilter/Filters/MultiSelect/MultiSelect";
 import Form from "next/form";
 import {clientGet} from "@/shared/api/clientFetcher";
+import {z} from "zod";
 
-export default function MyProfileView({editData, onCanSubmitChange}) {
+type Props<T> = {
+  editData: T
+}
+
+
+export const permissionGroupSchema = z.object({
+  userId: z.string().min(3, '1글자 이상 입력해주세요.'),
+  userNm: z.string().min(3, '1글자 이상 입력해주세요.'),
+  tptlUserAuthrtrs: z.string().min(3, '1글자 이상 입력해주세요.'),
+})
+
+type Auth = {
+  authrtId: string;
+  tptlAuthrtm: string;
+  tptlUserm: string;
+  userId: string;
+}
+
+export default function MyProfileView<T>({editData}: Props<T>) {
 
   const formRef = useRef(null)
 
-  const form = useCommonForm<Omit<MemberManagementColumnType, 'id' | 'date'>>(
+  const onCanSubmitChange = (a) => {
+    console.log(a);
+  }
+
+  const form = useCommonForm<any>(
     formRef,
     editData,
     onCanSubmitChange,
+    permissionGroupSchema,
     {
-      interestStation: []
+      userId: '123', // 회원 아이디
+      userNm: '', // 이름
+      tptlUserAuthrtrs: [], //소속 권한 그룹
+      deptCd: '', // 소속
+      jbgdCd: '', // 직급
+      cpNo: '', // 연락처
+      wideRailYn: 'Y'
     }
   )
-
 
   return (
     <div className={styles.container}>
@@ -34,10 +63,13 @@ export default function MyProfileView({editData, onCanSubmitChange}) {
             <div className={styles.gridLayout}>
               {
                 form.Field({
-                  name: 'channelName',
+                  name: 'userId',
                   children: (field) => {
+                    console.log(field.getValue())
+                    console.log(field);
                     return (
                       <InputField
+                        value={field.getValue()}
                         field={field}
                         label={'회원아이디'}
                         placeholder={'회원아이디'}
@@ -50,7 +82,7 @@ export default function MyProfileView({editData, onCanSubmitChange}) {
               }
               {
                 form.Field({
-                  name: 'channelName',
+                  name: 'userNm',
                   children: (field) => {
                     return (
                       <InputField
@@ -68,8 +100,9 @@ export default function MyProfileView({editData, onCanSubmitChange}) {
             <div className={styles.gridLayout}>
               {
                 form.Field({
-                  name: 'channelName',
+                  name: 'tptlUserAuthrtrs',
                   children: (field) => {
+                    console.log(field.getValue());
                     return (
                       <FormFieldWrapper required label={'소속권한그룹'}>
                         <div
@@ -86,9 +119,11 @@ export default function MyProfileView({editData, onCanSubmitChange}) {
                             overflowY: 'auto'
                           }}
                         >
-                          <span style={{fontSize: '1.5rem'}}>사용자</span>
-                          <span style={{fontSize: '1.5rem'}}>관리자</span>
-                          <span style={{fontSize: '1.5rem'}}>사용자</span>
+                          {
+                            field.getValue().map((i: Auth, idx: number) => (
+                              <span key={idx} style={{fontSize: '1.5rem'}}>{i.authrtId}</span>
+                            ))
+                          }
                         </div>
                       </FormFieldWrapper>
                     )
@@ -97,7 +132,7 @@ export default function MyProfileView({editData, onCanSubmitChange}) {
               }
               {
                 form.Field({
-                  name: 'channelName',
+                  name: 'deptCd',
                   children: (field) => {
                     return (
                       <InputField
@@ -112,7 +147,7 @@ export default function MyProfileView({editData, onCanSubmitChange}) {
               }
               {
                 form.Field({
-                  name: 'channelName',
+                  name: 'jbgdCd',
                   children: (field) => {
                     return (
                       <InputField
@@ -127,7 +162,7 @@ export default function MyProfileView({editData, onCanSubmitChange}) {
               }
               {
                 form.Field({
-                  name: 'channelName',
+                  name: 'cpNo',
                   children: (field) => {
                     return (
                       <InputField
@@ -149,16 +184,17 @@ export default function MyProfileView({editData, onCanSubmitChange}) {
             <div className={styles.gridLayout}>
               {
                 form.Field({
-                  name: '',
+                  name: 'wideRailYn',
                   children: (field) => {
+
                     return (
                       <FormFieldWrapper label={'광역/간선구분'}>
                         <FilterRadioGroup
                           name={field.name}
-                          selected={'1'}
+                          selected={field.getValue()}
                           options={[
-                            {key: '1', label: '광역'},
-                            {key: '2', label: '간선'}
+                            {key: 'Y', label: '광역'},
+                            {key: 'N', label: '간선'}
                           ]}
                           onChange={field.handleChange}
                         />
@@ -172,7 +208,7 @@ export default function MyProfileView({editData, onCanSubmitChange}) {
                   name: 'interestStation',
                   children: (field) => {
                     return (
-                      <FormFieldWrapper label={'관심 역사'}>
+                      <FormFieldWrapper label={'관심 방면'}>
                         <MultiSelect
                           options={[
                             {

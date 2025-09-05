@@ -14,7 +14,7 @@
 #RUN yarn build
 
 # 3. Runner 단계
-FROM node:18.17.0
+FROM node:22.18.0
 WORKDIR /my-project
 ENV NODE_ENV production
 COPY /next.config.ts ./

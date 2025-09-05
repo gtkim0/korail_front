@@ -24,6 +24,7 @@ interface Props {
 export const SearchFilter = forwardRef<HTMLInputElement, Props>((props, ref: ForwardedRef<HTMLInputElement>) => {
 
   const {onAdd, type, value, onChange, onSubmit, enabledAdd} = props;
+
   const {isOpen, open, close} = useModal();
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && onSubmit) onSubmit();
@@ -60,23 +61,26 @@ export const SearchFilter = forwardRef<HTMLInputElement, Props>((props, ref: For
             </div>
         }
       </div>
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            initial={{opacity: 0, height: 0}}
-            animate={{opacity: 1, height: 'auto'}}
-            exit={{opacity: 0, height: 0}}
-            transition={{duration: 0.3, ease: 'easeInOut'}}
-          >
-            <DynamicFilterRenderer
-              schema={filterSchemas[type]}
-              value={value}
-              onChange={onChange}
-              modalEndPoint={'/'}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <motion.div
+        initial={false}
+        animate={{
+          opacity: isOpen ? 1 : 0,
+          height: isOpen ? 'auto' : 0,
+        }}
+        transition={{duration: 0.3, ease: 'easeInOut'}}
+        style={{
+          overflow: isOpen ? 'visible' : 'hidden',   // ★ 열릴 때는 보이게
+          pointerEvents: isOpen ? 'auto' : 'none',
+        }}
+        aria-hidden={!isOpen}
+      >
+        <DynamicFilterRenderer
+          schema={filterSchemas[type]}
+          value={value}
+          onChange={onChange}
+          modalEndPoint="/"
+        />
+      </motion.div>
     </div>
   )
 })

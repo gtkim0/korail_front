@@ -6,9 +6,9 @@ export default async function Home() {
   const cookieStore = await cookies();
   const token = cookieStore.get('access_token')
 
-  // if (token) {
-  //   redirect('/dashboard');
-  // } else {
-  //   redirect('/auth/login');
-  // }
+  if (token) {
+    redirect('/dashboard');
+  } else {
+    redirect('/auth/login');
+  }
 }
