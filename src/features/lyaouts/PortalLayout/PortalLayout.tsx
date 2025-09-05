@@ -1,5 +1,5 @@
 'use client';
-import {ReactNode} from 'react';
+import {ReactNode, useState} from 'react';
 import styles from './PortalLayout.module.scss';
 import PortalSidebar from "@/features/lyaouts/PortalLayout/PortalSidebar/PortalSidebar";
 import PortalHeader from "@/features/lyaouts/PortalLayout/PortalHeader/PortalHeader";
@@ -9,6 +9,7 @@ import {BaseMenu} from "@/types/menu";
 import MenuLoader from "@/shared/components/menu/MenuLoader";
 import clsx from "clsx";
 import {useGlobalStore} from "@/shared/store/globalStore";
+import {useAlarmStore} from "@/shared/store/slice/alarmSlice";
 
 interface Props {
   children: ReactNode;

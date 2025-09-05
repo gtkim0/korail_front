@@ -1,3 +1,4 @@
+'use client';
 // 대시 보드 우측 상단 타이머 및 알람
 import styles from "./TopRightSection.module.scss";
 import React, {useEffect, useState} from "react";
@@ -12,28 +13,29 @@ import BaseModal from "@/shared/components/modal/BaseModal/BaseModal";
 import CrowdingModal from "@/features/dashboard/components/modal/CrowdingModal/CrowdingModal";
 import {BaseModalFooter} from "@/shared/components/modal/BaseModal/BaseModalFooter/BaseModalFooter";
 import AlarmModal from "@/features/dashboard/components/modal/AlarmModal/AlarmModal";
+import {useAlarmStore} from "@/shared/store/slice/alarmSlice";
+import Clock from "@/features/dashboard/components/TopRightSection/Clock";
+import {createPortal} from "react-dom";
+import {useSSE} from "@/shared/hooks/useSSE";
 
 export default function TopRightSection() {
-    const [now, setNow] = useState(new Date())
-    const [isOn, setIsOn] = useState<boolean>(false);
+    const { isOn, toggle } = useAlarmStore();
 
     // 알람목록 모달
     const {isOpen, open, close} = useModal();
     const modalOnSubmit = () => {
     }
 
-    useEffect(() => {
-        const interval = setInterval(() => setNow(new Date()), 1000);
-        return () => clearInterval(interval)
-    }, []);
+    const { messages, connected, connect, disconnect } = useSSE({
+        url: "/apis/api/test/subscribe",
+        autoConnect: true,
+    });
+    //
+    // console.log(messages)
+
     return (<>
             <div className={styles.container}>
-                <div className={styles.timer}>
-                    <span className={styles.date}>{format(now, "yyyy-MM-dd")}</span>
-                    <span className={styles.date}>{format(now, "eee", {locale: ko})}</span>
-                    <span className={styles.time}>{format(now, "hh:mm")}</span>
-                    <span className={styles.time}>{format(now, "a").toUpperCase()}</span>
-                </div>
+              <Clock/>
                 <div className={styles.alarm}>
                     <div className={styles.title}>
                         <Image
@@ -44,7 +46,7 @@ export default function TopRightSection() {
                     </div>
                     <div className={styles.toggle}>
                         <ToggleSwitch checked={isOn} onChange={(checked) => {
-                            setIsOn(checked)
+                           toggle(checked)
                         }} height={20}/>
                         <span>{isOn ? "On" : "Off"}</span>
                     </div>
