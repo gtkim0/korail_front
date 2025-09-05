@@ -36,6 +36,7 @@ export default async function PageMapper({params}: { params: Promise<{ page: str
     if (response.resultCode !== '0000') return;
 
     const menuList = response?.result?.list ?? [];
+
     const menus = [DASHBOARD_MENU, ...menuList];
 
     const currentMenu = menus?.find(i => i.lnkgUrlAddrCn === path);

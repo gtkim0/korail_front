@@ -1,0 +1,20 @@
+### 권한관리 > 권한관리 > 사용자별 권한
+
+### 1. 권한에 따른 유저정보 조회
+GET {{backend_url}}/api/auths/users/get-list?page=1&pagePerSize=10&authrtId=BASIC
+Content-Type: application/json
+
+### 2. 권한에 따른 유저정보 업데이트
+POST {{backend_url}}/api/auths/users/update
+Content-Type: application/json
+
+{
+  "authrtId": "BASIC",
+  "userIds": [
+    "admin",
+    "test1",
+    "master"
+  ]
+}
+
+

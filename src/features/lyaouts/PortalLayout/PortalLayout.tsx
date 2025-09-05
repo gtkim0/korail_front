@@ -23,6 +23,8 @@ export default function PortalLayout(props: Props) {
 
   const codes = useGlobalStore(state => state.codes);
 
+  console.log(menus);
+
   return (
     <div className={clsx(styles.portalLayout, isDashboard && styles.dashboard)}>
       <MenuLoader menus={menus}/>

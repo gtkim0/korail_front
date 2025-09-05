@@ -18,7 +18,7 @@ export default function PermissionMenuView({initialFilter, initialData}: PageSer
 
   return (
     <ListPage<PermissionMenuColumnType, PermissionMenuAddFormProps, any>
-      pkColumn={'depth3PrgrmId'}
+      pkColumn={'depth3MenuId'}
       pageType={PageType.PermissionMenu}
       filterSchemaKey={PageType.PermissionMenu}
       columns={withRowSelection(permissionMenuColumns)}

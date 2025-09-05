@@ -91,7 +91,6 @@ interface ListPageProps<T, F, V = Record<string, any>> {
   buildActions?: any;
 }
 
-
 function ListPage<T, F, V>(
   {
     pkColumn,
@@ -164,6 +163,8 @@ function ListPage<T, F, V>(
     placeholderData: keepPreviousData,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
+    initialData: initialData as any,
+    initialDataUpdatedAt: Date.now(),
     enabled
   });
 
@@ -278,16 +279,20 @@ function ListPage<T, F, V>(
   )
 
   useEffect(() => {
-    if (enabled) {
-      refetch();
-    }
+    // if (enabled) {
+    //   refetch();
+    // }
+    refetch();
+
   }, [sortKey, sortOrder, pagination.pageSize, pagination.pageIndex, filterVersion])
 
-  useEffect(() => {
-    setEnabled(true);
-  }, []);
-
+  // useEffect(() => {
+  //   setEnabled(true);
+  // }, []);
   // @ts-ignore
+
+  console.log("dataSource", dataSource);
+
   return (
     <>
       <FilterComponent
@@ -303,57 +308,57 @@ function ListPage<T, F, V>(
         // customFilterSubProps 에 현재 날짜랑 응답 데이터 같이 넣어줘야함.
       />
       {
-        dataSource &&
-          <TableWrapper<T>
-              pkColumn={pkColumn}
-              onSelect={() => {
-              }}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-              onDownload={onDownload}
-              columns={columns}
-              data={dataSource?.list || []}
-              sorting={sorting}
-              clickedItem={clickedItem}
-              onChangeClickedItem={(item) => {
-                if ((clickedItem && clickedItem[pkColumn]) === item[pkColumn]) {
-                  setClickedItem(null)
-                } else {
-                  setClickedItem(item)
-                }
-              }}
-              onSortingChange={(updater) => {
-                const next = typeof updater === 'function' ? updater(sorting) : updater;
-                if (Array.isArray(next)) {
-                  setSorting(next);
-                }
-              }}
-              rowSelection={rowSelection}
-              onRowSelectionChange={onRowSelectionChange}
-              pageIndex={pagination.pageIndex}
-              pageSize={pagination.pageSize}
-              pageCount={Math.ceil(dataSource?.totalCount / pagination.pageSize)}
-              setPageIndex={index => setPagination(prev => ({...prev, pageIndex: index}))}
-              setPageSize={size => setPagination(prev => ({...prev, pageSize: size}))}
-              enabledEdit={!!onSubmitEdit}
-              enabledDelete={!!onDelete}
-              toolbarRight={() => toolbarRight?.({open: handleAdd, item: clickedItem})}
-              actions={actions}
-              renderToolbarRight={
-                renderToolbarRight
-                  ? () => renderToolbarRight({
-                    selectedIds,
-                    selectedRows,
-                    clickedItem,
-                    totalRows: 3,
-                  })
-                  :
-                  undefined
-              }
-          />
+        // dataSource &&
+        <TableWrapper<T>
+          pkColumn={pkColumn}
+          onSelect={() => {
+          }}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          onDownload={onDownload}
+          columns={columns}
+          data={dataSource?.list || []}
+          sorting={sorting}
+          clickedItem={clickedItem}
+          onChangeClickedItem={(item) => {
+            if ((clickedItem && clickedItem[pkColumn]) === item[pkColumn]) {
+              setClickedItem(null)
+            } else {
+              setClickedItem(item)
+            }
+          }}
+          onSortingChange={(updater) => {
+            const next = typeof updater === 'function' ? updater(sorting) : updater;
+            if (Array.isArray(next)) {
+              setSorting(next);
+            }
+          }}
+          rowSelection={rowSelection}
+          onRowSelectionChange={onRowSelectionChange}
+          pageIndex={pagination.pageIndex}
+          pageSize={pagination.pageSize}
+          pageCount={Math.ceil(dataSource?.totalCount / pagination.pageSize)}
+          setPageIndex={index => setPagination(prev => ({...prev, pageIndex: index}))}
+          setPageSize={size => setPagination(prev => ({...prev, pageSize: size}))}
+          enabledEdit={!!onSubmitEdit}
+          enabledDelete={!!onDelete}
+          toolbarRight={() => toolbarRight?.({open: handleAdd, item: clickedItem})}
+          actions={actions}
+          renderToolbarRight={
+            renderToolbarRight
+              ? () => renderToolbarRight({
+                selectedIds,
+                selectedRows,
+                clickedItem,
+                totalRows: 3,
+              })
+              :
+              undefined
+          }
+        />
       }
       {
-        ModalBody &&
+        ModalBody && isOpen &&
           <BaseModal
               title={MODAL_TITLE[pageType]}
               isOpen={isOpen}
@@ -367,6 +372,7 @@ function ListPage<T, F, V>(
                   {...(computedModalBodyProps as Omit<F, keyof BaseModalFormProps<T>>)}
                   editData={editTarget}
                   onCanSubmitChange={setCanSubmit}
+                  isOpen={isOpen}
               />
           </BaseModal>
       }

@@ -1,7 +1,7 @@
 import PermissionUserView from "@/features/permission-user/components/PermissionUserView/PermissionUserView";
 import {serverGetAuth} from "@/shared/api/serverAuth";
 import logger from "@/lib/logger";
-import {NormalizeResponseType, PaginationResponseType} from "@/types/common";
+import {PaginationResponseType} from "@/types/common";
 import {AuthUser} from "@/types/auth-user";
 
 interface AuthGroupList {
@@ -16,10 +16,12 @@ export default async function PermissionUserServer() {
   const authGroupList = await serverGetAuth<PaginationResponseType<AuthGroupList>>('/api/auths/groups/get-list');
   const initAuthGroup = authGroupList.result.list
 
+  console.log(initAuthGroup)
+
   const initialFilter = {
     page: 1,
     pagePerSize: 10,
-    authGroup: initAuthGroup[0]?.authrtId ?? ''
+    authrtId: initAuthGroup[0]?.authrtId ?? ''
   };
 
   const res = await serverGetAuth<PaginationResponseType<AuthUser>>(`/api/auths/users/get-list`, initialFilter, {
@@ -38,7 +40,7 @@ export default async function PermissionUserServer() {
   return (
     <PermissionUserView
       initialFilter={initialFilter}
-      initialData={res.result.list}
+      initialData={res.result}
     />
   )
 }

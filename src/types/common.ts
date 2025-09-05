@@ -1,11 +1,12 @@
 export interface BaseModalFormProps<T> {
   editData: T | null;
   onCanSubmitChange: (v: boolean) => void;
+  isOpen?: boolean;
 }
 
 export interface PageServerProps {
   initialFilter: Record<string, any>;
-  initialData: any[];
+  initialData: any;
   initialSortKey?: string;
 }
 
