@@ -19,6 +19,7 @@ export function withRowSelection<T extends object>(
       cell: ({row}) => (
         <input
           type="checkbox"
+          onClick={(e) => e.stopPropagation()}
           className={styles.checkbox}
           checked={row.getIsSelected()}
           disabled={!row.getCanSelect()}

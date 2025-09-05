@@ -14,22 +14,22 @@ const convertStruct = (flatData: BaseMenu[]) => {
   const map = new Map<string, MenuNode>();
 
   flatData.forEach(item => {
-    map.set(item.id, {...item, children: []});
+    map.set(item.menuId, {...item, children: []});
   });
 
   const roots: MenuNode[] = [];
 
   map.forEach(node => {
-    if (node.pid && map.has(node.pid)) {
-      map.get(node.pid)!.children!.push(node);
+    if (node.upMenuId && map.has(node.upMenuId)) {
+      map.get(node.upMenuId)!.children!.push(node);
     } else {
       roots.push(node);
     }
   });
 
   const toStructured = (node: MenuNode): any => ({
-    name: node.name,
-    link: node.url,
+    name: node.menuNm,
+    link: node.lnkgUrlAddrCn,
     children: node.children && node.children.length
       ? node.children.map(toStructured)
       : undefined,
@@ -75,6 +75,8 @@ export default function HeaderRightSection() {
 
   const dataMenus = convertStruct(menus);
 
+  console.log(dataMenus);
+
   return (
     <div className={styles.container}>
       {
@@ -88,7 +90,7 @@ export default function HeaderRightSection() {
             </div>
           ))
           :
-          rightMenu.filter(i=> i.label === '전체메뉴').map(i=> (
+          rightMenu.filter(i => i.label === '전체메뉴').map(i => (
             <div onClick={() => i.onClick?.()} key={i.label} className={styles.item}>
               <div className={styles.logo}>
                 <ImageWrapper src={i.src} alt={'logo'} width={20} height={20}/>

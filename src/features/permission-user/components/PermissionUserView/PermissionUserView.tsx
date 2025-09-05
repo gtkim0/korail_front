@@ -6,31 +6,44 @@ import {permissionUserColumns} from "@/features/permission-user/columns/permissi
 import {withRowSelection} from "@/shared/components/table/withRowSelection";
 import {PermissionUserColumnType} from "@/types/permission-user";
 import PermissionUserAddForm from "@/features/permission-user/components/PermissionUserAddForm/PermissionUserAddForm";
+import {useClientApi} from "@/shared/hooks/useClientApi";
 
 export interface PermissionUserAddFormProps extends BaseModalFormProps<PermissionUserColumnType> {
+  authGroupId: string;
 }
 
 export default function PermissionUserView({initialFilter, initialData}: PageServerProps) {
 
+  const api = useClientApi();
+
   return (
-    <ListPage<PermissionUserColumnType, PermissionUserAddFormProps>
+    <ListPage<PermissionUserColumnType, PermissionUserAddFormProps, any>
+      modalMaxWidth={'xxl'}
+      modalMinWidth={'100rem'}
+      pkColumn={'userId'}
       pageType={PageType.PermissionUser}
       filterSchemaKey={PageType.PermissionUser}
       columns={withRowSelection(permissionUserColumns)}
       initialFilter={initialFilter}
       initialSortKey={'id'}
-      fetchData={async () => {
-        return []
+      fetchData={async (params) => {
+        const newParams = {
+          page: params.page,
+          pagePerSize: params.pagePerSize,
+          authrtId: params.filter.authGroup
+        }
+
+        const res = await api.get('/api/auths/users/get-list', newParams);
+        return res.result;
       }}
       ModalBody={PermissionUserAddForm}
-      modalBodyProps={{}}
-      onSubmitEdit={async () => {
-        return true;
+      modalBodyProps={(props) => {
+        return {
+          authGroupId: props.appliedFilter.authGroup
+        }
       }}
-      onSubmitAdd={async (value) => {
-        return true;
-      }}
-      onDelete={async (ids) => {
+      onSubmitEdit={async (value) => {
+        console.log(value);
         return true;
       }}
       initialData={initialData}

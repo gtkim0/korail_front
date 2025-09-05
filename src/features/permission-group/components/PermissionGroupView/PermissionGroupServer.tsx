@@ -1,10 +1,6 @@
 import PermissionGroupView from "@/features/permission-group/components/PermissionGroupView/PermissionGroupView";
-import {serverGet} from "@/shared/api/serverFetcher";
-import {PaginationResponseType, ResponseType} from "@/types/common";
-import {PermissionGroupColumnType} from "@/types/permission-group";
-import {serverFetcher} from "@/lib/serverFetcher";
-import {isUnauthorized} from "@/lib/errors";
-import {redirect} from "next/navigation";
+import {serverGetAuth} from "@/shared/api/serverAuth";
+import logger from "@/lib/logger";
 
 export default async function PermissionGroupServer() {
 
@@ -13,25 +9,27 @@ export default async function PermissionGroupServer() {
     pagePerSize: 10
   }
 
-  // const res = await serverGet<PaginationResponseType<PermissionGroupColumnType>>('/api/auths/groups/get-list', initialFilter)
+  const res = await serverGetAuth<{ list: any }>(`/api/auths/groups/get-list`, initialFilter, {
+    returnTo: "/mypage/profile",
+  })
 
-  try {
-    const res = await serverFetcher(`/api/auths/groups/get-list`, initialFilter)
-    const data = res.result.list
+  console.log("res123", res);
 
+  if (!res?.result) {
+    logger.warn("MyProfileServer: profile 데이터 없음", {res});
     return (
-      <PermissionGroupView
-        initialFilter={initialFilter}
-        initialData={data}
-      />
-    )
-  } catch (e) {
-    if (isUnauthorized(e)) {
-      await fetch(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/logout`, {
-        method: 'post'
-      })
-      redirect(`/auth/login`)
-    }
-    throw e;
+      <div>
+        <h2>프로필을 불러오지 못했습니다.</h2>
+        <p>잠시 후 다시 시도해 주세요.</p>
+      </div>
+    );
   }
+
+
+  return (
+    <PermissionGroupView
+      initialFilter={initialFilter}
+      initialData={res.result.list}
+    />
+  )
 }

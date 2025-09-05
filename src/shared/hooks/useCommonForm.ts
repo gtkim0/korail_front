@@ -8,11 +8,11 @@ export function useCommonForm<T extends object>(
   schema?: any,
   initialValues?: Partial<T>
 ) {
-
   // @ts-ignore
   const form = useForm<T>({
     defaultValues: {
       ...(initialValues ?? {}),
+      ...(editData ?? {} as T),
     } as T,
     onSubmit: ({value}) => value,
     validateOnMount: true,
@@ -27,7 +27,10 @@ export function useCommonForm<T extends object>(
   const isValid = useStore(form.store, s => s.isValid);
   const isTouched = useStore(form.store, s => s.isTouched);
 
-  const canSubmit = isValid && isTouched;
+  // const canSubmit = isValid && isTouched;
+
+  const canSubmit = useStore(form.store, s => s.canSubmit)
+
   // const canSubmit = useStore(form.store, (state) => state.canSubmit);
 
   const values = useStore(form.store, (state) => state.values)
@@ -51,7 +54,10 @@ export function useCommonForm<T extends object>(
 
   useEffect(() => {
     if (editData) {
-      form.reset(editData);
+      const next = typeof structuredClone === 'function'
+        ? structuredClone(editData)
+        : JSON.parse(JSON.stringify(editData));
+      form.reset(next);
     }
   }, [editData]);
 

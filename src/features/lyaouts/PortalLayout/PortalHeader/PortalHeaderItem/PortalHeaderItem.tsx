@@ -16,7 +16,7 @@ export default function PortalHeaderItem({item, onClick, onHover, isActive, isDa
   return (
     <motion.div
       onClick={() => onClick(item)}
-      onMouseEnter={() => onHover(item.id)}
+      onMouseEnter={() => onHover(item.menuId)}
       className={clsx(styles.portalHeaderItem)}
       animate={{
         borderBottom: isActive ? '3px solid #1489F2' : '3px solid rgba(0, 0, 0, 0)',
@@ -32,7 +32,7 @@ export default function PortalHeaderItem({item, onClick, onHover, isActive, isDa
       }}
     >
       <div className={styles.portalHeaderItemLabel}>
-        {item.name}
+        {item.menuNm}
       </div>
     </motion.div>
   )

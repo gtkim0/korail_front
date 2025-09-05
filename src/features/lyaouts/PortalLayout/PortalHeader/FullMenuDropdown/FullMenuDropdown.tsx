@@ -28,8 +28,8 @@ export default function FullMenuDropdown({menuGroup, visible}: Props) {
   };
 
   const handleMenuClick = (item: BaseMenu) => {
-    if (!item.url) return;
-    router.push(item.url);
+    if (!item.lnkgUrlAddrCn) return;
+    router.push(item.lnkgUrlAddrCn);
   }
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function FullMenuDropdown({menuGroup, visible}: Props) {
           initial={{opacity: 0, height: 0, y: -5}}
           animate={{opacity: 1, height: 'auto', y: 0}}
           exit={{opacity: 0, height: 0, y: -5}}
-          transition={{ duration: 0.3, ease: 'easeInOut' }}
+          transition={{duration: 0.3, ease: 'easeInOut'}}
         >
           <motion.div className={styles.inner}>
             {Array.from({length: actualColumns}).map((_, columnIndex) => (
@@ -56,16 +56,16 @@ export default function FullMenuDropdown({menuGroup, visible}: Props) {
                 {menuGroup
                   .filter((_, idx) => idx % actualColumns === columnIndex)
                   .map((menu, idx) => (
-                    <div style={{padding: '1rem 0'}} key={menu.id}>
-                      <div className={styles.subMenuLabel}>{menu.name}</div>
+                    <div style={{padding: '1rem 0'}} key={menu.menuId}>
+                      <div className={styles.subMenuLabel}>{menu.menuNm}</div>
                       <div className={styles.thirdDepthWrapper}>
                         {menu.thirdDepths.map(third => (
                           <div
-                            onClick={()=> handleMenuClick(third)}
-                            key={third.id}
-                            className={clsx(styles.thirdDepthItem, third.url === path && styles.current)}
+                            onClick={() => handleMenuClick(third)}
+                            key={third.menuId}
+                            className={clsx(styles.thirdDepthItem, third.lnkgUrlAddrCn === path && styles.current)}
                           >
-                            {third.name}
+                            {third.menuNm}
                           </div>
                         ))}
                       </div>

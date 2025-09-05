@@ -23,7 +23,7 @@ services:
     volumes:
       - ./volumes/nginx/conf.d/:/etc/nginx/conf.d/
     ports:
-      - "10050:10050"
+      - "10050:80"
     depends_on:
       - nextjs
 

@@ -10,4 +10,5 @@ export type PermissionUserColumnType = {
   interestStation: string;
   useYn: boolean;
   date: string;
+  selected: Array<string>;
 }

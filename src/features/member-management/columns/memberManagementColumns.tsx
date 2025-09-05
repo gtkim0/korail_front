@@ -1,14 +1,7 @@
 import {ColumnDef} from "@tanstack/react-table";
-import {MemberManagementColumnType} from "@/types/member-management";
+import {AuthorityGroup, MemberManagementColumnType} from "@/types/member-management";
 
 export const memberManagementColumns: ColumnDef<MemberManagementColumnType>[] = [
-  {
-    accessorKey: 'id',
-    header: '번호',
-    meta: {
-      hidden: true,
-    }
-  },
   {
     accessorKey: 'userId',
     header: '회원아이디'
@@ -18,11 +11,15 @@ export const memberManagementColumns: ColumnDef<MemberManagementColumnType>[] = 
     header: '이름'
   },
   {
-    accessorKey: 'authority',
-    header: '소속권한그룹'
+    accessorKey: 'tptlUserAuthrtrs',
+    header: '소속권한그룹',
+    cell: (info) => {
+      const value = info.getValue() as AuthorityGroup[];
+      return <>{value.map(i => i.authrtId).join(', ')}</>;
+    }
   },
   {
-    accessorKey: 'areaOrTrunk',
+    accessorKey: 'wideRailYn',
     header: '구분'
   },
   {
@@ -34,11 +31,11 @@ export const memberManagementColumns: ColumnDef<MemberManagementColumnType>[] = 
     header: '관심역사'
   },
   {
-    accessorKey: 'useYn',
+    accessorKey: 'acntLockYn',
     header: '사용유무'
   },
   {
-    accessorKey: 'date',
+    accessorKey: 'joinDt',
     header: '데이터 기준일자'
   },
 ]

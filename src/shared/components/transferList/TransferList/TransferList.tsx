@@ -2,270 +2,197 @@
 import {useTransferList} from "@/shared/hooks/useTransferList";
 import styles from './TransferList.module.scss';
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
-import {useRef} from "react";
-import clsx from "clsx";
+import {useEffect, useRef} from "react";
 import Image from "next/image";
 import ArrowRightBlue from '@/shared/assets/images/arrow-right-blue.svg'
 import ArrowTop from '@/shared/assets/images/arrow-top.svg'
 import ArrowSort from '@/shared/assets/images/arrow-sort-both.svg'
 
-const dummy = [
-  {id: 1, num: '4081', type: 'normal'},
-  {id: 2, num: '4082', type: 'normal'},
-  {id: 3, num: '4083', type: 'normal'},
-  {id: 4, num: '4084', type: 'normal'},
-  {id: 5, num: '4085', type: 'normal'},
-  {id: 6, num: '4085', type: 'normal'},
-  {id: 7, num: '4085', type: 'normal'},
-  {id: 8, num: '4085', type: 'normal'},
-  {id: 9, num: '4085', type: 'normal'},
-  {id: 10, num: '4085', type: 'normal'},
-  {id: 11, num: '4085', type: 'normal'},
-  {id: 12, num: '4085', type: 'normal'},
-]
-const rightDummy = [
-  {
-    id: 13,
-    num: '4086',
-    type: 'normal'
-  },
-]
-
-interface Column {
-  key: string;
+interface Column<T> {
+  key: keyof T & string;
   header: string;
 }
 
-interface Props<T> {
-  columns: readonly Column[]
-  initialItems: Array<T>
-  selectedItems: Array<T>
+interface Props<T extends Record<string, any>> {
+  columns: readonly Column<T>[];
+  rightColumns?: readonly Column<T>[];
+  initialItems: T[];
+  value: T[];
+  onChange: (next: T[]) => void;
+  idKey?: keyof T & string;
 }
 
-export default function TransferList<T>({columns, initialItems, selectedItems}: Props<T>) {
+export default function TransferList<T extends Record<string, any>>({
+                                                                      columns,
+                                                                      rightColumns,
+                                                                      initialItems,
+                                                                      value,
+                                                                      onChange,
+                                                                      idKey = 'id' as keyof T & string
+                                                                    }: Props<T>) {
 
   const {
-    leftItems,
-    rightItems,
-    leftSelected,
-    rightSelected,
-    onSort,
-    onAdd,
-    onDelete,
-    onMoveUp,
-    onMoveDown,
-    onCheckboxToggle,
-    onChangeHeaderToggle,
-    onClick
-  } = useTransferList({
-    initialItems: dummy,
-    selectedItems: rightDummy
-  })
+    leftItems, rightItems,
+    leftSelectedRows, rightSelectedRows,
+    onSort, onAdd, onDelete, onMoveUp, onMoveDown,
+    onCheckboxToggle, onChangeHeaderToggle, onClick,
+    getId,
+  } = useTransferList<T>({initialItems, selectedItems: value, idKey});
 
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleSearch = () => {
-  }
+  useEffect(() => {
+    onChange?.(rightItems);
+  }, [rightItems, onChange]);
 
-  const renderList = (items: any[], selected: number[], source: 'LEFT' | 'RIGHT', isOrdered = false) => {
-    return (
-      <div className={styles.stationArea}>
-        <div className={styles.header}>
-          <div className={styles.checkbox}>
-            <input
-              checked={source === 'LEFT' ?
-                (leftSelected.length === leftItems.length && leftItems.length !== 0) :
-                (rightSelected.length === rightItems.length && rightItems.length !== 0)}
-              onChange={() => onChangeHeaderToggle(source)} type={'checkbox'}/>
-          </div>
-          {isOrdered && (
-            <div
-              onClick={() => onSort('id', source)}
-              style={{
-                padding: '.6rem 1.2rem',
-                fontSize: '1.4rem',
-                width: '8rem',
-                fontWeight: '600',
-                display: 'flex',
-                alignItems: 'center',
-                cursor: 'pointer'
-              }}>
-              순서
-              <Image src={ArrowSort} alt={''}/>
-            </div>
-          )}
-          {
-            columns.map(column => (
-              <div
-                onClick={() => onSort(column.key, source)}
-                style={{display: 'flex', alignItems: 'center', cursor: 'pointer'}}
-                key={column.key}
-                className={clsx(styles.item, styles.number)}
-              >
-                {column.header}
-                <Image src={ArrowSort} alt={''}/>
-              </div>
-            ))
-          }
-        </div>
-        <div
-          className={styles.stationList}
-        >
-          {
-            items.map((item, idx) => {
-              const isSelected = selected.includes(item.id)
-              return (
-                <div
-                  key={item.id}
-                  className={styles.station}
-                  onClick={(e) => onClick(e, item, source)}
-                >
-                  {
-                    <div className={styles.item}>
-                      <input
-                        onClick={e => e.stopPropagation()}
-                        onChange={() => {
-                          onCheckboxToggle?.(item, source);
-                        }}
-                        checked={isSelected}
-                        type={'checkbox'}
-                      />
-                    </div>
-                  }
-                  {isOrdered && (
-                    <div style={{width: '8rem'}} className={clsx(styles.item, styles.order)}>{idx + 1}</div>
-                  )}
-                  {
-                    columns.map(col => (
-                      <div className={styles.item} style={{flex: 1}} key={col.key}>
-                        {item[col.key]}
-                      </div>
-                    ))
-                  }
+  const isSelected = (rows: T[], row: T) =>
+    rows.some(r => getId(r) === getId(row));
+
+  const renderTable = (
+    items: T[],
+    selectedRows: T[],
+    source: 'LEFT' | 'RIGHT',
+    isOrdered = false
+  ) => (
+    <table className={styles.table}>
+      <thead style={{position: 'sticky', top: 0}}>
+      <tr>
+        <th>
+          <input
+            type="checkbox"
+            checked={source === 'LEFT'
+              ? (leftSelectedRows.length === leftItems.length && leftItems.length !== 0)
+              : (rightSelectedRows.length === rightItems.length && rightItems.length !== 0)}
+            onChange={() => onChangeHeaderToggle(source)}
+          />
+        </th>
+        {isOrdered &&
+            <th className={styles.sortableHeader} onClick={() => onSort(idKey, source)}>
+                <div className={styles.thContent}>
+                    <span className={styles.thText}>순서</span>
+                  {/*<Image src={ArrowSort} alt=""/>*/}
                 </div>
-              )
-            })
-          }
-        </div>
-      </div>
-    )
-  }
+            </th>
+        }
+        {columns.map(col => (
+          <th
+            key={col.key}
+            onClick={() => onSort(col.key, source)}
+            className={styles.sortableHeader}  // 클릭 커서/효과만 유지 (flex는 여기서 제거)
+          >
+            <div className={styles.thContent}>
+              <span className={styles.thText}>{col.header}</span>
+              {/*<Image src={ArrowSort} alt=""/>*/}
+            </div>
+          </th>
+        ))}
+      </tr>
+      </thead>
+      <tbody style={{minHeight: '300px'}}>
+      {items.map((item, idx) => {
+        const checked = isSelected(selectedRows, item);
+        return (
+          <tr
+            style={{background: '#fff'}}
+            key={String(getId(item))}
+            onClick={(e) => onClick(e, item, source)}
+            className={checked ? styles.selectedRow : ''}
+          >
+            <td>
+              <input
+                type="checkbox"
+                checked={checked}
+                onClick={e => e.stopPropagation()}
+                onChange={() => onCheckboxToggle(item, source)}
+              />
+            </td>
+
+            {isOrdered && <td>{idx + 1}</td>}
+            {columns.map(col => (
+              <td key={col.key}>{String(item[col.key] ?? '')}</td>
+            ))}
+          </tr>
+        );
+      })}
+      </tbody>
+    </table>
+  );
 
   return (
     <div className={styles.container}>
-      <div style={{display: 'flex', width: '100%'}}>
-        <div className={styles.leftArea}>
+      <div className={styles.leftArea}>
+        <div style={{display: 'flex', flexDirection: 'column'}}>
           <div className={styles.inputArea}>
-            <div className={styles.input}>
-              <input ref={inputRef} placeholder={'검색어를 입력해주세요.'}/>
-              <span onClick={handleSearch} style={{cursor: 'pointer'}}>
-                <ImageWrapper width={20} height={20} src={'/search.svg'}/>
-              </span>
+            <div style={{
+              background: '#fff',
+              display: 'flex',
+              width: '100%',
+              borderRadius: '6px',
+              alignItems: 'center',
+              padding: '0 1rem'
+            }}>
+              <input type={'text'} ref={inputRef} placeholder="검색어를 입력해주세요."/>
+              <span><ImageWrapper width={20} height={20} src="/search.svg"/></span>
             </div>
           </div>
-          {
-            renderList(leftItems, leftSelected, 'LEFT')
-          }
           <div
             style={{
-              display: 'flex',
-              padding: '1.2rem 0',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              alignSelf: 'stretch',
-              borderTop: '1px solid #EBEBEB'
+              padding: '0 1.6rem 1.6rem 1.6rem'
             }}
           >
-            <span
+            <div
               style={{
-                fontSize: '1.4rem',
-                color: '#363637'
+                // padding: '0 1.6rem 1.6rem 1.6rem',
+                minHeight: '30rem',
+                maxHeight: '60rem',
+                overflowY: 'auto',
               }}
             >
-              선택된
-              <span
-                style={{
-                  fontWeight: 600,
-                  color: '#0061b8'
-                }}
-              >
-                {leftSelected.length}
-              </span>
-              대 차량
-            </span>
+              {renderTable(leftItems, leftSelectedRows, 'LEFT')}
+            </div>
+          </div>
+        </div>
+        <div style={{padding: '1.2rem 1.6rem'}} className={styles.footer}>
+          <span style={{fontSize: '1.4rem'}}>선택된 {leftSelectedRows.length}명</span>
+          <button
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              height: '3.2rem',
+              background: '#E2F0FE',
+              padding: '0 1rem',
+              color: '#00417A',
+              border: '1px solid #5EB2FE',
+              borderRadius: '4px'
+            }}
+            type={'button'}
+            onClick={onAdd}
+          >추가 <Image
+            src={ArrowRightBlue} alt=""/></button>
+        </div>
+      </div>
 
-            <button
-              type={'button'}
-              onClick={onAdd}
-              style={{
-                display: 'flex',
-                height: '3.2rem',
-                minWidth: '6.4rem',
-                padding: '0 1rem',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: '4px',
-                border: '1px solid #5EB2FE',
-                background: '#E2F0FE',
-                color: '#00417A'
-              }}
-            >
-              추가
-              <Image src={ArrowRightBlue} alt={''}/>
+      <div className={styles.rightArea}>
+        <div className={styles.rightHeader}>
+          <span style={{fontSize: '1.4rem', fontFamily: 'Pretendard GOV'}}>총 {rightItems.length}명 등록됨</span>
+          <div style={{display: 'flex', gap: '.8rem'}}>
+            <button type={'button'} className={styles.arrowBtn} onClick={onMoveUp}><Image src={ArrowTop} alt="up"/>
             </button>
-
+            <button type={'button'} className={styles.arrowBtn} onClick={onMoveDown}><Image src={ArrowTop} alt="down"
+                                                                                            style={{transform: 'rotate(180deg)'}}/>
+            </button>
+            <button className={styles.delBtn} type={'button'} onClick={onDelete}>선택삭제</button>
           </div>
         </div>
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            flex: 1,
-            padding: '1.6rem',
-
+            maxHeight: '30rem',
+            overflowY: 'auto',
           }}
         >
-          <div
-            style={{
-              display: 'flex',
-              paddingBottom: '1.2rem',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              alignSelf: 'stretch',
-            }}
-          >
-            <div style={{fontSize: '1.4rem', color: '#363637', fontWeight: 700}}>총
-              <span style={{color: '#0061b8', fontFamily: 'Pretendard GOV'}}> 24</span>
-              대 등록됨
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'flex-end',
-                alignItems: 'center',
-                gap: '.8rem',
-                height: '100%'
-              }}
-            >
-              <div className={styles.buttonArea}>
-                <button onClick={onMoveUp} type={'button'}>
-                  <Image src={ArrowTop} alt={'button'}/>
-                </button>
-                <button onClick={onMoveDown} type={'button'}>
-                  <Image src={ArrowTop} alt={'button'} style={{transform: 'rotate(180deg)'}}/>
-                </button>
-              </div>
-              <button onClick={onDelete} type={'button'} className={styles.deleteBtn}>
-                선택삭제
-              </button>
-            </div>
-          </div>
-          {
-            renderList(rightItems, rightSelected, 'RIGHT', true)
-          }
+          {renderTable(rightItems, rightSelectedRows, 'RIGHT', true)}
         </div>
       </div>
     </div>
-
-  )
+  );
 }

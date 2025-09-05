@@ -83,11 +83,11 @@ interface ListPageProps<T, F, V = Record<string, any>> {
   onDelete?: (ids: string[]) => Promise<boolean>;
   onDownload?: () => void;
   initialData?: T[]
-  modalMaxWidth?: 'lg' | 'xl';
+  modalMaxWidth?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'full';
+  modalMinWidth?: string;
   toolbarRight?: (helpers: { open: () => void, item: T | null }) => ReactNode;
   renderToolbarRight?: RenderToolbarRight<T>
   renderModals?: any;
-
   buildActions?: any;
 }
 
@@ -111,10 +111,10 @@ function ListPage<T, F, V>(
     onDownload,
     initialData,
     modalMaxWidth = 'lg',
+    modalMinWidth = '40rem',
     toolbarRight,
     renderToolbarRight,
     renderModals,
-
     buildActions
   }: ListPageProps<T, F, V>,
 ) {
@@ -129,6 +129,8 @@ function ListPage<T, F, V>(
   const [pagination, setPagination] = useState({pageIndex: 1, pageSize: 10});
   const [clickedItem, setClickedItem] = useState<T | null>(null);
   const [filter, setFilter] = useState<V>(initialFilter);
+  const [appliedFilter, setAppliedFilter] = useState<V>(initialFilter);
+
 
   const [sorting, setSorting] = useState<{ id: string; desc: boolean }[]>([
     {id: initialSortKey || 'id', desc: false}
@@ -154,26 +156,16 @@ function ListPage<T, F, V>(
       return fetchData({
         sortKey,
         sortOrder,
-        filter,
+        filter: appliedFilter,
         page: pagination.pageIndex,
         pagePerSize: pagination.pageSize
       });
     },
-    // initialData: initialData,
     placeholderData: keepPreviousData,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     enabled
   });
-
-  // const {
-  //   rowSelection,
-  //   onRowSelectionChange
-  // } = useTableSelection<T>(dataSource?.list || [], ids => {
-  //   console.log(ids);
-  //   const delCheckItem = ids.map((i) => dataSource?.list[Number(i)][pkColumn])
-  //   setDelItems(delCheckItem)
-  // });
 
   const {
     rowSelection,
@@ -183,21 +175,17 @@ function ListPage<T, F, V>(
     clearSelection
   } = useTableSelection<T>(dataSource?.list ?? [], {
     onChangeIds: (ids) => {
-
-
       const toDelete = ids
         .map((i) => dataSource?.list[Number(i)]?.[pkColumn as keyof T])
         .filter(Boolean) as (string | number)[];
-
-      console.log(toDelete)
-
       setDelItems(toDelete)
     }
   })
 
   const handleSubmit = () => {
+    setAppliedFilter(filter);
     setFilterVersion(prev => prev + 1)
-    setPagination(prev => ({...prev, pageIndex: 0}));
+    setPagination(prev => ({...prev, pageIndex: 1}));
   };
 
   const handleEdit = () => {
@@ -214,7 +202,6 @@ function ListPage<T, F, V>(
   }
 
   const handleAdd = useCallback(() => {
-    console.log('asd');
     setEditTarget(null);
     open();
   }, [setEditTarget, open]);
@@ -259,23 +246,23 @@ function ListPage<T, F, V>(
     setFilter(val);
   }
 
-  // @TODO tanstack/react-table 에서 항상 새로운 배열만들면서 참조달라짐. query key 에 넣을수없을듯.
-  // 추후 방법 찾아보기.
-  useEffect(() => {
-    if (enabled) {
-      refetch();
+  const computedModalBodyProps = useMemo(() => {
+    if (typeof modalBodyProps === 'function') {
+      return modalBodyProps({
+        appliedFilter,
+        filter,
+        clickedItem,
+        selectedRows,
+      });
     }
-  }, [sortKey, sortOrder, pagination.pageSize, pagination.pageIndex, filterVersion])
-
-  useEffect(() => {
-    setEnabled(true);
-  }, []);
+    return modalBodyProps;
+  }, [modalBodyProps, appliedFilter, filter, clickedItem, selectedRows]);
 
   const ctx = useMemo(
     () => ({
       selectedRows,
       clickedItem,
-      filter
+      filter: appliedFilter
     }),
     []
   )
@@ -289,6 +276,16 @@ function ListPage<T, F, V>(
     () => (buildActions ? buildActions(ctx, helpers) : undefined),
     [buildActions, ctx, helpers]
   )
+
+  useEffect(() => {
+    if (enabled) {
+      refetch();
+    }
+  }, [sortKey, sortOrder, pagination.pageSize, pagination.pageIndex, filterVersion])
+
+  useEffect(() => {
+    setEnabled(true);
+  }, []);
 
   // @ts-ignore
   return (
@@ -362,11 +359,12 @@ function ListPage<T, F, V>(
               isOpen={isOpen}
               onCloseAction={close}
               maxWidth={modalMaxWidth}
+              minWidth={modalMinWidth}
               footer={<BaseModalFooter disabled={!canSubmit} onSubmit={handleSubmitForm} close={close}/>}
           >
               <ModalBody
                   ref={editAreaRef}
-                  {...(modalBodyProps as Omit<F, keyof BaseModalFormProps<T>>)}
+                  {...(computedModalBodyProps as Omit<F, keyof BaseModalFormProps<T>>)}
                   editData={editTarget}
                   onCanSubmitChange={setCanSubmit}
               />

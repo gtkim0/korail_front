@@ -1,51 +1,61 @@
 import PortalLayout from "@/features/lyaouts/PortalLayout/PortalLayout";
-import {dummyMenu} from "@/data/dummyMenu";
-import {cookies} from "next/headers";
 import PortalContentLayout from "@/features/lyaouts/PortalContentLayout/PortalContentLayout";
-import {notFound} from "next/navigation";
+import {notFound, redirect} from "next/navigation";
+import {serverFetcher} from "@/lib/serverFetcher";
+import {NormalizeResponseType, ResponseType} from "@/types/common";
+import {BaseMenu} from "@/types/menu";
+import {isUnauthorized} from "@/lib/errors";
+
+export const dynamic = "force-dynamic";
+
+const DASHBOARD_MENU: BaseMenu = {
+  depth: 1,
+  lnkgUrlAddrCn: "/dashboard",
+  menuExplnCn: "대시보드",
+  menuId: "DASHBOARD",
+  menuNm: "대시보드",
+  upMenuId: "ROOT",
+  insdPrgrmIdntfNm: "Dashboard",
+  menuSortSn: 1,
+  tptlMenuAuthrtrs: null as any,
+};
 
 /** 동적 import 로 routing **/
-export default async function PageMapper({ params }: { params: Promise<{page: string[]}> }) {
+export default async function PageMapper({params}: { params: Promise<{ page: string[] }> }) {
 
-  const { page } = await params;
+  const {page} = await params;
   if (page?.[0] === '.well-known') {
     return <div>Not Found</div>;
   }
   const path = "/" + (page?.join("/") ?? "");
-  const isDashboard =  path == "/dashboard";
+  const isDashboard = path == "/dashboard";
 
-  // const menus = await getMenus();
-  // const menu = await getMenuByPath(path, menus); // 함수 내부에서 match
-  //
-  // let Component;
-  // try {
-  //   Component = (await import(`@/app/pages/${menu?.component}`)).default;
-  // } catch (err) {
-  //   Component = () => <Menu />
-  // }
-  //
-  // return <Component />
-
-  const cookieStore = await cookies();
-  const token = cookieStore.get('access_token');
-
-  // const menus = await menuServerApi.get(token) as BaseMenu[];
-  const menus = dummyMenu;
-
-  const currnet = menus.find(i=> i.url === path);
-
-  let Component;
+  //@TODO serverGetAuth 로 변경하여 인증 처리.
   try {
-    Component = (await import(`@/app/pages/${currnet?.component}`)).default;
-  } catch {
-    throw notFound();
-    // Component = () => <Banner />
-    // 추후 catch 에서는 404 에러페이지 띄우기.
-   }
-  return (
-    <PortalLayout menus={menus} isDashboard={isDashboard}>
-      <PortalContentLayout path={path} menus={menus}>
-        <Component />
-      </PortalContentLayout>
-    </PortalLayout>)
+    const response = await serverFetcher<ResponseType<NormalizeResponseType<BaseMenu[]>>>('/api/menus/get-list/render');
+    if (response.resultCode !== '0000') return;
+
+    const menuList = response?.result?.list ?? [];
+    const menus = [DASHBOARD_MENU, ...menuList];
+
+    const currentMenu = menus?.find(i => i.lnkgUrlAddrCn === path);
+    if (!currentMenu?.insdPrgrmIdntfNm) notFound();
+
+    const Component = (await import(`@/app/pages/${currentMenu.insdPrgrmIdntfNm}`))
+      .default;
+
+    return (
+      <PortalLayout menus={menus} isDashboard={isDashboard}>
+        <PortalContentLayout path={path} menus={menus}>
+          <Component/>
+        </PortalContentLayout>
+      </PortalLayout>
+    )
+  } catch (e) {
+    if (isUnauthorized(e)) {
+      await fetch(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/logout`, {method: "POST"});
+      redirect(`/auth/login?redirect=${encodeURIComponent(path)}`);
+    }
+    throw e;
+  }
 }

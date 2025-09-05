@@ -20,20 +20,22 @@ export default function PortalHeader({menus, isDashboard}: { menus: BaseMenu[], 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [containerHeight, setContainerHeight] = useState(0);
 
+  const renderMenu = [
+    ...menus.filter(i => i.depth === 1)
+  ];
 
-  const renderMenu = menus.filter(i => i.depth === 1);
   const [activeMenuId, setActiveMenuId] = useState<string>('');
 
 
   const activeFirstDepthId = useMemo(() => {
-    const current = menus.find(m => m.url === pathname);
+    const current = menus.find(m => m.lnkgUrlAddrCn === pathname);
     if (!current) return null;
 
-    const second = menus.find(m => m.id === current.pid);
+    const second = menus.find(m => m.menuId === current.upMenuId);
     if (!second) return null;
 
-    const first = menus.find(m => m.id === second.pid);
-    return first?.id ?? null;
+    const first = menus.find(m => m.menuId === second.upMenuId);
+    return first?.menuId ?? null;
   }, [menus, pathname]);
 
   const allMenuGroups = useMemo(() => {
@@ -43,10 +45,10 @@ export default function PortalHeader({menus, isDashboard}: { menus: BaseMenu[], 
     const map: Record<string, { id: string; name: string; thirdDepths: BaseMenu[] }[]> = {};
 
     menus.filter(i => i.depth === 1).forEach(first => {
-      const seconds = secondDepth.filter(s => s.pid === first.id);
-      map[first.id] = seconds.map(s => ({
+      const seconds = secondDepth.filter(s => s.upMenuId === first.menuId);
+      map[first.menuId] = seconds.map(s => ({
         ...s,
-        thirdDepths: thirdDepth.filter(t => t.pid === s.id)
+        thirdDepths: thirdDepth.filter(t => t.upMenuId === s.menuId)
       }));
     });
 
@@ -57,23 +59,21 @@ export default function PortalHeader({menus, isDashboard}: { menus: BaseMenu[], 
 
   const handleMenuClick = (item: BaseMenu) => {
 
-    console.log(item);
-
-    if (item.component === 'Dashboard') {
+    if (item.insdPrgrmIdntfNm === 'Dashboard') {
       router.push('/dashboard')
     }
 
 
-    const id = item.id
+    const id = item.menuId
 
-    const secondDepthList = menus.filter(i => i.depth === 2 && i.pid === id);
+    const secondDepthList = menus.filter(i => i.depth === 2 && i.upMenuId === id);
     const thirdDepth = menus.find(i =>
-      i.depth === 3 && secondDepthList.some(second => second.id === i.pid)
+      i.depth === 3 && secondDepthList.some(second => second.menuId === i.upMenuId)
     );
 
-    if (thirdDepth?.url) {
+    if (thirdDepth?.lnkgUrlAddrCn) {
       setSelectedRouteMenu(thirdDepth);
-      router.push(thirdDepth.url);
+      router.push(thirdDepth.lnkgUrlAddrCn);
     } else {
       console.warn('하위 3뎁스 메뉴가 없습니다');
     }
@@ -119,11 +119,11 @@ export default function PortalHeader({menus, isDashboard}: { menus: BaseMenu[], 
                 <div className={styles.content}>
                   {renderMenu.map(i => (
                     <PortalHeaderItem
-                      key={i.id}
+                      key={i.menuId}
                       item={i}
                       onClick={handleMenuClick}
                       onHover={handleMenuHover}
-                      isActive={activeFirstDepthId === i.id}
+                      isActive={activeFirstDepthId === i.menuId}
                       isDashboard={isDashboard}
                     />
                   ))}

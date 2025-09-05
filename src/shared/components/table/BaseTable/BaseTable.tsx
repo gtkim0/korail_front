@@ -70,7 +70,6 @@ export default function Table<T>(
     columnResizeMode: 'onChange'
   });
 
-
   return (
     <div style={{overflowX: 'auto', minWidth: '100%', flex: 1, height: '100%'}}>
       <table className={styles.table} style={{minWidth, maxWidth}}>
@@ -124,8 +123,14 @@ export default function Table<T>(
           return (
             <tr
               // style={{background: clickedItem && (row.original[pkColumn] === clickedItem[pkColumn]) ? bgColor : 'transparent'}}
-              style={{background: bgColor ?? 'transparent'}}
-
+              style={{
+                cursor: 'pointer',
+                background:
+                  clickedItem ?
+                    (row.original[pkColumn] === clickedItem[pkColumn]) ?
+                      '#e2f0fe' : bgColor ?? 'transparent'
+                    : 'transparent'
+              }}
               key={row.id}
               className={styles.tr}
               onClick={(e) => {

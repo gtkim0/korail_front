@@ -19,16 +19,15 @@ interface Props {
 export default function PortalLayout(props: Props) {
 
   const {children, menus, isDashboard} = props;
-  const codes = useGlobalStore(state => state.codes);
 
-  console.log(codes);
+  const codes = useGlobalStore(state => state.codes);
 
   return (
     <div className={clsx(styles.portalLayout, isDashboard && styles.dashboard)}>
       <MenuLoader menus={menus}/>
       <PortalHeader menus={menus} isDashboard={isDashboard}/>
       <div style={{flex: 1, display: 'flex'}}>
-        {!isDashboard && <PortalSidebar menu={dummyMenu}/>}
+        {!isDashboard && <PortalSidebar menu={menus}/>}
         <div className={styles.portalContent}>
           {children}
         </div>

@@ -12,6 +12,7 @@ export function useAuth() {
     if (!user) {
       api.get('/api/auths/me', {})
         .then(res => {
+          console.log(res);
           if (!res.ok) throw new Error('unauthenticated');
           return res.json();
         })

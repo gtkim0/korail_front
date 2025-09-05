@@ -16,15 +16,15 @@ function getBreadcrumb(menuList: BaseMenu[], target: BaseMenu | null) {
 
   while (current) {
     path.unshift(current);
-    current = menuList.find(m => m.id === current?.pid) || null;
+    current = menuList.find(m => m.menuId === current?.upMenuId) || null;
   }
 
   return path;
 }
 
-export default function MenuBreadCrumb({ path , menus }: Props ) {
+export default function MenuBreadCrumb({path, menus}: Props) {
 
-  const currentMenu = menus.find(item => item.url === path);
+  const currentMenu = menus.find(item => item.lnkgUrlAddrCn === path);
   const breadcrumb = getBreadcrumb(menus, currentMenu!);
 
   return (
@@ -33,20 +33,20 @@ export default function MenuBreadCrumb({ path , menus }: Props ) {
         return (
           <span
             className={clsx(idx === 0 && styles.isFirst, idx === breadcrumb.length - 1 && styles.isMatch)}
-            key={item.id}
+            key={item.menuId}
             style={{
               lineHeight: 0
             }}
           >
-            { idx === 0 &&
-                <div style={{position:'relative', width:'1.6rem',height:'1.6rem'}}>
-                  <Image src={'/home-stroke.svg'} alt={'logo'} fill style={{objectFit:'contain'}}/>
+            {idx === 0 &&
+                <div style={{position: 'relative', width: '1.6rem', height: '1.6rem'}}>
+                    <Image src={'/home-stroke.svg'} alt={'logo'} fill style={{objectFit: 'contain'}}/>
                 </div>
             }
-            {item.name}
-            { idx < breadcrumb.length - 1 &&
-                <div style={{position:'relative', width:'1.6rem',height:'1.6rem'}}>
-                  <Image src={'/arrow-right.svg'} alt={'logo'} fill style={{objectFit:'contain'}}/>
+            {item.menuNm}
+            {idx < breadcrumb.length - 1 &&
+                <div style={{position: 'relative', width: '1.6rem', height: '1.6rem'}}>
+                    <Image src={'/arrow-right.svg'} alt={'logo'} fill style={{objectFit: 'contain'}}/>
                 </div>
             }
         </span>

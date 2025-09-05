@@ -1,13 +1,13 @@
 'use client';
-import { BaseMenu } from "@/types/menu";
+import {BaseMenu} from "@/types/menu";
 import styles from './PortalMenuItem.module.css';
-import { useGlobalStore } from "@/shared/store/globalStore";
+import {useGlobalStore} from "@/shared/store/globalStore";
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
 import {usePathname, useRouter} from 'next/navigation'
 import clsx from "clsx";
 import {AnimatePresence, motion} from "framer-motion";
 
-export default function PortalMenuItem({ item }: { item: BaseMenu & { children?: BaseMenu[] } }) {
+export default function PortalMenuItem({item}: { item: BaseMenu & { children?: BaseMenu[] } }) {
 
   const router = useRouter();
   const pathname = usePathname();
@@ -16,13 +16,13 @@ export default function PortalMenuItem({ item }: { item: BaseMenu & { children?:
   const expandedMenuId = useGlobalStore(state => state.expandedMenuId);
   const setExpandedMenuId = useGlobalStore(state => state.setExpandedMenuId);
 
-  const isOpen = expandedMenuId === item.id;
-  const isMatch = item.url === pathname;
+  const isOpen = expandedMenuId === item.menuId;
+  const isMatch = item.lnkgUrlAddrCn === pathname;
 
   const handleToggle = () => {
 
     if (item.depth === 3) {
-      router.push(item.url);
+      router.push(item.lnkgUrlAddrCn);
       return;
     }
 
@@ -31,17 +31,17 @@ export default function PortalMenuItem({ item }: { item: BaseMenu & { children?:
     if (isOpen) {
       setExpandedMenuId(null);
     } else {
-      setExpandedMenuId(item.id);
+      setExpandedMenuId(item.menuId);
     }
   };
 
   return (
     <div className={clsx(styles.menuItemWrapper, {[styles.menuItemWrapper_open]: isOpen})}>
       <div className={clsx(styles.menuItem, {[styles.menuOpen]: isOpen})} onClick={handleToggle}>
-        <span className={clsx('font_lg', 'text_bold','font', isMatch && styles.match)}>{item.name}</span>
+        <span className={clsx('font_lg', 'text_bold', 'font', isMatch && styles.match)}>{item.menuNm}</span>
         {hasChildren && (
           <span className={`${styles.chevron} ${isOpen ? styles.open : ''}`}>
-            <ImageWrapper width={20} height={20} src={ isOpen ? '/arrow-down-white.svg' : '/arrow-down.svg'} />
+            <ImageWrapper width={20} height={20} src={isOpen ? '/arrow-down-white.svg' : '/arrow-down.svg'}/>
           </span>
         )}
       </div>
@@ -51,13 +51,13 @@ export default function PortalMenuItem({ item }: { item: BaseMenu & { children?:
           <motion.div
             className={styles.childrenWrapper}
             key="children"
-            initial={{ height: 0, opacity: 0, y: -5 }}
-            animate={{ height: 'auto', opacity: 1, y: 0 }}
-            exit={{ height: 0, opacity: 0, y: -5 }}
-            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            initial={{height: 0, opacity: 0, y: -5}}
+            animate={{height: 'auto', opacity: 1, y: 0}}
+            exit={{height: 0, opacity: 0, y: -5}}
+            transition={{duration: 0.25, ease: 'easeInOut'}}
           >
             {item.children?.map(child => (
-              <PortalMenuItem key={child.id} item={child} />
+              <PortalMenuItem key={child.menuId} item={child}/>
             ))}
           </motion.div>
         )}
