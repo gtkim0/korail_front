@@ -4,8 +4,8 @@ POST {{backend_url}}/api/auths/login
 Content-Type: application/json
 
 {
-  "userId": "test0004",
-  "lgnPswdCn": "1234"
+  "userId": "master",
+  "lgnPswdCn": "Korail7788!!"
 }
 
 

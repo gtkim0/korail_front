@@ -20,6 +20,7 @@ export default function PortalHeader({menus, isDashboard}: { menus: BaseMenu[], 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [containerHeight, setContainerHeight] = useState(0);
 
+  console.log(menus);
   const renderMenu = [
     ...menus.filter(i => i.depth === 1)
   ];
@@ -96,6 +97,8 @@ export default function PortalHeader({menus, isDashboard}: { menus: BaseMenu[], 
 
     return () => window.removeEventListener('resize', updateHeight);
   }, []);
+
+  console.log(renderMenu);
 
   return (
     <>

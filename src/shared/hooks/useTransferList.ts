@@ -45,7 +45,11 @@ export function useTransferList<T extends Record<string, any>>({
    * 데이터 들어온후 처음에 일단 초기화
    */
   useEffect(() => {
+
     if (!initialized && ((initialItems?.length ?? 0) > 0 || (selectedItems?.length ?? 0) > 0)) {
+
+      console.log("computedInitialLeft", computedInitialLeft);
+
       setLeftItems(computedInitialLeft);
       setRightItems(selectedItems);
       setInitialized(true);

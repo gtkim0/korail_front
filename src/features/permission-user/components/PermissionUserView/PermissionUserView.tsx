@@ -19,7 +19,7 @@ export default function PermissionUserView({initialFilter, initialData}: PageSer
   return (
     <ListPage<PermissionUserColumnType, PermissionUserAddFormProps, any>
       modalMaxWidth={'xxl'}
-      modalMinWidth={'100rem'}
+      modalMinWidth={'90rem'}
       pkColumn={'userId'}
       pageType={PageType.PermissionUser}
       filterSchemaKey={PageType.PermissionUser}
@@ -30,9 +30,8 @@ export default function PermissionUserView({initialFilter, initialData}: PageSer
         const newParams = {
           page: params.page,
           pagePerSize: params.pagePerSize,
-          authrtId: params.filter.authGroup
+          authrtId: params.filter.authrtId
         }
-
         const res = await api.get('/api/auths/users/get-list', newParams);
         return res.result;
       }}
@@ -43,8 +42,16 @@ export default function PermissionUserView({initialFilter, initialData}: PageSer
         }
       }}
       onSubmitEdit={async (value) => {
-        console.log(value);
-        return true;
+
+        const {target, selected} = value;
+
+        const body = {
+          authrtId: target,
+          userIds: selected.map(i => i.userId)
+        }
+
+        const res = await api.post('/api/auths/users/update', body);
+        return res.resultCode === '0000'
       }}
       initialData={initialData}
     />
