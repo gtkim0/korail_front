@@ -6,16 +6,25 @@ import TrainCrowdingStatus from "@/features/dashboard/components/TrainCrowdingSt
 import RealTimeSection from "@/features/dashboard/components/RealTimeSection/RealTimeSection";
 import StationCrowdingStatus from "@/features/dashboard/components/StationCrowdingStatus/StationCrowdingStatus";
 import CongestionBarChart from "@/features/dashboard/components/CongestionBarChart/CongestionBarChart";
-import React, {useState} from "react";
-import {SearchTargetType, searchTargetInit} from "@/types/dashboard";
+import React, {useEffect, useState} from "react";
+import {DashBoardProps, searchTargetInit, SearchTargetType} from "@/types/dashboard";
 import {AnimatePresence, motion} from "framer-motion";
 import SectionCrowdingStatus from "@/features/dashboard/components/SectionCrowdingStatus/SectionCrowdingStatus";
 import BoxHeader from "@/features/dashboard/components/BoxHeader/BoxHeader";
-import TopCenterSection from "@/features/dashboard/components/TopCenterSection/TopCenterSection";
 import ArrivalInfo from "@/features/dashboard/components/ArrivalInfo/ArrivalInfo";
+import {useCongestStepStore} from "@/shared/store/slice/congestStepSlice";
 
-export default function DashboardView() {
+
+export default function DashboardView({initialData}: DashBoardProps) {
     const [searchTarget, setSearchTarget] = useState<SearchTargetType>(searchTargetInit);
+    const {setCongestStep} = useCongestStepStore();
+    useEffect(() => {
+        console.log(initialData)
+        if (initialData.settingRes) {
+            setCongestStep(initialData.settingRes.tPtlDgcnCrtrms)
+        }
+
+    }, [initialData]);
 
     return (
         <div className={styles.container}>
@@ -47,20 +56,6 @@ export default function DashboardView() {
                                 <BoxHeader name={"열차 혼잡도 통계"} time={"14:00"}/>
                                 <CongestionBarChart
                                     searchTarget={searchTarget}
-                                    levels={[
-                                        {key: 'normal', label: '보통', count: 402, percent: 60},
-                                        {key: 'warning', label: '주의', count: 108, percent: 18},
-                                        {key: 'congested', label: '혼잡', count: 94, percent: 14},
-                                        {key: 'critical', label: '심각', count: 32, percent: 8},
-                                    ]}
-                                    data={[
-                                        {name: "경부선", normal: 21, warning: 30, congested: 10, critical: 3},
-                                        {name: "경의중앙선", normal: 10, warning: 22, congested: 30, critical: 5},
-                                        {name: "경강선", normal: 30, warning: 40, congested: 20, critical: 8},
-                                        {name: "경춘선", normal: 14, warning: 20, congested: 50, critical: 2},
-                                        {name: "동해선", normal: 26, warning: 24, congested: 12, critical: 4},
-                                        {name: "ss", normal: 26, warning: 24, congested: 12, critical: 4},
-                                    ]}
                                 />
                             </div>
                             <div className={styles.box_container} style={{flex: "1 1 0"}}>
@@ -95,19 +90,6 @@ export default function DashboardView() {
                                 <BoxHeader name={"역사 혼잡도 통계"} time={"14:00"}/>
                                 <CongestionBarChart
                                     searchTarget={searchTarget}
-                                    levels={[
-                                        {key: 'normal', label: '보통', count: 402, percent: 60},
-                                        {key: 'warning', label: '주의', count: 108, percent: 18},
-                                        {key: 'congested', label: '혼잡', count: 94, percent: 14},
-                                        {key: 'critical', label: '심각', count: 32, percent: 8},
-                                    ]}
-                                    data={[
-                                        {name: "경부선", normal: 21, warning: 30, congested: 10, critical: 3},
-                                        {name: "경의중앙선", normal: 10, warning: 22, congested: 30, critical: 5},
-                                        {name: "경강선", normal: 30, warning: 40, congested: 20, critical: 8},
-                                        {name: "경춘선", normal: 14, warning: 20, congested: 50, critical: 2},
-                                        {name: "동해선", normal: 26, warning: 24, congested: 12, critical: 4}
-                                    ]}
                                 />
                             </div>
                             <div className={styles.box_container} style={{flex: "1 1 0"}}>

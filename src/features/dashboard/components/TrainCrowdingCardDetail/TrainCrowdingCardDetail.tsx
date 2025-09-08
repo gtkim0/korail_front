@@ -21,7 +21,7 @@ export default function TrainCrowdingCardDetail() {
                 <span>1호선 인천행</span>
                 <span className={styles.train_num}>K0660</span>
             </div>
-            <CrowdingBadge level={1} percent={21}/>
+            <CrowdingBadge level={4} percent={21}/>
         </div>
         <div className={styles.item_content}>
             <div className={styles.item_route}>
@@ -33,16 +33,16 @@ export default function TrainCrowdingCardDetail() {
                 </div>
             </div>
             <div className={styles.item_train}>
-                <MetroLineAtomic label={'혼잡'} backgroundColor={'#F4AA21'}/>
-                <MetroLineAtomic label={'심각'} backgroundColor={'#FF1500'}/>
-                <MetroLineAtomic label={'보통'} backgroundColor={'#009856'}/>
-                <MetroLineAtomic label={'주의'} backgroundColor={'#F4AA21'}/>
-                <MetroLineAtomic label={'주의'} backgroundColor={'#F4AA21'}/>
-                <MetroLineAtomic label={'주의'} backgroundColor={'#F4AA21'}/>
-                <MetroLineAtomic label={'주의'} backgroundColor={'#F4AA21'}/>
-                <MetroLineAtomic label={'주의'} backgroundColor={'#F4AA21'}/>
-                <MetroLineAtomic label={'주의'} backgroundColor={'#F4AA21'}/>
-                <MetroLineAtomic label={'주의'} backgroundColor={'#F4AA21'}/>
+                <MetroLineAtomic label={1}/>
+                <MetroLineAtomic label={2}/>
+                <MetroLineAtomic label={4}/>
+                <MetroLineAtomic label={4}/>
+                <MetroLineAtomic label={3}/>
+                <MetroLineAtomic label={2}/>
+                <MetroLineAtomic label={1}/>
+                <MetroLineAtomic label={2}/>
+                <MetroLineAtomic label={1}/>
+                <MetroLineAtomic label={1}/>
             </div>
         </div>
     </div>

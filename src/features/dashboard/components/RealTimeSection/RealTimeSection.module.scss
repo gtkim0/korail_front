@@ -26,14 +26,12 @@
       display: flex;
       gap: 8px;
 
-      & div:last-child {
-        margin-left: auto;
-      }
 
       .text {
         display: flex;
         flex-direction: column;
         gap: 10px;
+        margin-right: auto;
 
         .title {
           font-size: 2.8rem;
@@ -54,7 +52,7 @@
         background: rgba(255, 255, 255, 0.10);
         width: fit-content;
         height: fit-content;
-        margin: 6px 0 6px auto;
+        margin: 6px 0 6px 0;
       }
     }
 
@@ -82,7 +80,6 @@
         }
 
         .step_box {
-          background: #1a73e8;
           border-radius: 8px;
           font-size: 1.4rem;
           display: flex;
@@ -94,7 +91,6 @@
 
         .step_num {
           font-size: 2.2rem;
-          color: #1a73e8;
         }
       }
     }

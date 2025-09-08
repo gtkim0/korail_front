@@ -7,6 +7,7 @@ import Image from "next/image";
 import TrainCrowdingCardDetail from "@/features/dashboard/components/TrainCrowdingCardDetail/TrainCrowdingCardDetail";
 import icon from "@/shared/assets/images/train.svg";
 import FilterRadioGroup from "@/shared/components/searchFilter/Filters/FilterRadioGroup/FilterRadioGroup";
+import Refresh from "@/features/dashboard/components/Refresh/Refresh";
 
 interface Props {
 
@@ -14,7 +15,7 @@ interface Props {
 
 export default function TrainCrowdingStatus() {
     const [activeTab, setActiveTab] = useState<"all" | "up" | "down">("all")
-    const data = ["1", "2", "3"]
+    const data = ["1", "2", "3", "4", "5", "6", "7"]
 
     return (<>
         <div className={styles.header}>
@@ -25,6 +26,7 @@ export default function TrainCrowdingStatus() {
             <span>열차 혼잡도 현황</span>
             <div className={styles.radio}>
                 <FilterRadioGroup
+                    name="TrainCrowdingStatus"
                     selected={activeTab}
                     options={[
                         {key: 'all', label: '전체'},
@@ -51,6 +53,7 @@ export default function TrainCrowdingStatus() {
             />
             <SearchInput placeholder={"열차번호 입력"} parentClass={styles.search_parent}/>
         </div>
+        <Refresh top={130}/>
         <div className={styles.contents}>
             {data.map((el, idx) => (<TrainCrowdingCardDetail key={idx}/>))}
         </div>

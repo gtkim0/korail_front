@@ -1,21 +1,15 @@
 'use client';
 import React from 'react';
 import styles from './MetroLineAtomic.module.scss';
+import {useCongestStepStore} from "@/shared/store/slice/congestStepSlice";
 
 interface Props {
-    label: string;
-    width?: number;
-    height?: number;
-    backgroundColor?: string;
-    stripeColor?: string;
-    textColor?: string;
-    borderRadius?: number;
-
+    label: any;
 }
 
 function getStripeColor(bgColor: string): string {
-    const hex = bgColor.replace('#', '');
-    if (hex.length !== 6) return 'rgba(255,255,255,0.3)';
+    const hex = bgColor?.replace('#', '');
+    if (hex?.length !== 6) return 'rgba(255,255,255,0.3)';
 
     const r = parseInt(hex.substring(0, 2), 16);
     const g = parseInt(hex.substring(2, 4), 16);
@@ -30,31 +24,24 @@ function getStripeColor(bgColor: string): string {
 export default function MetroLineAtomic(
     {
         label,
-        width = 25,
-        height = 25,
-        backgroundColor = '#FFB800',
-        textColor = '#fff',
-        borderRadius = 4
     }: Props) {
 
-    const stripeColor = getStripeColor(backgroundColor);
+    const {congestStep} = useCongestStepStore();
 
-    // console.log(stripeColor);
 
+    const step = congestStep.find((s) => s.dgcnStgNo === label);
+
+    const stripeColor = getStripeColor(step?.indctClorNo);
     const customStyle = {
-        width,
-        height,
-        borderRadius,
-        color: textColor,
-        backgroundColor: backgroundColor,
+        backgroundColor: `#${step?.indctClorNo}`,
         backgroundImage: `repeating-linear-gradient(45deg,${stripeColor}, ${stripeColor} 1px,transparent 1px,transparent 3px)`,
     };
-
+    if (!step) return null;
     return (
         <>
             <div className={styles.badge} style={customStyle}>
         <span className={styles.text}>
-      {label}
+      {step?.stgNm}
         </span>
 
                 <div className={styles.tooltip}><span>혼잡도</span><span>120%</span></div>
