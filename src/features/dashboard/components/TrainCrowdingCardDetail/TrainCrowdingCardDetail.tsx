@@ -6,7 +6,11 @@ import MetroLineAtomic from "@/features/dashboard/components/MetroLineAtomic/Met
 import React from "react";
 import arrowIcon from "@/shared/assets/images/left-arrow.svg"
 
-export default function TrainCrowdingCardDetail() {
+interface Props {
+    data: any
+}
+
+export default function TrainCrowdingCardDetail({data}: Props) {
     return <div className={styles.item}>
         <div className={styles.item_header}>
             <div className={styles.train_name}>
@@ -18,31 +22,24 @@ export default function TrainCrowdingCardDetail() {
                     priority
                     style={{objectFit: 'contain'}}
                 />
-                <span>1호선 인천행</span>
-                <span className={styles.train_num}>K0660</span>
+                <span>{data?.line}</span>
+                <span className={styles.train_num}>{data?.train}</span>
             </div>
-            <CrowdingBadge level={4} percent={21}/>
+            <CrowdingBadge level={data?.level} percent={data?.percent}/>
         </div>
         <div className={styles.item_content}>
             <div className={styles.item_route}>
-                <div className={styles.departure_defore}>전역출발</div>
+                <div className={styles.departure_defore}>{data?.status}</div>
                 <div className={styles.route}>
-                    <span className={styles.station}>가산디지털단지역</span>
+                    <span className={styles.station}>{data?.startRoute}</span>
                     <Image src={arrowIcon} alt=""/>
-                    <span className={styles.station}>디지털미디어시티역</span>
+                    <span className={styles.station}>{data?.endRoute}</span>
                 </div>
             </div>
             <div className={styles.item_train}>
-                <MetroLineAtomic label={1}/>
-                <MetroLineAtomic label={2}/>
-                <MetroLineAtomic label={4}/>
-                <MetroLineAtomic label={4}/>
-                <MetroLineAtomic label={3}/>
-                <MetroLineAtomic label={2}/>
-                <MetroLineAtomic label={1}/>
-                <MetroLineAtomic label={2}/>
-                <MetroLineAtomic label={1}/>
-                <MetroLineAtomic label={1}/>
+                {data?.trains?.map((el, idx) => {
+                    return <MetroLineAtomic label={el} key={idx}/>
+                })}
             </div>
         </div>
     </div>

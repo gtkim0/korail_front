@@ -6,7 +6,6 @@ import useModal from "@/shared/hooks/useModal";
 import BaseModal from "@/shared/components/modal/BaseModal/BaseModal";
 import {BaseModalFooter} from "@/shared/components/modal/BaseModal/BaseModalFooter/BaseModalFooter";
 import CrowdingModal from "@/features/dashboard/components/modal/CrowdingModal/CrowdingModal";
-import Refresh from "@/features/dashboard/components/Refresh/Refresh";
 
 export default function SectionCrowdingStatus() {
 
@@ -35,10 +34,16 @@ export default function SectionCrowdingStatus() {
     }, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {
         name: "승강장",
         crowding: "심각"
-    }, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}]
+    }, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {
+        name: "승강장",
+        crowding: "심각"
+    }, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {
+        name: "승강장",
+        crowding: "심각"
+    }, {name: "승강장", crowding: "심각"}]
     return <>
         <div className={styles.table}>
-            <Refresh top={50}/>
+            {/*<Refresh top={50}/>*/}
             <Table<T>
                 columns={[
                     {accessorKey: "name", header: "구역명", enableSorting: false},

@@ -5,31 +5,39 @@ import TopRightSection from "@/features/dashboard/components/TopRightSection/Top
 import TrainCrowdingStatus from "@/features/dashboard/components/TrainCrowdingStatus/TrainCrowdingStatus";
 import RealTimeSection from "@/features/dashboard/components/RealTimeSection/RealTimeSection";
 import StationCrowdingStatus from "@/features/dashboard/components/StationCrowdingStatus/StationCrowdingStatus";
-import CongestionBarChart from "@/features/dashboard/components/CongestionBarChart/CongestionBarChart";
+import CongestionStats from "@/features/dashboard/components/CongestionStats/CongestionStats";
 import React, {useEffect, useState} from "react";
-import {DashBoardProps, searchTargetInit, SearchTargetType} from "@/types/dashboard";
+import {DashBoardProps} from "@/types/dashboard";
 import {AnimatePresence, motion} from "framer-motion";
 import SectionCrowdingStatus from "@/features/dashboard/components/SectionCrowdingStatus/SectionCrowdingStatus";
 import BoxHeader from "@/features/dashboard/components/BoxHeader/BoxHeader";
 import ArrivalInfo from "@/features/dashboard/components/ArrivalInfo/ArrivalInfo";
 import {useCongestStepStore} from "@/shared/store/slice/congestStepSlice";
+import {useDashboardSelectStore} from "@/shared/store/slice/dashboardSelectSlice";
 
 
 export default function DashboardView({initialData}: DashBoardProps) {
-    const [searchTarget, setSearchTarget] = useState<SearchTargetType>(searchTargetInit);
+    const {searchTarget, setInitWideRailYn} = useDashboardSelectStore();
     const {setCongestStep} = useCongestStepStore();
+
+    const [init, setInit] = useState(false);
+
     useEffect(() => {
-        console.log(initialData)
         if (initialData.settingRes) {
             setCongestStep(initialData.settingRes.tPtlDgcnCrtrms)
         }
+        if (initialData.profileRes.profile.wideRailYn) {
+            setInitWideRailYn(initialData.profileRes.profile.wideRailYn)
+        }
+        setInit(true);
+    }, [initialData, setInit]);
 
-    }, [initialData]);
+    if (!init) return <></>;
 
     return (
         <div className={styles.container}>
             <div className={styles.top_contents}>
-                <TopLeftSection setSearchTarget={setSearchTarget} searchTarget={searchTarget}/>
+                <TopLeftSection initialData={initialData.routeDirectionRes}/>
                 {/*<TopCenterSection/>*/}
                 <TopRightSection/>
             </div>
@@ -54,9 +62,7 @@ export default function DashboardView({initialData}: DashBoardProps) {
                                       transition={{duration: 0.25, ease: 'easeInOut'}}>
                             <div className={styles.box_container} style={{flex: "0 0 auto", overflow: "hidden"}}>
                                 <BoxHeader name={"열차 혼잡도 통계"} time={"14:00"}/>
-                                <CongestionBarChart
-                                    searchTarget={searchTarget}
-                                />
+                                <CongestionStats isTrain={true} initialData={initialData.trainCongStatsRes}/>
                             </div>
                             <div className={styles.box_container} style={{flex: "1 1 0"}}>
                                 {/*열차 혼잡도 현황*/}
@@ -88,9 +94,7 @@ export default function DashboardView({initialData}: DashBoardProps) {
                                     transition={{duration: 0.25, ease: 'easeInOut'}}>
                             <div className={styles.box_container} style={{flex: "0 0 auto", overflow: "hidden"}}>
                                 <BoxHeader name={"역사 혼잡도 통계"} time={"14:00"}/>
-                                <CongestionBarChart
-                                    searchTarget={searchTarget}
-                                />
+                                <CongestionStats isTrain={false} initialData={initialData.stationCongStatsRes}/>
                             </div>
                             <div className={styles.box_container} style={{flex: "1 1 0"}}>
                                 <BoxHeader name={"역사 혼잡도 현황"} time={"14:00"}/>
@@ -100,5 +104,6 @@ export default function DashboardView({initialData}: DashBoardProps) {
                     }
                 </AnimatePresence>
             </div>
-        </div>)
+        </div>
+    )
 }

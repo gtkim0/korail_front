@@ -5,10 +5,8 @@ import React, {useState} from "react";
 import Image from "next/image";
 import Table from "@/shared/components/table/BaseTable/BaseTable";
 import {AnimatePresence, motion} from "framer-motion";
-import clsx from "clsx";
 import CrowdingBadge from "@/features/dashboard/components/CrowdingBadge/CrowdingBadge";
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
-import Refresh from "@/features/dashboard/components/Refresh/Refresh";
 
 export default function StationCrowdingStatus() {
     const [openStation, setOpenStation] = useState<null | number>(null);
@@ -40,7 +38,7 @@ export default function StationCrowdingStatus() {
         <div className={styles.filter}>
             <SearchInput placeholder={"역사명 입력"} parentClass={styles.search_parent}/>
         </div>
-        <Refresh top={130}/>
+        {/*<Refresh top={130}/>*/}
         <div className={styles.contents}>
             {data.map((el, idx) => {
                 const isOpen = openStation == idx;

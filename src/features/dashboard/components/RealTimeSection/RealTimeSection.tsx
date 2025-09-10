@@ -3,19 +3,20 @@ import styles from "./RealTimeSection.module.scss"
 import Image from "next/image";
 import React, {useState} from "react";
 import clsx from "clsx";
-import {SearchTargetType} from "@/types/dashboard";
 import OlMap from "@/features/dashboard/components/OlMap/OlMap";
 import LineRealTime from "@/features/dashboard/components/LineRealTime/LineRealTime";
 import SpecialPeriodInfo from "@/features/dashboard/components/SpecialPeriodInfo/SpecialPeriodInfo";
 import RealTimeStationList from "@/features/dashboard/components/RealTimeStationList/RealTimeStationList";
 import RealTimeLineList from "@/features/dashboard/components/RealTimeLineList/RealTimeLineList";
 import {useCongestStepStore} from "@/shared/store/slice/congestStepSlice";
+import {useDashboardSelectStore} from "@/shared/store/slice/dashboardSelectSlice";
 
 interface Props {
-    searchTarget: SearchTargetType
+
 }
 
-export default function RealTimeSection({searchTarget}: Props) {
+export default function RealTimeSection({}: Props) {
+    const {searchTarget} = useDashboardSelectStore();
     const [activeCrowding, setActiveCrowding] = useState(null);
     const {congestStep} = useCongestStepStore();
     return <>
@@ -42,6 +43,7 @@ export default function RealTimeSection({searchTarget}: Props) {
                 <div className={styles.item_container}>
                     {congestStep?.map((el, idx) => {
                         return <div className={clsx(styles.item, activeCrowding == el.dgcnStgNo && styles.active)}
+                                    key={`congestStep-${idx}`}
                                     onClick={() => {
                                         if (activeCrowding == el.dgcnStgNo) {
                                             setActiveCrowding(null)

@@ -103,7 +103,7 @@
 
   .scroll {
     height: 332px;
-    overflow-y: scroll;
+    overflow-y: auto;
     @extend .custom-scroll3;
   }
 

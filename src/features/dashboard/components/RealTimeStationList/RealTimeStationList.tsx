@@ -2,7 +2,6 @@ import styles from "./RealTimeStationList.module.scss"
 import Table from "@/shared/components/table/BaseTable/BaseTable";
 import CrowdingBadge from "@/features/dashboard/components/CrowdingBadge/CrowdingBadge";
 import React from "react";
-import Refresh from "@/features/dashboard/components/Refresh/Refresh";
 
 export default function RealTimeStationList() {
     const data = [{name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {
@@ -28,7 +27,7 @@ export default function RealTimeStationList() {
         crowding: "심각"
     }, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}]
     return <>
-        <Refresh top={70}/>
+        {/*<Refresh top={70}/>*/}
         <div className={styles.table}>
             <Table<T>
                 columns={[

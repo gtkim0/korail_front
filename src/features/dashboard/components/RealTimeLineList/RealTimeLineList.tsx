@@ -6,7 +6,6 @@ import Image from "next/image";
 import DownUp from "@/shared/assets/images/down_up.svg";
 import TrainCrowdingCard from "@/features/dashboard/components/TrainCrowdingCard/TrainCrowdingCard";
 import CrowdingBadge from "@/features/dashboard/components/CrowdingBadge/CrowdingBadge";
-import Refresh from "@/features/dashboard/components/Refresh/Refresh";
 
 export default function RealTimeLineList() {
     const [activeTab, setActiveTab] = useState<"train" | "station">("train");
@@ -40,32 +39,36 @@ export default function RealTimeLineList() {
 
             <AnimatePresence mode="sync">
                 {activeTab == "train" ?
-                   <>
-                       <Refresh top={20}/>
-                       <motion.div key={"train"} initial={{x: "-100%", opacity: 0}} animate={{x: 0, opacity: 1}}
-                                   exit={{x: "-100%", opacity: 0}} transition={{duration: 0.4}} className={styles.list}>
-                           {data.map((el, idx) => {
-                               return <TrainCrowdingCard key={`train_crowding_card_${idx}`}/>
-                           })}
-                       </motion.div></> :
-                  <>  <Refresh top={20}/>
-                      <motion.div key={"station"} initial={{x: "100%", opacity: 0}} animate={{x: 0, opacity: 1}}
-                                  exit={{x: "100%", opacity: 0}} transition={{duration: 0.4}} className={styles.list}
-                      >
-                          {data.map((el, idx) => {
-                              return <div className={styles.station_item} key={`station_crowding_card_${idx}`}>
-                                  <Image
-                                      src={"/line-outline.svg"}
-                                      alt={"err"}
-                                      width={20}
-                                      height={20}
-                                      priority
-                                      style={{objectFit: 'contain'}}
-                                  /><span className={styles.station_title}>가산디지털단지역</span>
-                                  <CrowdingBadge level={1} percent={21} noBoxShadow={true} className={styles.margin}/>
-                              </div>
-                          })}
-                      </motion.div></>}
+                    <>
+                        {/*<Refresh top={20}/>*/}
+                        <motion.div key={"train"} initial={{x: "-100%", opacity: 0}} animate={{x: 0, opacity: 1}}
+                                    exit={{x: "-100%", opacity: 0}} transition={{duration: 0.4}}
+                                    className={styles.list}>
+                            {data.map((el, idx) => {
+                                return <TrainCrowdingCard key={`train_crowding_card_${idx}`}/>
+                            })}
+                        </motion.div>
+                    </> :
+                    <>
+                        {/*<Refresh top={20}/>*/}
+                        <motion.div key={"station"} initial={{x: "100%", opacity: 0}} animate={{x: 0, opacity: 1}}
+                                    exit={{x: "100%", opacity: 0}} transition={{duration: 0.4}} className={styles.list}
+                        >
+                            {data.map((el, idx) => {
+                                return <div className={styles.station_item} key={`station_crowding_card_${idx}`}>
+                                    <Image
+                                        src={"/line-outline.svg"}
+                                        alt={"err"}
+                                        width={20}
+                                        height={20}
+                                        priority
+                                        style={{objectFit: 'contain'}}
+                                    /><span className={styles.station_title}>가산디지털단지역</span>
+                                    <CrowdingBadge level={1} percent={21} noBoxShadow={true} className={styles.margin}/>
+                                </div>
+                            })}
+                        </motion.div>
+                    </>}
 
             </AnimatePresence>
         </div>

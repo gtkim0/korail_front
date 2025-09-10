@@ -63,8 +63,13 @@
 }
 
 .table {
-  max-height: 200px;
   position: relative;
+  overflow: hidden;
+
+  .inner {
+    max-height: 200px;
+    overflow-y: auto;
+  }
 
   table {
     border-collapse: collapse;
@@ -97,4 +102,8 @@
     border: none;
     padding: 4px 12px;
   }
+}
+
+.empty {
+  min-height: 240px;
 }
