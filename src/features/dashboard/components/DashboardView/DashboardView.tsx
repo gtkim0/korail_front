@@ -5,22 +5,39 @@ import TopRightSection from "@/features/dashboard/components/TopRightSection/Top
 import TrainCrowdingStatus from "@/features/dashboard/components/TrainCrowdingStatus/TrainCrowdingStatus";
 import RealTimeSection from "@/features/dashboard/components/RealTimeSection/RealTimeSection";
 import StationCrowdingStatus from "@/features/dashboard/components/StationCrowdingStatus/StationCrowdingStatus";
-import CongestionBarChart from "@/features/dashboard/components/CongestionBarChart/CongestionBarChart";
-import React, {useState} from "react";
-import {SearchTargetType, searchTargetInit} from "@/types/dashboard";
+import CongestionStats from "@/features/dashboard/components/CongestionStats/CongestionStats";
+import React, {useEffect, useState} from "react";
+import {DashBoardProps} from "@/types/dashboard";
 import {AnimatePresence, motion} from "framer-motion";
 import SectionCrowdingStatus from "@/features/dashboard/components/SectionCrowdingStatus/SectionCrowdingStatus";
 import BoxHeader from "@/features/dashboard/components/BoxHeader/BoxHeader";
-import TopCenterSection from "@/features/dashboard/components/TopCenterSection/TopCenterSection";
 import ArrivalInfo from "@/features/dashboard/components/ArrivalInfo/ArrivalInfo";
+import {useCongestStepStore} from "@/shared/store/slice/congestStepSlice";
+import {useDashboardSelectStore} from "@/shared/store/slice/dashboardSelectSlice";
 
-export default function DashboardView() {
-    const [searchTarget, setSearchTarget] = useState<SearchTargetType>(searchTargetInit);
+
+export default function DashboardView({initialData}: DashBoardProps) {
+    const {searchTarget, setInitWideRailYn} = useDashboardSelectStore();
+    const {setCongestStep} = useCongestStepStore();
+
+    const [init, setInit] = useState(false);
+
+    useEffect(() => {
+        if (initialData.settingRes) {
+            setCongestStep(initialData.settingRes.tPtlDgcnCrtrms)
+        }
+        if (initialData.profileRes.profile.wideRailYn) {
+            setInitWideRailYn(initialData.profileRes.profile.wideRailYn)
+        }
+        setInit(true);
+    }, [initialData, setInit]);
+
+    if (!init) return <></>;
 
     return (
         <div className={styles.container}>
             <div className={styles.top_contents}>
-                <TopLeftSection setSearchTarget={setSearchTarget} searchTarget={searchTarget}/>
+                <TopLeftSection initialData={initialData.routeDirectionRes}/>
                 {/*<TopCenterSection/>*/}
                 <TopRightSection/>
             </div>
@@ -45,23 +62,7 @@ export default function DashboardView() {
                                       transition={{duration: 0.25, ease: 'easeInOut'}}>
                             <div className={styles.box_container} style={{flex: "0 0 auto", overflow: "hidden"}}>
                                 <BoxHeader name={"열차 혼잡도 통계"} time={"14:00"}/>
-                                <CongestionBarChart
-                                    searchTarget={searchTarget}
-                                    levels={[
-                                        {key: 'normal', label: '보통', count: 402, percent: 60},
-                                        {key: 'warning', label: '주의', count: 108, percent: 18},
-                                        {key: 'congested', label: '혼잡', count: 94, percent: 14},
-                                        {key: 'critical', label: '심각', count: 32, percent: 8},
-                                    ]}
-                                    data={[
-                                        {name: "경부선", normal: 21, warning: 30, congested: 10, critical: 3},
-                                        {name: "경의중앙선", normal: 10, warning: 22, congested: 30, critical: 5},
-                                        {name: "경강선", normal: 30, warning: 40, congested: 20, critical: 8},
-                                        {name: "경춘선", normal: 14, warning: 20, congested: 50, critical: 2},
-                                        {name: "동해선", normal: 26, warning: 24, congested: 12, critical: 4},
-                                        {name: "ss", normal: 26, warning: 24, congested: 12, critical: 4},
-                                    ]}
-                                />
+                                <CongestionStats isTrain={true} initialData={initialData.trainCongStatsRes}/>
                             </div>
                             <div className={styles.box_container} style={{flex: "1 1 0"}}>
                                 {/*열차 혼잡도 현황*/}
@@ -93,22 +94,7 @@ export default function DashboardView() {
                                     transition={{duration: 0.25, ease: 'easeInOut'}}>
                             <div className={styles.box_container} style={{flex: "0 0 auto", overflow: "hidden"}}>
                                 <BoxHeader name={"역사 혼잡도 통계"} time={"14:00"}/>
-                                <CongestionBarChart
-                                    searchTarget={searchTarget}
-                                    levels={[
-                                        {key: 'normal', label: '보통', count: 402, percent: 60},
-                                        {key: 'warning', label: '주의', count: 108, percent: 18},
-                                        {key: 'congested', label: '혼잡', count: 94, percent: 14},
-                                        {key: 'critical', label: '심각', count: 32, percent: 8},
-                                    ]}
-                                    data={[
-                                        {name: "경부선", normal: 21, warning: 30, congested: 10, critical: 3},
-                                        {name: "경의중앙선", normal: 10, warning: 22, congested: 30, critical: 5},
-                                        {name: "경강선", normal: 30, warning: 40, congested: 20, critical: 8},
-                                        {name: "경춘선", normal: 14, warning: 20, congested: 50, critical: 2},
-                                        {name: "동해선", normal: 26, warning: 24, congested: 12, critical: 4}
-                                    ]}
-                                />
+                                <CongestionStats isTrain={false} initialData={initialData.stationCongStatsRes}/>
                             </div>
                             <div className={styles.box_container} style={{flex: "1 1 0"}}>
                                 <BoxHeader name={"역사 혼잡도 현황"} time={"14:00"}/>
@@ -118,5 +104,6 @@ export default function DashboardView() {
                     }
                 </AnimatePresence>
             </div>
-        </div>)
+        </div>
+    )
 }

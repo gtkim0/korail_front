@@ -1,11 +1,11 @@
 import {create} from "zustand";
 
-interface AlarmState {
+interface AlarmSlice {
     isOn: boolean;
     toggle: (value?: boolean) => void;
 }
 
-export const useAlarmStore = create<AlarmState>((set) => ({
+export const useAlarmStore = create<AlarmSlice>((set) => ({
     isOn: false,
     toggle: (value) =>
         set((state) => ({

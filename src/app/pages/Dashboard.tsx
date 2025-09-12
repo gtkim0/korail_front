@@ -1,5 +1,5 @@
-import DashboardView from "@/features/dashboard/components/DashboardView/DashboardView";
+import DashboardServer from "@/features/dashboard/components/DashboardView/DashboardServer";
 
 export default async function Dashboard(){
-    return <DashboardView/>
+    return <DashboardServer/>
 }

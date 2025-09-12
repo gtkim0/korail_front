@@ -34,9 +34,16 @@ export default function SectionCrowdingStatus() {
     }, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {
         name: "승강장",
         crowding: "심각"
-    }, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}]
+    }, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {
+        name: "승강장",
+        crowding: "심각"
+    }, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {
+        name: "승강장",
+        crowding: "심각"
+    }, {name: "승강장", crowding: "심각"}]
     return <>
         <div className={styles.table}>
+            {/*<Refresh top={50}/>*/}
             <Table<T>
                 columns={[
                     {accessorKey: "name", header: "구역명", enableSorting: false},

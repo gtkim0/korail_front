@@ -14,88 +14,88 @@ import clsx from "clsx";
 
 export default function PortalHeader({menus, isDashboard}: { menus: BaseMenu[], isDashboard: boolean }) {
 
-  const pathname = usePathname();
-  const router = useRouter();
-  const {setSelectedRouteMenu} = useGlobalStore(state => state);
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const [containerHeight, setContainerHeight] = useState(0);
+    const pathname = usePathname();
+    const router = useRouter();
+    const {setSelectedRouteMenu} = useGlobalStore(state => state);
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    const [containerHeight, setContainerHeight] = useState(0);
 
   const renderMenu = [
     ...menus.filter(i => i.depth === 1)
   ];
 
-  const [activeMenuId, setActiveMenuId] = useState<string>('');
+    const [activeMenuId, setActiveMenuId] = useState<string>('');
 
 
-  const activeFirstDepthId = useMemo(() => {
-    const current = menus.find(m => m.lnkgUrlAddrCn === pathname);
-    if (!current) return null;
+    const activeFirstDepthId = useMemo(() => {
+        const current = menus.find(m => m.lnkgUrlAddrCn === pathname);
+        if (!current) return null;
 
-    const second = menus.find(m => m.menuId === current.upMenuId);
-    if (!second) return null;
+        const second = menus.find(m => m.menuId === current.upMenuId);
+        if (!second) return null;
 
-    const first = menus.find(m => m.menuId === second.upMenuId);
-    return first?.menuId ?? null;
-  }, [menus, pathname]);
+        const first = menus.find(m => m.menuId === second.upMenuId);
+        return first?.menuId ?? null;
+    }, [menus, pathname]);
 
-  const allMenuGroups = useMemo(() => {
-    const secondDepth = menus.filter(i => i.depth === 2);
-    const thirdDepth = menus.filter(i => i.depth === 3);
+    const allMenuGroups = useMemo(() => {
+        const secondDepth = menus.filter(i => i.depth === 2);
+        const thirdDepth = menus.filter(i => i.depth === 3);
 
-    const map: Record<string, { id: string; name: string; thirdDepths: BaseMenu[] }[]> = {};
+        const map: Record<string, { id: string; name: string; thirdDepths: BaseMenu[] }[]> = {};
 
-    menus.filter(i => i.depth === 1).forEach(first => {
-      const seconds = secondDepth.filter(s => s.upMenuId === first.menuId);
-      map[first.menuId] = seconds.map(s => ({
-        ...s,
-        thirdDepths: thirdDepth.filter(t => t.upMenuId === s.menuId)
-      }));
-    });
+        menus.filter(i => i.depth === 1).forEach(first => {
+            const seconds = secondDepth.filter(s => s.upMenuId === first.menuId);
+            map[first.menuId] = seconds.map(s => ({
+                ...s,
+                thirdDepths: thirdDepth.filter(t => t.upMenuId === s.menuId)
+            }));
+        });
 
-    return map;
-  }, [menus]);
+        return map;
+    }, [menus]);
 
-  const menuGroup = activeMenuId ? allMenuGroups[activeMenuId] ?? [] : [];
+    const menuGroup = activeMenuId ? allMenuGroups[activeMenuId] ?? [] : [];
 
-  const handleMenuClick = (item: BaseMenu) => {
+    const handleMenuClick = (item: BaseMenu) => {
 
-    if (item.insdPrgrmIdntfNm === 'Dashboard') {
-      router.push('/dashboard')
-    }
+        if (item.insdPrgrmIdntfNm === 'Dashboard') {
+            router.push('/dashboard')
+        }
 
 
-    const id = item.menuId
+        const id = item.menuId
 
-    const secondDepthList = menus.filter(i => i.depth === 2 && i.upMenuId === id);
-    const thirdDepth = menus.find(i =>
-      i.depth === 3 && secondDepthList.some(second => second.menuId === i.upMenuId)
-    );
+        const secondDepthList = menus.filter(i => i.depth === 2 && i.upMenuId === id);
+        const thirdDepth = menus.find(i =>
+            i.depth === 3 && secondDepthList.some(second => second.menuId === i.upMenuId)
+        );
 
-    if (thirdDepth?.lnkgUrlAddrCn) {
-      setSelectedRouteMenu(thirdDepth);
-      router.push(thirdDepth.lnkgUrlAddrCn);
-    } else {
-      console.warn('하위 3뎁스 메뉴가 없습니다');
-    }
-  };
-
-  const handleMenuHover = (id: string) => {
-    setActiveMenuId(id);
-  };
-
-  useEffect(() => {
-    const updateHeight = () => {
-      if (wrapperRef.current) {
-        const rect = wrapperRef.current.getBoundingClientRect();
-        setContainerHeight(rect.height);
-      }
+        if (thirdDepth?.lnkgUrlAddrCn) {
+            setSelectedRouteMenu(thirdDepth);
+            router.push(thirdDepth.lnkgUrlAddrCn);
+        } else {
+            console.warn('하위 3뎁스 메뉴가 없습니다');
+        }
     };
 
-    updateHeight();
-    window.addEventListener('resize', updateHeight);
+    const handleMenuHover = (id: string) => {
+        setActiveMenuId(id);
+    };
 
-    return () => window.removeEventListener('resize', updateHeight);
-  }, []);
+    useEffect(() => {
+        const updateHeight = () => {
+            if (wrapperRef.current) {
+                const rect = wrapperRef.current.getBoundingClientRect();
+                setContainerHeight(rect.height);
+            }
+        };
+
+        updateHeight();
+        window.addEventListener('resize', updateHeight);
+
+        return () => window.removeEventListener('resize', updateHeight);
+    }, []);
 
   return (
     <>
@@ -133,29 +133,29 @@ export default function PortalHeader({menus, isDashboard}: { menus: BaseMenu[], 
             <HeaderRightSection/>
           </div>
 
-          {/*@TODO 추후 데이터 다 들어간후 any 제거*/}
-          <FullMenuDropdown
-            visible={!!activeMenuId}
-            menuGroup={menuGroup as any}
-          />
-        </div>
-      </header>
+                    {/*@TODO 추후 데이터 다 들어간후 any 제거*/}
+                    <FullMenuDropdown
+                        visible={!!activeMenuId}
+                        menuGroup={menuGroup as any}
+                    />
+                </div>
+            </header>
 
-      <AnimatePresence>
-        {activeMenuId && (
-          <motion.div
-            className={styles.backdropBelowHeader}
-            initial={{opacity: 0}}
-            animate={{opacity: 1}}
-            exit={{opacity: 0}}
-            transition={{duration: 0.3}}
-            style={{
-              top: containerHeight,
-              height: `calc(100vh - ${containerHeight}px)`,
-            }}
-          />
-        )}
-      </AnimatePresence>
-    </>
-  );
+            <AnimatePresence>
+                {activeMenuId && (
+                    <motion.div
+                        className={styles.backdropBelowHeader}
+                        initial={{opacity: 0}}
+                        animate={{opacity: 1}}
+                        exit={{opacity: 0}}
+                        transition={{duration: 0.3}}
+                        style={{
+                            top: containerHeight,
+                            height: `calc(100vh - ${containerHeight}px)`,
+                        }}
+                    />
+                )}
+            </AnimatePresence>
+        </>
+    );
 }

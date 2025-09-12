@@ -26,10 +26,10 @@ export default function TopRightSection() {
     const modalOnSubmit = () => {
     }
 
-    const { messages, connected, connect, disconnect } = useSSE({
-        url: "/apis/api/test/subscribe",
-        autoConnect: true,
-    });
+    // const { messages, connected, connect, disconnect } = useSSE({
+    //     url: "/apis/api/test/subscribe",
+    //     autoConnect: true,
+    // });
     //
     // console.log(messages)
 

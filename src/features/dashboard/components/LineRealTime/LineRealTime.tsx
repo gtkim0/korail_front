@@ -1,16 +1,17 @@
-import React, {useRef, useState, useEffect} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styles from "./LineRealTime.module.scss"
 import Image from "next/image";
 import upTrain from "@/shared/assets/images/up_train_icon.svg"
 import downTrain from "@/shared/assets/images/down_train_icon.svg"
 import markIcon from "@/shared/assets/images/arrow-drop-down.svg";
 import ReactDOM from "react-dom";
-import {motion, AnimatePresence} from "framer-motion";
+import {AnimatePresence, motion} from "framer-motion";
 import clsx from "clsx";
 import starIcon from "@/shared/assets/images/star_fill.svg"
 import CrowdingBadge from "@/features/dashboard/components/CrowdingBadge/CrowdingBadge";
 import Table from "@/shared/components/table/BaseTable/BaseTable";
 import TrainCrowdingCardDetail from "@/features/dashboard/components/TrainCrowdingCardDetail/TrainCrowdingCardDetail";
+import {useCongestStepStore} from "@/shared/store/slice/congestStepSlice";
 
 type TooltipState = {
     top: number;
@@ -24,6 +25,7 @@ type TooltipState = {
 export default function LineRealTime() {
     const [tooltip, setTooltip] = useState<TooltipState>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    const {congestStep} = useCongestStepStore();
     const data = [
         {id: "1", station: "가산디지털단지역", other: true},
         {id: "2", station: "서울역", other: false},
@@ -145,6 +147,19 @@ export default function LineRealTime() {
             document.body
         );
 
+    const congestNm = (id: any) => {
+        return congestStep.find((s) => s.dgcnStgNo === id)?.stgNm
+    }
+
+    const badgeStyle = (id: any) => {
+        const colorCode = `#${congestStep.find((s) => s.dgcnStgNo === id)?.indctClorNo}`;
+
+        return {
+            background: colorCode, boxShadow: `0 0 8px 0 ${colorCode}`
+        }
+    }
+
+
     return <div className={styles.container}>
         <div className={styles.header}>
             <div className={styles.down_route}>인천방면</div>
@@ -167,7 +182,9 @@ export default function LineRealTime() {
                             className={styles.train_info}
                             style={{top: "50%"}}
                             onClick={(e) => handleClick(e, "train", el)}>
-                            <div className={styles.crowding}>보통</div>
+                            <div className={styles.crowding}
+                                 style={badgeStyle(3)}>{congestNm(3)}
+                            </div>
                             <div className={styles.destination}>신창</div>
                             <div className={styles.express}>급</div>
                             <div className={styles.train_num}>1935</div>
@@ -198,7 +215,9 @@ export default function LineRealTime() {
                         </span>
                             <button>가산디지털단지역 방면</button>
                         </div>}
-                        <div className={styles.crowding}>보통</div>
+                        <div className={styles.crowding}
+                             style={badgeStyle(1)}>{congestNm(1)}
+                        </div>
                         <div className={styles.title}>가산디지털단지역</div>
                         <Image
                             src={"/line-outline.svg"}
@@ -214,7 +233,9 @@ export default function LineRealTime() {
                         <Image alt="" src={markIcon} className={styles.rotate}/>
                         <div className={styles.train_info} style={{top: "50%"}}
                              onClick={(e) => handleClick(e, "train", el)}>
-                            <div className={styles.crowding}>보통</div>
+                            <div className={styles.crowding}
+                                 style={badgeStyle(4)}>{congestNm(4)}
+                            </div>
                             <div className={styles.destination}>신창</div>
                             <div className={styles.express}>급</div>
                             <div className={styles.train_num}>1935</div>

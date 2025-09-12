@@ -27,6 +27,7 @@ export default function RealTimeStationList() {
         crowding: "심각"
     }, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}, {name: "승강장", crowding: "심각"}]
     return <>
+        {/*<Refresh top={70}/>*/}
         <div className={styles.table}>
             <Table<T>
                 columns={[

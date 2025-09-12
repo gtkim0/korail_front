@@ -1,0 +1,14 @@
+.button{
+  position: absolute;
+  z-index: 999;
+  padding: 4px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: #1489f2;
+  border-radius: 16px;
+  color:#fff;
+  left: 50%;
+  white-space: nowrap;
+}

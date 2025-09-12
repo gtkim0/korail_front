@@ -1,0 +1,109 @@
+@use "src/shared/styles/scroll";
+
+.chart {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.label {
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 4px;
+  padding: 4.5px 10px;
+
+}
+
+.barArea {
+  position: relative;
+  flex: 1;
+  height: 24px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  transition: width 0.6s ease-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+}
+
+.badge {
+  position: absolute;
+  right: -10px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 12px;
+  border: 2px solid currentColor;
+  opacity: 0;
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.50);
+  backdrop-filter: blur(10px);
+}
+
+.showBadge {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.table {
+  position: relative;
+  overflow: hidden;
+
+  .inner {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    overflow: auto;
+    border: none;
+  }
+
+  div {
+    @extend .custom-scroll2;
+    padding-right: 5px;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+  }
+
+  tr {
+    background: transparent;
+  }
+
+  th {
+    //background: rgba(255, 255, 255, 0.05);
+    background: #1a2336;
+    color: #98a6c0;
+  }
+
+  td {
+    border: none;
+    padding: 4px 12px;
+  }
+}
+
+.empty {
+  min-height: 240px;
+}

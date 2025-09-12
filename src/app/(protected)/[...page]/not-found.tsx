@@ -1,7 +1,5 @@
 import styles from './404.module.scss';
 import Link from 'next/link';
-import MetroLineAtomic from "@/features/dashboard/components/MetroLineAtomic/MetroLineAtomic";
-import CongestionBarChart from "@/features/dashboard/components/CongestionBarChart/CongestionBarChart";
 
 export default function NotFound() {
     return (
@@ -27,7 +25,7 @@ export default function NotFound() {
             {/*    <MetroLineAtomic label={'보통'} backgroundColor={'#009856'}/>*/}
             {/*    <MetroLineAtomic label={'주의'} backgroundColor={'#F4AA21'}/>*/}
             {/*    <MetroLineAtomic label={'주의'} backgroundColor={'#F4AA21'}/>*/}
-            {/*    <CongestionBarChart*/}
+            {/*    <CongestionStats*/}
             {/*        time="14:00"*/}
             {/*        levels={[*/}
             {/*            {key: 'normal', label: '보통', count: 402, percent: 60},*/}
