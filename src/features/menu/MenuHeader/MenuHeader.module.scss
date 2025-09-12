@@ -1,0 +1,56 @@
+.container {
+  display: flex;
+  padding: 1.2rem 1.6rem;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #d5d5d6;
+
+  .wrapper {
+    height: 3.2rem;
+    display: flex;
+    flex: 1;
+
+    .btnWrapper {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      flex: 1;
+      height: 100%;
+
+      button {
+        display: flex;
+        min-width: 6.4rem;
+        padding: 0 1rem;
+        justify-content: center;
+        align-items: center;
+        gap: .2rem;
+        border-radius: 4px;
+        height: 100%;
+      }
+
+      .createBtn {
+        color: #00417a;
+        background: #E3EBF2;
+        border: 1px solid #9fd1ff;
+      }
+
+      .delBtn {
+        background: #fff;
+        border: 1px solid #d5d5d6;
+      }
+    }
+
+    .arrowWrapper {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+
+      button {
+        height: 100%;
+        padding: 6px;
+        border-radius: 6px;
+        border: 1px solid #d5d5d6;
+      }
+    }
+  }
+}

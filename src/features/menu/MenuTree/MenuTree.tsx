@@ -1,15 +1,16 @@
 'use client'
 import MenuNode from "@/features/menu/MenuTreeItem/MenuNode";
-import {BaseMenu} from "@/types/menu";
+import {BaseMenu, SettingMenu} from "@/types/menu";
 
 interface Props {
   parentId: string | null;
-  data: BaseMenu[],
+  parentCid?: string | null;
+  data: SettingMenu[],
   defaultExpandAll: boolean,
   level?: number,
   storageKey?: string;
-  selectedMenu: BaseMenu;
-  onSelect: (menu: BaseMenu) => void;
+  selectedMenu: SettingMenu;
+  onSelect: (menu: SettingMenu) => void;
   addedMenuId?: string | null;
 }
 
@@ -17,6 +18,7 @@ export default function MenuTree(props: Props) {
 
   const {
     parentId,
+    parentCid,
     data,
     storageKey = 'menuState',
     defaultExpandAll = false,
@@ -27,25 +29,25 @@ export default function MenuTree(props: Props) {
   } = props
 
   const children = data
-    .filter(item => item.pid === parentId)
-    .sort((a, b) => a.order - b.order); // 정렬 추가
+    .filter(item => {
+      const byId = item.upMenuId === parentId;
+      const byCid = !item.upMenuId && parentCid && item.upCid === props.parentCid;
+      return byId || byCid;
+    }).sort((a, b) => a.menuSortSn - b.menuSortSn)
 
   if (children.length === 0) return null;
 
-
   return (
-    <div
-      style={{
-        padding: '.8rem 1.6rem',
-        display: 'flex',
-        flex: 1
-      }}
-    >
-      <ul style={{paddingLeft: level * 6, width: '100%', background: level === 4 ? '#EBEBEB' : 'inherit'}}>
-        {/*, borderLeft: level !== 1 ? '1px solid rgba(0,0,0,0.1)' : 'none'*/}
+    <div style={{padding: '0 1.6rem', display: 'flex', flex: 1}}>
+      <ul style={{
+        paddingLeft: (level === 3) ? 0 : level * 6,
+        width: '100%',
+        background: level === 3 ? '#EBEBEB' : 'inherit',
+        borderRadius: level === 3 ? '4px' : 0
+      }}>
         {children.map(child => (
           <MenuNode
-            key={child.id}
+            key={`${child.cid || child.menuId}-${child.menuSortSn}`}
             item={child}
             data={data}
             defaultExpandAll={defaultExpandAll}

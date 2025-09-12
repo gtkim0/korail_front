@@ -59,6 +59,8 @@ export default function TransferList<T extends Record<string, any>>({
   const getId = (row: T) => row[idKey] as ItemId;
   const colsBy = (side: Side) => (side === 'LEFT' ? columns : (rightColumns ?? columns));
 
+  const [search, setSearch] = useState('');
+
   /** 왼쪽 리스트 = allItems - value (파생값) */
   const leftItems = useMemo(() => {
     const chosen = new Set(value.map(getId));
@@ -68,11 +70,20 @@ export default function TransferList<T extends Record<string, any>>({
   const [leftSortKey, setLeftSortKey] = useState<keyof T & string | null>(null);
   const [leftSortAsc, setLeftSortAsc] = useState(true);
 
+  const filteredLeft = useMemo(() => {
+    if (!search.trim()) return leftItems;
+    return leftItems.filter(item =>
+      String((item as any).userId ?? '')
+        .toLowerCase()
+        .includes(search.toLowerCase())
+    );
+  }, [leftItems, search])
+
   const sortedLeft = useMemo(() => {
-    if (!leftSortKey) return leftItems;
-    const arr = [...leftItems].sort((a, b) => compare(a[leftSortKey!], b[leftSortKey!]));
+    if (!leftSortKey) return filteredLeft;
+    const arr = [...filteredLeft].sort((a, b) => compare(a[leftSortKey!], b[leftSortKey!]));
     return leftSortAsc ? arr : arr.reverse();
-  }, [leftItems, leftSortKey, leftSortAsc]);
+  }, [filteredLeft, leftSortKey, leftSortAsc]);
 
   const [leftSelectedRows, setLeftSelectedRows] = useState<T[]>([]);
   const [rightSelectedRows, setRightSelectedRows] = useState<T[]>([]);
@@ -209,7 +220,6 @@ export default function TransferList<T extends Record<string, any>>({
     }
   };
 
-
   const renderTable = (
     items: T[],
     selectedRows: T[],
@@ -219,22 +229,22 @@ export default function TransferList<T extends Record<string, any>>({
 
     const cols = colsBy(source);
 
-    // LEFT: 토글 변경될 때만 전체선택/해제
+    /** LEFT: 토글 변경될 때만 전체선택/해제 */
     useEffect(() => {
       setLeftSelectedRows(selectAllChecked.left ? sortedLeft : []);
-    }, [selectAllChecked.left]); // ❗ sortedLeft 제거
+    }, [selectAllChecked.left]);
 
-// LEFT: 목록이 바뀌었는데 전체선택이 켜져 있으면 동기화
+    /** LEFT: 목록이 바뀌었는데 전체선택이 켜져 있으면 동기화 */
     useEffect(() => {
       if (selectAllChecked.left) setLeftSelectedRows(sortedLeft);
     }, [sortedLeft, selectAllChecked.left]);
 
-// RIGHT: 토글 변경될 때만 전체선택/해제
+    /**  RIGHT: 토글 변경될 때만 전체선택/해제 */
     useEffect(() => {
       setRightSelectedRows(selectAllChecked.right ? value : []);
-    }, [selectAllChecked.right]); // ❗ value 제거
+    }, [selectAllChecked.right]);
 
-// RIGHT: 목록이 바뀌었는데 전체선택이 켜져 있으면 동기화
+    /** RIGHT: 목록이 바뀌었는데 전체선택이 켜져 있으면 동기화 */
     useEffect(() => {
       if (selectAllChecked.right) setRightSelectedRows(value);
     }, [value, selectAllChecked.right]);
@@ -304,9 +314,6 @@ export default function TransferList<T extends Record<string, any>>({
     );
   };
 
-  console.log(leftSelectedRows);
-  console.log(rightSelectedRows);
-
   return (
     <div className={styles.container}>
       <div className={styles.leftArea}>
@@ -316,7 +323,7 @@ export default function TransferList<T extends Record<string, any>>({
               background: '#fff', display: 'flex', width: '100%',
               borderRadius: '6px', alignItems: 'center', padding: '0 1rem'
             }}>
-              <input ref={inputRef} placeholder="검색어를 입력해주세요."/>
+              <input onChange={(e) => setSearch(e.target.value)} ref={inputRef} placeholder="회원 아이디를 입력해주세요."/>
               <span><ImageWrapper width={20} height={20} src="/search.svg"/></span>
             </div>
           </div>

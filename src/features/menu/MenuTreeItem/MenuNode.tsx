@@ -4,19 +4,19 @@ import {useEffect, useState, useRef} from "react";
 import MenuTree from "@/features/menu/MenuTree/MenuTree";
 import styles from './MenuNode.module.css';
 import clsx from "clsx";
-import {BaseMenu} from "@/types/menu";
+import {SettingMenu} from "@/types/menu";
 import useExpand from '@/features/menu/hooks/useExpand';
 import isDescendant from '@/shared/utils/isDescendant';
 import {ImageWrapper} from "@/shared/components/ImageWrapper/ImageWrapper";
 
 interface Props {
-  item: BaseMenu;
-  data: BaseMenu[];
+  item: SettingMenu;
+  data: SettingMenu[];
   defaultExpandAll: boolean;
   level: number;
   storageKey: string;
-  selectedMenu: BaseMenu;
-  onSelect: (item: BaseMenu) => void;
+  selectedMenu: SettingMenu;
+  onSelect: (item: SettingMenu) => void;
   addedMenuId?: string | null;
 }
 
@@ -26,25 +26,25 @@ export default function MenuNode(props: Props) {
   const {isOpen, toggle, loadItem} = useExpand({
     storageKey,
     defaultExpandAll,
-    id: item.id
+    id: item.cid || item.menuId
   });
 
-  const hasChildren = data?.some(i => i.pid === item.id);
+  const hasChildren = data?.some(i => i.upMenuId === item.menuId);
 
   const hasMounted = useRef(false);
   const [wrapperClass, setWrapperClass] = useState(styles.closed);
 
   useEffect(() => {
     loadItem();
-  }, [item.id, storageKey, defaultExpandAll]);
+  }, [item.menuId, storageKey, defaultExpandAll]);
 
   useEffect(() => {
     if (isOpen) {
       setWrapperClass(styles.closed);
 
       const suppressAnimation =
-        props.addedMenuId === item.id ||
-        (props.addedMenuId && isDescendant(props.data, props.addedMenuId, item.id));
+        props.addedMenuId === item.menuId ||
+        (props.addedMenuId && isDescendant(props.data, props.addedMenuId, item.menuId));
 
       if (!suppressAnimation) {
         requestAnimationFrame(() => {
@@ -63,19 +63,24 @@ export default function MenuNode(props: Props) {
   return (
     <li
       className={clsx(
-        styles.menu
+        styles.menu,
       )}
     >
-      <div className={selectedMenu?.id === item.id ? styles.selected : ''}
-           style={{display: 'flex', alignItems: 'center'}}>
-        {hasChildren ? (
-          <span onClick={toggle} style={{cursor: 'pointer', userSelect: 'none'}}>
+      <div
+        className={(selectedMenu?.menuId === item.menuId && selectedMenu?.menuSortSn === item.menuSortSn) ? styles.selected : ''}
+        style={{display: 'flex', alignItems: 'center', padding: '.6rem 0', gap: '.6rem'}}
+      >
+        {
+          (hasChildren && item.depth !== 3) ? (
+            <span onClick={toggle} style={{cursor: 'pointer', userSelect: 'none'}}>
             <ImageWrapper width={16} height={16} src={isOpen ? '/tree_up.svg' : '/tree_down.svg'}/>
           </span>
-        ) : (
-          <span style={{width: '1rem'}}/>
-          // <span/>
-        )}
+          ) : (
+            <span style={{fontSize: '1.6rem', visibility: 'hidden'}}>
+            <ImageWrapper width={16} height={16} src={isOpen ? '/tree_up.svg' : '/tree_down.svg'}/>
+          </span>
+            // <span/>
+          )}
         <div
           onClick={() => onSelect(item)}
           style={{
@@ -90,7 +95,7 @@ export default function MenuNode(props: Props) {
           {/*  (!item.component && hasChildren) ? '/folder-open.svg' :*/}
           {/*    (!item.component && !hasChildren) ? '/folder-close.svg' : '/file.svg'*/}
           {/*} alt={''} width={20} height={20} />*/}
-          {item.name}
+          {item.menuNm}
         </div>
       </div>
       <div className={clsx(styles.childrenWrapper, wrapperClass)}>
@@ -99,7 +104,8 @@ export default function MenuNode(props: Props) {
             onSelect={onSelect}
             selectedMenu={selectedMenu}
             data={data ?? []}
-            parentId={item.id}
+            parentId={item.menuId}
+            parentCid={item.cid ?? null}
             defaultExpandAll={defaultExpandAll}
             level={level + 1}
           />

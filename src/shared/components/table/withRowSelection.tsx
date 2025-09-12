@@ -31,7 +31,11 @@ export function withRowSelection<T extends object>(
       ),
       size: 40,
       minSize: 40,
-      maxSize: 40
+      maxSize: 40,
+      enableResizing: false,
+      meta: {
+        width: '40'
+      }
     },
     ...columns,
   ];

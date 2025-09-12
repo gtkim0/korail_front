@@ -32,7 +32,6 @@ export default function PermissionGroupView({initialFilter, initialData}: PageSe
           pagePerSize
         }
         const res = await api.get('/api/auths/groups/get-list', newParams)
-        // const res = await clientGet<PaginationResponseType<PermissionGroupColumnType>>('/api/auths/groups/get-list', newParams)
         return res.result
       }}
       ModalBody={PermissionGroupAddForm}

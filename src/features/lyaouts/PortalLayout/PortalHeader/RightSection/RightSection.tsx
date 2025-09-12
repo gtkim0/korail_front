@@ -75,8 +75,6 @@ export default function HeaderRightSection() {
 
   const dataMenus = convertStruct(menus);
 
-  console.log(dataMenus);
-
   return (
     <div className={styles.container}>
       {

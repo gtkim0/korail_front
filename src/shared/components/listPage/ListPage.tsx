@@ -371,6 +371,8 @@ function ListPage<T, F, V>(
                   ref={editAreaRef}
                   {...(computedModalBodyProps as Omit<F, keyof BaseModalFormProps<T>>)}
                   editData={editTarget}
+                  onCloseModal={close}
+                  refetch={refetch}
                   onCanSubmitChange={setCanSubmit}
                   isOpen={isOpen}
               />

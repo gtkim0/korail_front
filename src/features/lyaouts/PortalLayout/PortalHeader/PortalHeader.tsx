@@ -20,7 +20,6 @@ export default function PortalHeader({menus, isDashboard}: { menus: BaseMenu[], 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [containerHeight, setContainerHeight] = useState(0);
 
-  console.log(menus);
   const renderMenu = [
     ...menus.filter(i => i.depth === 1)
   ];
@@ -98,8 +97,6 @@ export default function PortalHeader({menus, isDashboard}: { menus: BaseMenu[], 
     return () => window.removeEventListener('resize', updateHeight);
   }, []);
 
-  console.log(renderMenu);
-
   return (
     <>
       <header
@@ -114,7 +111,7 @@ export default function PortalHeader({menus, isDashboard}: { menus: BaseMenu[], 
                 onClick={() => router.push('/dashboard')}
               >
                 <div className={styles.imageArea}>
-                  <Image alt={''} src={PortalLogo} fill style={{objectFit: 'contain'}}/>
+                  <Image width={166} height={40} alt={''} src={PortalLogo}/>
                 </div>
                 <div className={styles.mainTitle}>혼잡도 관리시스템</div>
               </div>

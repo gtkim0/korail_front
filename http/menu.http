@@ -1,6 +1,6 @@
 ### 메뉴관리
 
-### 1. 메뉴 조회
+### 1. 전체 메뉴 조회
 GET {{common-path}}/api/menus/get-list
 Content-Type: application/json
 
