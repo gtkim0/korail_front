@@ -16,8 +16,6 @@ export default async function PermissionUserServer() {
   const authGroupList = await serverGetAuth<PaginationResponseType<AuthGroupList>>('/api/auths/groups/get-list');
   const initAuthGroup = authGroupList.result.list
 
-  console.log(initAuthGroup)
-
   const initialFilter = {
     page: 1,
     pagePerSize: 10,
@@ -29,7 +27,7 @@ export default async function PermissionUserServer() {
   })
 
   if (!res?.result) {
-    logger.error('')
+    logger.error('사용자별 권한 api pre fetch 에러.')
     return (
       <>
         PermissionUserServer pre fetch error

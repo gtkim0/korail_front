@@ -1,4 +1,4 @@
-### 2. 메뉴 생성
+### 1. 로그인
 POST {{backend_url}}/api/auths/login
 #Authorization: Bearer {{access_token}}
 Content-Type: application/json
@@ -8,8 +8,6 @@ Content-Type: application/json
   "lgnPswdCn": "Korail7788!!"
 }
 
-
-#### 2. 메뉴 생성
+#### 2. 내 정보 조회 ( 로그인 API 호출 후 쿠키 받은 후 조회 )
 GET {{backend_url}}/api/auths/me
-#Cookie:JSESSIONID=A4C8BA6A5254BAEEFBDD40E7E874999F; accessToken=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRob3JpemF0aW9uIiwidHlwZSI6IkF1dGhvcml6YXRpb24iLCJleHAiOjE3NTY5NzUxODEsInVzZXJJZCI6InRlc3QiLCJpYXQiOjE3NTY5Njc5ODF9.1SimFq2uUDpTlgYELKJVWPOQmLpK8Mp-Jx9gbctkj7g-XpUn-koGUu6uOMLbLSdKYjOLL7g2uZPALqJhJELXvg; refreshToken=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRob3JpemF0aW9uIiwidHlwZSI6IkF1dGhvcml6YXRpb24iLCJleHAiOjE3NTk1NTk5ODEsInVzZXJJZCI6InRlc3QiLCJpYXQiOjE3NTY5Njc5ODF9.OCPgPqsrL3mB_JqdblncyO74Wn6HDdniuRHUdeIYxzq06NLADX-nYvtvJx-IbK1phg15RsrljouYo6ftbNHWBA
 Content-Type: application/json

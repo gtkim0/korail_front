@@ -5,6 +5,7 @@ import {serverFetcher} from "@/lib/serverFetcher";
 import {NormalizeResponseType, ResponseType} from "@/types/common";
 import {BaseMenu} from "@/types/menu";
 import {isUnauthorized} from "@/lib/errors";
+import logger from "@/lib/logger";
 
 export const dynamic = "force-dynamic";
 
@@ -36,6 +37,7 @@ export default async function PageMapper({params}: { params: Promise<{ page: str
     if (response.resultCode !== '0000') return;
 
     const menuList = response?.result?.list ?? [];
+    console.log("menuList", menuList);
 
     const menus = [DASHBOARD_MENU, ...menuList];
 

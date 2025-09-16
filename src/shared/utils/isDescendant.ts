@@ -1,10 +1,10 @@
-import {BaseMenu} from "@/types/menu";
+import {BaseMenu, SettingMenu} from "@/types/menu";
 
-export default function isDescendant(menuList: BaseMenu[], parentId: string, childId: string): boolean {
-  let current = menuList.find(m => m.id === childId);
+export default function isDescendant(menuList: SettingMenu[], parentId: string, childId: string): boolean {
+  let current = menuList.find(m => m.menuId === childId);
   while (current) {
-    if (current.pid === parentId) return true;
-    current = menuList.find(m => m.id === current?.pid);
+    if (current.upMenuId === parentId) return true;
+    current = menuList.find(m => m.menuId === current?.upMenuId);
   }
   return false;
 }

@@ -20,10 +20,9 @@ export default function PortalHeader({menus, isDashboard}: { menus: BaseMenu[], 
     const wrapperRef = useRef<HTMLDivElement>(null);
     const [containerHeight, setContainerHeight] = useState(0);
 
-    // console.log(menus);
-    const renderMenu = [
-        ...menus.filter(i => i.depth === 1)
-    ];
+  const renderMenu = [
+    ...menus.filter(i => i.depth === 1)
+  ];
 
     const [activeMenuId, setActiveMenuId] = useState<string>('');
 
@@ -98,43 +97,41 @@ export default function PortalHeader({menus, isDashboard}: { menus: BaseMenu[], 
         return () => window.removeEventListener('resize', updateHeight);
     }, []);
 
-    // console.log(renderMenu);
-
-    return (
-        <>
-            <header
-                className={clsx(styles.portalHeader, isDashboard && styles.dashboard)}
-                onMouseLeave={() => setActiveMenuId('')}
-            >
-                <div ref={wrapperRef} className={styles.wrapper}>
-                    <div className={styles.menuArea}>
-                        <div className={styles.menuWrapper}>
-                            <div
-                                className={styles.leftArea}
-                                onClick={() => router.push('/dashboard')}
-                            >
-                                <div className={styles.imageArea}>
-                                    <Image alt={''} src={PortalLogo} fill style={{objectFit: 'contain'}}/>
-                                </div>
-                                <div className={styles.mainTitle}>혼잡도 관리시스템</div>
-                            </div>
-                            <div className={styles.contentWrapper}>
-                                <div className={styles.content}>
-                                    {renderMenu.map(i => (
-                                        <PortalHeaderItem
-                                            key={i.menuId}
-                                            item={i}
-                                            onClick={handleMenuClick}
-                                            onHover={handleMenuHover}
-                                            isActive={activeFirstDepthId === i.menuId}
-                                            isDashboard={isDashboard}
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                        <HeaderRightSection/>
-                    </div>
+  return (
+    <>
+      <header
+        className={clsx(styles.portalHeader, isDashboard && styles.dashboard)}
+        onMouseLeave={() => setActiveMenuId('')}
+      >
+        <div ref={wrapperRef} className={styles.wrapper}>
+          <div className={styles.menuArea}>
+            <div className={styles.menuWrapper}>
+              <div
+                className={styles.leftArea}
+                onClick={() => router.push('/dashboard')}
+              >
+                <div className={styles.imageArea}>
+                  <Image width={166} height={40} alt={''} src={PortalLogo}/>
+                </div>
+                <div className={styles.mainTitle}>혼잡도 관리시스템</div>
+              </div>
+              <div className={styles.contentWrapper}>
+                <div className={styles.content}>
+                  {renderMenu.map(i => (
+                    <PortalHeaderItem
+                      key={i.menuId}
+                      item={i}
+                      onClick={handleMenuClick}
+                      onHover={handleMenuHover}
+                      isActive={activeFirstDepthId === i.menuId}
+                      isDashboard={isDashboard}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+            <HeaderRightSection/>
+          </div>
 
                     {/*@TODO 추후 데이터 다 들어간후 any 제거*/}
                     <FullMenuDropdown

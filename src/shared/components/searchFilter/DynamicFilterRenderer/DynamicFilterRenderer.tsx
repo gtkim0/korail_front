@@ -93,7 +93,6 @@ export function DynamicFilterRenderer({
             const resp = method === 'POST'
               ? await api.post(job.endpoint, params)
               : await api.get(job.endpoint, params);
-            // 응답 구조 유연 처리
             data = resp?.result?.list ?? resp?.result ?? resp?.data ?? resp;
           }
           setDatasets(prev => ({...prev, [job.datasetKey]: data}));
@@ -147,79 +146,77 @@ export function DynamicFilterRenderer({
 
   /** ───────────────────────── asyncOptions (API 기반 옵션) ───────────────────────── **/
 
-    // 공용 fetch 함수
   const fetchAsyncOptions = async (f: FilterSchema) => {
-      const cfg = f.asyncOptions!;
-      const debounceMs = cfg.debounceMs ?? 150;
+    const cfg = f.asyncOptions!;
+    const debounceMs = cfg.debounceMs ?? 150;
 
-      // 디바운스 처리
-      if (debounceRef.current[f.key]) {
-        window.clearTimeout(debounceRef.current[f.key]!);
+    if (debounceRef.current[f.key]) {
+      window.clearTimeout(debounceRef.current[f.key]!);
+    }
+    await new Promise<void>(resolve => {
+      debounceRef.current[f.key] = window.setTimeout(() => resolve(), debounceMs);
+    });
+
+    // 기존 요청 취소
+    abortRef.current[f.key]?.abort?.();
+    const ac = new AbortController();
+    abortRef.current[f.key] = ac;
+
+    // 캐시 키
+    const ck = cfg.cacheKey
+      ? cfg.cacheKey(value)
+      : `${f.key}:${JSON.stringify((cfg.dependsOn ?? []).map(k => value[k]))}`;
+
+    // 캐시 사용
+    if (cacheRef.current.has(ck)) {
+      setOptions(f.key, cacheRef.current.get(ck)!);
+      return;
+    }
+
+    setLoading(f.key, true);
+    try {
+      let opts: Option[] = [];
+
+      if (typeof cfg.endpoint === 'function') {
+        const p = cfg.params?.(value) ?? {};
+        const res = await cfg.endpoint(p);
+        opts = res; // 함수형이면 Option[] 반환 가정
+      } else if (cfg.endpoint) {
+        const method = cfg.method ?? 'GET';
+        const params = cfg.params?.(value) ?? {};
+        const resp = method === 'POST'
+          ? await api.post(cfg.endpoint, params)
+          : await api.get(cfg.endpoint, params);
+        const raw = resp?.result?.list ?? resp?.result ?? resp?.data ?? resp;
+        opts = cfg.map ? cfg.map(raw) : (
+          Array.isArray(raw)
+            ? raw.map((d: any) => ({
+              key: String(d.id ?? d.code ?? d.key ?? d.value ?? ''),
+              label: String(d.name ?? d.label ?? d.title ?? d.text ?? d.id ?? d.code ?? '')
+            }))
+            : []
+        );
       }
-      await new Promise<void>(resolve => {
-        debounceRef.current[f.key] = window.setTimeout(() => resolve(), debounceMs);
-      });
 
-      // 기존 요청 취소
-      abortRef.current[f.key]?.abort?.();
-      const ac = new AbortController();
-      abortRef.current[f.key] = ac;
+      cacheRef.current.set(ck, opts);
+      setOptions(f.key, opts);
 
-      // 캐시 키
-      const ck = cfg.cacheKey
-        ? cfg.cacheKey(value)
-        : `${f.key}:${JSON.stringify((cfg.dependsOn ?? []).map(k => value[k]))}`;
-
-      // 캐시 사용
-      if (cacheRef.current.has(ck)) {
-        setOptions(f.key, cacheRef.current.get(ck)!);
-        return;
+      // 선택값 유효성 정리
+      const curr = value[f.key];
+      const keys = new Set(opts.map(o => o.key));
+      const invalid = Array.isArray(curr) ? curr.some((c: string) => !keys.has(c)) : curr && !keys.has(curr);
+      if (invalid) {
+        onChange({...value, [f.key]: Array.isArray(curr) ? [] : ''});
       }
-
-      setLoading(f.key, true);
-      try {
-        let opts: Option[] = [];
-
-        if (typeof cfg.endpoint === 'function') {
-          const p = cfg.params?.(value) ?? {};
-          const res = await cfg.endpoint(p);
-          opts = res; // 함수형이면 Option[] 반환 가정
-        } else if (cfg.endpoint) {
-          const method = cfg.method ?? 'GET';
-          const params = cfg.params?.(value) ?? {};
-          const resp = method === 'POST'
-            ? await api.post(cfg.endpoint, params)
-            : await api.get(cfg.endpoint, params);
-          const raw = resp?.result?.list ?? resp?.result ?? resp?.data ?? resp;
-          opts = cfg.map ? cfg.map(raw) : (
-            Array.isArray(raw)
-              ? raw.map((d: any) => ({
-                key: String(d.id ?? d.code ?? d.key ?? d.value ?? ''),
-                label: String(d.name ?? d.label ?? d.title ?? d.text ?? d.id ?? d.code ?? '')
-              }))
-              : []
-          );
-        }
-
-        cacheRef.current.set(ck, opts);
-        setOptions(f.key, opts);
-
-        // 선택값 유효성 정리
-        const curr = value[f.key];
-        const keys = new Set(opts.map(o => o.key));
-        const invalid = Array.isArray(curr) ? curr.some((c: string) => !keys.has(c)) : curr && !keys.has(curr);
-        if (invalid) {
-          onChange({...value, [f.key]: Array.isArray(curr) ? [] : ''});
-        }
-      } catch (e: any) {
-        if (e?.name !== 'AbortError') {
-          console.error(`[asyncOptions: ${f.key}] fetch error`, e);
-          setOptions(f.key, []);
-        }
-      } finally {
-        setLoading(f.key, false);
+    } catch (e: any) {
+      if (e?.name !== 'AbortError') {
+        console.error(`[asyncOptions: ${f.key}] fetch error`, e);
+        setOptions(f.key, []);
       }
-    };
+    } finally {
+      setLoading(f.key, false);
+    }
+  };
 
   // 1) dependsOn 없는 asyncOptions: 마운트 시 1회
   useEffect(() => {

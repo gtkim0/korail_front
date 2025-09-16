@@ -67,12 +67,27 @@ export default function Table<T>(
     enableSorting: true,
     manualPagination: true, // 이게 수동설정
     pageCount: pageCount || 1,  // 총 페이지수
-    columnResizeMode: 'onChange'
+    columnResizeMode: 'onChange',
+    // columnResizeDirection: 'ltr'
   });
 
   return (
     <div style={{overflowX: 'auto', minWidth: '100%', flex: 1, height: '100%'}}>
       <table className={styles.table} style={{minWidth, maxWidth}}>
+        <colgroup>
+          {table
+            .getVisibleLeafColumns()
+            .map(col => (
+              <col
+                key={col.id}
+                // style={{
+                //   width: col.id === 'select' ? '40px' : `${col.getSize()}px`,
+                //   minWidth: col.id === 'select' ? '40px' : undefined,
+                //   maxWidth: col.id === 'select' ? '40px' : undefined,
+                // }}
+              />
+            ))}
+        </colgroup>
         <thead style={{borderRadius: '6px'}}>
         {table.getHeaderGroups().map(headerGroup => (
           <tr
@@ -85,15 +100,15 @@ export default function Table<T>(
                 return (
                   <th
                     style={{
-                      width: header.column.columnDef.meta?.width ?? header.getSize(),
-                      maxWidth: header.column.columnDef.maxSize,
-                      minWidth: header.column.columnDef.minSize
+                      width: header.column.id === 'select' ? 40 : header.getSize(),
+                      minWidth: header.column.id === 'select' ? 40 : header.column.columnDef.minSize,
+                      maxWidth: header.column.id === 'select' ? 40 : header.column.columnDef.maxSize,
                     }}
                     key={header.id}
                     className={styles.th}
                     onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
                   >
-                    <div style={{display: 'flex', alignItems: 'center'}}>
+                    <div style={{display: 'flex', alignItems: 'center', minWidth: 0}}>
                       {flexRender(header.column.columnDef.header, header.getContext())}
                       {header.column.getCanSort() && (
                         <span className={styles.sortIcon}>
@@ -143,10 +158,12 @@ export default function Table<T>(
                 .map(cell => (
                   <td
                     style={{
-                      width: cell.column.getSize(),
-                      // width: cell.column.columnDef.meta?.width ?? cell.column.getSize(),
-                      maxWidth: cell.column.columnDef.maxSize,
-                      minWidth: cell.column.columnDef.minSize,
+                      // width: cell.column.getSize(),
+                      // maxWidth: cell.column.columnDef.maxSize,
+                      // minWidth: cell.column.columnDef.minSize,
+                      width: cell.column.id === 'select' ? 40 : cell.column.getSize(),
+                      minWidth: cell.column.id === 'select' ? 40 : cell.column.columnDef.minSize,
+                      maxWidth: cell.column.id === 'select' ? 40 : cell.column.columnDef.maxSize,
                     }}
                     key={cell.id}
                     className={styles.td}
