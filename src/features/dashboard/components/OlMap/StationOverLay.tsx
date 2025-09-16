@@ -46,7 +46,7 @@ export default function StationOverLay({feature, coordKey}: { feature: Feature, 
                     priority
                     style={{objectFit: 'contain'}}
                 />
-                <span>{feature.get("name")}</span>
+                <span>{feature.get("lnNm")}</span>
                 <button
                     className={styles.button}
                     onClick={() => {

@@ -75,7 +75,11 @@ export default function DashboardView({initialData}: DashBoardProps) {
                     <motion.div className={styles.center_box} key={searchTarget.type} initial={{opacity: 0}}
                                 animate={{opacity: 1}} exit={{opacity: 0}}
                                 transition={{duration: 0.25, ease: 'easeInOut'}}>
-                        <RealTimeSection searchTarget={searchTarget}/>
+                        <RealTimeSection initialData={{
+                            routeDirectionRes: initialData.routeDirectionRes,
+                            stationCongStatsRes: initialData.stationCongStatsRes,
+                            trainCongStatsRes: initialData.trainCongStatsRes
+                        }}/>
                     </motion.div>
                 </AnimatePresence>
                 {/*right section*/}

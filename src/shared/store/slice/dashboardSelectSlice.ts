@@ -12,8 +12,8 @@ interface DashboardSelectSlice {
         lnNm: string,
         rteDtlNo: string,
         rteDtlNm: string,
-        stnCd: string,
-        stnNm: string
+        stnCd?: string,
+        stnNm?: string
     ) => void;
     setWideRailYn: (value: "Y" | "N") => void;
     reset: () => void;

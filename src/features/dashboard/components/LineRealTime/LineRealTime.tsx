@@ -1,3 +1,4 @@
+'use client';
 import React, {useEffect, useRef, useState} from "react";
 import styles from "./LineRealTime.module.scss"
 import Image from "next/image";
@@ -12,6 +13,8 @@ import CrowdingBadge from "@/features/dashboard/components/CrowdingBadge/Crowdin
 import Table from "@/shared/components/table/BaseTable/BaseTable";
 import TrainCrowdingCardDetail from "@/features/dashboard/components/TrainCrowdingCardDetail/TrainCrowdingCardDetail";
 import {useCongestStepStore} from "@/shared/store/slice/congestStepSlice";
+import {RouteDirectionListType} from "@/types/routes-direction";
+import {useDashboardSelectStore} from "@/shared/store/slice/dashboardSelectSlice";
 
 type TooltipState = {
     top: number;
@@ -22,10 +25,17 @@ type TooltipState = {
     buttonRect: DOMRect;
 } | null;
 
-export default function LineRealTime() {
+interface Props {
+    initialData: RouteDirectionListType
+}
+
+export default function LineRealTime({initialData}: Props) {
     const [tooltip, setTooltip] = useState<TooltipState>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const {congestStep} = useCongestStepStore();
+    const {searchTarget} = useDashboardSelectStore();
+
+
     const data = [
         {id: "1", station: "가산디지털단지역", other: true},
         {id: "2", station: "서울역", other: false},
@@ -42,6 +52,7 @@ export default function LineRealTime() {
         {id: "13", station: "서울대벤처타운역", other: false},
         {id: "14", station: "신림역", other: false},
     ]
+
     const handleClick = (
         e: React.MouseEvent<HTMLDivElement>,
         type: "station" | "train",
@@ -303,7 +314,16 @@ function StationTooltip({data}: { data: any }) {
 function TrainTooltip({data}: { data: any }) {
     return (
         <div style={{width: "328px", height: "115px"}}>
-            <TrainCrowdingCardDetail/>
+            <TrainCrowdingCardDetail data={{
+                line: "1호선 인천행",
+                train: "K0021",
+                trains: [1, 3, 2, 4, 4, 3, 2],
+                startRoute: "연천역",
+                endRoute: "인천역",
+                status: "전역출발",
+                level: 4,
+                percent: 120
+            }}/>
         </div>
     );
 }

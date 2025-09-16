@@ -8,9 +8,9 @@ import {useCongestStepStore} from "@/shared/store/slice/congestStepSlice";
 import _ from "lodash";
 import {useDashboardSelectStore} from "@/shared/store/slice/dashboardSelectSlice";
 import {CongStatsResType, RouteCongestionType, StageSummaryType} from "@/types/congestion-stats";
-import {useQuery} from "@tanstack/react-query";
 import {useClientApi} from "@/shared/hooks/useClientApi";
 import {Empty} from "@/features/dashboard/components/Empty/Empty";
+import {useGetCongStats} from "@/features/dashboard/hooks/queryHooks";
 
 
 interface Props {
@@ -21,16 +21,8 @@ interface Props {
 export default function CongestionStats({isTrain, initialData}: Props) {
     const {searchTarget} = useDashboardSelectStore();
 
-    const url = isTrain ? "/api/dashboards/trains/congestion/statistics" : "/api/dashboards/stations/congestion/statistics"
-    const api = useClientApi();
 
-    const {data} = useQuery({
-        queryKey: ["CongestionStats", searchTarget, isTrain], queryFn: async () => {
-            const res = await api.get(url, {wideRailYn: searchTarget.wideRailYn})
-            return res.result
-        },
-        initialData: initialData
-    })
+    const {data} = useGetCongStats(isTrain, initialData)
 
     const [animatedPercents, setAnimatedPercents] = useState<number[]>([]);
     const [showBadges, setShowBadges] = useState<boolean>(false);

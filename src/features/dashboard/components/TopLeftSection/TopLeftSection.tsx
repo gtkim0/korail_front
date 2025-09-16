@@ -7,30 +7,21 @@ import Image from "next/image";
 import clsx from "clsx";
 import {RouteDirectionListType} from "@/types/routes-direction";
 import {useDashboardSelectStore} from "@/shared/store/slice/dashboardSelectSlice";
-import {useQuery} from "@tanstack/react-query";
 import {useClientApi} from "@/shared/hooks/useClientApi";
+import {useGetRoutesList} from "@/features/dashboard/hooks/queryHooks";
 
 interface Props {
     initialData: RouteDirectionListType
 }
 
 
-export default function TopLeftSection(props: Props) {
-    const {initialData} = props;
+export default function TopLeftSection({initialData}: Props) {
     const [isDropOpen, setIsDropOpen] = useState<boolean>(false);
     const [isItemOpen, setIsItemOpen] = useState<number | null>(null);
 
     const {searchTarget, setTarget, setWideRailYn, reset} = useDashboardSelectStore();
 
-    const api = useClientApi();
-
-    const {data} = useQuery({
-        queryKey: ["dropDown", searchTarget.wideRailYn], queryFn: async () => {
-            const res = await api.get("/api/dashboards/routes/directions/get-list", {wideRailYn: searchTarget.wideRailYn})
-            return res.result
-        },
-        initialData: initialData
-    });
+    const {data} = useGetRoutesList(initialData);
 
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -81,22 +72,22 @@ export default function TopLeftSection(props: Props) {
             <div className={clsx(styles.toggle_item, searchTarget.wideRailYn == "Y" && styles.active)}
                  onClick={() => {
                      setWideRailYn("Y");
-                     // refetch().then()
                  }}>광역
             </div>
             <div className={clsx(styles.toggle_item, searchTarget.wideRailYn == "N" && styles.active)}
                  onClick={() => {
-                     setWideRailYn("N")
-                     // refetch().then()
+                     setWideRailYn("N");
                  }}>간선
             </div>
         </div>
         <div className={styles.dropdown_container} ref={dropdownRef}>
-            <button className={clsx(styles.button, isDropOpen && styles.open)} onClick={() => {
-                if (formattedData && formattedData.length > 0) {
-                    setIsDropOpen(!isDropOpen)
-                }
-            }}>
+            <button
+                className={clsx([styles.button, isDropOpen && styles.open, (!formattedData || formattedData.length == 0) && styles.disabled])}
+                onClick={() => {
+                    if (formattedData && formattedData.length > 0) {
+                        setIsDropOpen(!isDropOpen)
+                    }
+                }}>
                 <div
                     className={styles.text}>{searchTarget.type == "station" ? searchTarget.stnNm : searchTarget.type == "line" ? searchTarget.rteDtlNm : "노선선택"}</div>
                 <motion.img src={"/arrow-down-white.svg"} alt={"arrow"} width={20} height={20}
@@ -144,7 +135,7 @@ export default function TopLeftSection(props: Props) {
                                                 exit={{height: 0, opacity: 0, y: -5}}
                                                 transition={{duration: 0.25, ease: 'easeInOut'}}>
                                                 {
-                                                    el1.trifStnms.map((el2, idx2) => {
+                                                    el1?.trifStnms?.map((el2, idx2) => {
                                                         return <div className={styles.station_item}
                                                                     key={`dropdown_station_${idx2}`}
                                                         >

@@ -79,6 +79,10 @@
   font-size: 1.7rem;
   font-weight: 500;
 
+  &.disabled {
+    opacity: 0.5;
+  }
+
   &.open {
     border: 1px solid #0078e3;
   }

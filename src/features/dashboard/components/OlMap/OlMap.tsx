@@ -1,6 +1,6 @@
 "use client";
 import styles from "./OlMap.module.scss"
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 import Map from "ol/Map";
 import {GeoJSON} from "ol/format";
 import VectorSource from "ol/source/Vector";
@@ -11,23 +11,27 @@ import {Feature, View} from "ol";
 import {fromLonLat} from "ol/proj";
 import Overlay from "ol/Overlay";
 import {LineString} from "ol/geom";
-import {line_dummy} from "@/data/dashboard-dummy";
 import {DEVICE_PIXEL_RATIO} from "ol/has"
 import {hexToRgba} from "@/utils/darkenHexColor";
 import {defaults as defaultControls} from "ol/control"
 import {createRoot} from "react-dom/client";
 import StationOverLay from "@/features/dashboard/components/OlMap/StationOverLay";
+import {RouteDirectionListType} from "@/types/routes-direction";
+import {useGetRoutesList} from "@/features/dashboard/hooks/queryHooks";
+
+interface Props {
+    initialData: RouteDirectionListType
+}
 
 
-export default function OlMap() {
+export default function OlMap({initialData}: props) {
     const pixelRatio = DEVICE_PIXEL_RATIO;
 
     const mapRef = useRef<HTMLDivElement>(null);
     const mapInstance = useRef<Map | null>(null);
     const polygonLayerRef = useRef<VectorLayer<VectorSource> | null>(null);
-    const [data, setData] = useState<any[] | null>(null);
-
-    useEffect(() => setData(line_dummy), []);
+    const currentOverlay = useRef<Overlay | null>(null);
+    const {data} = useGetRoutesList(initialData);
 
     useEffect(() => {
         if (!mapRef.current) return;
@@ -40,7 +44,7 @@ export default function OlMap() {
             }),
         });
         const seoulFeature = vectorSource.getFeatures().find((r) => r.get("CTP_ENG_NM") == "Seoul")
-        const extent = seoulFeature.getGeometry().getExtent();
+        // const extent = seoulFeature.getGeometry().getExtent();
 
         const vectorLayer = new VectorLayer({
             source: vectorSource,
@@ -72,23 +76,25 @@ export default function OlMap() {
             targetEl.style.cursor = hit ? "pointer" : ""
         })
 
-        let currentOverlay: Overlay | null = null;
 
         // 클릭 이벤트 (polygonLayer만)
         map.on("click", (evt) => {
-            const feature = map.forEachFeatureAtPixel(evt.pixel, (feat, layer) => {
-                if (layer === polygonLayerRef.current) return feat;
-            });
+            const feature = map.forEachFeatureAtPixel(evt.pixel, (feat, layer) =>
+                layer === polygonLayerRef.current ? feat : undefined
+            );
 
-            const coordKey = `${evt.coordinate[0]} - ${evt.coordinate[1]}`
+            const coordKey = `${evt.coordinate[0]} - ${evt.coordinate[1]}`;
+
             if (feature) {
-                if (currentOverlay) {
-                    map.removeOverlay(currentOverlay);
-                    currentOverlay = null;
+                if (currentOverlay.current) {
+                    map.removeOverlay(currentOverlay.current);
+                    currentOverlay.current = null;
                 }
+
                 const container = document.createElement("div");
                 const root = createRoot(container);
-                container.id = "overlay-container"
+                container.id = "overlay-container";
+
                 const overlay = new Overlay({
                     element: container,
                     offset: [0, -15],
@@ -97,14 +103,12 @@ export default function OlMap() {
                 map.addOverlay(overlay);
                 overlay.setPosition(evt.coordinate);
 
-                root.render(
-                    <StationOverLay feature={feature} coordKey={coordKey}/>
-                )
-                currentOverlay = overlay;
+                root.render(<StationOverLay feature={feature} coordKey={coordKey}/>);
+                currentOverlay.current = overlay;
             } else {
-                if (currentOverlay) {
-                    map.removeOverlay(currentOverlay);
-                    currentOverlay = null
+                if (currentOverlay.current) {
+                    map.removeOverlay(currentOverlay.current);
+                    currentOverlay.current = null;
                 }
             }
         });
@@ -120,26 +124,40 @@ export default function OlMap() {
         return () => {
             map.setTarget(undefined);
             mapInstance.current = null;
+            currentOverlay.current = null;
         };
     }, []);
 
     useEffect(() => {
-        if (!mapInstance.current || !data || data.length === 0) return;
-        // 호선 별 폴리건 레이어
+        if (!mapInstance.current || !data.list) return;
+
+        // 기존 레이어 제거
+        if (polygonLayerRef.current) {
+            mapInstance.current.removeLayer(polygonLayerRef.current);
+            polygonLayerRef.current = null;
+        }
+        // 기존 오버레이 제거
+        if (currentOverlay.current) {
+            mapInstance.current.removeOverlay(currentOverlay.current);
+            currentOverlay.current = null;
+        }
+
+        // 새 VectorSource 생성
         const vectorSource = new VectorSource();
 
-        data.forEach((d) => {
+        data?.list?.forEach((d) => {
+            console.log(d)
             const feature = new Feature({
-                geometry: new LineString(d.list.map((i) => fromLonLat([i.x, i.y]))),
-                name: d.name,
+                geometry: new LineString(d?.trifStnms?.map((i) => fromLonLat([i?.stnPstnYcod, i?.stnPstnXcod]))),
+                lnNm: d.lnNm,
             });
 
             const outLineStyle = new Style({
-                stroke: new Stroke({color: hexToRgba(d.color, 0.3), width: 10}),
+                stroke: new Stroke({color: hexToRgba(d.lnClorNo, 0.3), width: 10}),
             });
             const strokeStyle = new Style({
                 stroke: new Stroke({
-                    color: d.color,
+                    color: d.lnClorNo,
                     width: 3,
                     lineDash: [0, 12],
                     lineCap: "square",
@@ -152,15 +170,17 @@ export default function OlMap() {
 
         const polygonLayer = new VectorLayer({source: vectorSource});
         mapInstance.current.addLayer(polygonLayer);
-        polygonLayerRef.current = polygonLayer;
+        mapInstance.current.getView().setCenter(fromLonLat([127.8, 36.5])); // 초기 중심
+        mapInstance.current.getView().setZoom(7.9); // 초기 줌 (pixelRatio 고려 가능)
+        polygonLayerRef.current = polygonLayer; // 참조 업데이트
     }, [data]);
 
     return <div className={styles.container} ref={mapRef}>
-        {data && data.length > 0 && <div className={styles.legend}>
-            {data.map((el, idx) => {
+        {data?.list?.length > 0 && <div className={styles.legend}>
+            {data?.list?.map((el, idx) => {
                 return <div key={idx} className={styles.item}>
-                    <div className={styles.dot} style={{background: el.color}}></div>
-                    <div>{el.name}</div>
+                    <div className={styles.dot} style={{background: `#${el.lnClorNo}`}}></div>
+                    <div>{el.lnNm}</div>
                 </div>
             })}
         </div>}
